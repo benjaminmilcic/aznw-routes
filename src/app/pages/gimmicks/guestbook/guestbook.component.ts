@@ -28,24 +28,23 @@ import { environment } from '../../../../environments/environment';
 import { HttpErrorService } from '../../http-error/http-error.service';
 
 @Component({
-  selector: 'app-guestbook',
-  standalone: true,
-  imports: [
-    IonFabButton,
-    YouTubePlayer,
-    CommonModule,
-    EditorModule,
-    IonFab,
-    IonFabButton,
-    MatTooltipModule,
-    IonInput,
-    FormsModule,
-    TranslateModule,
-    SafeHtmlPipe,
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
-  templateUrl: './guestbook.component.html',
-  styleUrl: './guestbook.component.css',
+    selector: 'app-guestbook',
+    imports: [
+        IonFabButton,
+        YouTubePlayer,
+        CommonModule,
+        EditorModule,
+        IonFab,
+        IonFabButton,
+        MatTooltipModule,
+        IonInput,
+        FormsModule,
+        TranslateModule,
+        SafeHtmlPipe,
+    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+    templateUrl: './guestbook.component.html',
+    styleUrl: './guestbook.component.css'
 })
 export class GuestbookComponent implements OnInit, AfterViewInit {
   showcreatePostDialog = false;

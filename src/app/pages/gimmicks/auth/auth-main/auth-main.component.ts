@@ -15,21 +15,20 @@ import { IonContent, IonPopover } from '@ionic/angular/standalone';
 import { HttpErrorService } from '../../../http-error/http-error.service';
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [
-    CommonModule,
-    IonCheckbox,
-    FormsModule,
-    TranslateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    IonContent,
-    IonPopover,
-  ],
-  templateUrl: './auth-main.component.html',
-  styleUrl: './auth-main.component.css',
+    selector: 'app-main',
+    imports: [
+        CommonModule,
+        IonCheckbox,
+        FormsModule,
+        TranslateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        IonContent,
+        IonPopover,
+    ],
+    templateUrl: './auth-main.component.html',
+    styleUrl: './auth-main.component.css'
 })
 export class AuthMainComponent implements OnInit {
   jokes: Joke[];

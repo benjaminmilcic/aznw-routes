@@ -6,17 +6,16 @@ import { IonPopover } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
-  imports: [
-    IonPopover,
-    RouterModule,
-    JokesBookComponent,
-    StripeComponent,
-    TranslateModule,
-  ],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css',
+    selector: 'app-auth',
+    imports: [
+        IonPopover,
+        RouterModule,
+        JokesBookComponent,
+        StripeComponent,
+        TranslateModule,
+    ],
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.css'
 })
 export class AuthComponent {
   constructor(private translate: TranslateService) {}

@@ -14,20 +14,19 @@ import { AuthService } from './auth/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-gimmicks',
-  standalone: true,
-  imports: [
-    IonIcon,
-    MapComponent,
-    RouterModule,
-    TranslateModule,
-    IonFab,
-    IonFabButton,
-    IonFabList,
-    CommonModule,
-  ],
-  templateUrl: './gimmicks.component.html',
-  styleUrl: './gimmicks.component.css',
+    selector: 'app-gimmicks',
+    imports: [
+        IonIcon,
+        MapComponent,
+        RouterModule,
+        TranslateModule,
+        IonFab,
+        IonFabButton,
+        IonFabList,
+        CommonModule,
+    ],
+    templateUrl: './gimmicks.component.html',
+    styleUrl: './gimmicks.component.css'
 })
 export class GimmicksComponent implements OnInit, OnDestroy {
   innerWidth: number;

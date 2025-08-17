@@ -5,11 +5,10 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-skills',
-  templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.css'],
-  standalone: true,
-  imports: [TranslateModule, RouterModule, MatTooltipModule, CommonModule],
+    selector: 'app-skills',
+    templateUrl: './skills.component.html',
+    styleUrls: ['./skills.component.css'],
+    imports: [TranslateModule, RouterModule, MatTooltipModule, CommonModule]
 })
 export class SkillsComponent {
   constructor(public translateService: TranslateService) {}

@@ -23,25 +23,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AngularCropperjsModule, CropperComponent } from 'angular-cropperjs';
 
 @Component({
-  selector: 'app-image-cropper',
-  standalone: true,
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonContent,
-    IonFab,
-    IonFabButton,
-    AngularCropperjsModule,
-    CommonModule,
-    MatIcon,
-    IonIcon,
-    TranslateModule,
-  ],
-  templateUrl: './image-cropper.component.html',
-  styleUrl: './image-cropper.component.css',
+    selector: 'app-image-cropper',
+    imports: [
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonButtons,
+        IonButton,
+        IonContent,
+        IonFab,
+        IonFabButton,
+        AngularCropperjsModule,
+        CommonModule,
+        MatIcon,
+        IonIcon,
+        TranslateModule,
+    ],
+    templateUrl: './image-cropper.component.html',
+    styleUrl: './image-cropper.component.css'
 })
 export class ImageCropperComponent implements OnInit {
   @ViewChild('cropper') public cropper: CropperComponent;

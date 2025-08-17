@@ -23,19 +23,18 @@ import { ChartsHelperService } from '../charts-helper.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-line-chart',
-  standalone: true,
-  imports: [
-    BaseChartDirective,
-    IonSegmentButton,
-    IonSegment,
-    IonLabel,
-    TranslateModule,
-    CommonModule,
-  ],
-  templateUrl: './line-chart.component.html',
-  styleUrl: './line-chart.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-line-chart',
+    imports: [
+        BaseChartDirective,
+        IonSegmentButton,
+        IonSegment,
+        IonLabel,
+        TranslateModule,
+        CommonModule,
+    ],
+    templateUrl: './line-chart.component.html',
+    styleUrl: './line-chart.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
   lineChartType: ChartType = 'line';

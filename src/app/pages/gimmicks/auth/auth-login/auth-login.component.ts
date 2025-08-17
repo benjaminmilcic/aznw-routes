@@ -12,18 +12,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
-  imports: [
-    IonSpinner,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    CommonModule,
-    TranslateModule,
-  ],
-  templateUrl: './auth-login.component.html',
-  styleUrl: './auth-login.component.css',
+    selector: 'app-auth',
+    imports: [
+        IonSpinner,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        CommonModule,
+        TranslateModule,
+    ],
+    templateUrl: './auth-login.component.html',
+    styleUrl: './auth-login.component.css'
 })
 export class AuthLoginComponent implements OnInit {
   isLoginMode = true;

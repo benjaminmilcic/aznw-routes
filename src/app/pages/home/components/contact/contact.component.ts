@@ -10,11 +10,10 @@ import { CommonModule } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css'],
-  standalone: true,
-  imports: [TranslateModule, FormsModule, CommonModule],
+    selector: 'app-contact',
+    templateUrl: './contact.component.html',
+    styleUrls: ['./contact.component.css'],
+    imports: [TranslateModule, FormsModule, CommonModule]
 })
 export class ContactComponent implements OnInit, OnDestroy {
   isSending = false;

@@ -7,11 +7,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'],
-  standalone: true,
-  imports: [TranslateModule, CommonModule, RouterModule, MatMenuModule,MatButtonModule],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css'],
+    imports: [TranslateModule, CommonModule, RouterModule, MatMenuModule, MatButtonModule]
 })
 export class SidebarComponent implements OnInit {
   sidebarActivated: boolean = false;

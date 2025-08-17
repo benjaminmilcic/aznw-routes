@@ -12,11 +12,10 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-scratch-card',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './scratch-card.component.html',
-  styleUrl: './scratch-card.component.css',
+    selector: 'app-scratch-card',
+    imports: [TranslateModule],
+    templateUrl: './scratch-card.component.html',
+    styleUrl: './scratch-card.component.css'
 })
 export class ScratchCardComponent implements AfterViewInit, OnChanges {
   @Input() word: string;

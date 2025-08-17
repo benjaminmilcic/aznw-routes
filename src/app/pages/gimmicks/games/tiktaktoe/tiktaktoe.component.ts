@@ -14,20 +14,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { GamesService } from '../games.service';
 
 @Component({
-  selector: 'app-tiktaktoe',
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    MatIconModule,
-    IonLabel,
-    IonSegment,
-    IonSegmentButton,
-    TranslateModule,
-    MatButtonModule,
-  ],
-  templateUrl: './tiktaktoe.component.html',
-  styleUrl: './tiktaktoe.component.css',
+    selector: 'app-tiktaktoe',
+    imports: [
+        FormsModule,
+        CommonModule,
+        MatIconModule,
+        IonLabel,
+        IonSegment,
+        IonSegmentButton,
+        TranslateModule,
+        MatButtonModule,
+    ],
+    templateUrl: './tiktaktoe.component.html',
+    styleUrl: './tiktaktoe.component.css'
 })
 export class TiktaktoeComponent implements OnInit {
   board: string[][] = [

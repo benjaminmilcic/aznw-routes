@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-analog-clock',
-  standalone: true,
-  imports: [],
-  templateUrl: './analog-clock.component.html',
-  styleUrl: './analog-clock.component.css',
+    selector: 'app-analog-clock',
+    imports: [],
+    templateUrl: './analog-clock.component.html',
+    styleUrl: './analog-clock.component.css'
 })
 export class AnalogClockComponent implements OnInit {
   @ViewChild('hrHand') hrHand: ElementRef;

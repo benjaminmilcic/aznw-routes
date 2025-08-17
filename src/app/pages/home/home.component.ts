@@ -11,20 +11,19 @@ import { CommonModule } from '@angular/common';
 import { HomeService } from './home.service';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    AboutComponent,
-    SkillsComponent,
-    PortfolioComponent,
-    ContactComponent,
-    FooterComponent,
-    TranslateModule,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        HeaderComponent,
+        AboutComponent,
+        SkillsComponent,
+        PortfolioComponent,
+        ContactComponent,
+        FooterComponent,
+        TranslateModule,
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css'
 })
 export class HomeComponent {
   @HostListener('document:DOMContentLoaded')

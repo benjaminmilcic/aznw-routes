@@ -10,20 +10,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-yahtzee-remote',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    CommonModule,
-    FormsModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    TranslateModule
-  ],
-  templateUrl: './yahtzee-remote.component.html',
-  styleUrl: './yahtzee-remote.component.css',
+    selector: 'app-yahtzee-remote',
+    imports: [
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        CommonModule,
+        FormsModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        TranslateModule
+    ],
+    templateUrl: './yahtzee-remote.component.html',
+    styleUrl: './yahtzee-remote.component.css'
 })
 export class YahtzeeRemoteComponent implements OnInit {
   players: string[] = [];

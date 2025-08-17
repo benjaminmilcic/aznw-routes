@@ -8,19 +8,18 @@ import { map, Observable, startWith } from 'rxjs';
 import { City } from '../map.models';
 
 @Component({
-  selector: 'app-search-field',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TranslateModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatOptionModule,
-    AsyncPipe,
-  ],
-  templateUrl: './search-field.component.html',
-  styleUrl: './search-field.component.css',
+    selector: 'app-search-field',
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatOptionModule,
+        AsyncPipe,
+    ],
+    templateUrl: './search-field.component.html',
+    styleUrl: './search-field.component.css'
 })
 export class SearchFieldComponent implements OnInit {
   selectedCity = new FormControl('');

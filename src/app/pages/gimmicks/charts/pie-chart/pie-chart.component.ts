@@ -23,19 +23,18 @@ import { ChartsHelperService } from '../charts-helper.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-pie-chart',
-  standalone: true,
-  imports: [
-    BaseChartDirective,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-    FormsModule,
-    CommonModule,
-  ],
-  templateUrl: './pie-chart.component.html',
-  styleUrl: './pie-chart.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-pie-chart',
+    imports: [
+        BaseChartDirective,
+        IonSegment,
+        IonSegmentButton,
+        IonLabel,
+        FormsModule,
+        CommonModule,
+    ],
+    templateUrl: './pie-chart.component.html',
+    styleUrl: './pie-chart.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() users: User[];

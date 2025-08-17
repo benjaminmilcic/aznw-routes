@@ -12,11 +12,10 @@ import { Dice } from '../yahtzee.types';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-yahtzee-dice',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './yahtzee-dice.component.html',
-  styleUrl: './yahtzee-dice.component.css',
+    selector: 'app-yahtzee-dice',
+    imports: [CommonModule],
+    templateUrl: './yahtzee-dice.component.html',
+    styleUrl: './yahtzee-dice.component.css'
 })
 export class YahtzeeDiceComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('container') container: ElementRef<HTMLDivElement>;

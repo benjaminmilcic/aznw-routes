@@ -9,19 +9,18 @@ interface DialogData {
 }
 
 @Component({
-  selector: 'app-http-error',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-    TranslateModule
-  ],
-  templateUrl: './http-error.component.html',
-  styleUrl: './http-error.component.css',
+    selector: 'app-http-error',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose,
+        TranslateModule
+    ],
+    templateUrl: './http-error.component.html',
+    styleUrl: './http-error.component.css'
 })
 export class HttpErrorComponent {
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);

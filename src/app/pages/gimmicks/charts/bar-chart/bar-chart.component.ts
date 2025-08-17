@@ -4,11 +4,10 @@ import { ChartConfiguration, ChartData, ChartEvent } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
-  selector: 'app-bar-chart',
-  standalone: true,
-  imports: [BaseChartDirective],
-  templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.css',
+    selector: 'app-bar-chart',
+    imports: [BaseChartDirective],
+    templateUrl: './bar-chart.component.html',
+    styleUrl: './bar-chart.component.css'
 })
 export class BarChartComponent implements OnInit {
   @Input() chartValues: { '2022': number; '2023': number };

@@ -11,17 +11,16 @@ import * as de from '@angular/common/locales/de';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-quiz-bottom-sheet',
-  standalone: true,
-  imports: [
-    MatBottomSheetModule,
-    CommonModule,
-    ScratchCardComponent,
-    TranslateModule,
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
-  templateUrl: './quiz-bottom-sheet.component.html',
-  styleUrl: './quiz-bottom-sheet.component.css',
+    selector: 'app-quiz-bottom-sheet',
+    imports: [
+        MatBottomSheetModule,
+        CommonModule,
+        ScratchCardComponent,
+        TranslateModule,
+    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+    templateUrl: './quiz-bottom-sheet.component.html',
+    styleUrl: './quiz-bottom-sheet.component.css'
 })
 export class QuizBottomSheetComponent implements OnInit {
   holiday: Holiday;

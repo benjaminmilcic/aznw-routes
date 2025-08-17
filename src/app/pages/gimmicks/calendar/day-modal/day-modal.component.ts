@@ -19,28 +19,27 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-day-modal',
-  standalone: true,
-  imports: [
-    IonCard,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonCard,
-    IonFab,
-    IonFabButton,
-    IonIcon,
-    IonButton,
-    IonButtons,
-    IonInput,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    TranslateModule,
-  ],
-  templateUrl: './day-modal.component.html',
-  styleUrl: './day-modal.component.css',
+    selector: 'app-day-modal',
+    imports: [
+        IonCard,
+        IonContent,
+        IonHeader,
+        IonTitle,
+        IonToolbar,
+        IonCard,
+        IonFab,
+        IonFabButton,
+        IonIcon,
+        IonButton,
+        IonButtons,
+        IonInput,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        TranslateModule,
+    ],
+    templateUrl: './day-modal.component.html',
+    styleUrl: './day-modal.component.css'
 })
 export class DayModalComponent implements OnInit {
   @Input() day: number;

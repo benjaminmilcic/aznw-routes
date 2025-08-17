@@ -3,11 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-print-schedule',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './print-schedule.component.html',
-  styleUrl: './print-schedule.component.css',
+    selector: 'app-print-schedule',
+    imports: [CommonModule],
+    templateUrl: './print-schedule.component.html',
+    styleUrl: './print-schedule.component.css'
 })
 export class PrintScheduleComponent implements OnInit {
   printDate: string[];

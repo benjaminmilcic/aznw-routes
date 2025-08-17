@@ -15,18 +15,17 @@ interface DialogData {
 }
 
 @Component({
-  selector: 'app-tiktaktoe-dialog',
-  standalone: true,
-  imports: [
-    MatDialogModule,
-    MatButtonModule,
-    CommonModule,
-    NgFireworksModule,
-    TranslateModule,
-    MatButtonModule
-  ],
-  templateUrl: './winner-dialog.component.html',
-  styleUrl: './winner-dialog.component.css',
+    selector: 'app-tiktaktoe-dialog',
+    imports: [
+        MatDialogModule,
+        MatButtonModule,
+        CommonModule,
+        NgFireworksModule,
+        TranslateModule,
+        MatButtonModule
+    ],
+    templateUrl: './winner-dialog.component.html',
+    styleUrl: './winner-dialog.component.css'
 })
 export class WinnerDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}

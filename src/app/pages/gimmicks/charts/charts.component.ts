@@ -25,30 +25,29 @@ import { MatOptionModule } from '@angular/material/core';
 import { DoubleBarChartComponent } from './double-bar-chart/double-bar-chart.component';
 
 @Component({
-  selector: 'app-charts',
-  standalone: true,
-  imports: [
-    IonSegmentButton,
-    IonSegment,
-    IonLabel,
-    MatExpansionModule,
-    CommonModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatSidenavModule,
-    DrawerContentComponent,
-    BarChartComponent,
-    PieChartComponent,
-    LineChartComponent,
-    DoubleBarChartComponent,
-    TranslateModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
-  ],
-  templateUrl: './charts.component.html',
-  styleUrl: './charts.component.css',
+    selector: 'app-charts',
+    imports: [
+        IonSegmentButton,
+        IonSegment,
+        IonLabel,
+        MatExpansionModule,
+        CommonModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatSidenavModule,
+        DrawerContentComponent,
+        BarChartComponent,
+        PieChartComponent,
+        LineChartComponent,
+        DoubleBarChartComponent,
+        TranslateModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
+    ],
+    templateUrl: './charts.component.html',
+    styleUrl: './charts.component.css'
 })
 export class ChartsComponent implements OnInit {
   users: User[] = UserValues;

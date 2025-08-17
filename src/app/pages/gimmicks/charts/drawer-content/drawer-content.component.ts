@@ -24,25 +24,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { ImageCropperComponent } from '../image-cropper/image-cropper.component.js';
 
 @Component({
-  selector: 'app-drawer-content',
-  standalone: true,
-  imports: [
-    IonFab,
-    MatIconModule,
-    TranslateModule,
-    MatFormFieldModule,
-    MatInputModule,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-    ReactiveFormsModule,
-    CommonModule,
-    FormsModule,
-    MatTooltipModule,
-    MatButtonModule,
-  ],
-  templateUrl: './drawer-content.component.html',
-  styleUrl: './drawer-content.component.css',
+    selector: 'app-drawer-content',
+    imports: [
+        IonFab,
+        MatIconModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        IonSegment,
+        IonSegmentButton,
+        IonLabel,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+        MatTooltipModule,
+        MatButtonModule,
+    ],
+    templateUrl: './drawer-content.component.html',
+    styleUrl: './drawer-content.component.css'
 })
 export class DrawerContentComponent implements OnInit {
   @Input() user: User;

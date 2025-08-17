@@ -4,11 +4,10 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-scroll-to-top',
-  templateUrl: './scroll-to-top.component.html',
-  styleUrls: ['./scroll-to-top.component.css'],
-  standalone: true,
-  imports: [TranslateModule, CommonModule, RouterModule],
+    selector: 'app-scroll-to-top',
+    templateUrl: './scroll-to-top.component.html',
+    styleUrls: ['./scroll-to-top.component.css'],
+    imports: [TranslateModule, CommonModule, RouterModule]
 })
 export class ScrollToTopComponent implements OnInit {
   scrollToTopVisible = false;

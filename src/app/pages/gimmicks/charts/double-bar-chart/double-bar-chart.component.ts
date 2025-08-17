@@ -22,19 +22,18 @@ import { ChartsHelperService } from '../charts-helper.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-double-bar-chart',
-  standalone: true,
-  imports: [
-    BaseChartDirective,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-    CommonModule,
-    TranslateModule,
-  ],
-  templateUrl: './double-bar-chart.component.html',
-  styleUrl: './double-bar-chart.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-double-bar-chart',
+    imports: [
+        BaseChartDirective,
+        IonSegment,
+        IonSegmentButton,
+        IonLabel,
+        CommonModule,
+        TranslateModule,
+    ],
+    templateUrl: './double-bar-chart.component.html',
+    styleUrl: './double-bar-chart.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DoubleBarChartComponent
   implements OnInit, OnDestroy, AfterViewInit

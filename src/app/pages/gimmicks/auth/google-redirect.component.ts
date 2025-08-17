@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-google-redirect',
-  template: `<p>Logging in with Google...</p>`,
+    selector: 'app-google-redirect',
+    template: `<p>Logging in with Google...</p>`,
+    standalone: false
 })
 export class GoogleRedirectComponent implements OnInit {
   constructor(

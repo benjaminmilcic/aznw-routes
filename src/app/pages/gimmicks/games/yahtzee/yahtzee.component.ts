@@ -21,30 +21,29 @@ import { YahtzeeRemoteComponent } from './yahtzee-remote/yahtzee-remote.componen
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-yahtzee',
-  standalone: true,
-  imports: [
-    CommonModule,
-    YahtzeeScoreComponent,
-    YahtzeeDiceComponent,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatLabel,
-    MatIconModule,
-    FormsModule,
-    TranslateModule,
-    MatRadioModule,
-    YahtzeeRemoteComponent,
-  ],
-  templateUrl: './yahtzee.component.html',
-  styleUrl: './yahtzee.component.css',
-  providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline' },
-    },
-  ],
+    selector: 'app-yahtzee',
+    imports: [
+        CommonModule,
+        YahtzeeScoreComponent,
+        YahtzeeDiceComponent,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatLabel,
+        MatIconModule,
+        FormsModule,
+        TranslateModule,
+        MatRadioModule,
+        YahtzeeRemoteComponent,
+    ],
+    templateUrl: './yahtzee.component.html',
+    styleUrl: './yahtzee.component.css',
+    providers: [
+        {
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: { appearance: 'outline' },
+        },
+    ]
 })
 export class YahtzeeComponent implements OnInit, OnDestroy {
   diceOne: number;

@@ -5,11 +5,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GamesService } from '../games.service';
 
 @Component({
-  selector: 'app-jigsaw',
-  standalone: true,
-  imports: [CommonModule, TranslateModule],
-  templateUrl: './jigsaw.component.html',
-  styleUrl: './jigsaw.component.css',
+    selector: 'app-jigsaw',
+    imports: [CommonModule, TranslateModule],
+    templateUrl: './jigsaw.component.html',
+    styleUrl: './jigsaw.component.css'
 })
 export class JigsawComponent implements OnInit {
   trustedUrl;

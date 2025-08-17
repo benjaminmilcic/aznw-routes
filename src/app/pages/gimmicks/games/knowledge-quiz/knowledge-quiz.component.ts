@@ -7,11 +7,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GamesService } from '../games.service';
 
 @Component({
-  selector: 'app-knowledge-quiz',
-  standalone: true,
-  imports: [MatButtonModule, MatIconModule, CommonModule, TranslateModule],
-  templateUrl: './knowledge-quiz.component.html',
-  styleUrl: './knowledge-quiz.component.css',
+    selector: 'app-knowledge-quiz',
+    imports: [MatButtonModule, MatIconModule, CommonModule, TranslateModule],
+    templateUrl: './knowledge-quiz.component.html',
+    styleUrl: './knowledge-quiz.component.css'
 })
 export class KnowledgeQuizComponent implements OnInit {
   questions: Question[] = JSON.parse(JSON.stringify(QUESTIONS));

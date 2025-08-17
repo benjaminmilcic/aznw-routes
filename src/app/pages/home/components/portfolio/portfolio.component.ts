@@ -4,11 +4,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
 
 @Component({
-  selector: 'app-portfolio',
-  templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css'],
-  standalone: true,
-  imports: [TranslateModule, RouterModule],
+    selector: 'app-portfolio',
+    templateUrl: './portfolio.component.html',
+    styleUrls: ['./portfolio.component.css'],
+    imports: [TranslateModule, RouterModule]
 })
 export class PortfolioComponent {
   constructor(public homeService: HomeService, private router: Router) {}

@@ -38,20 +38,19 @@ import { environment } from '../../../../../environments/environment';
 import { HttpErrorService } from '../../../http-error/http-error.service';
 
 @Component({
-  selector: 'app-stripe',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    CommonModule,
-    NgxStripeModule,
-    MatInputModule,
-    FormsModule,
-    IonSpinner,
-    TranslateModule,
-  ],
-  templateUrl: './stripe.component.html',
-  styleUrl: './stripe.component.css',
+    selector: 'app-stripe',
+    imports: [
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        CommonModule,
+        NgxStripeModule,
+        MatInputModule,
+        FormsModule,
+        IonSpinner,
+        TranslateModule,
+    ],
+    templateUrl: './stripe.component.html',
+    styleUrl: './stripe.component.css'
 })
 export class StripeComponent implements OnInit {
   @ViewChild(StripePaymentElementComponent)

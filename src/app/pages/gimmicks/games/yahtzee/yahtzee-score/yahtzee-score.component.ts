@@ -6,11 +6,10 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-yahtzee-score',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './yahtzee-score.component.html',
-  styleUrl: './yahtzee-score.component.css',
+    selector: 'app-yahtzee-score',
+    imports: [CommonModule],
+    templateUrl: './yahtzee-score.component.html',
+    styleUrl: './yahtzee-score.component.css'
 })
 export class YahtzeeScoreComponent implements OnInit, OnDestroy {
   finalDice: RollDice = {

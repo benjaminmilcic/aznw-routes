@@ -36,19 +36,18 @@ interface HighScore {
 }
 
 @Component({
-  selector: 'app-moorhuhn',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    TranslateModule,
-    MatButtonToggleModule,
-    FormsModule,
-    NgCircleProgressModule,
-  ],
-  templateUrl: './moorhuhn.component.html',
-  styleUrl: './moorhuhn.component.css',
+    selector: 'app-moorhuhn',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        TranslateModule,
+        MatButtonToggleModule,
+        FormsModule,
+        NgCircleProgressModule,
+    ],
+    templateUrl: './moorhuhn.component.html',
+    styleUrl: './moorhuhn.component.css'
 })
 export class MoorhuhnComponent implements OnInit, OnDestroy {
   birds: Bird[] = [];

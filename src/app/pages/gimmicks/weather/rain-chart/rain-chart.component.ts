@@ -16,11 +16,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 Chart.register(ChartDataLabels);
 
 @Component({
-  selector: 'app-rain-chart',
-  standalone:true,
-  imports: [BaseChartDirective],
-  templateUrl: './rain-chart.component.html',
-  styleUrl: './rain-chart.component.scss',
+    selector: 'app-rain-chart',
+    imports: [BaseChartDirective],
+    templateUrl: './rain-chart.component.html',
+    styleUrl: './rain-chart.component.scss'
 })
 export class RainChartComponent implements OnInit, OnChanges {
   @Input({ required: true }) hourlyForecast: HourlyForecast[];

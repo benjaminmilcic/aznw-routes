@@ -17,11 +17,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 Chart.register(ChartDataLabels);
 
 @Component({
-  selector: 'app-temperature-chart',
-  standalone:true,
-  imports: [BaseChartDirective],
-  templateUrl: './temperature-chart.component.html',
-  styleUrl: './temperature-chart.component.scss',
+    selector: 'app-temperature-chart',
+    imports: [BaseChartDirective],
+    templateUrl: './temperature-chart.component.html',
+    styleUrl: './temperature-chart.component.scss'
 })
 export class TemperatureChartComponent implements OnInit, OnChanges {
   @Input({ required: true }) hourlyForecast: HourlyForecast[];

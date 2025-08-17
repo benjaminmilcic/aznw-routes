@@ -2,11 +2,10 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-jokes-book',
-  standalone: true,
-  imports:[TranslateModule],
-  templateUrl: './jokes-book.component.html',
-  styleUrls: ['./jokes-book.component.css']
+    selector: 'app-jokes-book',
+    imports: [TranslateModule],
+    templateUrl: './jokes-book.component.html',
+    styleUrls: ['./jokes-book.component.css']
 })
 export class JokesBookComponent implements AfterViewInit {
 

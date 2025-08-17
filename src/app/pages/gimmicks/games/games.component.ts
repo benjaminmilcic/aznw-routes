@@ -12,18 +12,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GamesService } from './games.service';
 
 @Component({
-  selector: 'app-games',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    MatButtonModule,
-    RouterModule,
-    TranslateModule,
-    MatMenuModule,
-  ],
-  templateUrl: './games.component.html',
-  styleUrl: './games.component.css',
+    selector: 'app-games',
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        MatButtonModule,
+        RouterModule,
+        TranslateModule,
+        MatMenuModule,
+    ],
+    templateUrl: './games.component.html',
+    styleUrl: './games.component.css'
 })
 export class GamesComponent {
   gameName: string;

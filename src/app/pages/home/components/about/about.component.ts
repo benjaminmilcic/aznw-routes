@@ -5,11 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css'],
-  standalone: true,
-  imports: [TranslateModule, CommonModule, RouterModule],
+    selector: 'app-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css'],
+    imports: [TranslateModule, CommonModule, RouterModule]
 })
 export class AboutComponent {
   cvActivated: boolean = false;

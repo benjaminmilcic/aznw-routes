@@ -14,20 +14,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { GamesService } from '../games.service';
 
 @Component({
-  selector: 'app-connect-four',
-  standalone: true,
-  imports: [
-    IonSegmentButton,
-    CommonModule,
-    IonLabel,
-    IonSegment,
-    FormsModule,
-    MatIconModule,
-    TranslateModule,
-    MatButtonModule,
-  ],
-  templateUrl: './connect-four.component.html',
-  styleUrl: './connect-four.component.css',
+    selector: 'app-connect-four',
+    imports: [
+        IonSegmentButton,
+        CommonModule,
+        IonLabel,
+        IonSegment,
+        FormsModule,
+        MatIconModule,
+        TranslateModule,
+        MatButtonModule,
+    ],
+    templateUrl: './connect-four.component.html',
+    styleUrl: './connect-four.component.css'
 })
 export class ConnectFourComponent implements OnInit {
   title = '4 Gewinnt';

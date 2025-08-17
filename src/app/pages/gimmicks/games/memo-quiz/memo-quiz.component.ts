@@ -5,11 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GamesService } from '../games.service';
 
 @Component({
-  selector: 'app-memo-quiz',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, TranslateModule],
-  templateUrl: './memo-quiz.component.html',
-  styleUrl: './memo-quiz.component.css',
+    selector: 'app-memo-quiz',
+    imports: [CommonModule, MatButtonModule, TranslateModule],
+    templateUrl: './memo-quiz.component.html',
+    styleUrl: './memo-quiz.component.css'
 })
 export class MemoQuizComponent implements OnInit {
   images: string[] = [
