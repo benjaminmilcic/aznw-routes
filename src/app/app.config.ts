@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
@@ -32,7 +32,7 @@ export const appConfig: ApplicationConfig = {
         useHash: true,
       })
     ),
-    importProvidersFrom(HttpClientModule), // or provideHttpClient() in Angular v15
+    provideHttpClient(), // or provideHttpClient() in Angular v15
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
