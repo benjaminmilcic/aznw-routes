@@ -80,7 +80,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         TranslateModule,
     ],
     templateUrl: './weather.component.html',
-    styleUrl: './weather.component.scss'
+    styleUrl: './weather.component.css'
 })
 export class WeatherComponent implements OnInit, OnDestroy {
   latitude: number | null = null;
