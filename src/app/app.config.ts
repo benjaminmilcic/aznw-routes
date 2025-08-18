@@ -45,11 +45,11 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular(),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptorService,
+    //   multi: true,
+    // },
     provideNgxStripe(
       'pk_test_51P05azL6Qm22ltjdlDi75OKMXcdkImE9eB6U7pS709irbBgVW1OuvSEho05cYC3OdwAt4nJh2Zfike65t3OKhviN00RWkBd4Qa'
     ),
