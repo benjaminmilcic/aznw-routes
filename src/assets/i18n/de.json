@@ -99,7 +99,14 @@
       "print": "Drucken",
       "imageManipulation": "Bildbearbeitung",
       "sourceCode": "Quellcode dieser Webseite auf GitHub",
-      "fileStorage": "Dateispeicherung"
+      "fileStorage": "Dateispeicherung",
+      "showDescription":"Beschreibung anzeigen",
+      "playAudio":"Türgeräusch",
+      "bgGradient":"Hintergrundfarbverlauf",
+      "red":"Rot",
+      "green":"Grün",
+      "blue":"Blau",
+      "opacity":"Deckkraft"
     },
     "map": {
       "search": "Stadtsuche...",

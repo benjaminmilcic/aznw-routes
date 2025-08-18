@@ -99,7 +99,14 @@
       "print": "Ispis",
       "imageManipulation": "Manipulacija slikama",
       "sourceCode": "Izvorni kod ove web stranice na GitHubu",
-      "fileStorage": "Skladištenje datoteka"
+      "fileStorage": "Skladištenje datoteka",
+      "showDescription": "Prikaži opis",
+      "playAudio": "Zvuk vrata",
+      "bgGradient": "Pozadinski gradijent",
+      "red": "Crvena",
+      "green": "Zelena",
+      "blue": "Plava",
+      "opacity": "Prozirnost"
     },
     "map": {
       "search": "Pretraži grad...",

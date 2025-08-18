@@ -99,7 +99,14 @@
       "print": "Printing",
       "imageManipulation": "Image manipulation",
       "sourceCode": "Source code of this website on GitHub",
-      "fileStorage": "File Storage"
+      "fileStorage": "File Storage",
+      "showDescription": "Show description",
+      "playAudio": "Door sound",
+      "bgGradient": "Background gradient",
+      "red": "Red",
+      "green": "Green",
+      "blue": "Blue",
+      "opacity": "Opacity"
     },
     "map": {
       "search": "Search a city...",

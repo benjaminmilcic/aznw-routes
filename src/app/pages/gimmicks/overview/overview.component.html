@@ -8,13 +8,92 @@
       >{{ "gimmicks.overview.sourceCode" | translate }}</a
     >
   </div>
-  <div class="flex flex-wrap justify-center relative">
+  <div #doors class="flex flex-wrap justify-center relative">
     <div
+      *ngFor="let setting of settings; let settingIndex = index"
       class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/weather'])"
+      (click)="goToPage([setting.goToPage])"
+      (mouseenter)="playAudio(settingIndex)"
+      [matContextMenuTriggerFor]="contextMenu"
     >
+      <mat-menu #contextMenu class="px-2 !min-w-[320px]">
+        <div (click)="$event.stopPropagation()">
+          <mat-slide-toggle
+            labelPosition="before"
+            [(ngModel)]="settings[settingIndex].showDescription"
+            class="ml-3 py-2"
+            ><div class="text-base font-normal">
+              {{'gimmicks.overview.showDescription'|translate}}
+            </div></mat-slide-toggle
+          >
+          <mat-slide-toggle
+            labelPosition="before"
+            [(ngModel)]="settings[settingIndex].playAudio"
+            class="ml-3 py-2"
+            ><div class="text-base font-normal">
+              {{'gimmicks.overview.playAudio'|translate}}
+            </div></mat-slide-toggle
+          >
+          <div class="border-t"></div>
+          <div class="pl-3 mt-3">{{'gimmicks.overview.bgGradient'|translate}}</div>
+          <table class="ml-6">
+            <tr>
+              <td class="text-[#FB001A]">{{'gimmicks.overview.red'|translate}}:</td>
+              <td>
+                <mat-slider min="0" max="255" class="red-slider">
+                  <input
+                    matSliderThumb
+                    [(ngModel)]="settings[settingIndex].red"
+                    (ngModelChange)="changeColor(settingIndex)"
+                  />
+                </mat-slider>
+              </td>
+              <td class="text-[#FB001A]">{{ settings[settingIndex].red }}</td>
+            </tr>
+            <tr>
+              <td class="text-[#107E15]">{{'gimmicks.overview.green'|translate}}:</td>
+              <td>
+                <mat-slider min="0" max="255" class="green-slider">
+                  <input
+                    matSliderThumb
+                    [(ngModel)]="settings[settingIndex].green"
+                    (ngModelChange)="changeColor(settingIndex)"
+                  />
+                </mat-slider>
+              </td>
+              <td class="text-[#107E15]">{{ settings[settingIndex].green }}</td>
+            </tr>
+            <tr>
+              <td class="text-[#2303F8]">{{'gimmicks.overview.blue'|translate}}:</td>
+              <td>
+                <mat-slider min="0" max="255" class="blue-slider">
+                  <input
+                    matSliderThumb
+                    [(ngModel)]="settings[settingIndex].blue"
+                    (ngModelChange)="changeColor(settingIndex)"
+                  />
+                </mat-slider>
+              </td>
+              <td class="text-[#2303F8]">{{ settings[settingIndex].blue }}</td>
+            </tr>
+            <tr>
+              <td>{{'gimmicks.overview.opacity'|translate}}:</td>
+              <td>
+                <mat-slider min="0" max="255" class="opacity-slider">
+                  <input
+                    matSliderThumb
+                    [(ngModel)]="settings[settingIndex].opacity"
+                    (ngModelChange)="changeColor(settingIndex)"
+                  />
+                </mat-slider>
+              </td>
+              <td>{{ settings[settingIndex].opacity }}</td>
+            </tr>
+          </table>
+        </div>
+      </mat-menu>
       <div
-        class="bg-gradient-to-b from-[#b4530980] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
+        class="text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
       >
         <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
           <div class="relative">
@@ -28,251 +107,26 @@
           <div>
             <div class="flex justify-between items-center mb-6">
               <div class="text-xl font-bold">
-                {{ "gimmicks.menu.weather" | translate }}
+                {{ setting.header | translate }}
               </div>
-              <i class="fa-solid fa-cloud text-4xl text-amber-100"></i>
+              @if (setting.icon) {
+              <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
+
+              }@else {
+              <img class="w-8 h-8" [src]="setting.imageSrc" />
+              }
             </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>Nest.js API</li>
-              <li>OpenStreetMap API</li>
-              <li>Geonames API</li>
-              <li>OpenMeteo API</li>
-              <li>GeoLocation</li>
-              <li>Chart.js</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/map'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#facc1580] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.map" | translate }}
-              </div>
-              <i class="fa-solid fa-map text-4xl text-yellow-100"></i>
-            </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>Google Maps API</li>
-              <li>{{ "gimmicks.overview.searchTypeahead" | translate }}</li>
-              <li>Drag and drop</li>
-              <li>{{ "gimmicks.overview.table" | translate }}</li>
-              <li>{{ "gimmicks.overview.resizable" | translate }}</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/calendar'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#f8717180] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.calendar" | translate }}
-              </div>
-              <i class="fa-solid fa-calendar text-4xl text-red-100"></i>
-            </div>
+            @if (settings[settingIndex].showDescription) {
 
             <div class="mb-2 text-gray-200">
               {{ "gimmicks.overview.elements" | translate }}:
             </div>
             <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>SVG</li>
-              <li>Popup modal</li>
-              <li>Bottom drawer</li>
-              <li>{{ "gimmicks.overview.scratchCard" | translate }}</li>
-              <li>{{ "gimmicks.overview.print" | translate }}</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
+              <li *ngFor="let element of setting.elements">
+                {{ element | translate }}
+              </li>
             </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/guestbook'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#4ade8080] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.guestbook" | translate }}
-              </div>
-              <i class="fa-solid fa-book text-4xl text-green-100"></i>
-            </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>{{ "gimmicks.overview.youtubePlayer" | translate }}</li>
-              <li>Popup Modal</li>
-              <li>{{ "gimmicks.overview.editor" | translate }}</li>
-              <li>{{ "gimmicks.overview.fileStorage" | translate }}</li>
-              <li>Nest.js API</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/charts'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#fb923c80] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.charts" | translate }}
-              </div>
-              <i class="fa-solid fa-chart-simple text-4xl text-orange-100"></i>
-            </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>{{ "gimmicks.overview.charts" | translate }}</li>
-              <li>{{ "gimmicks.overview.imageManipulation" | translate }}</li>
-              <li>{{ "gimmicks.overview.fileUpload" | translate }}</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/auth/main'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#22d3ee80] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.jokes" | translate }}
-              </div>
-              <i class="fa-solid fa-face-smile text-4xl text-violet-100"></i>
-            </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>{{ "gimmicks.jokes.auth" | translate }}</li>
-              <li>Nest.js API</li>
-              <li>{{ "gimmicks.jokes.stripe" | translate }}</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
-      (click)="goToPage(['/gimmicks/games'])"
-    >
-      <div
-        class="bg-gradient-to-b from-[#A52A2A80] to-blue-600 text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
-      >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
-          <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
-          </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ "gimmicks.menu.games" | translate }}
-              </div>
-              <img class="w-8 h-8" src="assets/svg/tic-tac-toe.svg" />
-            </div>
-            <div class="mb-2 text-gray-200">
-              {{ "gimmicks.overview.elements" | translate }}:
-            </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
-              <li>Nest.js API</li>
-              <li>Websocket</li>
-              <li>Responsive design</li>
-              <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-            </ul>
+            }
           </div>
         </div>
       </div>

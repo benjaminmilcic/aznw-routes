@@ -32,7 +32,6 @@ export const appConfig: ApplicationConfig = {
         useHash: true,
       })
     ),
-    provideHttpClient(), // or provideHttpClient() in Angular v15
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
