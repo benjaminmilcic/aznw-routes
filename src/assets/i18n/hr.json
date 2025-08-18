@@ -106,7 +106,8 @@
       "red": "Crvena",
       "green": "Zelena",
       "blue": "Plava",
-      "opacity": "Prozirnost"
+      "opacity": "Prozirnost",
+      "contextMenu": "U svrhu demonstracije iznad vrata postoji kontekstni izbornik"
     },
     "map": {
       "search": "Pretraži grad...",

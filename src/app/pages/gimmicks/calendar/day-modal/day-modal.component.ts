@@ -8,31 +8,24 @@ import {
   IonContent,
   IonToolbar,
   IonTitle,
-  IonCard,
   IonFab,
   IonFabButton,
-  IonIcon,
   IonButton,
   IonButtons,
-  IonInput,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-day-modal',
     imports: [
-        IonCard,
         IonContent,
         IonHeader,
         IonTitle,
         IonToolbar,
-        IonCard,
         IonFab,
         IonFabButton,
-        IonIcon,
         IonButton,
         IonButtons,
-        IonInput,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,

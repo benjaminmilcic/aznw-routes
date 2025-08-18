@@ -1,4 +1,4 @@
-:host /deep/ angular-cropper .cropper {
+:host ::ng-deep angular-cropper .cropper {
   width: auto !important;
   height: auto !important;
   max-height: 400px !important;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 650px), (max-height: 800px) and (min-height: 421px) {
-  :host /deep/ angular-cropper .cropper {
+  :host ::ng-deep angular-cropper .cropper {
     width: auto !important;
     height: auto !important;
     max-height: 260px !important;
@@ -15,7 +15,7 @@
 }
 
 @media screen and (max-height: 420px){
-  :host /deep/ angular-cropper .cropper {
+  :host ::ng-deep angular-cropper .cropper {
     width: auto !important;
     height: auto !important;
     max-height: 180px !important;

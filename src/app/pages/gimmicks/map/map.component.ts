@@ -8,17 +8,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ResizableModule, ResizeEvent } from 'angular-resizable-element';
 import LatLng = google.maps.LatLng;
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  IonLabel,
   IonItem,
-  IonIcon,
   IonButton,
   IonCheckbox,
-  IonInput,
 } from '@ionic/angular/standalone';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -48,12 +45,9 @@ import { MapService } from './map.service';
         CommonModule,
         ResizableModule,
         FormsModule,
-        IonLabel,
         IonItem,
-        IonIcon,
         IonButton,
         IonCheckbox,
-        IonInput,
         MatTableModule,
         MatPaginatorModule,
         CdkDrag,
@@ -63,11 +57,8 @@ import { MapService } from './map.service';
         MatInputModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        AsyncPipe,
         MatTooltipModule,
         TranslateModule,
-        FilterButtonComponent,
-        SearchFieldComponent,
     ],
     templateUrl: './map.component.html',
     styleUrl: './map.component.css'

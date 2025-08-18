@@ -2,13 +2,11 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { JokesBookComponent } from './jokes-book/jokes-book.component';
 import { StripeComponent } from './stripe/stripe.component';
-import { IonPopover } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-auth',
     imports: [
-        IonPopover,
         RouterModule,
         JokesBookComponent,
         StripeComponent,

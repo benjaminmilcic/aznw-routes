@@ -1,13 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MapComponent } from './map/map.component';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  IonIcon,
-} from '@ionic/angular/standalone';
 import { ChartsHelperService } from './charts/charts-helper.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
@@ -16,13 +9,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-gimmicks',
     imports: [
-        IonIcon,
-        MapComponent,
         RouterModule,
         TranslateModule,
-        IonFab,
-        IonFabButton,
-        IonFabList,
         CommonModule,
     ],
     templateUrl: './gimmicks.component.html',

@@ -15,10 +15,15 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GimmicksOverviewSetting } from './overview.types';
 import { gimmicksOverViewSettings } from './overview.constants';
+import { IonPopover, IonContent } from "@ionic/angular/standalone";
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-overview',
   imports: [
+    IonContent,
+    IonPopover,
     RouterModule,
     TranslateModule,
     CommonModule,
@@ -27,6 +32,7 @@ import { gimmicksOverViewSettings } from './overview.constants';
     FormsModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatIconModule,
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss',

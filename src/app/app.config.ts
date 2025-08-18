@@ -8,9 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AuthInterceptorService } from './pages/gimmicks/auth/auth-interceptor.service';
 import { provideNgxStripe } from 'ngx-stripe';
@@ -45,8 +43,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(ToastrModule.forRoot()),
     importProvidersFrom(BrowserAnimationsModule),
     provideIonicAngular(),
-    importProvidersFrom(AngularFireModule.initializeApp(environment.firebase)),
-    importProvidersFrom(AngularFireStorageModule),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptorsFromDi()),
     {

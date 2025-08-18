@@ -106,7 +106,8 @@
       "red": "Red",
       "green": "Green",
       "blue": "Blue",
-      "opacity": "Opacity"
+      "opacity": "Opacity",
+      "contextMenu": "For demonstration purposes, there is a context menu above the doors"
     },
     "map": {
       "search": "Search a city...",

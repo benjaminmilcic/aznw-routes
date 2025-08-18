@@ -9,12 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import {
-  IonLabel,
-  IonSegment,
-  IonSegmentButton,
-} from '@ionic/angular/standalone';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -26,9 +21,6 @@ import { Subscription } from 'rxjs';
     selector: 'app-pie-chart',
     imports: [
         BaseChartDirective,
-        IonSegment,
-        IonSegmentButton,
-        IonLabel,
         FormsModule,
         CommonModule,
     ],

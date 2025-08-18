@@ -106,7 +106,8 @@
       "red":"Rot",
       "green":"Grün",
       "blue":"Blau",
-      "opacity":"Deckkraft"
+      "opacity":"Deckkraft",
+      "contextMenu":"Zu Demonstrationszwecken gibt es über den Türen ein Kontext-Menü"
     },
     "map": {
       "search": "Stadtsuche...",
