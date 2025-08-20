@@ -55,32 +55,32 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-weather',
-    imports: [
-        CommonModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatAutocompleteModule,
-        MatProgressSpinnerModule,
-        MatOptionModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        NgxMatSelectSearchModule,
-        MatSelectTrigger,
-        MatIconModule,
-        MatButtonModule,
-        TemperatureChartComponent,
-        RainChartComponent,
-        MatIconModule,
-        IonLabel,
-        IonSegment,
-        IonSegmentButton,
-        TranslateModule,
-    ],
-    templateUrl: './weather.component.html',
-    styleUrl: './weather.component.css'
+  selector: 'app-weather',
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatOptionModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
+    MatSelectTrigger,
+    MatIconModule,
+    MatButtonModule,
+    TemperatureChartComponent,
+    RainChartComponent,
+    MatIconModule,
+    IonLabel,
+    IonSegment,
+    IonSegmentButton,
+    TranslateModule,
+  ],
+  templateUrl: './weather.component.html',
+  styleUrl: './weather.component.css',
 })
 export class WeatherComponent implements OnInit, OnDestroy {
   latitude: number | null = null;
@@ -118,6 +118,8 @@ export class WeatherComponent implements OnInit, OnDestroy {
   showChart = true;
 
   selectedWay: 'location' | 'search' = 'location';
+
+  loading = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent): void {
@@ -198,6 +200,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.hourlyForecast = null;
     this.showDisplay = false;
     this.error = '';
+    this.loading = true;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -211,6 +214,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
           this.getWeather();
         },
         (err) => {
+          this.loading = false;
           this.translateService
             .get('gimmicks.weather.errorOnPosition')
             .subscribe((value) => {
@@ -219,6 +223,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
         }
       );
     } else {
+      this.loading = false;
       this.translateService
         .get('gimmicks.weather.geoLocationNotSupported')
         .subscribe((value) => {
@@ -313,9 +318,8 @@ export class WeatherComponent implements OnInit, OnDestroy {
           }
         }
         this.changeDataOfFirstDay();
-        console.log(this.hourlyForecast);
-
         this.displayCurrentWeather();
+        this.loading = false;
       });
   }
 
@@ -425,6 +429,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   }
 
   searchCity() {
+    this.loading = true;
     this.currentWeather = null;
     this.dailyForecast = null;
     this.hourlyForecast = null;
@@ -453,6 +458,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
           .subscribe((value) => {
             this.error += `<br>${value}`;
           });
+        this.loading = false;
       },
     });
   }

@@ -102,11 +102,18 @@
       <button mat-raised-button (click)="searchCity()">OK</button>
     </div>
 
+    <div *ngIf="loading" class="flex justify-center">
+      <mat-spinner class="!w-[50px]"></mat-spinner>
+    </div>
+
     <div
       *ngIf="!currentWeather"
       class="flex h-full justify-center items-center m-8 box-border"
     >
-      <img src="assets/weather-bg.jpg" class=" w-full max-w-[500px] box-border opacity-80"/>
+      <img
+        src="assets/weather-bg.jpg"
+        class="w-full max-w-[500px] box-border opacity-80"
+      />
     </div>
     <div *ngIf="currentWeather" class="flex w-full justify-center p-4">
       <div

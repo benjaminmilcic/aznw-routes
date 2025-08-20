@@ -50,7 +50,7 @@ export const environment = {
     errorMessageApi: 'http://localhost:3000/error2email',
   },
   yahtzeeGame: {
-    webSocketsUrl: 'http://192.168.178.71:3000/yahtzee-game',
+    webSocketsUrl: 'http://10.250.248.38:3000/yahtzee-game', //je nach aktueller IP anpassen
   },
   geoLocation: {
     reverseGeoCodeApi: 'http://localhost:3000/geolocation/reverse-geocode',
@@ -58,7 +58,7 @@ export const environment = {
     citiesApi: 'http://localhost:3000/geolocation/cities',
   },
   googleLogin: {
-    loginApi:'http://localhost:3000/auth/google'
+    loginApi: 'http://localhost:3000/auth/google',
   },
   production: false,
 };
