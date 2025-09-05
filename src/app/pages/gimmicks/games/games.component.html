@@ -83,6 +83,17 @@
           <div>{{ "gimmicks.games.connectFour" | translate }}</div>
         </div>
       </button>
+      <button
+        mat-menu-item
+        (click)="changeGame('Minesweeper')"
+        [routerLink]="['/gimmicks/games/minesweeper']"
+        routerLinkActive="router-link-active"
+      >
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/minesweeper.png" />
+          <div>Minesweeper</div>
+        </div>
+      </button>
       <!-- <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.jigsaw')"

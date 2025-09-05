@@ -1,0 +1,97 @@
+<div class="relative">
+  <div class="flex flex-col items-center">
+    @if (!hasMouse) {
+    <div class="text-center p-4 text-red-600 text-xs">
+      {{ "gimmicks.games.bestPlayedWithMouse" | translate }}
+    </div>
+
+    }
+    <div class="difficulty-selector-wrapper">
+      <select
+        class="difficulty-selector"
+        [ngModel]="selectedDifficulty()"
+        (ngModelChange)="selectDifficulty($event)"
+      >
+        @for (d of difficulties; track d) { @if (!d.disabled) {
+
+        <option [ngValue]="d">
+          {{ d.name }}
+        </option>
+        } }
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <div class="frame">
+      <div class="status-bar">
+        <div class="number-display">
+          {{ remainingMines().toString().padStart(3, "0") }}
+        </div>
+        <div class="border border-black">
+          <button (click)="startNewGame()" class="smile-button">
+            @if (!gameOver() && !gameWon()) {🙂}@else if (gameOver() &&
+            !gameWon()) {🙁}@else {😎}
+          </button>
+        </div>
+        <div class="number-display">
+          {{ seconds().toString().padStart(3, "0") }}
+        </div>
+      </div>
+      <div class="board">
+        @for (row of board(); track row) {
+        <div class="row">
+          @for (cell of row; track cell) {
+          <div
+            class="cell"
+            [class.revealed]="cell.isRevealed"
+            [class.mine]="cell.isRevealed && cell.hasMine"
+            [class.flagged]="cell.isFlagged"
+            (click)="reveal(cell)"
+            (contextmenu)="toggleFlag($event, cell)"
+          >
+            @if (cell.isRevealed && !cell.hasMine && cell.adjacentMines > 0) {
+            <span
+              [ngClass]="{
+              'text-blue-500': cell.adjacentMines === 1,
+              'text-green-500': cell.adjacentMines === 2,
+              'text-red-500': cell.adjacentMines === 3,
+              'text-blue-900': cell.adjacentMines === 4,
+              'text-green-900': cell.adjacentMines === 5,
+              'text-red-900': cell.adjacentMines === 6,
+              'text-pink-500': cell.adjacentMines === 7,
+              'text-yellow-500': cell.adjacentMines === 8,
+            }"
+              >{{ cell.adjacentMines }}</span
+            >
+            } @if (cell.isRevealed && cell.hasMine) { 💣 } @if (cell.isFlagged
+            && !cell.isRevealed) { 🚩 }
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+    <div class="flex items-center gap-8 mt-8">
+      <button
+        mat-raised-button
+        color="light-dark"
+        (click)="toggleTheme()"
+      >
+        @if (theme() === 'light') { 🌙 Dark Mode } @else { ☀️ Light Mode }
+      </button>
+
+      @if(bestTime() !== null){
+      <span
+        class="text-lg"
+        [ngClass]="{
+          'text-green-900': !(theme() === 'light'),
+          'text-green-200': theme() === 'light'
+        }"
+        >{{ "gimmicks.games.bestTime" | translate }}: {{ bestTime() }} s</span
+      >
+
+      }
+    </div>
+  </div>
+</div>

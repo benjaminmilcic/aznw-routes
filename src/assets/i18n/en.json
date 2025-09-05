@@ -342,7 +342,9 @@
       "endGame": "Quit Game",
       "hasEndGame": " has finished the game",
       "player1": "Player 1",
-      "player2": "Player 2"
+      "player2": "Player 2",
+      "bestPlayedWithMouse": "The game is best played with a mouse. Playing on a touch-only device like a smartphone is not recommended. It's better to play it on a PC.",
+      "bestTime":"Best time"
     },
     "weather": {
       "useLocation": "Use location",

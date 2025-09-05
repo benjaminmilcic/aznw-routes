@@ -342,7 +342,9 @@
       "endGame": "Završi igru",
       "hasEndGame": " je završio igru",
       "player1": "Igrač 1",
-      "player2": "Igrač 2"
+      "player2": "Igrač 2",
+      "bestPlayedWithMouse":"Igru je najbolje igrati mišem. Igranje na uređaju osjetljivom na dodir poput pametnog telefona se ne preporučuje. Bolje je igrati na računalu.",
+      "bestTime":"Najbolje vrijeme"
     },
     "weather": {
       "useLocation": "Koristi lokaciju",

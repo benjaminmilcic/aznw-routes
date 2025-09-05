@@ -90,6 +90,10 @@ export class GamesComponent {
         this.gameName = 'Yahtzee';
         this.gameIconSrc = '/assets/yahtzee.png';
         break;
+      case 'minesweeper':
+        this.gameName = 'Minesweeper';
+        this.gameIconSrc = '/assets/minesweeper.png';
+        break;
 
       default:
         break;
@@ -121,6 +125,9 @@ export class GamesComponent {
         break;
       case 'Yahtzee':
         this.gameIconSrc = '/assets/yahtzee.png';
+        break;
+      case 'Minesweeper':
+        this.gameIconSrc = '/assets/minesweeper.png';
         break;
 
       default:

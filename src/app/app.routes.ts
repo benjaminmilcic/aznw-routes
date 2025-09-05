@@ -23,6 +23,7 @@ import { MoorhuhnComponent } from './pages/gimmicks/games/moorhuhn/moorhuhn.comp
 import { YahtzeeComponent } from './pages/gimmicks/games/yahtzee/yahtzee.component';
 import { WeatherComponent } from './pages/gimmicks/weather/weather.component';
 import { GoogleRedirectComponent } from './pages/gimmicks/auth/google-redirect.component';
+import { MinesweeperComponent } from './pages/gimmicks/games/minesweeper/minesweeper.component';
 
 export const routes: Routes = [
   {
@@ -114,6 +115,10 @@ export const routes: Routes = [
           {
             path: 'yahtzee',
             component: YahtzeeComponent,
+          },
+          {
+            path: 'minesweeper',
+            component: MinesweeperComponent,
           },
         ],
       },

@@ -342,7 +342,9 @@
       "endGame": "Spiel Beenden",
       "hasEndGame": " hat das Spiel beendet",
       "player1": "Spieler 1",
-      "player2": "Spieler 2"
+      "player2": "Spieler 2",
+      "bestPlayedWithMouse":"Das Spiel lässt sich am besten mit der Maus spielen. Das Spielen auf einem reinen Touch-Gerät wie einem Smartphone wird nicht empfohlen. Besser ist es, es auf einem PC zu spielen.",
+      "bestTime":"Bestzeit"
     },
     "weather":{
       "useLocation":"Nutze Standort",

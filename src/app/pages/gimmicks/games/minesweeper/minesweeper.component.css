@@ -1,0 +1,154 @@
+:host {
+  --color-bg: #eee;
+  --color-cell: #ddd;
+  --color-cell-revealed: #ccc;
+  --color-cell-mine: #f99;
+  --color-cell-flag: #ddd;
+  --color-text: #000;
+  --color-border: #999;
+  --color-border-light: white;
+  --color-border-dark: darkgray;
+  --color-display-text: red;
+  --color-display-bg: black;
+  --color-display-border: #ccc;
+}
+
+/* Dark Mode */
+:host(.dark) {
+  --color-bg: #121212;
+  --color-cell: #333;
+  --color-cell-revealed: #444;
+  --color-cell-mine: #f55;
+  --color-cell-flag: #666;
+  --color-text: #eee;
+  --color-border: #555;
+  --color-border-light: #777;
+  --color-border-dark: #222;
+  --color-display-text: #ff4444;
+  --color-display-bg: #111;
+  --color-display-border: #555;
+}
+
+.frame {
+  background-color: var(--color-bg);
+  padding: 10px;
+  border-left: 4px solid var(--color-border-light);
+  border-top: 4px solid var(--color-border-light);
+  border-right: 4px solid var(--color-border-dark);
+  border-bottom: 4px solid var(--color-border-dark);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.board {
+  display: inline-block;
+  border-right: 4px solid var(--color-border-light);
+  border-bottom: 4px solid var(--color-border-light);
+  border-left: 4px solid var(--color-border-dark);
+  border-top: 4px solid var(--color-border-dark);
+  background: var(--color-bg);
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border-left: 4px solid var(--color-border-light);
+  border-top: 4px solid var(--color-border-light);
+  border-right: 4px solid var(--color-border-dark);
+  border-bottom: 4px solid var(--color-border-dark);
+  background: var(--color-cell);
+  color: var(--color-text);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.cell.revealed {
+  background: var(--color-cell-revealed);
+  border: 1px solid var(--color-border);
+
+  cursor: default;
+}
+
+.cell.mine {
+  background: var(--color-cell-mine) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.cell.flagged {
+  background: var(--color-cell-flag);
+  border-left: 4px solid var(--color-border-light);
+  border-top: 4px solid var(--color-border-light);
+  border-right: 4px solid var(--color-border-dark);
+  border-bottom: 4px solid var(--color-border-dark);
+}
+
+.difficulty-selector-wrapper {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: fit-content;
+  background-color: var(--color-bg);
+  border-left: 4px solid var(--color-border-light);
+  border-top: 4px solid var(--color-border-light);
+  border-right: 4px solid var(--color-border-dark);
+  border-bottom: 4px solid var(--color-border-dark);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.difficulty-selector {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.status-bar {
+  border-right: 4px solid var(--color-border-light);
+  border-bottom: 4px solid var(--color-border-light);
+  border-left: 4px solid var(--color-border-dark);
+  border-top: 4px solid var(--color-border-dark);
+  background: var(--color-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 10px;
+  height: 70px;
+}
+
+.smile-button {
+  border-left: 4px solid var(--color-border-light);
+  border-top: 4px solid var(--color-border-light);
+  border-right: 4px solid var(--color-border-dark);
+  border-bottom: 4px solid var(--color-border-dark);
+  background: var(--color-cell);
+  font-size: x-large;
+}
+
+.smile-button:active {
+  border-left: 5px solid var(--color-border-dark);
+  border-top: 5px solid var(--color-border-dark);
+  border-right: 3px solid var(--color-border-light);
+  border-bottom: 3px solid var(--color-border-light);
+}
+
+.number-display {
+  font-family: "Digital-7", monospace;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-display-text);
+  background-color: var(--color-display-bg);
+  padding: 2px 6px;
+  border: 2px inset var(--color-display-border);
+  text-align: center;
+}
+
+.mat-light-dark {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
