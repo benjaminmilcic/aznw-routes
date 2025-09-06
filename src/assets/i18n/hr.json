@@ -1,7 +1,8 @@
 {
   "header": {
     "developer": "Programer",
-    "findOutMore": "Saznajte više"
+    "findOutMore": "Saznajte više",
+    "apiError":"!!! API ove web stranice trenutno ne radi zbog problema sa SSL certifikatom. U kontaktu sam sa svojim davateljem usluga i riješit ću problem što je prije moguće. !!!"
   },
   "about": {
     "aboutMe": "O meni",

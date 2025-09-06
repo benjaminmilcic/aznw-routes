@@ -1,7 +1,8 @@
 {
   "header": {
     "developer": "Developer",
-    "findOutMore": "Find Out More"
+    "findOutMore": "Find Out More",
+    "apiError":"!!! This website's API is currently unavailable due to an issue with the SSL certificate. I'm in contact with my provider and will resolve the issue as soon as possible. !!!"
   },
   "about": {
     "aboutMe": "About me",

@@ -1,7 +1,8 @@
 {
   "header": {
     "developer": "Entwickler",
-    "findOutMore": "Erfahre mehr"
+    "findOutMore": "Erfahre mehr",
+    "apiError":"!!! Die API dieser Webseite funktioniert momentan nicht, da es ein Problem mit dem SSL-Zertifikat gibt. Ich bin im Austausch mit meinem Provider und werde das Problem so schnell wie möglich beheben. !!!"
   },
   "about": {
     "aboutMe": "Über mich",
