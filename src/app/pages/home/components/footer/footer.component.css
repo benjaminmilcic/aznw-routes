@@ -3,13 +3,16 @@ footer {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 1rem 0rem;
-  color: var(--color1);
-  background-color: var(--color2);
+  padding: 2rem;
+  color: #e2e8f0;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 500;
 }
 
 @media screen and (max-width: 600px) {
   footer {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    padding: 1.5rem 1rem;
   }
 }

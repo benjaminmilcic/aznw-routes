@@ -10,10 +10,10 @@ import { CommonModule } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-    selector: 'app-contact',
-    templateUrl: './contact.component.html',
-    styleUrls: ['./contact.component.css'],
-    imports: [TranslateModule, FormsModule, CommonModule]
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css'],
+  imports: [TranslateModule, FormsModule, CommonModule],
 })
 export class ContactComponent implements OnInit, OnDestroy {
   isSending = false;
@@ -92,6 +92,14 @@ export class ContactComponent implements OnInit, OnDestroy {
           });
         }
       );
+  }
+
+  openEmail() {
+    window.location.href = 'mailto:benjamin.milcic.com';
+  }
+
+  callNumber() {
+    window.location.href = 'tel:+4917641942532';
   }
 
   ngOnDestroy(): void {

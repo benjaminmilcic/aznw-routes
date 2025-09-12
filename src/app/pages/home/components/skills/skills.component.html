@@ -1,9 +1,8 @@
-<section id="skills" class="bg-blue-300">
+
+<section id="skills">
   <div class="flex-col place-items-center w-full content hidden md:flex">
-    <h3 class="mb-40 text-color1">Skills</h3>
-    <div
-      class="main border-2 border-color1 shadow-2xl animation image-animation"
-    >
+    <h3 class="mb-40 text-white">Skills</h3>
+    <div class="main border-[6px] border-gray-600">
       <div
         class="flex place-content-center justify-center w-[350px] h-[350px] rounded-full relative"
         [matTooltip]="'skills.workplace' | translate"
@@ -13,8 +12,10 @@
         class="circle group cursor-pointer animation skill-animation2"
         (click)="openLink('https://wikipedia.org/wiki/HTML5')"
       >
-        <img src="assets/svg/html5.svg" width="36px" />
-        <p class="group-hover:font-bold font-semibold mt-1">HTML5</p>
+        <div class="circle-image">
+          <img src="assets/svg/html5.svg" width="36px" />
+        </div>
+        <p class="group-hover:font-bold font-semibold mt-[2px]">HTML5</p>
       </div>
 
       <div
@@ -23,9 +24,11 @@
           openLink('https://wikipedia.org/wiki/Cascading_Style_Sheets#CSS3')
         "
       >
-        <img src="assets/svg/css3.svg" width="36px" class="rotate-[-28deg]" />
+        <div class="circle-image">
+          <img src="assets/svg/css3.svg" width="36px" class="rotate-[-28deg]" />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold ml-10 mt-1 rotate-[-28deg]"
+          class="group-hover:font-bold font-semibold ml-[48px] mt-[-4px] rotate-[-28deg]"
         >
           CSS3
         </p>
@@ -34,9 +37,11 @@
         class="circle group cursor-pointer animation skill-animation4"
         (click)="openLink('https://wikipedia.org/wiki/JavaScript')"
       >
-        <img src="assets/svg/js.svg" width="36px" class="rotate-[-55deg]" />
+        <div class="circle-image">
+          <img src="assets/svg/js.svg" width="36px" class="rotate-[-55deg]" />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold ml-14 -mt-2 rotate-[-55deg]"
+          class="group-hover:font-bold font-semibold ml-[78px] mt-[-22px] rotate-[-55deg]"
         >
           JavaScript
         </p>
@@ -45,13 +50,16 @@
         class="circle group cursor-pointer animation skill-animation5"
         (click)="openLink('https://angular.io/')"
       >
-        <img
-          src="assets/svg/angular.svg"
-          width="36px"
-          class="rotate-[-83deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/angular.svg"
+            width="36px"
+            class="rotate-[-83deg]"
+          />
+        </div>
+
         <p
-          class="group-hover:font-bold font-semibold ml-16 -mt-7 rotate-[-83deg]"
+          class="group-hover:font-bold font-semibold ml-[92px] mt-[-42px] rotate-[-83deg]"
         >
           Angular
         </p>
@@ -60,9 +68,15 @@
         class="circle group cursor-pointer animation skill-animation6"
         (click)="openLink('https://ionicframework.com/')"
       >
-        <img src="assets/svg/ionic.svg" width="36px" class="rotate-[-111deg]" />
+        <div class="circle-image">
+          <img
+            src="assets/svg/ionic.svg"
+            width="36px"
+            class="rotate-[-111deg]"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-111deg] -mt-[42px] ml-16"
+          class="group-hover:font-bold font-semibold rotate-[-111deg] mt-[-64px] ml-[92px]"
         >
           Ionic
         </p>
@@ -71,13 +85,16 @@
         class="circle group cursor-pointer animation skill-animation7"
         (click)="openLink('https://www.cypress.io/')"
       >
-        <img
-          src="assets/svg/cypress.svg"
-          width="36px"
-          class="rotate-[-138deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/cypress.svg"
+            width="36px"
+            class="rotate-[-138deg]"
+          />
+        </div>
+
         <p
-          class="group-hover:font-bold font-semibold rotate-[-138deg] -mt-14 ml-11"
+          class="group-hover:font-bold font-semibold rotate-[-138deg] mt-[-80px] ml-[62px]"
         >
           Cypress
         </p>
@@ -86,13 +103,15 @@
         class="circle group cursor-pointer animation skill-animation8"
         (click)="openLink('https://getbootstrap.com/')"
       >
-        <img
-          src="assets/svg/bootstrap.svg"
-          width="36px"
-          class="rotate-[-166deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/bootstrap.svg"
+            width="36px"
+            class="rotate-[-166deg]"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-166deg] -mt-16 ml-6"
+          class="group-hover:font-bold font-semibold rotate-[-166deg] mt-[-90px] ml-[24px]"
         >
           Bootstrap
         </p>
@@ -101,13 +120,16 @@
         class="circle group cursor-pointer animation skill-animation9"
         (click)="openLink('https://tailwindcss.com/')"
       >
-        <img
-          src="assets/svg/tailwind.svg"
-          width="36px"
-          class="rotate-[-194deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/tailwind.svg"
+            width="36px"
+            class="rotate-[-194deg]"
+          />
+        </div>
+
         <p
-          class="group-hover:font-bold font-semibold rotate-[-194deg] -mt-14 -ml-2"
+          class="group-hover:font-bold font-semibold rotate-[-194deg] mt-[-90px] ml-[-20px]"
         >
           Tailwind
         </p>
@@ -116,9 +138,15 @@
         class="circle group cursor-pointer animation skill-animation10"
         (click)="openLink('https://www.mysql.com')"
       >
-        <img src="assets/svg/mysql.svg" width="36px" class="rotate-[-222deg]" />
+        <div class="circle-image">
+          <img
+            src="assets/svg/mysql.svg"
+            width="36px"
+            class="rotate-[-222deg]"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-222deg] -mt-14 -ml-12"
+          class="group-hover:font-bold font-semibold rotate-[-222deg] mt-[-80px] ml-[-62px]"
         >
           MySQL
         </p>
@@ -127,13 +155,15 @@
         class="circle group cursor-pointer animation skill-animation11"
         (click)="openLink('https://nodejs.org')"
       >
-        <img
-          src="assets/svg/nodejs.svg"
-          width="48px"
-          class="rotate-[-249deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/nodejs.svg"
+            width="48px"
+            class="rotate-[-249deg]"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-249deg] -mt-12 -ml-16"
+          class="group-hover:font-bold font-semibold rotate-[-249deg] mt-[-60px] ml-[-84px]"
         >
           Node.js
         </p>
@@ -142,13 +172,15 @@
         class="circle group cursor-pointer animation skill-animation12"
         (click)="openLink('https://nestjs.com/')"
       >
-        <img
-          src="assets/svg/nestjs.svg"
-          class="rotate-[-278deg]"
-          width="48px"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/nestjs.svg"
+            class="rotate-[-278deg]"
+            width="48px"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-278deg] -mt-8 -ml-20"
+          class="group-hover:font-bold font-semibold rotate-[-278deg] mt-[-40px] ml-[-89px]"
         >
           NestJS
         </p>
@@ -157,9 +189,11 @@
         class="circle group cursor-pointer animation skill-animation13"
         (click)="openLink('https://www.npmjs.com/')"
       >
-        <img src="assets/svg/npm.svg" class="rotate-[-310deg]" width="48px" />
+        <div class="circle-image">
+          <img src="assets/svg/npm.svg" class="rotate-[-305deg]" width="48px" />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-310deg] -mt-1 -ml-8"
+          class="group-hover:font-bold font-semibold rotate-[-305deg] mt-[-20px] ml-[-72px]"
         >
           npm
         </p>
@@ -168,26 +202,28 @@
         class="circle group cursor-pointer animation skill-animation14"
         (click)="openLink('https://www.docker.com/')"
       >
-        <img
-          src="assets/svg/docker.svg"
-          width="36px"
-          class="rotate-[-332deg]"
-        />
+        <div class="circle-image">
+          <img
+            src="assets/svg/docker.svg"
+            width="36px"
+            class="rotate-[-332deg]"
+          />
+        </div>
         <p
-          class="group-hover:font-bold font-semibold rotate-[-332deg] -ml-8 mt-1"
+          class="group-hover:font-bold font-semibold rotate-[-332deg] ml-[-40px] mt-[-4px]"
         >
           Docker
         </p>
       </div>
     </div>
   </div>
-  <div class="skills-wrapper md:hidden">
-    <h3 class="mb-4 text-color1 relative">Skills</h3>
+  <div class="md:hidden z-50">
+    <h3 class="mb-4 text-white relative">Skills</h3>
     <div class="p-6 flex justify-center mb-4">
       <div class="max-w-96">
         <img
           src="/assets/workplacehome.webp"
-          class="rounded-lg max-w-full h-auto border-2 border-color1"
+          class="rounded-lg max-w-full h-auto border-2 border-gray-600 !touch-manipulation"
           [matTooltip]="'skills.workplace' | translate"
           matTooltipClass="my-tooltip-class"
         />
@@ -327,57 +363,16 @@
       </ul>
     </div>
   </div>
-  <div class="relative mt-14 md:mt-40 flex justify-center">
-    <div class="paper sm:min-w-[325px] sm:min-h-[175px] max-w-52">
-      <div class="pin">
-        <div class="shadow"></div>
-        <div class="metal"></div>
-        <div class="bottom-circle"></div>
+ 
+
+  <div class="relative text-center mt-[60px] md:mt-[200px]">
+    <a class="next-section-button" [routerLink]="['/']" fragment="portfolio">
+      <div class="flex gap-2 items-center">
+        <mat-icon
+          fontIcon="business_center"
+        ></mat-icon>
+        <div>Portfolio</div>
       </div>
-      <p class="p-8 text-sm sm:text-base">
-        <br />
-        {{ "gimmicks.overview.header1" | translate }}
-        <ng-container *ngIf="translateService.currentLang === 'de'"
-          ><a
-            [routerLink]="['/gimmicks/']"
-            fragment="header"
-            class="hover:text-blue-600"
-            >hier</a
-          ><span>&nbsp;</span></ng-container
-        >
-        <ng-container *ngIf="translateService.currentLang === 'hr'"
-          ><a
-            [routerLink]="['/gimmicks/']"
-            fragment="header"
-            class="hover:text-blue-600"
-            >ovdje</a
-          ><span>&nbsp;</span></ng-container
-        >
-
-        <button
-          [routerLink]="['/gimmicks/']"
-          fragment="header"
-          class="bg-color2 hover:bg-color4 rounded px-4 py-2 text-color1 cursor-pointer"
-        >
-          Gimmicks
-        </button>
-        <ng-container *ngIf="translateService.currentLang === 'en'"
-          ><span class="sm:hidden">&nbsp;</span
-          ><a
-            [routerLink]="['/gimmicks/']"
-            fragment="header"
-            class="hover:text-color5 text-color4"
-            >here</a
-          ></ng-container
-        >
-        {{ "gimmicks.overview.header2" | translate }}
-      </p>
-    </div>
-  </div>
-
-  <div class="relative text-center mt-20 md:mt-28">
-    <a class="next-section-button" [routerLink]="['/']" fragment="portfolio"
-      >Portfolio</a
-    >
+    </a>
   </div>
 </section>

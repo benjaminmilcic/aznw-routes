@@ -2,7 +2,8 @@
   "header": {
     "developer": "Entwickler",
     "findOutMore": "Erfahre mehr",
-    "apiError":"!!! Die API dieser Webseite funktioniert momentan nicht, da es ein Problem mit dem SSL-Zertifikat gibt. Ich bin im Austausch mit meinem Provider und werde das Problem so schnell wie möglich beheben. !!!"
+    "passionateDeveloper":"Leidenschaftlicher Entwickler mit Fokus auf moderne Web-Technologien.",
+    "transform":"Ich verwandle Ideen in elegante, funktionale Lösungen."
   },
   "about": {
     "aboutMe": "Über mich",
@@ -15,7 +16,11 @@
     "text7": "Ich bin verheiratet und stolzer Vater eines Kindes.",
     "mySkills": "Meine Fähigkeiten",
     "curriculumVitae": "Lebenslauf",
-    "downloadCV": "Laden Sie hier meinen Lebenslauf herunter"
+    "downloadCV": "Lebenslauf herunterladen",
+    "yearsExperiance":"Jahre Erfahrung",
+    "projects":"Projekte",
+    "passion":"Leidenschaft",
+    "specialized":"Spezialisiert auf moderne Web-Technologien"
   },
   "skills": {
     "headline": "Programmiersprachen & Werkzeuge",
@@ -54,6 +59,7 @@
     "message": "Nachricht",
     "send": "Abschicken",
     "sending": "Senden...",
+    "phone":"Telefon",
     "toast": {
       "success": {
         "headline": "Alles klar!",

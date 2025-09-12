@@ -1,59 +1,66 @@
 <section id="about">
-  <div class="content">
-    <!-- <h3>{{ "about.aboutMe" | translate }}</h3> -->
-    <div class="flex justify-center relative">
+  <div class="box">
+    <div class="profile">
       <div
-        class="w-32 h-32 sm:w-60 sm:h-60 overflow-hidden rounded-full absolute animation image-animation z-10"
+        class="p-4 w-fit cv-button-wrapper border border-white cursor-pointer"
+        (click)="openCV()"
       >
-        <img src="assets/5x7_changed.jpg" class="max-w-full h-auto" />
+        <div class="flex gap-2 items-center">
+          <mat-icon fontIcon="article" class="text-white"></mat-icon>
+          <div class="text-white underline">
+            {{ "about.downloadCV" | translate }}
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div
-      class="about rounded-lg p-6 sm:p-20 pt-20 sm:pt-40 shadow mt-[64px] sm:mt-[120px] bg-gradient-to-b from-color4 to-color5 font-mono animation box-animation text-color1"
-    >
-      <div class="animation text-animation">
-        <p class="leading-normal">
-          {{ "about.text1" | translate }}<br /><br />
-          {{ "about.text2" | translate }}<br /><br />
-
-          {{ "about.text3" | translate }}<br /><br />
-          {{ "about.text5" | translate }}<br /><br />
-          {{ "about.text6" | translate }}<br /><br />
-          {{ "about.text7" | translate }}<br /><br />
-        </p>
-        <div class="flex place-items-center mt-6 gap-4">
-          <img src="/assets/PDF_file_icon.svg.png" width="24" />
-
-          <a
-            *ngIf="translateService.currentLang == 'de'"
-            href="/assets/CV_DE.pdf"
-            target="_blank"
-            class="text-color2"
-            ><span>{{ "about.downloadCV" | translate }}</span></a
-          >
-          <a
-            *ngIf="translateService.currentLang == 'en'"
-            href="/assets/CV_EN.pdf"
-            target="_blank"
-            class="text-color2"
-            ><span>{{ "about.downloadCV" | translate }}</span></a
-          >
-          <a
-            *ngIf="translateService.currentLang == 'hr'"
-            href="/assets/CV_HR.pdf"
-            target="_blank"
-            class="text-color2"
-            ><span>{{ "about.downloadCV" | translate }}</span></a
-          >
+      <img
+        src="assets/5x7_changed.jpg"
+        class="profile-image"
+        alt="Benjamin Milčić"
+      />
+      <h2 class="mt-10 text-white">{{ "about.aboutMe" | translate }}</h2>
+      <div class="profile-badges">
+        <div class="flex flex-col items-center">
+          <div class="text-[#3b82f6] text-[2rem] font-extrabold">5+</div>
+          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
+            {{ "about.yearsExperiance" | translate }}
+          </div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="text-[#3b82f6] text-[2rem] font-extrabold">10+</div>
+          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
+            {{ "about.projects" | translate }}
+          </div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="text-[#3b82f6] text-[2rem] font-extrabold">100%</div>
+          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
+            {{ "about.passion" | translate }}
+          </div>
         </div>
       </div>
     </div>
+    <div class="content">
+      <div class="font-extrabold text-3xl">
+        Angular Frontend {{ "header.developer" | translate }}
+      </div>
+      <div class="text-[#3b82f6] text-[1.125rem] font-semibold mt-1">
+        {{ "about.specialized" | translate }}
+      </div>
+      <div class="text-[#475569] text-[1.1rem] mt-8 leading-7">
+        {{ "about.text1" | translate }}<br /><br />
+        {{ "about.text2" | translate }}<br /><br />
 
-    <div class="button-wrapper">
-      <a class="button" [routerLink]="['/']" fragment="skills">{{
-        "about.mySkills" | translate
-      }}</a>
+        {{ "about.text3" | translate }}<br /><br />
+        {{ "about.text5" | translate }}<br /><br />
+        {{ "about.text6" | translate }}<br /><br />
+        {{ "about.text7" | translate }}<br /><br />
+      </div>
     </div>
   </div>
+  <a class="button mt-16" [routerLink]="['/']" fragment="skills">
+    <div class="flex gap-2 items-center">
+      <mat-icon fontIcon="work"></mat-icon>
+      {{ "about.mySkills" | translate }}
+    </div>
+  </a>
 </section>

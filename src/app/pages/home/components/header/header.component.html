@@ -1,13 +1,29 @@
 <header id="header">
   <div class="content">
-    <h1 class="text-color3 animation name-animation">Benjamin Milčić</h1>
-    <h3 class="text-color3 animation profession-animation">
+    <h1 class="text-slate-700 ">Benjamin Milčić</h1>
+    <h3 class="text-white">
       <em>Angular Frontend {{ "header.developer" | translate }}</em>
     </h3>
-    <div class="button-wrapper animation button-animation">
-      <a [routerLink]="['/']" fragment="about">{{
-        "header.findOutMore" | translate
-      }}</a>
+    <div class="mx-4">
+      <p class="relaxed-text">
+        {{ "header.passionateDeveloper" | translate }}
+        <br />
+        {{ "header.transform" | translate }}
+      </p>
+    </div>
+    <div class="button-wrapper">
+      <a [routerLink]="['/']" fragment="about" class="btn-primary"
+        ><div class="flex gap-2 items-center">
+          <mat-icon fontIcon="person"></mat-icon>
+          <div>{{ "header.findOutMore" | translate }}</div>
+        </div></a
+      >
+      <a [routerLink]="['/']" fragment="contact" class="btn-secondary">
+        <div class="flex gap-2 items-center">
+          <mat-icon fontIcon="mail"></mat-icon>
+          <div>{{ "portfolio.contact" | translate }}</div>
+        </div>
+      </a>
     </div>
   </div>
 </header>

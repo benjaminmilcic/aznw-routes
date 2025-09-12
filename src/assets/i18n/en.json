@@ -2,7 +2,8 @@
   "header": {
     "developer": "Developer",
     "findOutMore": "Find Out More",
-    "apiError":"!!! This website's API is currently unavailable due to an issue with the SSL certificate. I'm in contact with my provider and will resolve the issue as soon as possible. !!!"
+    "passionateDeveloper":"Passionate developer with a focus on modern web technologies.",
+    "transform":"I transform ideas into elegant, functional solutions."
   },
   "about": {
     "aboutMe": "About me",
@@ -15,7 +16,11 @@
     "text7": "I am married and the proud father of one child.",
     "mySkills": "My Skills",
     "curriculumVitae": "curriculum vitae",
-    "downloadCV": "Download my curriculum vitae here"
+    "downloadCV": "Download curriculum vitae",
+    "yearsExperiance": "Years experience",
+    "projects": "Projects",
+    "passion": "Passion",
+    "specialized": "Specialized in modern web technologies"
   },
   "skills": {
     "headline": "Programming languages & Tools",
@@ -54,6 +59,7 @@
     "message": "Message",
     "send": "Send",
     "sending": "Sending...",
+    "phone": "Phone",
     "toast": {
       "success": {
         "headline": "All right!",

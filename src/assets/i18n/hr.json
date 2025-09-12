@@ -2,7 +2,8 @@
   "header": {
     "developer": "Programer",
     "findOutMore": "Saznajte više",
-    "apiError":"!!! API ove web stranice trenutno ne radi zbog problema sa SSL certifikatom. U kontaktu sam sa svojim davateljem usluga i riješit ću problem što je prije moguće. !!!"
+    "passionateDeveloper": "Strastveni programer s fokusom na moderne web tehnologije.",
+    "transform": "Ideje pretvaram u elegantna i funkcionalna rješenja."
   },
   "about": {
     "aboutMe": "O meni",
@@ -15,7 +16,11 @@
     "text7": "Oženjen sam i ponosni otac jednog djeteta.",
     "mySkills": "Moje vještine",
     "curriculumVitae": "životopis",
-    "downloadCV": "Preuzmite moj životopis ovdje"
+    "downloadCV": "Preuzmite životopis",
+    "yearsExperiance": "Godina iskustva",
+    "projects": "Projekti",
+    "passion": "Strast",
+    "specialized": "Specijaliziran za moderne web tehnologije"
   },
   "skills": {
     "headline": "Programski jezici i alati",
@@ -54,6 +59,7 @@
     "message": "Poruka",
     "send": "Pošalji",
     "sending": "Slanje...",
+    "phone": "Telefon",
     "toast": {
       "success": {
         "headline": "U redu!",
