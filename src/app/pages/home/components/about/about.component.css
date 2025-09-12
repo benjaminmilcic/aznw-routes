@@ -144,6 +144,10 @@ section {
     left: -12px;
   }
 
+  section {
+  padding: 40px 20px 40px 20px;
+}
+
   .cv-button-wrapper::after {
     border-left: 12px solid transparent;
   }

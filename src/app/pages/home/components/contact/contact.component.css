@@ -208,7 +208,7 @@ textarea:required:invalid {
   }
 
   section {
-    padding: 3rem 3rem;
+    padding: 3rem 40px;
   }
 
   .name {
@@ -267,5 +267,9 @@ textarea:required:invalid {
     color: blue;
     font-size: 1rem;
     box-shadow: none;
+  }
+
+  section {
+    padding: 3rem 20px;
   }
 }
