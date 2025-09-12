@@ -151,4 +151,9 @@ section {
   .cv-button-wrapper:hover::after {
     border-left: 7px solid transparent;
   }
+
+  .profile-image {
+  width: 180px;
+  height: 180px;
+}
 }

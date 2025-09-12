@@ -487,6 +487,11 @@ dialog::backdrop {
   margin-bottom: 2rem;
 }
 
+.project-box {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 .section-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -561,6 +566,11 @@ dialog::backdrop {
     width: 3px;
     height: 10px;
     top: 15px;
+  }
+
+  .project-box {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -724,6 +734,11 @@ dialog::backdrop {
 
   .image-title {
     height: 50px;
+  }
+
+  .project-box {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 

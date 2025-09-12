@@ -1,11 +1,5 @@
 <div class="relative">
   <div class="flex flex-col items-center">
-    @if (!hasMouse) {
-    <div class="text-center p-4 text-red-600 text-xs">
-      {{ "gimmicks.games.bestPlayedWithMouse" | translate }}
-    </div>
-
-    }
     <div class="difficulty-selector-wrapper">
       <select
         class="difficulty-selector"
@@ -73,11 +67,7 @@
       </div>
     </div>
     <div class="flex items-center gap-8 mt-8">
-      <button
-        mat-raised-button
-        color="light-dark"
-        (click)="toggleTheme()"
-      >
+      <button mat-raised-button color="light-dark" (click)="toggleTheme()">
         @if (theme() === 'light') { 🌙 Dark Mode } @else { ☀️ Light Mode }
       </button>
 
