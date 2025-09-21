@@ -110,12 +110,12 @@
         (!showSelectField||yahtzeeService.players[yahtzeeService.playerOnMoveIndex].name.includes('Computer'))
         {
 
-        <div *ngIf="diceCount !== 0">
+        <div *ngIf="diceCount !== 0" class="text-white">
           {{ "gimmicks.games.rollNumber" | translate }}&nbsp;{{ diceCount }}
         </div>
         <div *ngIf="diceCount === 0">&nbsp;</div>
         }@else {
-        <div class="text-red-600">
+        <div class="text-red-400">
           {{ "gimmicks.games.selectFieldToEnter" | translate }}
         </div>
         }

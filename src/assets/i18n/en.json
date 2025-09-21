@@ -88,7 +88,8 @@
       "charts": "Charts",
       "jokes": "Jokes",
       "games": "Games",
-      "weather": "Weather"
+      "weather": "Weather",
+      "menu":"Menu"
     },
     "overview": {
       "header1": "So far I have created enterprise applications that can only be accessed with a login and password. That's why you'll find",
@@ -115,7 +116,8 @@
       "green": "Green",
       "blue": "Blue",
       "opacity": "Opacity",
-      "contextMenu": "For demonstration purposes, there is a context menu above the doors"
+      "contextMenu": "For demonstration purposes, there is a context menu above the doors",
+      "settings": "Settings"
     },
     "map": {
       "search": "Search a city...",
@@ -186,7 +188,8 @@
     "guestbook": {
       "createComment": "Create Comment",
       "thanks": "Thanks for leaving a comment",
-      "save": "Save"
+      "save": "Save",
+      "shareThoughts": "Share your thoughts and leave a message"
     },
     "charts": {
       "monthlyConsumption": "Monthly consumption",
@@ -369,7 +372,9 @@
       "errorOnPosition": "Error retrieving position",
       "geoLocationNotSupported": "Geolocation is not supported by this browser.",
       "errorOnAddress": "Error retrieving address.",
-      "errorOnSearch": "Error while searching. City not found or no weather data for this city."
+      "errorOnSearch": "Error while searching. City not found or no weather data for this city.",
+      "weatherDataIsLoading": "Weather data is loading...",
+      "error": "Error"
     }
   },
   "pageNotFound": {

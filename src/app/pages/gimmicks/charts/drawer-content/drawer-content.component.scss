@@ -1,0 +1,31 @@
+@use "@angular/material" as mat;
+
+mat-form-field {
+  @include mat.form-field-overrides(
+    (
+      outlined-outline-color: white,
+      outlined-focus-outline-color: white,
+      outlined-hover-outline-color: white,
+      outlined-hover-label-text-color:white,
+      outlined-label-text-color:white,
+      outlined-focus-label-text-color:white,
+      outlined-input-text-color:white,
+      outlined-caret-color:white,
+    )
+  );
+}
+
+
+:host {
+  @include mat.fab-overrides((
+    disabled-state-container-color:#0000ff80,
+    disabled-state-foreground-color:#ffffff80,
+  ));
+}
+
+.value2022 {
+  --indicator-color: #ffcd56;
+}
+.value2023 {
+  --indicator-color: #9966ff;
+}

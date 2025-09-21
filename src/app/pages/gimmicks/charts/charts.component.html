@@ -1,4 +1,4 @@
-<mat-drawer-container class="min-h-[calc(100%-40px)]">
+<mat-drawer-container class="min-h-[calc(100%-49px)]">
   <mat-drawer #drawer mode="over" disableClose="true"
     ><app-drawer-content
       *ngIf="user"
@@ -15,7 +15,7 @@
       (saveUser)="onSaveNewUser($event)"
     ></app-drawer-content
   ></mat-drawer>
-  <mat-drawer-content class="bg-blue-400">
+  <mat-drawer-content class="bg-blue-900">
     <div class="flex flex-col lg:flex-row pt-4">
       <div class="flex flex-col relative place-items-center lg:w-1/2 ">
         <ion-segment
@@ -116,8 +116,8 @@
               expandedHeight="100px"
             >
               <div class="flex gap-6 place-items-center">
-                <img [src]="user.image" class="w-16 rounded-full" />
-                <div>{{ user.name }}</div>
+                <img [src]="user.image" class="w-16 rounded-full border-2 border-white/30" />
+                <div class="text-lg">{{ user.name }}</div>
               </div>
             </mat-expansion-panel-header>
             <div class="flex justify-between gap-4">
@@ -173,8 +173,8 @@
           </mat-expansion-panel>
         </mat-accordion>
         <div class="pt-4 pb-2 flex w-[340px] sm:w-96">
-          <button
-            class="bg-[#3f51b5] rounded-full w-10 h-10 text-white shadow flex justify-center items-center hover:opacity-90 cursor-pointer"
+           <button
+            class="add-user-button rounded-full w-10 h-10 text-white shadow flex justify-center items-center cursor-pointer"
             [matTooltip]="'gimmicks.charts.addUser' | translate"
             color="primary"
             (click)="onAddUser()"

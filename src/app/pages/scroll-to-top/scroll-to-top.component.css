@@ -6,7 +6,7 @@ a{
   height: 50px;
   text-align: center;
   color: var(--color1);
-  background: var(--color3);
+  background: var(--color2);
   line-height: 50px;
   border-radius: 0.25rem;
   opacity: 0;
@@ -22,5 +22,5 @@ a i {
 }
 
 a.visible{
-  opacity: 0.5;
+  opacity: 0.8;
 }

@@ -11,8 +11,6 @@ import {
 import { YouTubePlayer } from '@angular/youtube-player';
 import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
 import {
-  IonFab,
-  IonFabButton,
   IonInput} from '@ionic/angular/standalone';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
@@ -26,25 +24,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { environment } from '../../../../environments/environment';
 import { HttpErrorService } from '../../http-error/http-error.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-guestbook',
-    imports: [
-        IonFabButton,
-        YouTubePlayer,
-        CommonModule,
-        EditorModule,
-        IonFab,
-        IonFabButton,
-        MatTooltipModule,
-        IonInput,
-        FormsModule,
-        TranslateModule,
-        SafeHtmlPipe,
-    ],
-    providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
-    templateUrl: './guestbook.component.html',
-    styleUrl: './guestbook.component.css'
+  selector: 'app-guestbook',
+  imports: [
+    YouTubePlayer,
+    CommonModule,
+    EditorModule,
+    MatTooltipModule,
+    IonInput,
+    FormsModule,
+    TranslateModule,
+    SafeHtmlPipe,
+    MatIconModule
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+  templateUrl: './guestbook.component.html',
+  styleUrl: './guestbook.component.css',
 })
 export class GuestbookComponent implements OnInit, AfterViewInit {
   showcreatePostDialog = false;
@@ -143,14 +140,13 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
     public sanitizer: DomSanitizer,
     private http: HttpClient,
     private changeDetectorRef: ChangeDetectorRef,
-    private httpErrorService: HttpErrorService,
+    private httpErrorService: HttpErrorService
   ) {
     registerLocaleData(de.default);
   }
 
   async ngOnInit() {
     this.loadFromDatabase();
-    
   }
 
   ngAfterViewInit(): void {
@@ -230,5 +226,14 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
     } catch (error) {
       this.httpErrorService.showHttpError(error, 'GuestbookComponent');
     }
+  }
+
+  getInitials(name: string): string {
+    if (!name) return '?';
+    return name
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase())
+      .slice(0, 2)
+      .join('');
   }
 }

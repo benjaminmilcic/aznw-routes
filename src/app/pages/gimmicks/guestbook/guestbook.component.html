@@ -1,20 +1,28 @@
 <section
   id="header"
-  class="flex min-h-[calc(100%-40px)] h-fit bg-blue-400 gap-16 flex-col xl:flex-row px-4 sm:px-0"
+  class="flex min-h-[calc(100%-49px)] h-fit bg-blue-900 gap-x-16 gap-y-2 flex-col xl:flex-row px-4 sm:px-0"
 >
   <dialog
     #createPostDialog
     [open]="showcreatePostDialog"
-    class="bg-blue-500 text-white my-4 mx-auto p-4 rounded-xl"
+    class="my-4 mx-auto rounded-xl !p-0"
   >
-    <div class="dialog-close">
-      <a (click)="showcreatePostDialog = false"><b>X</b></a>
+    <div
+      class="flex justify-between items-center bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-t-2xl p-4"
+    >
+      <div></div>
+      <div class="text-center text-white sm:text-lg font-bold">
+        {{ "gimmicks.guestbook.thanks" | translate }}
+      </div>
+      <button
+        class="bg-white/30 hover:scale-125 cursor-pointer rounded-full flex justify-center items-center py-[6px] shadow-lg"
+        (click)="showcreatePostDialog = false"
+      >
+        <mat-icon class="text-white">close</mat-icon>
+      </button>
     </div>
-    <div class="flex flex-col sm:flex-row gap-4 mt-12">
-      <div>
-        <div class="text-center mb-4">
-          {{ "gimmicks.guestbook.thanks" | translate }}
-        </div>
+    <div class="flex flex-col gap-4 p-4 funny-bg overflow-auto max-h-[70vh] rounded-b-2xl">
+      <div class="mt-2">
         <div class="mb-1">Name:</div>
         <ion-input
           fill="outline"
@@ -27,23 +35,21 @@
         apiKey="p8kzw066uvdiavhwv4gt5t1iqdqygdfatlxf194isih8d5rr"
         [init]="config"
         [(ngModel)]="postContent"
-        class="w-[600px]"
+        class=""
       ></editor>
+      <div class="flex justify-end">
+        <button class="create-post-btn" (click)="onSavePost()">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>{{ "gimmicks.guestbook.save" | translate }}</span>
+        </button>
+      </div>
     </div>
-    <ion-fab slot="fixed" vertical="top" horizontal="start">
-      <ion-fab-button
-        [matTooltip]="'gimmicks.guestbook.save' | translate"
-        (click)="onSavePost()"
-      >
-        <i class="fa-solid fa-floppy-disk text-xl"></i>
-      </ion-fab-button>
-    </ion-fab>
   </dialog>
 
   <div
     class="flex flex-col place-items-center justify-center p-8 xl:w-96 text-white relative"
   >
-    <div class="text-2xl">Johnny Cash</div>
+    <div class="text-4xl">Johnny Cash</div>
     <div class="text-lg mb-2">I Walk The Line</div>
     <div #youTubePlayer class="w-full flex justify-center">
       <youtube-player
@@ -54,26 +60,37 @@
     </div>
   </div>
   <div class="flex flex-col w-full relative xl:overflow-y-auto">
-    <button
-      class="xl:self-start self-center max-w-48 mx-6 mt-4 mb-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
-      (click)="onCreatePost()"
-    >
-      {{ "gimmicks.guestbook.createComment" | translate }}
-    </button>
-    <div
-      *ngFor="let post of posts"
-      class="flex flex-col m-4 pb-4 rounded-lg shadow bg-white w-full sm:w-[600px] max-w-[600px] self-center xl:self-start"
-    >
-      <div
-        class="flex justify-between px-4 py-2 bg-gradient-to-b from-[#4ade8080] to-[#2563eb80] rounded-t"
-      >
-        <div>{{ post.name }}</div>
-        <div>{{ post.date | date : undefined : undefined : "de" }}</div>
+    <div class="w-full xl:max-w-[800px] flex flex-col items-center mt-4">
+      <div class="text-white font-bold text-4xl">
+        {{ "gimmicks.menu.guestbook" | translate }}
       </div>
-      <div
-        class="px-4 py-1 overflow-x-auto"
-        [innerHTML]="post.content | safeHtml"
-      ></div>
+      <div class="text-white text-lg mt-2 text-center">
+        {{ "gimmicks.guestbook.shareThoughts" | translate }}
+      </div>
+    </div>
+    <div class="xl:self-start self-center mt-10 mb-2">
+      <button class="create-post-btn" (click)="onCreatePost()">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>{{ "gimmicks.guestbook.createComment" | translate }}</span>
+      </button>
+    </div>
+    <div class="flex justify-center xl:justify-start">
+      <div class="my-4 max-w-[800px] w-full">
+        <div *ngFor="let post of posts" class="post-card">
+          <div class="post-header">
+            <div class="post-avatar">
+              {{ getInitials(post.name) }}
+            </div>
+            <div class="post-meta">
+              <h3 class="post-author">{{ post.name }}</h3>
+              <time class="post-date">{{
+                post.date | date : "medium" : undefined : "de"
+              }}</time>
+            </div>
+          </div>
+          <div class="post-content" [innerHTML]="post.content | safeHtml"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -438,7 +438,17 @@ export class WeatherComponent implements OnInit, OnDestroy {
     const input: any = this.cityCtrl.value; // Typ explizit als any
     const cityName = typeof input === 'string' ? input : input?.display_name;
 
-    if (!cityName || !cityName.trim()) return;
+    if (!cityName || !cityName.trim()) {
+      this.cityLatitude = null;
+      this.cityLongitude = null;
+      this.translateService
+        .get('gimmicks.weather.errorOnSearch')
+        .subscribe((value) => {
+          this.error += `<br>${value}`;
+        });
+      this.loading = false;
+      return;
+    } 
 
     const url = `${
       environment.geoLocation.geoCodeApi
@@ -543,5 +553,16 @@ export class WeatherComponent implements OnInit, OnDestroy {
       day,
       hours: hours.sort((a: any, b: any) => a.hour - b.hour), // sortiere nach Uhrzeit
     }));
+  }
+
+  selectChart(chart: 'temp' | 'rain' | 'wind') {
+    this.selectedChart = chart;
+    setTimeout(() => {
+      
+      const el = document.getElementById(chart + '-chart');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 }

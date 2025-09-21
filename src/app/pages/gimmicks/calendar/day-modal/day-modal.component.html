@@ -1,18 +1,18 @@
 <ion-header>
-  <ion-toolbar color="primary" class="bg-green-200 text-black">
+  <ion-toolbar color="primary" class="bg-gradient-to-br from-blue-500 to-purple-500  text-white">
     <ion-title
       >{{ day }}. {{ "gimmicks.calendar.months." + month | translate }}
       {{ year }}</ion-title
     >
     <ion-buttons slot="end">
-      <ion-button (click)="close()">
+      <ion-button (click)="close()" class="bg-white/30 rounded-lg !mr-4 hover:scale-125">
         <i class="fa-solid fa-xmark text-lg"></i>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="h-[calc(100%-50px)]">
-  <div class="bg-[#fce7f3]">
+  <div class="bg-[#ffffff]">
     <form [formGroup]="hours">
       <table class="my-4 mx-2 border-spacing-x-2 xs:mx-8 xs:border-spacing-x-6">
         <tr>

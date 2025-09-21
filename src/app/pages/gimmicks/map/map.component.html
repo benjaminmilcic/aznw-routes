@@ -1,6 +1,6 @@
 <section
   id="header"
-  class="flex flex-col xl:flex-row bg-blue-400 min-h-[calc(100%-40px)] xl:h-[calc(100%-40px)]"
+  class="flex flex-col xl:flex-row bg-blue-900 min-h-[calc(100%-49px)] xl:h-[calc(100%-49px)]"
 >
   <div
     class="relative"
@@ -24,22 +24,22 @@
     </div>
     <div
       *ngIf="showFilter"
-      class="bg-white rounded-sm absolute left-20 top-[60px] z-10 overflow-y-scroll h-[calc(100%-60px)] w-fit"
+      class="bg-white/95 backdrop-blur-lg rounded-2xl absolute left-20 top-[60px] z-10 overflow-y-auto h-[calc(100%-80px)] w-fit"
     >
       <div
-        class="sticky top-0 z-10 bg-gradient-to-b from-[#facc15AA] to-gray-400 pt-3"
+        class="sticky top-0 z-50 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 pt-3 px-2"
       >
         <div class="flex justify-between place-items-center">
-          <div class="font-bold ml-2">Filter</div>
-          <ion-button
-            class="close"
-            size="small"
-            fill="clear"
-            color="dark"
+          <div class="font-bold text-white flex items-center gap-2">
+            <mat-icon class="text-white">filter_alt</mat-icon>
+            Filter
+          </div>
+          <button
+            class="bg-white/20 hover:bg-white/30 rounded-lg p-2 transition-all duration-300"
             (click)="showFilter = false"
           >
-            <i class="fa-solid fa-xmark text-black"></i>
-          </ion-button>
+            <i class="fa-solid fa-xmark text-white"></i>
+          </button>
         </div>
         <hr />
       </div>
@@ -229,27 +229,27 @@
       cdkDrag
       [hidden]="!showCityInfo"
       *ngIf="!mapToSmall(200)"
-      class="bg-white absolute top-[20px] right-[20px] shadow-lg rounded p-2 z-10"
+      class="funny-bg absolute top-[20px] right-[20px] shadow-lg rounded-xl p-4 z-10"
     >
       <div
-        class="flex justify-between place-items-center bg-gradient-to-b from-[#facc15AA] to-gray-400 -m-2 p-2"
+        class="flex justify-between place-items-center bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 -m-4 py-2 px-4 rounded-t-xl"
       >
-        <div class="cursor-move text-gray-500 w-5" cdkDragHandle>
+        <div class="cursor-move text-white/80 w-5" cdkDragHandle>
           <i class="fa-solid fa-arrows-up-down-left-right"></i>
         </div>
-        <div class="font-bold">
+        <div class="font-bold text-white">
           {{ "gimmicks.map.cityInfo" | translate }}
         </div>
         <div class="w-5">
           <button
             (click)="showCityInfo = false"
-            class="bg-transparent cursor-pointer"
+            class="bg-white/20 hover:bg-white/30 rounded-lg p-2 transition-all duration-300 cursor-pointer"
           >
-            <i class="fa-solid fa-xmark text-black"></i>
+            <i class="fa-solid fa-xmark text-white"></i>
           </button>
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-6">
         <span class="font-bold">Name: </span> <span>{{ cityInfo.name }}</span>
       </div>
       <div>
@@ -280,12 +280,14 @@
     {{ "gimmicks.map.noFunctions" | translate }}
   </div>
 
-  <div class="my-8 sm:m-8 xl:m-4 xl:overflow-y-auto overflow-x-auto relative">
+  <div
+    class="my-8 sm:m-8 xl:m-4 xl:overflow-y-auto overflow-x-auto relative rounded-xl"
+  >
     <div
-      class="sticky top-0 left-0 bg-gradient-to-b from-[#facc15AA] to-blue-600 rounded z-10 pt-4"
+      class="sticky top-0 left-0 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-xl z-10 pt-4"
     >
       <div
-        class="flex flex-col md:flex-row justify-center place-items-center mb-4"
+        class="flex flex-col md:flex-row justify-center place-items-center mb-4 text-white"
       >
         {{ "gimmicks.map.cities1" | translate }}
         <div>
@@ -320,7 +322,12 @@
       </mat-paginator>
     </div>
 
-    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <table
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 !rounded-b-xl !overflow-hidden table-with-pattern"
+    >
       <ng-container matColumnDef="rang">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ "gimmicks.map.rang" | translate }}

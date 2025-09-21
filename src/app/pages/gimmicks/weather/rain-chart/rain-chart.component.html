@@ -1,4 +1,5 @@
-<canvas
+<div class="hidden xs:block">
+  <canvas
     baseChart
     [data]="lineChartData"
     [options]="lineChartOptions"
@@ -6,3 +7,15 @@
     width="600"
     height="150"
   ></canvas>
+</div>
+
+<div class="xs:hidden">
+  <canvas
+    baseChart
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    width="600"
+    height="180"
+  ></canvas>
+</div>

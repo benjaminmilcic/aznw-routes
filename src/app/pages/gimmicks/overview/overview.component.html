@@ -1,25 +1,25 @@
-<section class="bg-blue-400 min-h-[calc(100vh-40px)]">
-  <div class="relative flex justify-between items-center text-xl px-8 py-4">
+<section class="bg-blue-900 min-h-[calc(100vh-49px)]">
+  <div class="relative flex justify-between items-center text-xl px-8 py-6 backdrop-blur-sm bg-black/20 border-b border-blue-700/30">
     <div>
       <mat-icon
         id="click-trigger2"
         fontIcon="info"
-        class="cursor-pointer text-red-500"
+        class="cursor-pointer text-blue-400 hover:text-blue-300 transition-colors duration-300 bg-blue-900/50 rounded-full p-2 hover:bg-blue-800/50"
       ></mat-icon>
       <ion-popover trigger="click-trigger2" triggerAction="click">
         <ng-template>
           <ion-content class="ion-padding"
-            ><div class="p-4">
+            ><div class="p-4 bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-700 text-gray-700">
               {{ "gimmicks.overview.contextMenu" | translate }}
             </div>
           </ion-content>
         </ng-template>
       </ion-popover>
     </div>
-    <div>
-      <i class="fa-brands fa-github text-sm"></i>&nbsp;
+    <div class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-full border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:bg-black/40">
+      <i class="fa-brands fa-github text-gray-300"></i>
       <a
-        class="text-color1 hover:text-color2 text-sm"
+        class="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
         href="https://github.com/benjaminmilcic/aznw-routes"
         target="_blank"
         >{{ "gimmicks.overview.sourceCode" | translate }}</a
@@ -37,6 +37,8 @@
     >
       <mat-menu #contextMenu class="px-2 !min-w-[320px]">
         <div (click)="$event.stopPropagation()">
+          <div class="text-xl my-1">{{ "gimmicks.overview.settings" | translate }}</div>
+          <div class="border-t mt-1 mb-3"></div>
           <mat-slide-toggle
             labelPosition="before"
             [(ngModel)]="settings[settingIndex].showDescription"
@@ -120,7 +122,7 @@
         </div>
       </mat-menu>
       <div
-        class="text-white sm:h-[420px] p-8 w-60 shadow-lg flipbox-active relative"
+        class="text-white sm:h-[400px] p-8 w-60 shadow-lg flipbox-active relative"
       >
         <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
           <div class="relative">
@@ -136,19 +138,22 @@
               <div class="text-xl font-bold">
                 {{ setting.header | translate }}
               </div>
-              @if (setting.icon) {
-              <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
+              <div class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14">
+                @if (setting.icon) {
+                <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
+  
+                }@else {
+                <img class="w-8 h-8" [src]="setting.imageSrc" />
+                }
 
-              }@else {
-              <img class="w-8 h-8" [src]="setting.imageSrc" />
-              }
+              </div>
             </div>
             @if (settings[settingIndex].showDescription) {
 
-            <div class="mb-2 text-gray-200">
+            <div class="mb-2 text-gray-200 font-medium">
               {{ "gimmicks.overview.elements" | translate }}:
             </div>
-            <ul class="mb-8 text-sm sm:text-base text-gray-200 mr-[50px]">
+            <ul class="mb-8 text-sm text-gray-200 font-medium mr-[50px]">
               <li *ngFor="let element of setting.elements">
                 {{ element | translate }}
               </li>

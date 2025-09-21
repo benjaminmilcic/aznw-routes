@@ -21,7 +21,7 @@ section:before {
 
 dialog {
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5); /* passend zu bg-blue-300 */
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
   border: none;
   outline: none;
   height: fit-content;
@@ -43,17 +43,6 @@ dialog::backdrop {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.dialog-close {
-  display: flex;
-  justify-content: end;
-  cursor: pointer;
-  margin-bottom: 36px;
-}
-
-.dialog-close:hover {
-  color: black;
-}
-
 hr {
   border: 0;
   clear: both;
@@ -63,7 +52,89 @@ hr {
   height: 1px;
 }
 
-ion-input {
+/* ion-input {
   --highlight-color-focused: white !important;
   --border-color: white !important;
+} */
+
+.create-post-btn {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.create-post-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+  background: linear-gradient(135deg, #5b52f5, #8b44ff);
+}
+
+.post-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  animation: slideInUp 0.5s ease-out;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.post-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.post-meta {
+  flex: 1;
+}
+
+.post-author {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.post-date {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.post-content {
+  color: #374151;
+  line-height: 1.6;
+  font-size: 1rem;
 }

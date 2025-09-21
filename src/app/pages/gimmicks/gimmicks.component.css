@@ -1,24 +1,3 @@
-.arrow:before {
-  content: " ";
-  display: block;
-  position: absolute;
-  left: 5px;
-  top: -7px;
-  width: 14px;
-  height: 14px;
-  border-style: none none solid solid;
-  background-color: rgb(191 219 254 / var(--tw-bg-opacity));
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-  -moz-transform: rotate(135deg);
-}
-
-@media (hover: none) {
-  .arrow {
-    display: none !important;
-  }
-}
-
 @keyframes slideOverviewIn {
   0% {
     translate: 0px -8px;
@@ -195,8 +174,6 @@
   }
 }
 
-
-
 @keyframes slideSubMenuButton {
   0% {
     rotate: 90deg;
@@ -247,42 +224,42 @@
   animation: 0.3s ease-out slideSixthItemIn;
 }
 
-.overviewOut{
+.overviewOut {
   animation: 0.3s ease-out slideOverviewOut;
 }
 
-.newItemOut{
+.newItemOut {
   animation: 0.3s ease-out slideNewItemOut;
 }
 
-.firstItemOut{
+.firstItemOut {
   animation: 0.3s ease-out slideFirstItemOut;
 }
 
-.secondItemOut{
+.secondItemOut {
   animation: 0.3s ease-out slideSecondItemOut;
 }
 
-.thirdItemOut{
+.thirdItemOut {
   animation: 0.3s ease-out slideThirdItemOut;
 }
 
-.fourthItemOut{
+.fourthItemOut {
   animation: 0.3s ease-out slideFourthItemOut;
 }
 
-.fifthItemOut{
+.fifthItemOut {
   animation: 0.3s ease-out slideFifthItemOut;
 }
 
-.sixthItemOut{
+.sixthItemOut {
   animation: 0.3s ease-out slideSixthItemOut;
 }
 
-.subMenuButton{
-   animation: 0.3s ease-out slideSubMenuButton;
+.subMenuButton {
+  animation: 0.3s ease-out slideSubMenuButton;
 }
 
-.subMenuButton2{
-   animation: 0.3s ease-out slideSubMenuButton2;
+.subMenuButton2 {
+  animation: 0.3s ease-out slideSubMenuButton2;
 }

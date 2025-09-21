@@ -38,6 +38,10 @@ section:before {
   transform: rotate(35deg);
 }
 
+ul li::marker {
+  @apply text-blue-300;          /* Farbe des Bullets */
+}
+
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 .red-slider {
   @include mat.slider-overrides(

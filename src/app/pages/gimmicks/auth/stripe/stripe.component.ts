@@ -50,7 +50,7 @@ import { HttpErrorService } from '../../../http-error/http-error.service';
         TranslateModule,
     ],
     templateUrl: './stripe.component.html',
-    styleUrl: './stripe.component.css'
+    styleUrl: './stripe.component.scss'
 })
 export class StripeComponent implements OnInit {
   @ViewChild(StripePaymentElementComponent)

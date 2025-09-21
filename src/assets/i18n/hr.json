@@ -88,7 +88,8 @@
       "charts": "Grafikoni",
       "jokes": "Šale",
       "games": "Igre",
-      "weather": "Vrijeme"
+      "weather": "Vrijeme",
+      "menu":"Izbornik"
     },
     "overview": {
       "header1": "Do sada sam izradio poslovne aplikacije koje su dostupne samo uz prijavu i lozinku. Zato ćete pronaći",
@@ -115,7 +116,8 @@
       "green": "Zelena",
       "blue": "Plava",
       "opacity": "Prozirnost",
-      "contextMenu": "U svrhu demonstracije iznad vrata postoji kontekstni izbornik"
+      "contextMenu": "U svrhu demonstracije iznad vrata postoji kontekstni izbornik",
+      "settings": "Postavke"
     },
     "map": {
       "search": "Pretraži grad...",
@@ -186,7 +188,8 @@
     "guestbook": {
       "createComment": "Napišite komentar",
       "thanks": "Hvala što ste ostavili komentar",
-      "save": "Spremi"
+      "save": "Spremi",
+      "shareThoughts": "Podijelite svoje misli i ostavite poruku"
     },
     "charts": {
       "monthlyConsumption": "Mjesečna potrošnja",
@@ -369,7 +372,9 @@
       "errorOnPosition": "Pogreška pri preuzimanju pozicije",
       "geoLocationNotSupported": "Ovaj preglednik ne podržava geolokaciju.",
       "errorOnAddress": "Pogreška pri preuzimanju adrese.",
-      "errorOnSearch": "Pogreška prilikom pretraživanja. Grad nije pronađen ili nema podataka o vremenu za ovaj grad."
+      "errorOnSearch": "Pogreška prilikom pretraživanja. Grad nije pronađen ili nema podataka o vremenu za ovaj grad.",
+      "weatherDataIsLoading": "Podaci o vremenu se učitavaju...",
+      "error": "Pogreška"
     }
   },
   "pageNotFound": {

@@ -1,305 +1,247 @@
 <div id="header">
   <div
-    *ngIf="innerWidth >= 900"
-    class="bg-blue-800 text-gray-300 px-8 flex flex-wrap gap-6 h-10 place-items-center"
+    *ngIf="innerWidth >= 1200"
+    class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-gray-100 px-8 flex flex-wrap gap-8 h-12 place-items-center shadow-lg backdrop-blur-sm border-b border-blue-700/30"
   >
     <div
-      class="hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-blue-700/50 hover:shadow-md"
       [routerLink]="['/gimmicks']"
     >
-      <i class="fa-solid fa-eye"></i>
-      <div>{{ "gimmicks.menu.overview" | translate }}</div>
+      <i
+        class="fa-solid fa-eye text-blue-300 group-hover:text-white transition-colors duration-300 mt-[2px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.overview" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-amber-600/50 hover:shadow-md"
       [routerLink]="['weather']"
     >
-      <i class="fa-solid fa-cloud text-amber-100"></i>
-      <div>{{ "gimmicks.menu.weather" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>Nest.js API</li>
-            <li>OpenStreetMap API</li>
-            <li>Geonames API</li>
-            <li>OpenMeteo API</li>
-            <li>GeoLocation</li>
-            <li>Chart.js</li>
-            <li>Responsive design</li>
-            <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-cloud text-amber-300 group-hover:text-white transition-colors duration-300 mt-[2px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.weather" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-yellow-600/50 hover:shadow-md"
       [routerLink]="['map']"
     >
-      <i class="fa-solid fa-map text-yellow-100"></i>
-      <div>{{ "gimmicks.menu.map" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>Google Maps API</li>
-          <li>{{ "gimmicks.overview.searchTypeahead" | translate }}</li>
-          <li>Drag and drop</li>
-          <li>{{ "gimmicks.overview.table" | translate }}</li>
-          <li>{{ "gimmicks.overview.resizable" | translate }}</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-map text-yellow-300 group-hover:text-white transition-colors duration-300 mt-[3px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.map" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-red-600/50 hover:shadow-md"
       [routerLink]="['calendar']"
     >
-      <i class="fa-solid fa-calendar text-red-100"></i>
-      <div>{{ "gimmicks.menu.calendar" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>SVG</li>
-          <li>Popup modal</li>
-          <li>Bottom drawer</li>
-          <li>{{ "gimmicks.overview.scratchCard" | translate }}</li>
-          <li>{{ "gimmicks.overview.print" | translate }}</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-calendar text-red-300 group-hover:text-white transition-colors duration-300 mt-[1px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.calendar" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-green-600/50 hover:shadow-md"
       [routerLink]="['guestbook']"
     >
-      <i class="fa-solid fa-book text-green-100"></i>
-      <div>{{ "gimmicks.menu.guestbook" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>{{ "gimmicks.overview.youtubePlayer" | translate }}</li>
-          <li>Popup Modal</li>
-          <li>{{ "gimmicks.overview.editor" | translate }}</li>
-          <li>{{ "gimmicks.overview.fileStorage" | translate }}</li>
-          <li>Nest.js API</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-book text-green-300 group-hover:text-white transition-colors duration-300 mt-[1px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.guestbook" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-purple-600/50 hover:shadow-md"
       [routerLink]="['charts']"
     >
-      <i class="fa-solid fa-chart-simple text-blue-100"></i>
-      <div>{{ "gimmicks.menu.charts" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>{{ "gimmicks.overview.charts" | translate }}</li>
-          <li>{{ "gimmicks.overview.imageManipulation" | translate }}</li>
-          <li>{{ "gimmicks.overview.fileUpload" | translate }}</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-chart-simple text-purple-300 group-hover:text-white transition-colors duration-300 mt-[1px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.charts" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-orange-600/50 hover:shadow-md"
       [routerLink]="['/gimmicks/auth/main']"
     >
-      <i class="fa-solid fa-face-smile"></i>
-      <div>{{ "gimmicks.menu.jokes" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>{{ "gimmicks.jokes.auth" | translate }}</li>
-          <li>Nest.js API</li>
-          <li>{{ "gimmicks.jokes.stripe" | translate }}</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <i
+        class="fa-solid fa-face-smile text-orange-300 group-hover:text-white transition-colors duration-300 mt-[2px]"
+      ></i>
+      <div class="font-medium">{{ "gimmicks.menu.jokes" | translate }}</div>
     </div>
     <div
-      class="relative group hover:text-gray-100 cursor-pointer flex gap-1 items-center"
+      class="relative group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-pink-600/50 hover:shadow-md"
       [routerLink]="['games']"
     >
-      <img class="w-4 h-4" src="assets/svg/tic-tac-toe-small.svg" />
-      <div>{{ "gimmicks.menu.games" | translate }}</div>
-      <div
-        class="absolute bg-gradient-to-b from-blue-200 to-blue-400 text-black rounded p-2 top-8 w-60 hidden group-hover:block z-20 arrow"
-      >
-        <ul class="text-xs">
-          <li>Nest.js API</li>
-          <li>Websocket</li>
-          <li>Responsive design</li>
-          <li>{{ "gimmicks.differentLanguages" | translate }}</li>
-        </ul>
-      </div>
+      <img class="w-4 h-4 mt-[3px]" src="assets/svg/tic-tac-toe-small.svg" />
+      <div class="font-medium">{{ "gimmicks.menu.games" | translate }}</div>
     </div>
   </div>
-  <div *ngIf="innerWidth < 900" class="bg-blue-800 h-10 flex flex-col">
+  <div
+    *ngIf="innerWidth < 1200"
+    class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 h-12 flex flex-col shadow-lg border-b border-blue-700/30"
+  >
     <button
       *ngIf="fadeOut"
-      class="bg-red-400 rounded-md w-8 min-h-8 text-white mt-1 ml-2 shadow-lg cursor-pointer"
+      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-24 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
       (click)="showSubMenu = true; fadeOut = false"
     >
-      <i class="fa-solid fa-chevron-right subMenuButton"></i>
+      <div class="flex gap-2 items-center justify-center">
+        <div>{{ "gimmicks.menu.menu" | translate }}</div>
+        <div>
+          <i class="fa-solid fa-chevron-right subMenuButton"></i>
+        </div>
+      </div>
     </button>
     <button
       *ngIf="!fadeOut"
-      class="bg-red-400 rounded-md w-8 min-h-8 text-white mt-1 ml-2 shadow-lg cursor-pointer"
+      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-24 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
       (click)="hideSubMenu()"
     >
-      <i class="fa-solid fa-chevron-down subMenuButton2"></i>
+      <div class="flex gap-2 items-center justify-center">
+        <div>{{ "gimmicks.menu.menu" | translate }}</div>
+        <div>
+          <i class="fa-solid fa-chevron-down subMenuButton2"></i>
+        </div>
+      </div>
     </button>
     <ng-container *ngIf="showSubMenu">
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group overviewIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group overviewIn cursor-pointer"
         [ngClass]="{ overviewOut: fadeOut }"
         [routerLink]="['/gimmicks']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg group-hover:text-white group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 bg-blue-500 rounded-full shadow-2xl text-white group-hover:bg-blue-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-eye"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.overview" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group newItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group newItemIn cursor-pointer"
         [ngClass]="{ newItemOut: fadeOut }"
         [routerLink]="['weather']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-amber-100 group-hover:text-amber-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-2xl bg-amber-500 text-white group-hover:bg-amber-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-cloud"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.weather" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group firstItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group firstItemIn cursor-pointer"
         [ngClass]="{ firstItemOut: fadeOut }"
         [routerLink]="['map']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-yellow-100 group-hover:text-yellow-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-yellow-500 text-white group-hover:bg-yellow-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-map"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.map" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group secondItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group secondItemIn cursor-pointer"
         [ngClass]="{ secondItemOut: fadeOut }"
         [routerLink]="['calendar']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-red-100 group-hover:text-red-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-red-500 text-white group-hover:bg-red-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-calendar"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.calendar" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group thirdItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group thirdItemIn cursor-pointer"
         [ngClass]="{ thirdItemOut: fadeOut }"
         [routerLink]="['guestbook']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-green-100 group-hover:text-green-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-green-500 text-white group-hover:bg-green-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-book"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.guestbook" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group fourthItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group fourthItemIn cursor-pointer"
         [ngClass]="{ fourthItemOut: fadeOut }"
         [routerLink]="['charts']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-orange-100 group-hover:text-orange-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-orange-500 text-white group-hover:bg-orange-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-chart-simple"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.charts" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group fifthItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group fifthItemIn cursor-pointer"
         [ngClass]="{ fourthItemOut: fadeOut }"
         [routerLink]="['/gimmicks/auth/login']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-violet-100 group-hover:text-violet-100 group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-violet-500 text-white group-hover:bg-violet-600 group-hover:text-blue-500 cursor-pointer"
         >
           <i class="fa-solid fa-face-smile"></i>
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.jokes" | translate }}
         </div>
       </div>
       <div
-        class="flex gap-1 items-center ml-2 mt-2 w-fit z-50 group sixthItemIn cursor-pointer"
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group sixthItemIn cursor-pointer"
         [ngClass]="{ sixthItemOut: fadeOut }"
         [routerLink]="['games']"
         (click)="hideSubMenu()"
       >
         <button
-          class="w-7 h-7 rounded-full shadow-lg bg-[#f6dbdb] group-hover:text-[#f6dbdb] group-hover:bg-black cursor-pointer"
+          class="w-12 h-12 rounded-full shadow-lg bg-pink-500 group-hover:bg-pink-600 cursor-pointer"
         >
           <img
             class="w-3 h-3 group-hover:hidden"
-            src="assets/svg/tic-tac-toe-black.svg"
+            src="assets/svg/tic-tac-toe-small.svg"
           />
           <img
             class="w-3 h-3 hidden group-hover:inline-block"
-            src="assets/svg/tic-tac-toe-small.svg"
+            src="assets/svg/tic-tac-toe-blue.svg"
           />
         </button>
         <div
-          class="bg-black text-white text-sm px-2 rounded shadow-lg group-hover:bg-white group-hover:text-black"
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.games" | translate }}
         </div>

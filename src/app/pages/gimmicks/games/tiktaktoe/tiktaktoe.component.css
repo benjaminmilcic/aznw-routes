@@ -1,3 +1,24 @@
 .mat-yellow {
     background-color: #fde047 !important;
 }
+
+/* Ion Segment Styling */
+::ng-deep ion-segment {
+  --background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep ion-segment-button {
+  --color: rgba(255, 255, 255, 0.8);
+  --color-checked: black;
+  min-height: 44px;
+}
+
+::ng-deep ion-segment-button:not(.segment-button-checked):hover {
+  --background: rgba(255, 255, 255, 0.1);
+}

@@ -42,7 +42,6 @@ export class HttpErrorService {
       const dialogRef = this.dialog.open(HttpErrorComponent, {
         data: { success:this.errorMailSuccess },
         disableClose: true,
-        width: '300px',
       });
       dialogRef.afterClosed().subscribe((result) => {
         this.dialogOpen = false;

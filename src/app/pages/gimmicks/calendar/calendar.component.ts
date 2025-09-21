@@ -12,18 +12,20 @@ import {
 import { QuizBottomSheetComponent } from './quiz-bottom-sheet/quiz-bottom-sheet.component';
 import { Router } from '@angular/router';
 import { AnalogClockComponent } from './analog-clock/analog-clock.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-calendar',
-    imports: [
-        CommonModule,
-        FormsModule,
-        MatBottomSheetModule,
-        TranslateModule,
-        AnalogClockComponent,
-    ],
-    templateUrl: './calendar.component.html',
-    styleUrl: './calendar.component.css'
+  selector: 'app-calendar',
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatBottomSheetModule,
+    TranslateModule,
+    AnalogClockComponent,
+    MatIconModule,
+  ],
+  templateUrl: './calendar.component.html',
+  styleUrl: './calendar.component.css',
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   currentYear: number;

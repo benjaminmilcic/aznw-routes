@@ -290,6 +290,7 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
           external: this.externalTooltipHandler,
         },
         legend: { display: false },
+        datalabels: { display: false },
       },
     };
   }

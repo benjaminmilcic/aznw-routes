@@ -2,11 +2,11 @@ mat-drawer-content {
   background-size: cover;
   background-position: center;
   position: relative;
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - 49px);
 }
 
 mat-drawer-content:before {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   left: 0;
@@ -20,12 +20,176 @@ mat-drawer-content:before {
   background-size: cover;
 }
 
-::ng-deep .mat-expansion-indicator::after{
-    border-color: black;
+::ng-deep .mat-expansion-indicator::after {
+  border-color: black;
 }
 
 mat-drawer {
- max-width: 640px;
- width: 100%;
- height: calc(100vh - 40px);
+  max-width: 640px;
+  width: 100%;
+  height: calc(100vh - 40px);
+}
+
+/* Ion Segment Styling */
+::ng-deep ion-segment {
+  --background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep ion-segment-button {
+  --color: rgba(255, 255, 255, 0.8);
+  --color-checked: black;
+  min-height: 44px;
+}
+
+::ng-deep ion-segment-button:not(.segment-button-checked):hover {
+  --background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mat Accordion Professional Styling */
+::ng-deep mat-accordion {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::ng-deep mat-expansion-panel {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+::ng-deep mat-expansion-panel:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+::ng-deep mat-expansion-panel-header {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 20px 24px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+::ng-deep mat-expansion-panel-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    var(--gimmicks-color1),
+    var(--gimmicks-color2)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+::ng-deep mat-expansion-panel-header:hover::before {
+  opacity: 0.1;
+}
+
+::ng-deep mat-expansion-panel.mat-expanded mat-expansion-panel-header::before {
+  opacity: 0.15;
+}
+
+::ng-deep mat-expansion-panel-header .mat-content {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+}
+
+::ng-deep mat-expansion-panel-header:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep mat-expansion-panel.mat-expanded mat-expansion-panel-header {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: white !important;
+  padding: 24px !important;
+  position: relative;
+}
+
+::ng-deep .mat-expansion-panel-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  pointer-events: none;
+}
+
+.add-user-button {
+  background: linear-gradient(
+    135deg,
+    var(--gimmicks-color1),
+    var(--gimmicks-color2)
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-user-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.add-user-button:hover {
+  transform: translateY(-3px) scale(1.15);
+  box-shadow: 0 10px 30px rgba(28, 99, 145, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.add-user-button:hover::before {
+  opacity: 1;
+}
+
+::ng-deep .mat-expansion-indicator:after {
+  border-bottom: 2px solid white !important;
+  border-right: 2px solid white !important;
+}
+
+::ng-deep mat-drawer.mat-drawer {
+  background: linear-gradient(135deg,
+    rgba(28, 99, 145, 0.95),
+    rgba(27, 82, 158, 0.95),
+    rgba(237, 197, 22, 0.1)
+  ) !important;
+  backdrop-filter: blur(20px);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3) !important;
 }

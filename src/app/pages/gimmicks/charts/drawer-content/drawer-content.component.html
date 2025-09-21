@@ -1,6 +1,6 @@
 <div class="flex justify-end my-4 mr-4">
-  <button (click)="onClose()" class="hover:scale-150 cursor-pointer bg-white">
-    <i class="fa-solid fa-xmark text-lg"></i>
+  <button (click)="onClose()" class="hover:scale-125 cursor-pointer bg-white/30 rounded-full py-[6px] px-[10px]">
+    <i class="fa-solid fa-xmark text-lg text-white"></i>
   </button>
 </div>
 <div class="flex items-center">
@@ -14,7 +14,7 @@
       <div>{{ "gimmicks.charts.image" | translate }}</div>
     </div>
     <button
-      class="absolute right-2 bottom-2 bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded shadow cursor-pointer"
+      class="absolute right-2 bottom-2 bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-2 py-2 rounded shadow cursor-pointer"
       (click)="openUploadImageModal()"
     >
       <i class="fa-solid fa-pen"></i>
@@ -22,7 +22,7 @@
   </div>
   <mat-form-field subscriptSizing="dynamic" appearance="outline">
     <mat-label>Name</mat-label>
-    <input matInput type="text" [(ngModel)]="user.name" />
+    <input matInput type="text" [(ngModel)]="user.name" class="!text-white" />
     <mat-hint class="text-red-400">{{ errorMessage }}</mat-hint>
   </mat-form-field>
 </div>
@@ -44,7 +44,7 @@
     </ion-segment-button>
   </ion-segment>
 </div>
-<table class="sm:px-6 text-sm sm:text-base">
+<table class="sm:px-6 text-sm sm:text-base text-white">
   <tr>
     <th class="text-left">{{ "gimmicks.charts.month" | translate }}</th>
     <th class="sm:w-40">

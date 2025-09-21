@@ -41,7 +41,7 @@ import { ImageCropperComponent } from '../image-cropper/image-cropper.component.
         MatButtonModule,
     ],
     templateUrl: './drawer-content.component.html',
-    styleUrl: './drawer-content.component.css'
+    styleUrl: './drawer-content.component.scss'
 })
 export class DrawerContentComponent implements OnInit {
   @Input() user: User;

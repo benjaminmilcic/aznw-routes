@@ -88,7 +88,8 @@
       "charts": "Diagramme",
       "jokes": "Witze",
       "games":"Spiele",
-      "weather":"Wetter"
+      "weather":"Wetter",
+      "menu":"Menü"
     },
     "overview": {
       "header1": "Bisher habe ich Unternehmensanwendungen erstellt, auf die nur mit Login und Passwort zugegriffen werden kann. Deshalb finden Sie",
@@ -115,7 +116,8 @@
       "green":"Grün",
       "blue":"Blau",
       "opacity":"Deckkraft",
-      "contextMenu":"Zu Demonstrationszwecken gibt es über den Türen ein Kontext-Menü"
+      "contextMenu":"Zu Demonstrationszwecken gibt es über den Türen ein Kontext-Menü",
+      "settings":"Einstellungen"
     },
     "map": {
       "search": "Stadtsuche...",
@@ -186,7 +188,8 @@
     "guestbook": {
       "createComment": "Kommentar erstellen",
       "thanks": "Vielen Dank für Ihren Kommentar",
-      "save": "Speichern"
+      "save": "Speichern",
+      "shareThoughts":"Teilen Sie Ihre Gedanken mit und hinterlassen Sie eine Nachricht"
     },
     "charts": {
       "monthlyConsumption": "Monatlicher Verbrauch",
@@ -369,7 +372,9 @@
       "errorOnPosition":"Fehler beim Abrufen der Position",
       "geoLocationNotSupported":"Geolocation wird von diesem Browser nicht unterstützt.",
       "errorOnAddress":"Fehler beim Abrufen der Adresse.",
-      "errorOnSearch":"Fehler beim Suchen. Stadt nicht gefunden oder keine Wetterdaten für diese Stadt."
+      "errorOnSearch":"Fehler beim Suchen. Stadt nicht gefunden oder keine Wetterdaten für diese Stadt.",
+      "weatherDataIsLoading":"Wetterdaten werden geladen...",
+      "error":"Fehler"
     }
   },
   "pageNotFound": {

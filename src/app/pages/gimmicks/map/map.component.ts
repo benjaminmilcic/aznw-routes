@@ -12,11 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ResizableModule, ResizeEvent } from 'angular-resizable-element';
 import LatLng = google.maps.LatLng;
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  IonItem,
-  IonButton,
-  IonCheckbox,
-} from '@ionic/angular/standalone';
+import { IonItem, IonCheckbox } from '@ionic/angular/standalone';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { City, CityInfo, MapDimension } from './map.models';
@@ -37,31 +33,32 @@ import {
 } from '@angular/elements';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { MapService } from './map.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-map',
-    imports: [
-        GoogleMapsModule,
-        CommonModule,
-        ResizableModule,
-        FormsModule,
-        IonItem,
-        IonButton,
-        IonCheckbox,
-        MatTableModule,
-        MatPaginatorModule,
-        CdkDrag,
-        CdkDragHandle,
-        MatSortModule,
-        MatAutocompleteModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatTooltipModule,
-        TranslateModule,
-    ],
-    templateUrl: './map.component.html',
-    styleUrl: './map.component.css'
+  selector: 'app-map',
+  imports: [
+    GoogleMapsModule,
+    CommonModule,
+    ResizableModule,
+    FormsModule,
+    IonItem,
+    IonCheckbox,
+    MatTableModule,
+    MatPaginatorModule,
+    CdkDrag,
+    CdkDragHandle,
+    MatSortModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    TranslateModule,
+    MatIconModule,
+  ],
+  templateUrl: './map.component.html',
+  styleUrl: './map.component.css',
 })
 export class MapComponent implements OnInit, AfterViewInit {
   style: { width: string; height: string };
@@ -142,7 +139,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       dimension = JSON.parse(localStorage.getItem('mapDimension'));
     } else {
       dimension.width = window.innerWidth;
-      dimension.height = window.innerHeight - 40;
+      dimension.height = window.innerHeight - 49;
     }
 
     if (event.target.innerWidth < 1280) {
@@ -160,7 +157,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     } else {
       this.style = {
         width: '100%',
-        height: 'calc(100vh - 40px)',
+        height: 'calc(100vh - 49px)',
       };
     }
   }
@@ -257,7 +254,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     } else {
       this.style = {
         width: `100%`,
-        height: 'calc(100vh - 40px)',
+        height: 'calc(100vh - 49px)',
       };
     }
   }
@@ -508,7 +505,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       return false;
     } else if (
       +this.style.height.slice(0, -2) > size ||
-      this.style.height === 'calc(100vh - 40px)' ||
+      this.style.height === 'calc(100vh - 49px)' ||
       this.style.height === 'nullpx'
     ) {
       return false;

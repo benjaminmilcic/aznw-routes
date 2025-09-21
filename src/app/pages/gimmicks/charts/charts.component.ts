@@ -89,6 +89,7 @@ export class ChartsComponent implements OnInit {
   onOpenEditDrawer(user: User) {
     this.userNames = this.users.map((user) => user.name);
     this.user = JSON.parse(JSON.stringify(user));
+    this.newUser = null;
     this.drawer.open();
   }
 
@@ -147,6 +148,7 @@ export class ChartsComponent implements OnInit {
       '2022': Array(12).fill({ electricity: 0, water: 0, gas: 0 }),
       '2023': Array(12).fill({ electricity: 0, water: 0, gas: 0 }),
     };
+    this.user = null;
     this.drawer.open();
   }
 

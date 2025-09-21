@@ -1,12 +1,12 @@
-<div class="p-4 lg:p-6 shadow bg-white rounded w-[340px] sm:w-[600px] lg:w-[360px] xl:w-[420px] m-2 sm:mb-4 lg:mt-8 relativ">
+<div class="py-4 px-2 xs:p-4 lg:p-6 shadow bg-white/30 rounded-xl border border-white text-white w-[318px] sm:w-[600px] lg:w-[360px] xl:w-[420px] m-2 sm:mb-4 lg:mt-8 relativ">
   <div
     *ngIf="elementsOptions.clientSecret && viewType === 'payment'"
     [formGroup]="paymentElementForm"
     class="flex flex-col"
   >
-    <div class="flex justify-center mb-4 sm:text-lg lg:text-base xl:text-lg">
-      {{ "gimmicks.jokes.orderBook" | translate }}&nbsp;<span
-        class="bg-blue-100 rounded-lg text-red-600 px-2 font-semibold"
+    <div class="flex justify-center mb-4 sm:text-lg lg:text-base xl:text-lg text-center">
+      {{ "gimmicks.jokes.orderBook" | translate }}&nbsp;&nbsp;<span
+        class="bg-white/30 border border-white rounded-lg text-red-600 px-2 font-semibold"
         >14.98 Euro</span
       >
     </div>
@@ -69,38 +69,44 @@
   </div>
   <div
     *ngIf="viewType === 'spinner'"
-    class="bg-white p-4 rounded flex justify-center"
+    class="bg-white/60 p-4 rounded flex justify-center"
   >
     <ion-spinner></ion-spinner>
   </div>
-  <div *ngIf="viewType === 'couldNotLoad'" class="bg-red-300 p-4 rounded">
+  <div *ngIf="viewType === 'couldNotLoad'" class="bg-red-300/60 p-4 rounded">
     <div>{{ "gimmicks.jokes.stripNotLoaded" | translate }}</div>
   </div>
-  <div *ngIf="viewType === 'success'" class="bg-green-300 p-4 rounded">
+  <div *ngIf="viewType === 'success'" class="bg-green-300/60 p-4 rounded">
     <div class="flex justify-center">
       {{ "gimmicks.jokes.congratulation" | translate }}
     </div>
     <div class="flex justify-center my-4">
       {{ "gimmicks.jokes.bookOrdered" | translate }}
     </div>
-    <button
+    <div class="flex justify-center">
+      <button
       (click)="onTryAgain()"
       class="hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
     >
       OK
     </button>
+    </div>
+    
   </div>
 
-  <div *ngIf="viewType === 'error'" class="bg-red-300 p-4 rounded">
+  <div *ngIf="viewType === 'error'" class="bg-red-300/60 p-4 rounded text-center">
     {{ "gimmicks.jokes.noSuccess" | translate }}
     <br /><br />
     {{ error }}
     <br /><br />
-    <button
-      (click)="onTryAgain()"
-      class="hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
-    >
-      {{ "gimmicks.jokes.tryAgain" | translate }}
-    </button>
+    <div class="flex justify-center">
+
+      <button
+        (click)="onTryAgain()"
+        
+      >
+        {{ "gimmicks.jokes.tryAgain" | translate }}
+      </button>
+    </div>
   </div>
 </div>

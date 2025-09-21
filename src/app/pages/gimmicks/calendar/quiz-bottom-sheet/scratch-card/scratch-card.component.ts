@@ -86,8 +86,8 @@ export class ScratchCardComponent implements AfterViewInit, OnChanges {
   fillScratchCard() {
     this.context.globalCompositeOperation = 'source-over';
     const grad = this.context.createLinearGradient(0, 0, 0, 50);
-    grad.addColorStop(0, '#fecaca');
-    grad.addColorStop(1, '#60a5fa');
+    grad.addColorStop(0, '#4ade80');
+    grad.addColorStop(1, '#10b981');
     this.context.fillStyle = grad;
     this.context.fillRect(0, 0, 250, 50);
   }

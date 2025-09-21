@@ -1,5 +1,5 @@
 <section id="jokes-box"
-  class="bg-gradient-to-b from-cyan-400 to-cyan-600 rounded shadow flex flex-col items-center p-8"
+  class="bg-gradient-to-b from-cyan-400/60 to-cyan-600/60 rounded-xl shadow flex flex-col items-center p-8 text-white border border-white"
 >
   
   <div class="flex w-full justify-between relative">
@@ -13,7 +13,7 @@
       </ng-template>
     </ion-popover>
     <button
-      class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
+      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
       (click)="onLogout()"
     >
       {{ "gimmicks.jokes.logout" | translate }}
@@ -44,13 +44,13 @@
   </div>
   <div class="flex gap-10 relative my-8">
     <button
-      class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
+      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
       (click)="nextJoke()"
     >
       <i class="fa-solid fa-caret-left"></i>
     </button>
     <button
-      class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
+      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer"
       (click)="previousJoke()"
     >
       <i class="fa-solid fa-caret-right"></i>

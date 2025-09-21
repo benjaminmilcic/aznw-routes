@@ -1,22 +1,34 @@
 <div>
-  <div class="flex justify-center my-4">
-    <div class="font-bold text-lg">
-      {{ "gimmicks.calendar.which" | translate }}&nbsp;
+  <div
+    class="flex justify-between py-4 rounded-t-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white px-4 gap-2"
+  >
+    <div>
+      <span class="font-bold text-lg">
+        {{ "gimmicks.calendar.which" | translate }}&nbsp;
+      </span>
+      <span class="font-bold text-lg">
+        {{ holiday.date | date : undefined : undefined : "de" }} ?
+      </span>
     </div>
-    <div class="font-bold text-lg">
-      {{ holiday.date | date : undefined : undefined : "de" }} ?
+    <div class="flex justify-center items-center">
+      <button
+        (click)="closeBottomSheet()"
+        class="!bg-white/30 !rounded-lg hover:scale-125 py-2 px-3 text-white"
+      >
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
     </div>
   </div>
-  <div class="flex flex-col items-center justify-center mt-4 mb-12">
+  <div class="flex flex-col items-center justify-center mt-12 mb-12">
     <app-scratch-card [word]="getScratchWord()"></app-scratch-card>
-    <div>{{ "gimmicks.calendar.answer" | translate }}</div>
+    <div class="mt-2">{{ "gimmicks.calendar.answer" | translate }}</div>
   </div>
-  <div class="flex justify-center mb-10">
+  <!-- <div class="flex justify-center mb-10">
     <button
       (click)="closeBottomSheet()"
       class="bg-blue-500 hover:bg-blue-600 rounded text-white px-4 py-2 cursor-pointer"
     >
       {{ "gimmicks.calendar.closeQuiz" | translate }}
     </button>
-  </div>
+  </div> -->
 </div>

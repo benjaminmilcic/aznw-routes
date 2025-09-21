@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar color="primary" class="bg-blue-700 text-white">
+  <ion-toolbar color="primary" class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
     <ion-title>{{
       "gimmicks.charts.imageCropper.headline" | translate
     }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">
+      <ion-button (click)="close()" class="bg-white/30 rounded-full px-[2px] hover:scale-125">
         <i class="fa-solid fa-xmark text-lg"></i>
       </ion-button>
     </ion-buttons>
@@ -14,13 +14,13 @@
   <div *ngIf="imageUrl" class="flex flex-col gap-2 mt-4">
     <div class="flex justify-center gap-8">
       <button
-        class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer h-7"
+        class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer h-7"
         (click)="moveLeft()"
       >
         <mat-icon>arrow_left</mat-icon>
       </button>
       <button
-        class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer h-7"
+        class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer h-7"
         (click)="moveRight()"
       >
         <mat-icon>arrow_right</mat-icon>
@@ -29,13 +29,13 @@
     <div class="flex justify-center items-center gap-2">
       <div class="h-full flex flex-col gap-8">
         <button
-          class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer"
+          class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer"
           (click)="zoomIn()"
         >
           <mat-icon>zoom_in</mat-icon>
         </button>
         <button
-          class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer"
+          class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer"
           (click)="zoomOut()"
         >
           <mat-icon>zoom_out</mat-icon>
@@ -51,13 +51,13 @@
       </div>
       <div class="h-full flex flex-col justify-center gap-8">
         <button
-          class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer h-7"
+          class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer h-7"
           (click)="moveUp()"
         >
           <mat-icon>arrow_drop_up</mat-icon>
         </button>
         <button
-          class="bg-green-500 hover:bg-green-600 text-white rounded shadow cursor-pointer h-7"
+          class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer h-7"
           (click)="moveDown()"
         >
           <mat-icon>arrow_drop_down</mat-icon>
@@ -66,7 +66,7 @@
     </div>
     <div class="flex justify-center">
       <button
-        class="bg-green-500 hover:bg-green-600 text-white px-2 py-2 rounded shadow cursor-pointer"
+        class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white px-2 py-2 rounded shadow cursor-pointer"
         (click)="reset()"
       >
         {{ "gimmicks.charts.imageCropper.reset" | translate }}
@@ -84,13 +84,13 @@
       #fileUpload
     />
     <button
-      class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded shadow cursor-pointer"
+      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-2 py-2 rounded shadow cursor-pointer"
       (click)="fileUpload.click()"
     >
       {{ "gimmicks.charts.imageCropper.uploadImage" | translate }}
     </button>
     <button
-      class="bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white px-2 py-2 rounded shadow cursor-pointer"
+      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 disabled:from-blue-300 disabled:to-blue-300 text-white px-2 py-2 rounded shadow cursor-pointer"
       (click)="save()"
       [disabled]="!imageUrl"
     >
