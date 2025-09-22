@@ -752,3 +752,23 @@ dialog::backdrop {
     width: 75px;
   }
 }
+
+@keyframes shake {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(3deg) scale(1.03); }
+  40%  { transform: rotate(-3deg) scale(1.06); }
+  60%  { transform: rotate(3deg) scale(1.09); }
+  80%  { transform: rotate(-3deg) scale(1.12); }
+  100% { transform: rotate(0deg) scale(1.15); }
+}
+
+.shake {
+  display: inline-block;
+  transition: transform 0.3s; /* sanfter Übergang */
+}
+
+/* Animation nur bei Hover auslösen */
+.shake:hover {
+  animation: shake 0.5s ease-in-out forwards;  /* Dauer & Timing */
+  animation-iteration-count: 1;       /* einmal abspielen */
+}
