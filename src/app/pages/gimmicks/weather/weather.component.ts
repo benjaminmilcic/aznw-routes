@@ -563,6 +563,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    });
+    },100);
   }
 }

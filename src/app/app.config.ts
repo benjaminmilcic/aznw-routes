@@ -27,6 +27,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       RouterModule.forRoot(routes, {
         anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'top',
         useHash: true,
       })
     ),

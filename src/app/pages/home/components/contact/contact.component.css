@@ -101,7 +101,7 @@ label {
 
 input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {
-  border: solid 1px red;
+  border: 2px solid red !important;
 }
 
 a,
@@ -174,10 +174,6 @@ input:focus {
   outline: none;
 }
 
-input:required:invalid {
-  border: 2px solid red !important;
-  outline: none; /* Standard-Outline aus */
-}
 
 textarea {
   padding-left: 16px !important;
@@ -193,10 +189,6 @@ textarea:focus {
   outline: none;
 }
 
-textarea:required:invalid {
-  border: 2px solid red !important; /* eigene Dicke und Farbe */
-  outline: none; /* Standard-Outline aus */
-}
 
 .contact-box {
   padding: 32px;
