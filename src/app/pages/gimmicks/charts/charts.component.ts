@@ -47,7 +47,7 @@ import { DoubleBarChartComponent } from './double-bar-chart/double-bar-chart.com
         MatOptionModule,
     ],
     templateUrl: './charts.component.html',
-    styleUrl: './charts.component.css'
+    styleUrl: './charts.component.scss'
 })
 export class ChartsComponent implements OnInit {
   users: User[] = UserValues;

@@ -58,6 +58,8 @@ export class TemperatureChartComponent implements OnInit, OnChanges {
     };
 
     this.lineChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
       layout: {
         padding: {
           top: 20,
@@ -83,6 +85,9 @@ export class TemperatureChartComponent implements OnInit, OnChanges {
         },
         x: {
           grid: {
+            display: false,
+          },
+          border: {
             display: false,
           },
           ticks: {

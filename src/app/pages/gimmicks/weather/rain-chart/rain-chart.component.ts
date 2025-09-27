@@ -57,6 +57,8 @@ export class RainChartComponent implements OnInit, OnChanges {
     };
 
     this.lineChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
       layout: {
         padding: {
           top: 40,

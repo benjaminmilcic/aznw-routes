@@ -1,6 +1,6 @@
 <section class="flex justify-center min-h-[calc(100%-49px)] bg-blue-900">
   <div
-    class="flex flex-col w-full max-w-full sm:max-w-[700px] my-4 relative bg-white rounded"
+    class="flex flex-col w-full max-w-full sm:max-w-[700px] my-4 relative bg-gradient-to-br from-blue-50/80 via-white/90 to-indigo-50/80 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl"
   >
     <div class="m-4 flex">
       <ion-segment
@@ -189,9 +189,7 @@
           </div>
           <div class="text-2xl text-blue-600 font-medium">°C</div>
         </div>
-        <div
-          class="text-sm space-y-1 bg-white/60 p-3 rounded-lg backdrop-blur-sm"
-        >
+        <div class="text-sm space-y-1 p-3 rounded-lg">
           <div class="whitespace-nowrap flex items-center gap-2">
             <div class="hidden xs:block">
               <mat-icon class="!text-blue-500 !text-base">water_drop</mat-icon>
@@ -205,7 +203,7 @@
           </div>
           <div class="whitespace-nowrap flex items-center gap-2">
             <div class="hidden xs:block">
-              <img src="assets/svg/humidity_percentage.svg" class="w-4 mr-2">
+              <img src="assets/svg/humidity_percentage.svg" class="w-4 mr-2" />
             </div>
             <span class="font-medium text-gray-700"
               >{{ "gimmicks.weather.humidity" | translate }}:</span
@@ -227,9 +225,7 @@
           </div>
         </div>
       </div>
-      <div
-        class="flex flex-col items-end bg-white/60 p-4 rounded-lg backdrop-blur-sm"
-      >
+      <div class="flex flex-col items-end p-4 rounded-lg">
         <div class="text-xl font-bold whitespace-nowrap text-gray-800 mb-2">
           {{ "gimmicks.weather.weather" | translate }}
         </div>
@@ -258,8 +254,10 @@
           }"
           (click)="selectChart('temp')"
         >
-          <mat-icon class="!text-base mr-1">thermostat</mat-icon>
-          {{ "gimmicks.weather.temperature" | translate }}
+          <div class="flex flex-col sm:flex-row items-center justify-center">
+            <mat-icon class="!text-base mr-1">thermostat</mat-icon>
+            {{ "gimmicks.weather.temperature" | translate }}
+          </div>
         </div>
         <div
           id="rain-chart"
@@ -272,8 +270,10 @@
           }"
           (click)="selectChart('rain')"
         >
-          <mat-icon class="!text-base mr-1">water_drop</mat-icon>
-          {{ "gimmicks.weather.precipitation" | translate }}
+          <div class="flex flex-col sm:flex-row items-center justify-center">
+            <mat-icon class="!text-base mr-1">water_drop</mat-icon>
+            {{ "gimmicks.weather.precipitation" | translate }}
+          </div>
         </div>
         <div
           id="wind-chart"
@@ -286,8 +286,10 @@
           }"
           (click)="selectChart('wind')"
         >
-          <mat-icon class="!text-base mr-1">air</mat-icon>
-          {{ "gimmicks.weather.wind" | translate }}
+          <div class="flex flex-col sm:flex-row items-center justify-center">
+            <mat-icon class="!text-base mr-1">air</mat-icon>
+            {{ "gimmicks.weather.wind" | translate }}
+          </div>
         </div>
       </div>
       <app-temperature-chart
@@ -386,10 +388,14 @@
     </div>
 
     <div *ngIf="error" class="p-6 mx-6 mb-4">
-      <div class="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-2 xs:p-4 shadow-lg">
+      <div
+        class="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-2 xs:p-4 shadow-lg"
+      >
         <div class="flex items-center gap-2 xs:mb-2">
           <mat-icon class="text-red-500">error</mat-icon>
-          <span class="font-semibold text-red-700">{{ "gimmicks.weather.error" | translate }}</span>
+          <span class="font-semibold text-red-700">{{
+            "gimmicks.weather.error" | translate
+          }}</span>
         </div>
         <div class="text-red-600 text-sm" [innerHTML]="error"></div>
       </div>

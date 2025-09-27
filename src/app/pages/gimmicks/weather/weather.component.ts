@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
-  HostListener,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -101,7 +100,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
   currentWeather: CurrentWeather;
   dailyForecast: DailyForecast;
   hourlyForecast: HourlyForecast[];
-
   displayedIcon = '';
   displayedTemp: number;
   displayedPrecipitation_probability: number;
@@ -110,24 +108,12 @@ export class WeatherComponent implements OnInit, OnDestroy {
   displayedTime: string;
   displayedWeather: string;
   showDisplay = false;
-
   dailyForcastIndex = 0;
-
   selectedChart: 'temp' | 'rain' | 'wind' = 'temp';
-
   showChart = true;
-
   selectedWay: 'location' | 'search' = 'location';
-
   loading = false;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent): void {
-    this.showChart = false;
-    setTimeout(() => {
-      this.showChart = true;
-    }, 50);
-  }
 
   constructor(
     private http: HttpClient,

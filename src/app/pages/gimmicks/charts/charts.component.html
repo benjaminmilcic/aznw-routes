@@ -16,8 +16,8 @@
     ></app-drawer-content
   ></mat-drawer>
   <mat-drawer-content class="bg-blue-900">
-    <div class="flex flex-col lg:flex-row pt-4">
-      <div class="flex flex-col relative place-items-center lg:w-1/2 ">
+    <div class="flex flex-col lg:flex-row gap-10 lg:gap-0 pt-4">
+      <div class="flex flex-col relative place-items-center lg:w-1/2">
         <ion-segment
           mode="ios"
           [value]="chartType"
@@ -45,7 +45,9 @@
           class="flex flex-col items-center mt-6"
         >
           <app-pie-chart [users]="users"></app-pie-chart>
-          <div class="flex justify-evenly w-full items-center mt-8">
+          <div
+            class="flex gap-10 sm:gap-0 flex-wrap justify-evenly w-full items-center mt-8"
+          >
             <div>
               <ion-segment
                 mode="ios"
@@ -84,8 +86,13 @@
                 </ion-segment-button>
               </ion-segment>
             </div>
-            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-48">
+            <mat-form-field
+              appearance="outline"
+              subscriptSizing="dynamic"
+              class="w-48 select-period-form-field"
+            >
               <mat-select
+                class="select-period"
                 [(value)]="selectedPeriod"
                 (selectionChange)="onPeriodChange($event)"
               >
@@ -108,15 +115,23 @@
           [users]="users"
         ></app-double-bar-chart>
       </div>
-      <div class="h-full relative flex flex-col items-center mt-4 lg:mt-0 lg:w-1/2">
+      <div
+        class="h-full relative flex flex-col items-center mt-4 lg:mt-0 lg:w-1/2"
+      >
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let user of users" class="border-b w-[340px] sm:w-96">
+          <mat-expansion-panel
+            *ngFor="let user of users"
+            class="border-b w-[340px] sm:w-96"
+          >
             <mat-expansion-panel-header
               collapsedHeight="100px"
               expandedHeight="100px"
             >
               <div class="flex gap-6 place-items-center">
-                <img [src]="user.image" class="w-16 rounded-full border-2 border-white/30" />
+                <img
+                  [src]="user.image"
+                  class="w-16 rounded-full border-2 border-white/30"
+                />
                 <div class="text-lg">{{ user.name }}</div>
               </div>
             </mat-expansion-panel-header>
@@ -173,7 +188,7 @@
           </mat-expansion-panel>
         </mat-accordion>
         <div class="pt-4 pb-2 flex w-[340px] sm:w-96">
-           <button
+          <button
             class="add-user-button rounded-full w-10 h-10 text-white shadow flex justify-center items-center cursor-pointer"
             [matTooltip]="'gimmicks.charts.addUser' | translate"
             color="primary"
