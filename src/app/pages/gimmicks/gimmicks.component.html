@@ -80,7 +80,7 @@
   >
     <button
       *ngIf="fadeOut"
-      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-24 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
+      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-fit px-3 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
       (click)="showSubMenu = true; fadeOut = false"
     >
       <div class="flex gap-2 items-center justify-center">
@@ -92,7 +92,7 @@
     </button>
     <button
       *ngIf="!fadeOut"
-      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-24 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
+      class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg w-fit px-3 min-h-10 text-white mt-1 ml-2 shadow-lg cursor-pointer"
       (click)="hideSubMenu()"
     >
       <div class="flex gap-2 items-center justify-center">
