@@ -40,7 +40,7 @@
       <button
         mat-raised-button
         (click)="getLocation()"
-        class="!bg-gradient-to-r !from-blue-600 !to-indigo-600 hover:!from-blue-700 hover:!to-indigo-700 !text-white !font-medium !py-3 !px-6 !rounded-xl !shadow-lg hover:!shadow-xl !transition-all !duration-300 !border-0"
+        class="!bg-gradient-to-r !from-blue-500 !to-indigo-500 hover:!from-blue-600 hover:!to-indigo-600 !text-white !font-medium !py-3 !px-6 !rounded-xl !shadow-lg hover:!shadow-xl !transition-all !duration-300 !border-0"
       >
         <mat-icon class="mr-2">my_location</mat-icon>
         {{ "gimmicks.weather.getLocation" | translate }}
@@ -146,19 +146,19 @@
       class="flex h-full justify-center items-center m-8 box-border"
     >
       <img
-        src="assets/weather-bg.jpg"
+        src="assets/weather-bg.png"
         class="w-full max-w-[500px] box-border opacity-80"
       />
     </div>
     <div *ngIf="currentWeather" class="flex w-full justify-center px-6 pb-4">
       <div
-        class="flex p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/50 w-full justify-between items-center shadow-sm backdrop-blur-sm"
+        class="flex p-4 rounded-xl bg-gradient-to-r from-emerald-50/50 to-teal-50/50 border border-emerald-200/50 w-full justify-between items-center shadow-sm backdrop-blur-sm"
       >
         <div *ngIf="address" class="flex items-center gap-2">
           <div class="hidden xs:block">
             <mat-icon class="text-emerald-600">place</mat-icon>
           </div>
-          <span class="text-emerald-700 font-semibold">{{ address }}</span>
+          <span class="text-emerald-600 font-semibold">{{ address }}</span>
         </div>
         <div class="flex flex-col sm:flex-row gap-4 text-sm text-gray-600">
           <div class="flex items-center gap-1">
@@ -241,13 +241,13 @@
     </div>
     <div *ngIf="hourlyForecast" class="flex flex-col p-4 w-full">
       <div
-        class="flex gap-1 w-full mb-6 bg-white/80 rounded-xl p-1 sm:shadow-inner"
+        class="flex gap-1 w-full mb-6  rounded-xl p-1"
       >
         <div
           id="temp-chart"
-          class="cursor-pointer px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 flex-1 text-center"
+          class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md':
+            'border-b-2 border-orange-300 text-blue-600':
               selectedChart === 'temp',
             'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
               selectedChart !== 'temp'
@@ -261,9 +261,9 @@
         </div>
         <div
           id="rain-chart"
-          class="cursor-pointer px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 flex-1 text-center"
+          class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md':
+            'border-b-2 border-orange-300 text-blue-600':
               selectedChart === 'rain',
             'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
               selectedChart !== 'rain'
@@ -277,9 +277,9 @@
         </div>
         <div
           id="wind-chart"
-          class="cursor-pointer px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 flex-1 text-center"
+          class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md':
+            'border-b-2 border-orange-300 text-blue-600':
               selectedChart === 'wind',
             'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
               selectedChart !== 'wind'
@@ -293,19 +293,19 @@
         </div>
       </div>
       <app-temperature-chart
-        *ngIf="hourlyForecast && selectedChart === 'temp' && showChart"
+        *ngIf="hourlyForecast && selectedChart === 'temp'"
         [hourlyForecast]="hourlyForecast"
         [dayIndex]="dailyForcastIndex"
         (hourClicked)="displayHourlyWeather($event)"
       ></app-temperature-chart>
       <app-rain-chart
-        *ngIf="hourlyForecast && selectedChart === 'rain' && showChart"
+        *ngIf="hourlyForecast && selectedChart === 'rain'"
         [hourlyForecast]="hourlyForecast"
         [dayIndex]="dailyForcastIndex"
       ></app-rain-chart>
       <div
         *ngIf="hourlyForecast && selectedChart === 'wind'"
-        class="flex justify-between w-full sm:h-[168px] bg-white/60 rounded-xl sm:py-4 sm:px-4 sm:shadow-inner backdrop-blur-sm"
+        class="flex justify-between w-full sm:h-[168px] rounded-xl sm:py-4 sm:px-4"
       >
         <ng-container
           *ngFor="
@@ -342,24 +342,27 @@
         </ng-container>
       </div>
     </div>
+    <div *ngIf="currentWeather" class="flex border border-blue-400 mx-4">
+
+    </div>
     <div *ngIf="dailyForecast" class="p-4 w-full flex justify-center">
       <div class="flex justify-between w-full overflow-x-auto">
         <div
           *ngFor="let day of dailyForecast.time; let i = index"
-          class="flex flex-col items-center rounded-xl px-1 py-2 xs:px-3 xs:py-4 cursor-pointer transition-all duration-300 min-w-fit"
+          class="flex flex-col items-center rounded-xl px-1 py-2 xs:px-2 sm:px-3  cursor-pointer transition-all duration-300 min-w-fit"
           [ngClass]="{
             'bg-gradient-to-b from-blue-500 to-indigo-500 text-white shadow-lg':
               dailyForecast.active[i],
-            'bg-white/80 hover:bg-blue-50/80 text-gray-700 shadow-sm border border-gray-200/50':
+            'bg-yellow-100/70 hover:bg-blue-50/80 text-gray-700 shadow-sm border border-gray-200/50':
               !dailyForecast.active[i]
           }"
           (click)="displayDailyWeather(i)"
         >
-          <div class="text-xs xs:text-sm font-medium mb-1 xs:mb-2">
+          <div class="text-xs  font-medium mb-1 xs:mb-2">
             {{ dailyForecast.weekday[i] }}
           </div>
           <div
-            class="bg-white/20 p-[2px] xs:p-2 rounded-lg mb-1 xs:mb-3"
+            class="bg-white/20 p-[2px] xs:p-2 rounded-lg mb-1 "
             [ngClass]="{
               'bg-white/20': dailyForecast.active[i],
               'bg-blue-100': !dailyForecast.active[i]
@@ -367,10 +370,10 @@
           >
             <img
               [src]="dailyForecast.icon[i]"
-              class="w-[32px] h-[32px] xs:w-[40px] xs:h-[40px]"
+              class="w-[32px] h-[32px] "
             />
           </div>
-          <div class="flex flex-col gap-1 text-xs xs:text-sm text-center">
+          <div class="flex flex-col gap-1 text-xs  text-center">
             <div class="font-bold">
               {{ dailyForecast.temperature_2m_max[i].toFixed(0) }}°
             </div>

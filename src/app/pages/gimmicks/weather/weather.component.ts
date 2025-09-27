@@ -110,7 +110,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
   showDisplay = false;
   dailyForcastIndex = 0;
   selectedChart: 'temp' | 'rain' | 'wind' = 'temp';
-  showChart = true;
   selectedWay: 'location' | 'search' = 'location';
   loading = false;
 
