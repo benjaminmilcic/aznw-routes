@@ -47,16 +47,18 @@
   </dialog>
 
   <div
-    class="flex flex-col place-items-center justify-center p-8 xl:w-96 text-white relative"
+    class="flex flex-col place-items-center p-8 xl:w-96 text-white relative"
   >
-    <div class="text-4xl">Johnny Cash</div>
-    <div class="text-lg mb-2">I Walk The Line</div>
+  <div class="flex flex-col h-full max-h-[calc(100vh-113px)] bg-gradient-to-br from-red-900/60 to-red-700/60 py-2 rounded-lg px-4 w-full justify-center items-center sticky left-0 top-[81px]">
+    <div class="text-lg text-center">{{ "gimmicks.guestbook.goodMusic" | translate }}</div>
+    <div class="text-4xl text-center mb-2 ">Cat Stevens</div>
     <div #youTubePlayer class="w-full flex justify-center">
       <youtube-player
-        videoId="1hyWnA7cgyU"
+        videoId="GArYfc1qX-M"
         [width]="videoWidth"
         [height]="videoHeight"
       />
+    </div>
     </div>
   </div>
   <div class="flex flex-col w-full relative xl:overflow-y-auto">
@@ -75,7 +77,7 @@
       </button>
     </div>
     <div class="flex justify-center xl:justify-start">
-      <div class="my-4 max-w-[800px] w-full">
+      <div class="my-4 max-w-[800px] w-full flex flex-col gap-10">
         <div *ngFor="let post of posts" class="post-card">
           <div class="post-header">
             <div class="post-avatar">
@@ -88,7 +90,7 @@
               }}</time>
             </div>
           </div>
-          <div class="post-content" [innerHTML]="post.content | safeHtml"></div>
+          <div class="post-content overflow-auto" [innerHTML]="post.content | safeHtml"></div>
         </div>
       </div>
     </div>

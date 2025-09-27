@@ -40,13 +40,15 @@
       </div>
     </div>
     <div class="content">
-      <div class="font-extrabold text-3xl">
+      <div class="font-extrabold text-xl sm:text-3xl">
         Full Stack {{ "header.developer" | translate }}
       </div>
-      <div class="text-[#3b82f6] text-[1.125rem] font-semibold mt-1">
+      <div class="text-[#3b82f6] sm:text-[18px] font-semibold mt-1">
         {{ "about.specialized" | translate }}
       </div>
-      <div class="text-[#475569] text-[1.1rem] mt-8 leading-7">
+      <div
+        class="text-[#475569] text-[14px] sm:text-[1.1rem] mt-8 leading-5 sm:leading-7"
+      >
         {{ "about.text1" | translate }}<br /><br />
         {{ "about.text2" | translate }}<br /><br />
 
@@ -55,27 +57,33 @@
         {{ "about.text6" | translate }}<br /><br />
         {{ "about.text7" | translate }}<br /><br />
       </div>
-      <div class="font-bold text-xl mt-4 mb-6">
+      <div class="font-bold sm:text-xl mt-4 mb-4 sm:mb-6">
         {{ "about.mainCompetencies" | translate }}
       </div>
-      <div class="flex gap-8 flex-wrap mb-6">
+      <div class="flex gap-4 sm:gap-8 flex-wrap mb-6">
         <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-4 px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
+          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
         >
-          <img src="assets/svg/angular.svg" class="w-[36px] h-auto" />
-          <div class="font-medium">Angular</div>
+          <img
+            src="assets/svg/angular.svg"
+            class="w-[24px] sm:w-[36px] h-auto"
+          />
+          <div class="font-medium text-[14px] sm:text-[16px]">Angular</div>
         </div>
         <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-4 px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
+          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
         >
-          <img src="assets/svg/ionic.svg" class="w-[36px] h-auto" />
-          <div class="font-medium">Ionic</div>
+          <img src="assets/svg/ionic.svg" class="w-[24px] sm:w-[36px] h-auto" />
+          <div class="font-medium text-[14px] sm:text-[16px]">Ionic</div>
         </div>
         <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-4 px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
+          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
         >
-          <img src="assets/svg/nestjs.svg" class="w-[36px] h-auto" />
-          <div class="font-medium">NestJS</div>
+          <img
+            src="assets/svg/nestjs.svg"
+            class="w-[24px] sm:w-[36px] h-auto"
+          />
+          <div class="font-medium text-[14px] sm:text-[16px]">NestJS</div>
         </div>
       </div>
     </div>

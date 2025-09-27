@@ -129,6 +129,13 @@ section {
   }
 }
 
+@media screen and (max-width: 600px) {
+  .button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .profile-badges {
     flex-direction: column;
@@ -145,8 +152,8 @@ section {
   }
 
   section {
-  padding: 40px 20px 40px 20px;
-}
+    padding: 40px 20px 40px 20px;
+  }
 
   .cv-button-wrapper::after {
     border-left: 12px solid transparent;
@@ -157,7 +164,7 @@ section {
   }
 
   .profile-image {
-  width: 180px;
-  height: 180px;
-}
+    width: 180px;
+    height: 180px;
+  }
 }

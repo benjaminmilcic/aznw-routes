@@ -21,11 +21,17 @@ header:before {
   width: 100%;
   height: 100%;
   opacity: 0.4;
-  background-image: url(/assets/header_bg.webp);
+  background:
+    linear-gradient(135deg,
+      rgba(29, 78, 216, 0.85) 0%,
+      rgba(37, 99, 235, 0.8) 30%,
+      rgba(59, 130, 246, 0.75) 70%,
+      rgba(30, 64, 175, 0.8) 100%
+    ),
+    url(/assets/header_bg.webp);
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
-  box-shadow: inset 0 0 0 100vmax rgba(15, 23, 42, 0.5);
 }
 
 header:after {
@@ -105,7 +111,7 @@ h3 {
   align-items: center;
   gap: 0.5rem;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.5) 0%, rgba(245, 158, 11, 0.6) 100%);
   color: #ffffff;
   padding: 1rem 2rem;
   font-size: 1rem;
@@ -114,14 +120,14 @@ h3 {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
   backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.7) 0%, rgba(245, 158, 11, 0.8) 100%);
 }
 
 .btn-primary:active,
