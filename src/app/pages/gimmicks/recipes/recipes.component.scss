@@ -1,0 +1,35 @@
+@use "@angular/material" as mat;
+
+mat-form-field {
+  @include mat.form-field-overrides(
+    (
+      outlined-caret-color: white,
+      outlined-focus-outline-color: white,
+      outlined-outline-color: white,
+      outlined-input-text-color: white,
+      outlined-hover-outline-color: white,
+      outlined-input-text-placeholder-color: lightgray,
+    )
+  );
+}
+
+section {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+section:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-image: url(/assets/skimming-stone-asteroid-meta.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}

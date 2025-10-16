@@ -1,0 +1,43 @@
+<div *ngIf="recipe | async as r" class="mt-0 w-full">
+  <div class="text-4xl text-center">{{ r.title }}</div>
+  <div class="flex gap-8 mt-8">
+    @if (r.imagePath) {
+    <img #recipeImage [src]="r.imagePath" [alt]="r.title" class="rounded" (load)="onImageLoad()" />
+    } @else {
+    <div
+      class="w-[200px] h-[200px] min-w-[200px] min-h-[200px] flex items-center justify-center bg-gray-100 rounded border border-gray-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="80"
+        height="80"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#9ca3af"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
+        />
+        <circle cx="12" cy="13" r="3" />
+        <line x1="2" y1="2" x2="22" y2="22" stroke-width="2.2" />
+      </svg>
+    </div>
+    }
+    <div class="flex flex-col items-center w-full">
+      <div class="flex flex-col items-center w-[400px]">
+        <div class="text-2xl">{{ 'gimmicks.recipes.ingredients' | translate }}</div>
+        <ul class="self-start">
+          @for (ingredient of r.ingredients; track $index) {
+
+          <li>{{ ingredient }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="text-center text-2xl mt-8">{{ 'gimmicks.recipes.preparation' | translate }}</div>
+  <div class="mt-4 whitespace-pre-line">{{ r.preparation }}</div>
+</div>

@@ -1,23 +1,30 @@
-<ion-header>
-  <ion-toolbar
-    color="primary"
-    class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white"
+<h2 mat-dialog-title>{{ 'gimmicks.recipes.uploadImageTitle' | translate }}</h2>
+<mat-dialog-content>
+  @if (!imageUrl()) {
+  <div
+    class="border-2 border-dashed border-[#ccc] rounded-lg px-[60px] py-[20px] text-center cursor-pointer bg-[#fafafa] transition-all hover:border-[#999] hover:bg-[#f0f0f0]"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (click)="fileInput.click()"
+    [ngClass]="{ '!border-[#3f51b5] !bg-[#e8eaf6]': isDragging() }"
   >
-    <ion-title>{{
-      "gimmicks.charts.imageCropper.headline" | translate
-    }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button
-        (click)="close()"
-        class="bg-white/30 rounded-full px-[2px] hover:scale-125"
-      >
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="overflow-auto">
-  <div *ngIf="imageUrl" class="flex flex-col gap-2 mt-4">
+    <div>
+      <p class="text-[#666] my-[10px]">
+        {{ 'gimmicks.recipes.dragOrClick' | translate }}
+      </p>
+      <p class="text-[12px] text-[#999]">{{ 'gimmicks.recipes.imageFormats' | translate }}</p>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      style="display: none"
+    />
+  </div>
+  } @else {
+  <div class="flex flex-col gap-2 mt-4">
     <div class="flex justify-center gap-8">
       <button
         class="bg-gradient-to-br from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white rounded shadow cursor-pointer h-7"
@@ -47,14 +54,14 @@
           <mat-icon>zoom_out</mat-icon>
         </button>
       </div>
-      <div>
+      <div class="w-full max-h-[400px]">
+        @if (cropperEnabled()) {
         <angular-cropper
-          class="charts-cropper"
-          *ngIf="cropperEnabled"
-          #cropper
-          [cropperOptions]="config"
-          [imageUrl]="imageUrl"
+          #angularCropper
+          [cropperOptions]="config()"
+          [imageUrl]="imageUrl()"
         ></angular-cropper>
+        }
       </div>
       <div class="h-full flex flex-col justify-center gap-8">
         <button
@@ -80,28 +87,14 @@
       </button>
     </div>
   </div>
-</ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <div class="flex gap-4">
-    <input
-      type="file"
-      accept="image/*"
-      hidden
-      (change)="onFileSelected($event)"
-      #fileUpload
-    />
-    <button
-      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-2 py-2 rounded shadow cursor-pointer"
-      (click)="fileUpload.click()"
-    >
-      {{ "gimmicks.charts.imageCropper.uploadImage" | translate }}
-    </button>
-    <button
-      class="bg-gradient-to-br from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 disabled:from-blue-300 disabled:to-blue-300 text-white px-2 py-2 rounded shadow cursor-pointer"
-      (click)="save()"
-      [disabled]="!imageUrl"
-    >
-      {{ "gimmicks.charts.imageCropper.saveImage" | translate }}
-    </button>
-  </div>
-</ion-fab>
+
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">{{ 'gimmicks.recipes.cancel' | translate }}</button>
+  @if (imageUrl()) {
+  <button mat-raised-button color="primary" (click)="onCrop()">
+    {{ 'gimmicks.recipes.apply' | translate }}
+  </button>
+  }
+</mat-dialog-actions>

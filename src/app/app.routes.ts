@@ -24,6 +24,11 @@ import { YahtzeeComponent } from './pages/gimmicks/games/yahtzee/yahtzee.compone
 import { WeatherComponent } from './pages/gimmicks/weather/weather.component';
 import { GoogleRedirectComponent } from './pages/gimmicks/auth/google-redirect.component';
 import { MinesweeperComponent } from './pages/gimmicks/games/minesweeper/minesweeper.component';
+import { RecipesComponent } from './pages/gimmicks/recipes/recipes.component';
+import { RecipesListComponent } from './pages/gimmicks/recipes/recipes-list/recipes-list.component';
+import { RecipeItemComponent } from './pages/gimmicks/recipes/recipe-item/recipe-item.component';
+import { AddRecipeComponent } from './pages/gimmicks/recipes/add-recipe/add-recipe.component';
+import { RecipePrintComponent } from './pages/gimmicks/recipes/recipe-print/recipe-print.component';
 
 export const routes: Routes = [
   {
@@ -126,12 +131,44 @@ export const routes: Routes = [
         path: 'weather',
         component: WeatherComponent,
       },
+      {
+        path: 'recipes',
+        component: RecipesComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: '/gimmicks/recipes/list',
+            pathMatch: 'full',
+          },
+          {
+            path: 'list',
+            component: RecipesListComponent,
+          },
+          {
+            path: 'recipe/:id',
+            component: RecipeItemComponent,
+          },
+          {
+            path: 'add',
+            component: AddRecipeComponent,
+          },
+          {
+            path: 'update/:id',
+            component: AddRecipeComponent,
+          },
+        ],
+      },
     ],
   },
   {
     path: 'print/:printDate',
     outlet: 'print',
     component: PrintScheduleComponent,
+  },
+  {
+    path: 'print-recipe/:id',
+    outlet: 'print',
+    component: RecipePrintComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

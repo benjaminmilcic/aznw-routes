@@ -60,13 +60,16 @@ export const environment = {
     webSocketsUrl: `https://${ip}:3000/yahtzee-game`,
   },
   geoLocation: {
-    reverseGeoCodeApi:
-      `https://${ip}:3000/geolocation/reverse-geocode`,
+    reverseGeoCodeApi: `https://${ip}:3000/geolocation/reverse-geocode`,
     geoCodeApi: `https://${ip}:3000/geolocation/geocode`,
     citiesApi: `https://${ip}:3000/geolocation/cities`,
   },
   googleLogin: {
     loginApi: `https://${ip}:3000/auth/google`,
+  },
+  recipes: {
+    recipesApi: `http://${ip}:3000/recipes`,
+    filesUrl: `http://${ip}:3000/files`,
   },
   production: true,
 };

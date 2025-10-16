@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/eigene Projekte/**)",
+      "WebFetch(domain:libretranslate.com)",
+      "WebFetch(domain:docs.libretranslate.com)",
+      "WebSearch",
+      "Bash(npm install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

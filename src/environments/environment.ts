@@ -64,6 +64,10 @@ export const environment = {
   googleLogin: {
     loginApi: `http://${ip}:3000/auth/google`,
   },
+  recipes: {
+    recipesApi: `http://${ip}:3000/recipes`,
+    filesUrl: `http://${ip}:3000/files`,
+  },
   production: false,
 };
 

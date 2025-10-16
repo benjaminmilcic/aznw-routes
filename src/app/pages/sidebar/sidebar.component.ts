@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateSendButtonService } from '../home/components/shared/translate-send-button.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -16,6 +16,8 @@ export class SidebarComponent implements OnInit {
   sidebarActivated: boolean = false;
 
   language: string = this.translate.currentLang;
+
+  @ViewChild(MatMenuTrigger) languageMenuTrigger!: MatMenuTrigger;
 
   constructor(
     private translate: TranslateService,
@@ -31,6 +33,11 @@ export class SidebarComponent implements OnInit {
   onToggleSidebar(event: Event | null) {
     if (event) {
       event.preventDefault();
+    }
+
+    // Close language menu if open when closing sidebar
+    if (this.sidebarActivated && this.languageMenuTrigger) {
+      this.languageMenuTrigger.closeMenu();
     }
 
     this.sidebarActivated = !this.sidebarActivated;

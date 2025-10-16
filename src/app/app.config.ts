@@ -15,6 +15,11 @@ import { provideNgxStripe } from 'ngx-stripe';
 import { LocationStrategy } from '@angular/common';
 import { ParameterHashLocationStrategy } from './ParameterHashLocationStrategy';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { provideStore } from '@ngrx/store';
+import { recipeReducer } from './pages/gimmicks/recipes/store/reducers/recipe.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { RecipeEffects } from './pages/gimmicks/recipes/store/effects/recipe.effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 
 
@@ -59,5 +64,15 @@ export const appConfig: ApplicationConfig = {
       useClass: ParameterHashLocationStrategy,
     },
     importProvidersFrom(NgCircleProgressModule.forRoot({})),
+    provideStore({
+      recipes: recipeReducer,
+    }),
+
+    provideEffects([RecipeEffects]),
+    // Redux DevTools für Debugging (optional, aber sehr hilfreich!)
+    provideStoreDevtools({
+      maxAge: 25, // Anzahl der gespeicherten States
+      logOnly: true, // Im Production-Modus auf true setzen
+    }),
   ],
 };

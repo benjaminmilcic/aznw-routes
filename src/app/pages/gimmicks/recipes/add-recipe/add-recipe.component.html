@@ -1,0 +1,190 @@
+@if(wrongId()){
+<div class="mt-8">
+  <div class="text-center text-2xl">⚠️</div>
+  <div class="text-center mt-2">
+    {{ 'gimmicks.recipes.invalidRecipeId' | translate }}
+  </div>
+  <div class="text-center mt-2">{{ 'gimmicks.recipes.cannotEditRecipe' | translate }}</div>
+</div>
+}@else{ @if (!savedReady()) {
+<div class="mt-8 flex flex-col justify-center w-full">
+  @if (recipeToUpdate()) {
+    <div class="my-4 text-center text-orange-300">{{ 'gimmicks.recipes.editRecipe' | translate }}</div>
+  }
+  <form [formGroup]="recipeForm">
+    <mat-form-field
+      subscriptSizing="dynamic"
+      appearance="outline"
+      class="w-full max-w-[500px]"
+      floatLabel="always"
+    >
+      <mat-label>{{ 'gimmicks.recipes.recipeName' | translate }}</mat-label>
+      <input matInput formControlName="title" [disabled]="isLoading()" />
+    </mat-form-field>
+
+    <div class="flex flex-wrap justify-center sm:justify-start items-center gap-5 mt-4 w-full">
+      <div class="w-[200px] h-[200px]">
+        @if (recipeImage()) {
+        <img
+          [src]="recipeImage()"
+          [alt]="'gimmicks.recipes.recipeImage' | translate"
+          class="w-[200px] h-[200px] object-cover rounded border border-[#ddd]"
+        />
+        } @else {
+        <div
+          class="flex flex-col justify-center items-center w-[200px] h-[200px] border-2 border-dashed bordewr-[#ccc] bg-[#f5f5f5] rounded"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="60"
+            height="60"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#999"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+            <path d="M7 2v20" />
+            <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+          </svg>
+          <span class="text-[#999] text-[14px] text-center p-4 mt-2"
+            >{{ 'gimmicks.recipes.uploadRecipeImage' | translate }}</span
+          >
+        </div>
+        }
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="openImageUploadDialog()"
+        [disabled]="isLoading()"
+      >
+        <div class="flex gap-1 items-center">
+          @if(!recipeImage()){
+          <div class="text-[20px] translate-y-[-5px]">📷</div>
+          {{ 'gimmicks.recipes.uploadImage' | translate }} }@else {
+          <div class="text-[20px] translate-y-[-5px]">📷</div>
+          {{ 'gimmicks.recipes.changeImage' | translate }} }
+        </div>
+      </button>
+      @if (recipeImage()) {
+      <button
+        mat-icon-button
+        type="button"
+        [matTooltip]="'gimmicks.recipes.removeImage' | translate"
+        (click)="onDeleteRecipeImage()"
+        [disabled]="isLoading()"
+      >
+        <div class="flex justify-center items-center translate-y-[-5px]">
+          🗑️
+        </div>
+      </button>
+      }
+    </div>
+    <div
+      class="relative inline-block border border-white rounded-md px-3 py-5 w-full mt-6 max-w-[500px] box-border"
+    >
+      <label
+        class="absolute -top-[10px] left-3 px-1 text-[13px] text-white/90 bg-red-900/60 font-semibold"
+        >{{ 'gimmicks.recipes.ingredients' | translate }}</label
+      >
+      <div formArrayName="ingredients">
+        @for (ingredient of ingredients.controls; track $index; let index =
+        $index; let first=$first; let last=$last) {
+        <div class="flex gap-2 items-center" [class.mt-2]="!first">
+          <div>{{ index + 1 }}.</div>
+          <mat-form-field
+            subscriptSizing="dynamic"
+            appearance="outline"
+            class="w-full"
+          >
+            <input
+              matInput
+              [formControlName]="index"
+              [disabled]="isLoading()"
+              (keydown.enter)="onIngredientEnter(index, last, $event)"
+              #ingredientInput
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            type="button"
+            [matTooltip]="'gimmicks.recipes.removeIngredient' | translate"
+            (click)="onDeleteIngredient(index)"
+            [disabled]="isLoading()"
+          >
+            <div class="flex justify-center items-center translate-y-[-5px]">
+              🗑️
+            </div>
+          </button>
+        </div>
+        }
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button
+          mat-fab
+          color="primary"
+          type="button"
+          (click)="onAddIngredient()"
+          [disabled]="isLoading()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mt-6 w-full">
+      <mat-form-field
+        subscriptSizing="dynamic"
+        appearance="outline"
+        floatLabel="always"
+        class="w-full max-w-[500px]"
+      >
+        <mat-label>{{ 'gimmicks.recipes.preparation' | translate }}</mat-label>
+        <textarea
+          matInput
+          rows="10"
+          formControlName="preparation"
+          [disabled]="isLoading()"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="flex justify-end mt-6">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        (click)="onSaveRecipe()"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+        <span>⏳ {{ 'gimmicks.recipes.saving' | translate }}</span>
+        } @else {
+        <span><span class="text-[18px]">💾</span> {{ 'gimmicks.recipes.save' | translate }}</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>
+}@else {
+<div class="mt-8 text-center text-2xl">✅</div>
+<div class="mt-4 text-center">{{ 'gimmicks.recipes.savedSuccessfully' | translate }}</div>
+<div class="mt-4 text-center">{{ 'gimmicks.recipes.whatNext' | translate }}</div>
+<div class="flex flex-col gap-4 item-center mt-12">
+  <button mat-raised-button color="accent" (click)="onAddRecipe()">
+    ➕{{ 'gimmicks.recipes.addAnotherRecipe' | translate }}
+  </button>
+  <button mat-raised-button color="accent" (click)="onShowRecipe()">
+    🔍 {{ 'gimmicks.recipes.viewRecipe' | translate }}
+  </button>
+  <button mat-raised-button color="accent" (click)="onUpdateRecipe()">
+    📝 {{ 'gimmicks.recipes.editRecipeAction' | translate }}
+  </button>
+  <button mat-raised-button color="accent" (click)="onRecipeList()">
+    <span class="text-[18px]">🍲</span> {{ 'gimmicks.recipes.toRecipeList' | translate }}
+  </button>
+</div>
+} }

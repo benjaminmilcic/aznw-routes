@@ -1,7 +1,7 @@
 <div id="header">
   <div
-    *ngIf="innerWidth >= 1200"
-    class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-gray-100 px-8 flex flex-wrap gap-8 h-12 place-items-center shadow-lg backdrop-blur-sm border-b border-blue-700/30"
+    *ngIf="innerWidth >= 1270"
+    class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-gray-100 px-8 flex flex-wrap gap-6 h-12 place-items-center shadow-lg backdrop-blur-sm border-b border-blue-700/30"
   >
     <div
       class="group hover:text-white cursor-pointer flex gap-2 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-blue-700/50 hover:shadow-md"
@@ -73,9 +73,16 @@
       <img class="w-4 h-4 mt-[3px]" src="assets/svg/tic-tac-toe-small.svg" />
       <div class="font-medium">{{ "gimmicks.menu.games" | translate }}</div>
     </div>
+    <div
+      class="relative group hover:text-white cursor-pointer flex gap-1 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-blue-600/50 hover:shadow-md"
+      [routerLink]="['recipes']"
+    >
+      <div class="text-[20px] mt-[-2px]">🍲</div>
+      <div class="font-medium">{{ "gimmicks.menu.recipes" | translate }}</div>
+    </div>
   </div>
   <div
-    *ngIf="innerWidth < 1200"
+    *ngIf="innerWidth < 1270"
     class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 h-12 flex flex-col shadow-lg border-b border-blue-700/30"
   >
     <button
@@ -244,6 +251,23 @@
           class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.games" | translate }}
+        </div>
+      </div>
+      <div
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-50 group seventhItemIn cursor-pointer"
+        [ngClass]="{ seventhItemOut: fadeOut }"
+        [routerLink]="['recipes']"
+        (click)="hideSubMenu()"
+      >
+        <button
+          class="w-12 h-12 rounded-full shadow-lg bg-red-500 group-hover:bg-red-600 cursor-pointer text-white text-xl"
+        >
+          🍲
+        </button>
+        <div
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
+        >
+          {{ "gimmicks.menu.recipes" | translate }}
         </div>
       </div>
     </ng-container>

@@ -1,0 +1,20 @@
+/* Style for translation menu to match accent color */
+::ng-deep .mat-mdc-menu-panel.translation-menu {
+  background-color: #ff4081 !important; /* accent color */
+}
+
+::ng-deep .mat-mdc-menu-panel.translation-menu .mat-mdc-menu-content {
+  background-color: #ff4081 !important;
+}
+
+::ng-deep .mat-mdc-menu-panel.translation-menu .mat-mdc-menu-item {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-menu-panel.translation-menu .mat-mdc-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+::ng-deep .mat-mdc-menu-panel.translation-menu .mat-divider {
+  border-top-color: rgba(255, 255, 255, 0.3) !important;
+}

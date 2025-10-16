@@ -1,0 +1,13 @@
+<div mat-dialog-title class="bg-gradient-to-br from-red-900 to-red-700/60 !text-white">🗑️ {{ 'gimmicks.recipes.deleteQuestion' | translate }}</div>
+<mat-dialog-content>
+  <div class="flex gap-4 items-center">
+    <div class="text-3xl">❓</div>
+    <div class="text-black pt-8">
+      {{ 'gimmicks.recipes.deleteConfirmation' | translate: {title: data.title} }}
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">{{ 'gimmicks.recipes.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="onDelete()">{{ 'gimmicks.recipes.delete' | translate }}</button>
+</mat-dialog-actions>
