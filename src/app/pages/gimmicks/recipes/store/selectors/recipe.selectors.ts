@@ -17,11 +17,15 @@ export const selectSearchTerm = createSelector(
 export const selectAllRecipesSummary = createSelector(
   selectRecipeState,
   (state: RecipeState) =>
-    state.recipes.map((recipe) => ({
-      id: recipe.id,
-      title: recipe.title,
-      imagePath: recipe.imagePath,
-    }))
+    state.recipes
+      .map((recipe) => ({
+        id: recipe.id,
+        title: recipe.title,
+        imagePath: recipe.imagePath,
+      }))
+      .sort((a, b) =>
+        a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+      )
 );
 
 export const selectFilteredRecipesSummary = createSelector(
