@@ -68,8 +68,8 @@ export const environment = {
     loginApi: `https://${ip}:3000/auth/google`,
   },
   recipes: {
-    recipesApi: `http://${ip}:3000/recipes`,
-    filesUrl: `http://${ip}:3000/files`,
+    recipesApi: `https://${ip}:3000/recipes`,
+    filesUrl: `https://${ip}:3000/files`,
   },
   production: true,
 };
