@@ -2,14 +2,18 @@
 <div class="mt-8">
   <div class="text-center text-2xl">⚠️</div>
   <div class="text-center mt-2">
-    {{ 'gimmicks.recipes.invalidRecipeId' | translate }}
+    {{ "gimmicks.recipes.invalidRecipeId" | translate }}
   </div>
-  <div class="text-center mt-2">{{ 'gimmicks.recipes.cannotEditRecipe' | translate }}</div>
+  <div class="text-center mt-2">
+    {{ "gimmicks.recipes.cannotEditRecipe" | translate }}
+  </div>
 </div>
 }@else{ @if (!savedReady()) {
 <div class="mt-8 flex flex-col justify-center w-full">
   @if (recipeToUpdate()) {
-    <div class="my-4 text-center text-orange-300">{{ 'gimmicks.recipes.editRecipe' | translate }}</div>
+  <div class="my-4 text-center text-orange-300">
+    {{ "gimmicks.recipes.editRecipe" | translate }}
+  </div>
   }
   <form [formGroup]="recipeForm">
     <mat-form-field
@@ -18,11 +22,13 @@
       class="w-full max-w-[500px]"
       floatLabel="always"
     >
-      <mat-label>{{ 'gimmicks.recipes.recipeName' | translate }}</mat-label>
+      <mat-label>{{ "gimmicks.recipes.recipeName" | translate }}</mat-label>
       <input matInput formControlName="title" [disabled]="isLoading()" />
     </mat-form-field>
 
-    <div class="flex flex-wrap justify-center sm:justify-start items-center gap-5 mt-4 w-full">
+    <div
+      class="flex flex-wrap justify-center sm:justify-start items-center gap-5 mt-4 w-full"
+    >
       <div class="w-[200px] h-[200px]">
         @if (recipeImage()) {
         <img
@@ -49,9 +55,9 @@
             <path d="M7 2v20" />
             <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
           </svg>
-          <span class="text-[#999] text-[14px] text-center p-4 mt-2"
-            >{{ 'gimmicks.recipes.uploadRecipeImage' | translate }}</span
-          >
+          <span class="text-[#999] text-[14px] text-center p-4 mt-2">{{
+            "gimmicks.recipes.uploadRecipeImage" | translate
+          }}</span>
         </div>
         }
       </div>
@@ -65,9 +71,9 @@
         <div class="flex gap-1 items-center">
           @if(!recipeImage()){
           <div class="text-[20px] translate-y-[-5px]">📷</div>
-          {{ 'gimmicks.recipes.uploadImage' | translate }} }@else {
+          {{ "gimmicks.recipes.uploadImage" | translate }} }@else {
           <div class="text-[20px] translate-y-[-5px]">📷</div>
-          {{ 'gimmicks.recipes.changeImage' | translate }} }
+          {{ "gimmicks.recipes.changeImage" | translate }} }
         </div>
       </button>
       @if (recipeImage()) {
@@ -89,7 +95,7 @@
     >
       <label
         class="absolute -top-[10px] left-3 px-1 text-[13px] text-white/90 bg-red-900/60 font-semibold"
-        >{{ 'gimmicks.recipes.ingredients' | translate }}</label
+        >{{ "gimmicks.recipes.ingredients" | translate }}</label
       >
       <div formArrayName="ingredients">
         @for (ingredient of ingredients.controls; track $index; let index =
@@ -143,10 +149,12 @@
         floatLabel="always"
         class="w-full max-w-[500px]"
       >
-        <mat-label>{{ 'gimmicks.recipes.preparation' | translate }}</mat-label>
+        <mat-label>{{ "gimmicks.recipes.preparation" | translate }}</mat-label>
         <textarea
           matInput
-          rows="10"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="10"
+          cdkAutosizeMaxRows="500"
           formControlName="preparation"
           [disabled]="isLoading()"
         ></textarea>
@@ -161,9 +169,12 @@
         [disabled]="isLoading()"
       >
         @if (isLoading()) {
-        <span>⏳ {{ 'gimmicks.recipes.saving' | translate }}</span>
+        <span>⏳ {{ "gimmicks.recipes.saving" | translate }}</span>
         } @else {
-        <span><span class="text-[18px]">💾</span> {{ 'gimmicks.recipes.save' | translate }}</span>
+        <span
+          ><span class="text-[18px]">💾</span>
+          {{ "gimmicks.recipes.save" | translate }}</span
+        >
         }
       </button>
     </div>
@@ -171,20 +182,25 @@
 </div>
 }@else {
 <div class="mt-8 text-center text-2xl">✅</div>
-<div class="mt-4 text-center">{{ 'gimmicks.recipes.savedSuccessfully' | translate }}</div>
-<div class="mt-4 text-center">{{ 'gimmicks.recipes.whatNext' | translate }}</div>
+<div class="mt-4 text-center">
+  {{ "gimmicks.recipes.savedSuccessfully" | translate }}
+</div>
+<div class="mt-4 text-center">
+  {{ "gimmicks.recipes.whatNext" | translate }}
+</div>
 <div class="flex flex-col gap-4 item-center mt-12">
   <button mat-raised-button color="accent" (click)="onAddRecipe()">
-    ➕{{ 'gimmicks.recipes.addAnotherRecipe' | translate }}
+    ➕{{ "gimmicks.recipes.addAnotherRecipe" | translate }}
   </button>
   <button mat-raised-button color="accent" (click)="onShowRecipe()">
-    🔍 {{ 'gimmicks.recipes.viewRecipe' | translate }}
+    🔍 {{ "gimmicks.recipes.viewRecipe" | translate }}
   </button>
   <button mat-raised-button color="accent" (click)="onUpdateRecipe()">
-    📝 {{ 'gimmicks.recipes.editRecipeAction' | translate }}
+    📝 {{ "gimmicks.recipes.editRecipeAction" | translate }}
   </button>
   <button mat-raised-button color="accent" (click)="onRecipeList()">
-    <span class="text-[18px]">🍲</span> {{ 'gimmicks.recipes.toRecipeList' | translate }}
+    <span class="text-[18px]">🍲</span>
+    {{ "gimmicks.recipes.toRecipeList" | translate }}
   </button>
 </div>
 } }

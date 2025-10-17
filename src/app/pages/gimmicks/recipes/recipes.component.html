@@ -24,7 +24,7 @@
 
       <div class="flex gap-6 mt-4 overflow-auto max-w-full">
         <div
-          class="cursor-pointer text-center"
+          class="cursor-pointer text-center flex items-end"
           [ngClass]="{
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'list'
@@ -35,7 +35,7 @@
         </div>
         @if (allRecipes().length) {
         <div
-          class="cursor-pointer text-center"
+          class="cursor-pointer text-center flex items-end"
           [ngClass]="{
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'day'
@@ -46,7 +46,7 @@
         </div>
         }
         <div
-          class="cursor-pointer text-center"
+          class="cursor-pointer text-center flex items-end"
           [ngClass]="{
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'search'
@@ -56,7 +56,7 @@
           {{ "gimmicks.recipes.recipeSearch" | translate }}
         </div>
         <div
-          class="cursor-pointer text-center"
+          class="cursor-pointer text-center flex items-end"
           [ngClass]="{
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'add'
