@@ -85,6 +85,9 @@ export class RecipeItemComponent {
         }
         this.recipeId.set(id);
         this.error.set(false);
+        // Zurücksetzen der Übersetzung bei Rezept-Wechsel
+        this.translatedRecipe$.next(null);
+        this.currentLanguage.set(null);
       });
   }
 
