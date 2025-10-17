@@ -2,7 +2,13 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpBackend,
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
@@ -21,10 +27,10 @@ import { provideEffects } from '@ngrx/effects';
 import { RecipeEffects } from './pages/gimmicks/recipes/store/effects/recipe.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
-
-
 export function HttpLoaderFactory(httpHandler: HttpBackend) {
-  return new TranslateHttpLoader(new HttpClient(httpHandler));
+  const http = new HttpClient(httpHandler);
+  const version = environment.version;
+  return new TranslateHttpLoader(http, './assets/i18n/', `.json?v=${version}`);
 }
 
 export const appConfig: ApplicationConfig = {

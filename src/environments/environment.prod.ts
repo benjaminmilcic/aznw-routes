@@ -72,4 +72,5 @@ export const environment = {
     filesUrl: `https://${ip}:3000/files`,
   },
   production: true,
+  version: new Date().getTime(),
 };
