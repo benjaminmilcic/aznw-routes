@@ -28,6 +28,14 @@ export const selectAllRecipesSummary = createSelector(
       )
 );
 
+/**
+ * Entfernt Akzente aus einem String
+ * Beispiel: 'Ćevapčići' => 'Cevapcici'
+ */
+const removeAccents = (str: string): string => {
+  return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+};
+
 export const selectFilteredRecipesSummary = createSelector(
   selectAllRecipesSummary,
   selectSearch,
@@ -36,13 +44,21 @@ export const selectFilteredRecipesSummary = createSelector(
     if (!search) {
       return recipes;
     } else {
-      return searchTerm
-        ? recipes.filter((recipe) =>
-            recipe.title
-              .toLocaleLowerCase()
-              .includes(searchTerm.toLocaleLowerCase())
-          )
-        : [];
+      if (!searchTerm) {
+        return [];
+      }
+
+      return recipes.filter((recipe) => {
+        const titleLower = recipe.title.toLocaleLowerCase();
+        const titleWithoutAccents = removeAccents(titleLower);
+
+        // Exakte Suche: Suche immer im Original-Titel
+        // UND zusätzlich im Titel ohne Akzente (damit "c" auch "Ćevapčići" findet)
+        return (
+          titleLower.includes(searchTerm.toLocaleLowerCase()) ||
+          titleWithoutAccents.includes(searchTerm.toLocaleLowerCase())
+        );
+      });
     }
   }
 );

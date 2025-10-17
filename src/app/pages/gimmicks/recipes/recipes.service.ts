@@ -204,13 +204,13 @@ export class RecipesService {
     const chunks = this.splitTextIntoChunks(text, MAX_CHARS);
 
     // Alle Chunks parallel übersetzen
-    const translations$ = chunks.map(chunk =>
+    const translations$ = chunks.map((chunk) =>
       this.translateTextChunk(chunk.text, sourceLang, targetLang)
     );
 
     // Alle Übersetzungen zusammenfügen mit Original-Separatoren
     return forkJoin(translations$).pipe(
-      map(translatedChunks => {
+      map((translatedChunks) => {
         let result = '';
         translatedChunks.forEach((translated, idx) => {
           result += translated;
@@ -230,8 +230,11 @@ export class RecipesService {
    * @param maxLength Maximale Länge pro Chunk
    * @returns Array von Objekten mit Text-Chunks und nachfolgendem Separator
    */
-  private splitTextIntoChunks(text: string, maxLength: number): Array<{text: string, separator: string}> {
-    const chunks: Array<{text: string, separator: string}> = [];
+  private splitTextIntoChunks(
+    text: string,
+    maxLength: number
+  ): Array<{ text: string; separator: string }> {
+    const chunks: Array<{ text: string; separator: string }> = [];
     let currentChunk = '';
     let chunkSeparator = '';
 
@@ -255,7 +258,8 @@ export class RecipesService {
       const word = part;
 
       // Prüfe ob das Wort in den aktuellen Chunk passt
-      const wouldBeLength = currentChunk.length + chunkSeparator.length + word.length;
+      const wouldBeLength =
+        currentChunk.length + chunkSeparator.length + word.length;
 
       if (wouldBeLength <= maxLength || !currentChunk) {
         // Füge zum aktuellen Chunk hinzu
@@ -265,7 +269,7 @@ export class RecipesService {
         // Chunk ist voll - speichere ihn mit dem gesammelten Separator
         chunks.push({
           text: currentChunk,
-          separator: chunkSeparator
+          separator: chunkSeparator,
         });
 
         // Starte neuen Chunk mit dem aktuellen Wort
@@ -278,7 +282,7 @@ export class RecipesService {
     if (currentChunk) {
       chunks.push({
         text: currentChunk,
-        separator: chunkSeparator
+        separator: chunkSeparator,
       });
     }
 
@@ -299,7 +303,9 @@ export class RecipesService {
   ): Observable<string> {
     // MyMemory API verwendet GET mit Query-Parametern
     const langPair = `${sourceLang}|${targetLang}`;
-    const url = `${this.MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=${langPair}`;
+    const url = `${this.MYMEMORY_API}?q=${encodeURIComponent(
+      text
+    )}&langpair=${langPair}`;
 
     return this.http.get<MyMemoryResponse>(url).pipe(
       map((response) => {
