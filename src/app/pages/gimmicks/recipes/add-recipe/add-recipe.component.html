@@ -61,34 +61,36 @@
         </div>
         }
       </div>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="openImageUploadDialog()"
-        [disabled]="isLoading()"
-      >
-        <div class="flex gap-1 items-center">
-          @if(!recipeImage()){
-          <div class="text-[20px] translate-y-[-5px]">📷</div>
-          {{ "gimmicks.recipes.uploadImage" | translate }} }@else {
-          <div class="text-[20px] translate-y-[-5px]">📷</div>
-          {{ "gimmicks.recipes.changeImage" | translate }} }
-        </div>
-      </button>
-      @if (recipeImage()) {
-      <button
-        mat-icon-button
-        type="button"
-        [matTooltip]="'gimmicks.recipes.removeImage' | translate"
-        (click)="onDeleteRecipeImage()"
-        [disabled]="isLoading()"
-      >
-        <div class="flex justify-center items-center translate-y-[-5px]">
-          🗑️
-        </div>
-      </button>
-      }
+      <div class="flex gap-5 items-center">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="openImageUploadDialog()"
+          [disabled]="isLoading()"
+        >
+          <div class="flex gap-1 items-center">
+            @if(!recipeImage()){
+            <div class="text-[20px] translate-y-[-5px]">📷</div>
+            {{ "gimmicks.recipes.uploadImage" | translate }} }@else {
+            <div class="text-[20px] translate-y-[-5px]">📷</div>
+            {{ "gimmicks.recipes.changeImage" | translate }} }
+          </div>
+        </button>
+        @if (recipeImage()) {
+        <button
+          mat-icon-button
+          type="button"
+          [matTooltip]="'gimmicks.recipes.removeImage' | translate"
+          (click)="onDeleteRecipeImage()"
+          [disabled]="isLoading()"
+        >
+          <div class="flex justify-center items-center translate-y-[-5px]">
+            🗑️
+          </div>
+        </button>
+        }
+      </div>
     </div>
     <div
       class="relative inline-block border border-white rounded-md px-3 py-5 w-full mt-6 max-w-[500px] box-border"
