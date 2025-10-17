@@ -193,6 +193,110 @@ export class RecipesService {
       return of(text);
     }
 
+    const MAX_CHARS = 450; // Sicherheitspuffer unter dem 500-Zeichen-Limit
+
+    // Wenn Text kurz genug ist, direkt übersetzen
+    if (text.length <= MAX_CHARS) {
+      return this.translateTextChunk(text, sourceLang, targetLang);
+    }
+
+    // Text in Chunks aufteilen
+    const chunks = this.splitTextIntoChunks(text, MAX_CHARS);
+
+    // Alle Chunks parallel übersetzen
+    const translations$ = chunks.map(chunk =>
+      this.translateTextChunk(chunk.text, sourceLang, targetLang)
+    );
+
+    // Alle Übersetzungen zusammenfügen mit Original-Separatoren
+    return forkJoin(translations$).pipe(
+      map(translatedChunks => {
+        let result = '';
+        translatedChunks.forEach((translated, idx) => {
+          result += translated;
+          if (idx < chunks.length - 1) {
+            // Verwende den Original-Separator (kann \n oder Leerzeichen sein)
+            result += chunks[idx].separator || ' ';
+          }
+        });
+        return result;
+      })
+    );
+  }
+
+  /**
+   * Teilt einen Text in Chunks auf, die an Satzgrenzen getrennt werden
+   * @param text Der zu teilende Text
+   * @param maxLength Maximale Länge pro Chunk
+   * @returns Array von Objekten mit Text-Chunks und nachfolgendem Separator
+   */
+  private splitTextIntoChunks(text: string, maxLength: number): Array<{text: string, separator: string}> {
+    const chunks: Array<{text: string, separator: string}> = [];
+    let currentChunk = '';
+    let chunkSeparator = '';
+
+    // Splitte Text an allen Whitespace-Grenzen und behalte die Separatoren
+    const parts = text.split(/(\s+)/);
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+
+      // Überspringe leere Parts
+      if (!part) continue;
+
+      // Ist es ein Separator (Leerzeichen/Zeilenumbrüche)?
+      if (/^\s+$/.test(part)) {
+        // Füge Separator zum aktuellen Chunk hinzu
+        chunkSeparator += part;
+        continue;
+      }
+
+      // Es ist ein Textteil (Wort oder Phrase)
+      const word = part;
+
+      // Prüfe ob das Wort in den aktuellen Chunk passt
+      const wouldBeLength = currentChunk.length + chunkSeparator.length + word.length;
+
+      if (wouldBeLength <= maxLength || !currentChunk) {
+        // Füge zum aktuellen Chunk hinzu
+        currentChunk += chunkSeparator + word;
+        chunkSeparator = '';
+      } else {
+        // Chunk ist voll - speichere ihn mit dem gesammelten Separator
+        chunks.push({
+          text: currentChunk,
+          separator: chunkSeparator
+        });
+
+        // Starte neuen Chunk mit dem aktuellen Wort
+        currentChunk = word;
+        chunkSeparator = '';
+      }
+    }
+
+    // Letzten Chunk hinzufügen
+    if (currentChunk) {
+      chunks.push({
+        text: currentChunk,
+        separator: chunkSeparator
+      });
+    }
+
+    return chunks;
+  }
+
+  /**
+   * Übersetzt einen einzelnen Text-Chunk mit MyMemory API
+   * @param text Zu übersetzender Text-Chunk
+   * @param sourceLang Ausgangssprache
+   * @param targetLang Zielsprache
+   * @returns Observable mit übersetztem Text
+   */
+  private translateTextChunk(
+    text: string,
+    sourceLang: string,
+    targetLang: string
+  ): Observable<string> {
     // MyMemory API verwendet GET mit Query-Parametern
     const langPair = `${sourceLang}|${targetLang}`;
     const url = `${this.MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=${langPair}`;

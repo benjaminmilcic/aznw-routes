@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { filter, Observable } from 'rxjs';
 import {
+  selectAllRecipesSummary,
   selectError,
   selectFilteredRecipesSummary,
   selectIsLoading,
@@ -52,6 +53,10 @@ export class RecipesComponent implements OnInit {
     initialValue: false,
   });
   recipes = toSignal(this.store.select(selectFilteredRecipesSummary), {
+    initialValue: [],
+  });
+
+  allRecipes = toSignal(this.store.select(selectAllRecipesSummary), {
     initialValue: [],
   });
 
