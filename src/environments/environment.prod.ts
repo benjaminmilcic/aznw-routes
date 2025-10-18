@@ -70,6 +70,7 @@ export const environment = {
   recipes: {
     recipesApi: `https://${ip}:3000/recipes`,
     filesUrl: `https://${ip}:3000/files`,
+    translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
   },
   production: true,
   version: new Date().getTime(),

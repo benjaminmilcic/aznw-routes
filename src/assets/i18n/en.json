@@ -425,7 +425,12 @@
       "uploadImageTitle":"Upload Image",
       "dragOrClick":"Drag image here or click to upload",
       "imageFormats":"JPG, PNG, GIF (max. 5MB)",
-      "apply":"Apply"
+      "apply":"Apply",
+      "translationRateLimitExceeded":"Translation limit reached. Please try again later.",
+      "translationTooManyRequests":"Too many translation requests. Please wait a moment.",
+      "translationNetworkError":"Network error during translation. Please check your internet connection.",
+      "translationApiError":"Translation API error. Please try again later.",
+      "translationUnknownError":"Unknown error during translation."
     }
   },
   "pageNotFound": {

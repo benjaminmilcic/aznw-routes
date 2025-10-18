@@ -47,6 +47,7 @@ export const recipeReducer = createReducer(
     return {
       ...state,
       search,
+      error:null
     };
   }),
 
@@ -54,6 +55,7 @@ export const recipeReducer = createReducer(
     return {
       ...state,
       searchTerm,
+      error:null
     };
   }),
 
@@ -155,6 +157,27 @@ export const recipeReducer = createReducer(
     return {
       ...state,
       isLoading: false,
+      error,
+    };
+  }),
+
+  on(RecipeActions.translateRecipe, (state) => {
+    return {
+      ...state,
+      error: null,
+    };
+  }),
+
+  on(RecipeActions.translateRecipeSuccess, (state) => {
+    return {
+      ...state,
+      error: null,
+    };
+  }),
+
+  on(RecipeActions.translateRecipeFailure, (state, { error }) => {
+    return {
+      ...state,
       error,
     };
   })

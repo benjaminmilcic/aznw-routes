@@ -165,15 +165,16 @@ export class RecipesService {
         this.cacheTranslation(recipe.id, targetLang, translatedRecipe);
 
         return translatedRecipe;
-      }),
-      catchError((error) => {
-        console.error('Translation error:', error);
-        return of({
-          ...recipe,
-          detectedLanguage: sourceLang,
-          targetLanguage: targetLang,
-        });
       })
+      // ❌ Entfernt: catchError wird entfernt damit Fehler zur Component durchgereicht werden
+      // catchError((error) => {
+      //   console.error('Translation error:', error);
+      //   return of({
+      //     ...recipe,
+      //     detectedLanguage: sourceLang,
+      //     targetLanguage: targetLang,
+      //   });
+      // })
     );
   }
 
@@ -303,22 +304,41 @@ export class RecipesService {
   ): Observable<string> {
     // MyMemory API verwendet GET mit Query-Parametern
     const langPair = `${sourceLang}|${targetLang}`;
+    const email = this.environment.recipes.translationEmail || '';
     const url = `${this.MYMEMORY_API}?q=${encodeURIComponent(
       text
-    )}&langpair=${langPair}`;
+    )}&langpair=${langPair}&de=${encodeURIComponent(email)}`;
 
     return this.http.get<MyMemoryResponse>(url).pipe(
       map((response) => {
         if (response.responseStatus === 200) {
           return response.responseData.translatedText;
+        } else if (response.responseStatus === 403) {
+          // Rate Limit erreicht
+          throw new Error('TRANSLATION_RATE_LIMIT_EXCEEDED');
+        } else if (response.responseStatus === 429) {
+          // Zu viele Anfragen
+          throw new Error('TRANSLATION_TOO_MANY_REQUESTS');
         } else {
           console.warn('Translation API warning:', response.responseDetails);
-          return text; // Fallback bei Nicht-200 Status
+          throw new Error('TRANSLATION_API_ERROR');
         }
       }),
       catchError((error) => {
         console.error('Translation API error:', error);
-        return of(text); // Fallback: Original-Text zurückgeben
+
+        // Spezifische Fehler weiterleiten
+        if (error.message?.startsWith('TRANSLATION_')) {
+          throw error;
+        }
+
+        // Netzwerkfehler
+        if (error.status === 0) {
+          throw new Error('TRANSLATION_NETWORK_ERROR');
+        }
+
+        // Sonstige Fehler
+        throw new Error('TRANSLATION_UNKNOWN_ERROR');
       })
     );
   }

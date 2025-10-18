@@ -70,3 +70,18 @@ export const updateRecipeFailure = createAction(
   props<{ error: string }>()
 );
 
+export const translateRecipe = createAction(
+  '[Recipe] Translate Recipe',
+  props<{ recipeId: number }>()
+);
+
+export const translateRecipeSuccess = createAction(
+  '[Recipe API] Translate Recipe Success',
+  props<{ recipeId: number }>()
+);
+
+export const translateRecipeFailure = createAction(
+  '[Recipe API] Translate Recipe Failure',
+  props<{ error: string }>()
+);
+

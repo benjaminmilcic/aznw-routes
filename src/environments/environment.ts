@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// const ip = '10.213.204.38';
+// const ip = '10.39.128.38';
 const ip = 'localhost';
 
 
@@ -67,6 +67,7 @@ export const environment = {
   recipes: {
     recipesApi: `http://${ip}:3000/recipes`,
     filesUrl: `http://${ip}:3000/files`,
+    translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
   },
   production: false,
   version: new Date().getTime(),

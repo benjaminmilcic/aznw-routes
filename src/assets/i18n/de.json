@@ -425,7 +425,12 @@
       "uploadImageTitle":"Bild hochladen",
       "dragOrClick":"Bild hierher ziehen oder klicken zum Hochladen",
       "imageFormats":"JPG, PNG, GIF (max. 5MB)",
-      "apply":"Übernehmen"
+      "apply":"Übernehmen",
+      "translationRateLimitExceeded":"Übersetzungslimit erreicht. Bitte versuchen Sie es später erneut.",
+      "translationTooManyRequests":"Zu viele Übersetzungsanfragen. Bitte warten Sie einen Moment.",
+      "translationNetworkError":"Netzwerkfehler bei der Übersetzung. Bitte überprüfen Sie Ihre Internetverbindung.",
+      "translationApiError":"Fehler bei der Übersetzungs-API. Bitte versuchen Sie es später erneut.",
+      "translationUnknownError":"Unbekannter Fehler bei der Übersetzung."
     }
   },
   "pageNotFound": {

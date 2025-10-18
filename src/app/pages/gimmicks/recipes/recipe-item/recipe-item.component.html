@@ -2,9 +2,11 @@
 <div class="mt-8">
   <div class="text-center text-2xl">⚠️</div>
   <div class="text-center mt-2">
-    {{ 'gimmicks.recipes.invalidRecipeId' | translate }}
+    {{ "gimmicks.recipes.invalidRecipeId" | translate }}
   </div>
-  <div class="text-center mt-2">{{ 'gimmicks.recipes.cannotLoadRecipe' | translate }}</div>
+  <div class="text-center mt-2">
+    {{ "gimmicks.recipes.cannotLoadRecipe" | translate }}
+  </div>
 </div>
 }@else{
 <div *ngIf="recipe | async as r" class="mt-8 w-full max-w-[500px]">
@@ -36,7 +38,9 @@
     </div>
     }
     <div class="flex flex-col items-center w-full">
-      <div class="text-xl sm:text-2xl">{{ 'gimmicks.recipes.ingredients' | translate }}</div>
+      <div class="text-xl sm:text-2xl">
+        {{ "gimmicks.recipes.ingredients" | translate }}
+      </div>
       <ul class="self-start">
         @for (ingredient of r.ingredients; track $index) {
 
@@ -45,7 +49,9 @@
       </ul>
     </div>
   </div>
-  <div class="text-center text-xl sm:text-2xl mt-8">{{ 'gimmicks.recipes.preparation' | translate }}</div>
+  <div class="text-center text-xl sm:text-2xl mt-8">
+    {{ "gimmicks.recipes.preparation" | translate }}
+  </div>
   <div class="mt-4 whitespace-pre-line text-[15px] sm:text-base">
     {{ r.preparation }}
   </div>
@@ -67,7 +73,7 @@
       class="w-full max-w-[300px] sm:w-fit"
       (click)="onUpdateRecipe(r.id)"
     >
-      📝 {{ 'gimmicks.recipes.edit' | translate }}
+      📝 {{ "gimmicks.recipes.edit" | translate }}
     </button>
     <button
       mat-raised-button
@@ -75,7 +81,7 @@
       class="w-full max-w-[300px] sm:w-fit"
       (click)="onPrint()"
     >
-      🖨️ {{ 'gimmicks.recipes.print' | translate }}
+      🖨️ {{ "gimmicks.recipes.print" | translate }}
     </button>
 
     <!-- Translation Menu -->
@@ -92,7 +98,7 @@
         diameter="20"
         style="display: inline-block; margin-right: 8px"
       ></mat-spinner>
-      }@else{ 🔄 {{ 'gimmicks.recipes.showOriginal' | translate }} }
+      }@else{ 🔄 {{ "gimmicks.recipes.showOriginal" | translate }} }
     </button>
     } @else {
     <button
@@ -109,7 +115,7 @@
       ></mat-spinner>
       }@else{
       <div class="flex gap-2 items-center">
-        <div>🌐 {{ 'gimmicks.recipes.translate' | translate }}</div>
+        <div>🌐 {{ "gimmicks.recipes.translate" | translate }}</div>
         <mat-icon>arrow_drop_down</mat-icon>
       </div>
       }
@@ -123,7 +129,7 @@
             width="24px"
             height="24px"
           />
-          <div>{{ 'gimmicks.recipes.german' | translate }}</div>
+          <div>{{ "gimmicks.recipes.german" | translate }}</div>
         </div>
       </button>
       <button mat-menu-item (click)="translateTo('en')">
@@ -133,17 +139,19 @@
             width="24px"
             height="24px"
           />
-          <div>{{ 'gimmicks.recipes.english' | translate }}</div>
+          <div>{{ "gimmicks.recipes.english" | translate }}</div>
         </div>
       </button>
       <button mat-menu-item (click)="translateTo('hr')">
         <div class="flex gap-2 items-center">
           <img src="/assets/svg/hr.svg" width="24px" height="24px" />
-          <div>{{ 'gimmicks.recipes.croatian' | translate }}</div>
+          <div>{{ "gimmicks.recipes.croatian" | translate }}</div>
         </div>
       </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item (click)="clearCache()">🗑️ {{ 'gimmicks.recipes.clearCache' | translate }}</button>
+      <button mat-menu-item (click)="clearCache()">
+        🗑️ {{ "gimmicks.recipes.clearCache" | translate }}
+      </button>
     </mat-menu>
   </div>
 </div>

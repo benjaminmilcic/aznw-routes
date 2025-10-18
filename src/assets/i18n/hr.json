@@ -425,7 +425,12 @@
       "uploadImageTitle":"Prenesi sliku",
       "dragOrClick":"Povucite sliku ovdje ili kliknite za prijenos",
       "imageFormats":"JPG, PNG, GIF (max. 5MB)",
-      "apply":"Primijeni"
+      "apply":"Primijeni",
+      "translationRateLimitExceeded":"Dosegnuto ograničenje prijevoda. Molimo pokušajte kasnije.",
+      "translationTooManyRequests":"Previše zahtjeva za prijevod. Molimo pričekajte trenutak.",
+      "translationNetworkError":"Mrežna pogreška tijekom prijevoda. Molimo provjerite internetsku vezu.",
+      "translationApiError":"Pogreška API-ja za prijevod. Molimo pokušajte kasnije.",
+      "translationUnknownError":"Nepoznata pogreška tijekom prijevoda."
     }
   },
   "pageNotFound": {

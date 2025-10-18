@@ -3,7 +3,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { switchMap, map, filter, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { selectRecipeById } from '../store/selectors/recipe.selectors';
+import { selectRecipeById, selectError } from '../store/selectors/recipe.selectors';
 import { Recipe } from '../recipes.model';
 import { Observable, BehaviorSubject, combineLatest, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,7 @@ import {
   TranslatedRecipe,
 } from '../recipes.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import * as RecipeActions from '../store/actions/recipe.actions';
 
 @Component({
   selector: 'app-recipe-item',
@@ -130,14 +131,44 @@ export class RecipeItemComponent {
     this.isTranslating.set(true);
     this.currentLanguage.set(language);
 
+    // Dispatch Action für Translation Start
+    this.store.dispatch(RecipeActions.translateRecipe({ recipeId: original.id }));
+
     this.recipeService.translateRecipe(original, language).subscribe({
       next: (translated) => {
         this.translatedRecipe$.next(translated);
         this.isTranslating.set(false);
+
+        // Dispatch Success Action
+        this.store.dispatch(RecipeActions.translateRecipeSuccess({ recipeId: original.id }));
       },
       error: (error) => {
         console.error('Translation failed:', error);
         this.isTranslating.set(false);
+
+        // Fehler-Mapping basierend auf aktueller Sprache
+        let errorMessage = '';
+        const errorCode = error.message;
+
+        switch (errorCode) {
+          case 'TRANSLATION_RATE_LIMIT_EXCEEDED':
+            errorMessage = this.translate.instant('gimmicks.recipes.translationRateLimitExceeded');
+            break;
+          case 'TRANSLATION_TOO_MANY_REQUESTS':
+            errorMessage = this.translate.instant('gimmicks.recipes.translationTooManyRequests');
+            break;
+          case 'TRANSLATION_NETWORK_ERROR':
+            errorMessage = this.translate.instant('gimmicks.recipes.translationNetworkError');
+            break;
+          case 'TRANSLATION_API_ERROR':
+            errorMessage = this.translate.instant('gimmicks.recipes.translationApiError');
+            break;
+          default:
+            errorMessage = this.translate.instant('gimmicks.recipes.translationUnknownError');
+        }
+
+        // Dispatch Failure Action
+        this.store.dispatch(RecipeActions.translateRecipeFailure({ error: errorMessage }));
       },
     });
   }
