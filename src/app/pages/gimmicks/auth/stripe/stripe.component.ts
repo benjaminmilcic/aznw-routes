@@ -83,6 +83,15 @@ export class StripeComponent implements OnInit {
     clientSecret: null,
     appearance: {
       theme: 'flat',
+      variables: {
+        colorText: '#000000',
+        colorTextSecondary: '#000000',
+      },
+      rules: {
+        '.Label': {
+          color: '#ffffff',
+        },
+      },
     },
   };
 

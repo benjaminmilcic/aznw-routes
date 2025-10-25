@@ -3,7 +3,7 @@
 >
   <div class="relative flex flex-col gap-4 w-[318px] sm:w-[600px] lg:mb-8">
     <div
-      class="flex flex-col sm:flex-row bg-white/30 border border-white text-white rounded-xl items-center sm:items-start shadow-2xl mt-2 sm:mt-4 lg:mt-8 px-4 sm:px-8 pb-4 sm:pb-8 sm:gap-8"
+      class="flex flex-col sm:flex-row bg-gradient-to-br from-red-900/60 to-red-700/60 border border-white text-white rounded-xl items-center sm:items-start shadow-2xl mt-2 sm:mt-4 lg:mt-8 px-4 sm:px-8 pb-4 sm:pb-8 sm:gap-8"
     >
       <app-jokes-book></app-jokes-book>
       <div class="sm:mt-8" id="container">
@@ -48,7 +48,7 @@
             <div>4000 0025 0000 3155</div>
             <div (click)="copyToClipboard('4000 0025 0000 3155', $event)">
               <i
-                class="fa-regular fa-clipboard ml-1 hover:text-blue-700 cursor-pointer"
+                class="fa-regular fa-clipboard ml-1 hover:text-orange-700 cursor-pointer"
               ></i>
             </div>
           </div>
@@ -59,7 +59,7 @@
             <div>4000 0000 0000 9995</div>
             <div (click)="copyToClipboard('4000 0000 0000 9995', $event)">
               <i
-                class="fa-regular fa-clipboard ml-1 hover:text-blue-700 cursor-pointer"
+                class="fa-regular fa-clipboard ml-1 hover:text-red-700 cursor-pointer"
               ></i>
             </div>
           </div>

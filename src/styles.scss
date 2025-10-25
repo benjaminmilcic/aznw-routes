@@ -191,3 +191,53 @@ button.alert-button.alert-button-confirm:hover {
 .full-width-dialog {
   margin: 0 !important;
 }
+
+.country-select-panel {
+  background: rgb(182, 136, 151) !important;
+
+  ngx-mat-select-search {
+    background: rgb(182, 136, 151) !important;
+
+    input {
+      background: rgb(182, 136, 151) !important;
+    }
+
+    .mat-mdc-form-field {
+      background: rgb(182, 136, 151) !important;
+    }
+  }
+
+  .mat-mdc-option {
+    background: transparent !important;
+  }
+
+  // Scrollbar styling
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgb(182, 136, 151);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  // Firefox
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgb(182, 136, 151);
+  scrollbar-width: auto;
+}
+
+.mat-select-search-inner {
+  background: rgb(182, 136, 151) !important;
+}
+
+.mat-select-search-panel {
+  background: rgb(182, 136, 151) !important;
+}

@@ -1,4 +1,4 @@
-<div class="py-4 px-2 xs:p-4 lg:p-6 shadow bg-white/30 rounded-xl border border-white text-white w-[318px] sm:w-[600px] lg:w-[360px] xl:w-[420px] m-2 sm:mb-4 lg:mt-8 relativ">
+<div class="py-4 px-2 xs:p-4 lg:p-6 shadow bg-gradient-to-br from-red-900/60 to-red-700/60 rounded-xl border border-white text-white w-[318px] sm:w-[600px] lg:w-[360px] xl:w-[420px] m-2 sm:mb-4 lg:mt-8 relativ">
   <div
     *ngIf="elementsOptions.clientSecret && viewType === 'payment'"
     [formGroup]="paymentElementForm"
@@ -6,7 +6,7 @@
   >
     <div class="flex justify-center mb-4 sm:text-lg lg:text-base xl:text-lg text-center">
       {{ "gimmicks.jokes.orderBook" | translate }}&nbsp;&nbsp;<span
-        class="bg-white/30 border border-white rounded-lg text-red-600 px-2 font-semibold"
+        class="bg-white/30 border border-white rounded-lg text-red-800 px-2 font-semibold"
         >14.98 Euro</span
       >
     </div>
@@ -69,7 +69,7 @@
   </div>
   <div
     *ngIf="viewType === 'spinner'"
-    class="bg-white/60 p-4 rounded flex justify-center"
+    class="bg-gradient-to-br from-red-900/60 to-red-700/60 p-4 rounded flex justify-center"
   >
     <ion-spinner></ion-spinner>
   </div>

@@ -81,7 +81,7 @@ export class RainChartComponent implements OnInit, OnChanges {
             display: false,
           },
           min: 0,
-          max:100,
+          max: 100,
         },
         x: {
           grid: {
@@ -93,6 +93,7 @@ export class RainChartComponent implements OnInit, OnChanges {
                 ? this.getLabelForValue(+value)
                 : '';
             },
+            color: 'lightgray',
             maxRotation: 0, // Keine Rotation
             minRotation: 0, // Keine Rotation
             autoSkip: false, // Wichtig, sonst ignoriert er manchmal Labels
@@ -105,10 +106,10 @@ export class RainChartComponent implements OnInit, OnChanges {
         datalabels: {
           align: 'end',
           anchor: 'end',
-          color: 'blue',
+          color: '#3b82f6',
           font: { weight: 'bold' },
           offset: 20,
-          formatter: (value: number) => Math.round(value)+'%',
+          formatter: (value: number) => Math.round(value) + '%',
           display: (ctx) => ctx.dataIndex % 3 === 0 && ctx.dataIndex !== 0,
         },
       },

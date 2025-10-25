@@ -1,5 +1,5 @@
 <section
-  class="flex flex-col justify-center items-center bg-white/30 text-white shadow rounded-xl py-8 border border-white"
+  class="flex flex-col justify-center items-center bg-gradient-to-br from-red-900/60 to-red-700/60 text-white shadow rounded-xl py-8 border border-white"
 >
   <div class="sm:text-lg mb-4 px-6 text-center">{{ "gimmicks.jokes.loginToRead" | translate }}</div>
   <div
@@ -10,7 +10,7 @@
   </div>
   <div
     *ngIf="isLoginMode"
-    class="bg-gradient-to-b from-cyan-100/60 to-cyan-300/60 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-48"
+    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-48"
   >
     <div *ngIf="isLoading" class="flex justify-center items-center h-full">
       <ion-spinner></ion-spinner>
@@ -70,7 +70,7 @@
   </ng-container>
   <div
     *ngIf="!isLoginMode"
-    class="bg-gradient-to-b from-cyan-100/60 to-cyan-300/60 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-64"
+    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-64"
   >
     <div *ngIf="isLoading" class="flex justify-center items-center h-full">
       <ion-spinner></ion-spinner>

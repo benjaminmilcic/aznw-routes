@@ -1,6 +1,6 @@
 <section class="flex justify-center min-h-[calc(100%-49px)] bg-blue-900">
   <div
-    class="flex flex-col w-full max-w-full sm:max-w-[700px] my-4 relative bg-gradient-to-br from-blue-50/80 via-white/90 to-indigo-50/80 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl"
+    class="flex flex-col w-full max-w-full sm:max-w-[700px] my-4 relative bg-gradient-to-br from-red-900/60 to-red-700/60 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl"
   >
     <div class="m-4 flex">
       <ion-segment
@@ -58,7 +58,7 @@
         <mat-label>{{
           "gimmicks.weather.selectCountry" | translate
         }}</mat-label>
-        <mat-select [(value)]="selectedCountry">
+        <mat-select [(value)]="selectedCountry" panelClass="country-select-panel">
           <mat-select-trigger>
             <div class="flex gap-1 items-center">
               <img
@@ -156,9 +156,9 @@
       >
         <div *ngIf="address" class="flex items-center gap-2">
           <div class="hidden xs:block">
-            <mat-icon class="text-emerald-600">place</mat-icon>
+            <mat-icon class="text-emerald-800">place</mat-icon>
           </div>
-          <span class="text-emerald-600 font-semibold">{{ address }}</span>
+          <span class="text-emerald-800 font-semibold">{{ address }}</span>
         </div>
         <div class="flex flex-col sm:flex-row gap-4 text-sm text-gray-600">
           <div class="flex items-center gap-1">
@@ -177,27 +177,27 @@
       class="flex items-center justify-between p-4 w-full flex-wrap"
     >
       <div class="flex gap-3 items-center">
-        <div class="xs:bg-blue-100 xs:p-3 xs:rounded-xl xs:shadow-md">
+        <div class="xs:bg-blue-300 xs:p-3 xs:rounded-xl xs:shadow-md">
           <img
             [src]="displayedIcon"
             class="w-[48px] h-[48px] xs:w-[72px] xs:h-[72px]"
           />
         </div>
         <div class="flex gap-2 items-center">
-          <div class="text-bold text-[48px] text-blue-700 font-light">
+          <div class="text-bold text-[48px] text-blue-600 font-light">
             {{ displayedTemp.toFixed(0) }}
           </div>
-          <div class="text-2xl text-blue-600 font-medium">°C</div>
+          <div class="text-2xl text-blue-500 font-medium">°C</div>
         </div>
         <div class="text-sm space-y-1 p-3 rounded-lg">
           <div class="whitespace-nowrap flex items-center gap-2">
             <div class="hidden xs:block">
               <mat-icon class="!text-blue-500 !text-base">water_drop</mat-icon>
             </div>
-            <span class="font-medium text-gray-700"
+            <span class="font-medium text-gray-400"
               >{{ "gimmicks.weather.precipitation" | translate }}:</span
             >
-            <span class="text-blue-600 font-semibold"
+            <span class="text-blue-500 font-semibold"
               >{{ displayedPrecipitation_probability }}%</span
             >
           </div>
@@ -205,10 +205,10 @@
             <div class="hidden xs:block">
               <img src="assets/svg/humidity_percentage.svg" class="w-4 mr-2" />
             </div>
-            <span class="font-medium text-gray-700"
+            <span class="font-medium text-gray-400"
               >{{ "gimmicks.weather.humidity" | translate }}:</span
             >
-            <span class="text-blue-600 font-semibold"
+            <span class="text-blue-500 font-semibold"
               >{{ displayedHumidity.toFixed(0) }}%</span
             >
           </div>
@@ -216,24 +216,24 @@
             <div class="hidden xs:block">
               <mat-icon class="!text-blue-500 !text-base">air</mat-icon>
             </div>
-            <span class="font-medium text-gray-700"
+            <span class="font-medium text-gray-400"
               >{{ "gimmicks.weather.wind" | translate }}:</span
             >
-            <span class="text-blue-600 font-semibold"
+            <span class="text-blue-500 font-semibold"
               >{{ displayedWind }} km/h</span
             >
           </div>
         </div>
       </div>
       <div class="flex flex-col items-end p-4 rounded-lg">
-        <div class="text-xl font-bold whitespace-nowrap text-gray-800 mb-2">
+        <div class="text-xl font-bold whitespace-nowrap text-gray-300 mb-2">
           {{ "gimmicks.weather.weather" | translate }}
         </div>
-        <div class="text-sm whitespace-nowrap text-gray-600 font-medium">
+        <div class="text-sm whitespace-nowrap text-gray-400 font-medium">
           {{ displayedTime }}
         </div>
         <div
-          class="text-base whitespace-nowrap text-blue-700 font-semibold mt-1"
+          class="text-base whitespace-nowrap text-blue-500 font-semibold mt-1"
         >
           {{ displayedWeather }}
         </div>
@@ -247,9 +247,9 @@
           id="temp-chart"
           class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'border-b-2 border-orange-300 text-blue-600':
+            'border-b-2 border-orange-300 text-blue-500':
               selectedChart === 'temp',
-            'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
+            'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
               selectedChart !== 'temp'
           }"
           (click)="selectChart('temp')"
@@ -263,9 +263,9 @@
           id="rain-chart"
           class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'border-b-2 border-orange-300 text-blue-600':
+            'border-b-2 border-orange-300 text-blue-500':
               selectedChart === 'rain',
-            'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
+            'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
               selectedChart !== 'rain'
           }"
           (click)="selectChart('rain')"
@@ -279,9 +279,9 @@
           id="wind-chart"
           class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
           [ngClass]="{
-            'border-b-2 border-orange-300 text-blue-600':
+            'border-b-2 border-orange-300 text-blue-500':
               selectedChart === 'wind',
-            'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50':
+            'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
               selectedChart !== 'wind'
           }"
           (click)="selectChart('wind')"
@@ -315,10 +315,10 @@
         >
           <div
             *ngIf="i % 3 === 0"
-            class="flex flex-col h-full items-center justify-between py-2 sm:px-2 bg-gradient-to-b from-blue-50/50 to-white/80 rounded-lg shadow-sm border border-blue-100/50"
+            class="flex flex-col h-full items-center justify-between py-2 sm:px-2 bg-gradient-to-b from-blue-50/30 to-white/50 rounded-lg shadow-sm border border-blue-100/50"
           >
             <div
-              class="text-xs xs:text-sm text-center font-semibold text-blue-700"
+              class="text-xs xs:text-sm text-center font-semibold text-blue-800"
             >
               <div class="flex flex-col items-center justify-center">
                 <div>
@@ -365,7 +365,7 @@
             class="bg-white/20 p-[2px] xs:p-2 rounded-lg mb-1 "
             [ngClass]="{
               'bg-white/20': dailyForecast.active[i],
-              'bg-blue-100': !dailyForecast.active[i]
+              'bg-blue-200': !dailyForecast.active[i]
             }"
           >
             <img

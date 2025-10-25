@@ -18,3 +18,11 @@ section:before {
   background-position: 50% 0;
   background-size: cover;
 }
+
+a{
+  @apply text-blue-500;
+}
+
+a:hover{
+  @apply text-blue-600;
+}

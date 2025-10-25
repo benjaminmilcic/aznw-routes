@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType, Chart } from 'chart.js';
-import { MatButtonModule } from '@angular/material/button';
 import { HourlyForecast } from '../weather.model';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -96,6 +95,7 @@ export class TemperatureChartComponent implements OnInit, OnChanges {
                 ? this.getLabelForValue(+value)
                 : '';
             },
+            color:'lightgray',
             maxRotation: 0, // Keine Rotation
             minRotation: 0, // Keine Rotation
             autoSkip: false, // Wichtig, sonst ignoriert er manchmal Labels
@@ -108,7 +108,7 @@ export class TemperatureChartComponent implements OnInit, OnChanges {
         datalabels: {
           align: 'end',
           anchor: 'end',
-          color: '#000',
+          color: '#ffffff',
           font: (ctx) => ({
             weight:
               ctx.dataIndex === this.clickedLabelIndex ? 'bold' : 'normal',
