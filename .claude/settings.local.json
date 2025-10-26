@@ -5,9 +5,7 @@
       "WebFetch(domain:libretranslate.com)",
       "WebFetch(domain:docs.libretranslate.com)",
       "WebSearch",
-      "Bash(npm install:*)",
-      "Bash(ng serve)",
-      "Bash(timeout /t 15)"
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

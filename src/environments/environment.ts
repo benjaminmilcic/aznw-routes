@@ -6,10 +6,8 @@
 const ip = 'localhost';
 
 // @ts-ignore
-const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 
 export const environment = {
-  stripePublishableKey: stripeKey,
   stripe: {
     //old PHP API => createApi: `http://${ip}:80/create.php`,
     // new spring boot API => createApi: `https://${ip}:8443/api/v2/stripe`,
