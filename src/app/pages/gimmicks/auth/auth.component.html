@@ -1,7 +1,7 @@
 <section
   class="flex flex-col lg:flex-row bg-blue-900 min-h-[calc(100%-49px)] items-center lg:items-start justify-center gap-7 lg:gap-6 xl:gap-10"
 >
-  <div class="relative flex flex-col gap-4 w-[318px] sm:w-[600px] lg:mb-8">
+  <div class="relative flex flex-col gap-4 w-[calc(100%-20px)] sm:w-[600px] lg:mb-8">
     <div
       class="flex flex-col sm:flex-row bg-gradient-to-br from-red-900/60 to-red-700/60 border border-white text-white rounded-xl items-center sm:items-start shadow-2xl mt-2 sm:mt-4 lg:mt-8 px-4 sm:px-8 pb-4 sm:pb-8 sm:gap-8"
     >
@@ -33,7 +33,7 @@
           <div class="text-blue-500 mb-1">
             {{ "gimmicks.jokes.paymentSucceeds" | translate }}
           </div>
-          <div class="text-blue-500 flex">
+          <div class="text-blue-500 flex justify-end">
             <div>4242 4242 4242 4242</div>
             <div (click)="copyToClipboard('4242 4242 4242 4242', $event)">
               <i
@@ -44,7 +44,7 @@
           <div class="text-orange-500 mb-1">
             {{ "gimmicks.jokes.paymentRequiresAuth" | translate }}
           </div>
-          <div class="text-orange-500 flex">
+          <div class="text-orange-500 flex justify-end">
             <div>4000 0025 0000 3155</div>
             <div (click)="copyToClipboard('4000 0025 0000 3155', $event)">
               <i
@@ -55,7 +55,7 @@
           <div class="text-red-500">
             {{ "gimmicks.jokes.paymentDeclined" | translate }}
           </div>
-          <div class="text-red-500 flex">
+          <div class="text-red-500 flex justify-end">
             <div>4000 0000 0000 9995</div>
             <div (click)="copyToClipboard('4000 0000 0000 9995', $event)">
               <i
@@ -78,7 +78,7 @@
     </div>
     <router-outlet></router-outlet>
   </div>
-  <div class="relative">
+  <div class="relative w-[calc(100%-20px)] sm:w-fit flex justify-center">
     <app-stripe></app-stripe>
   </div>
 </section>

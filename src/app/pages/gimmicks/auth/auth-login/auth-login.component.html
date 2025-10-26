@@ -4,13 +4,13 @@
   <div class="sm:text-lg mb-4 px-6 text-center">{{ "gimmicks.jokes.loginToRead" | translate }}</div>
   <div
     *ngIf="error"
-    class="flex justify-center p-8 bg-red-300/60 rounded mb-4 w-60 sm:w-96"
+    class="flex justify-center p-8 bg-red-300/60 rounded mb-4 w-[calc(100%-100px)] sm:w-96 text-center"
   >
     {{ error }}
   </div>
   <div
     *ngIf="isLoginMode"
-    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-48"
+    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-8 relative w-[calc(100%-100px)] sm:w-96 sm:max-w-96 h-48"
   >
     <div *ngIf="isLoading" class="flex justify-center items-center h-full">
       <ion-spinner></ion-spinner>
@@ -22,7 +22,7 @@
       *ngIf="!isLoading"
     >
       <div class="flex flex-col">
-        <mat-form-field appearance="outline" class="w-[200px] sm:w-96">
+        <mat-form-field appearance="outline" class="w-full sm:w-96">
           <mat-label>E-Mail</mat-label>
           <input
             #emailInput
@@ -35,7 +35,7 @@
             email
           />
         </mat-form-field>
-        <mat-form-field appearance="outline" class="w-[200px] sm:w-96">
+        <mat-form-field appearance="outline" class="w-full sm:w-96">
           <mat-label>{{ "gimmicks.jokes.password" | translate }}</mat-label>
           <input
             #passwordInput
@@ -70,7 +70,7 @@
   </ng-container>
   <div
     *ngIf="!isLoginMode"
-    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-4 xs:p-8 relative max-w-[220px] sm:w-96 sm:max-w-96 h-64"
+    class="bg-gradient-to-b from-cyan-100/80 to-cyan-300/80 shadow-2xl rounded p-8 relative w-[calc(100%-100px)] sm:w-96 sm:max-w-96 h-64"
   >
     <div *ngIf="isLoading" class="flex justify-center items-center h-full">
       <ion-spinner></ion-spinner>
@@ -81,7 +81,7 @@
       *ngIf="!isLoading"
     >
       <div class="flex flex-col">
-        <mat-form-field appearance="outline" class="w-[200px] sm:w-96">
+        <mat-form-field appearance="outline" class="w-full sm:w-96">
           <mat-label>E-Mail</mat-label>
           <input
             #emailInput2
@@ -94,7 +94,7 @@
             email
           />
         </mat-form-field>
-        <mat-form-field appearance="outline" class="w-[200px] sm:w-96">
+        <mat-form-field appearance="outline" class="w-full sm:w-96">
           <mat-label>{{ "gimmicks.jokes.password" | translate }}</mat-label>
           <input
             #passwordInput2
@@ -110,7 +110,7 @@
             passwordError
           }}</mat-hint>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="w-[200px] sm:w-96">
+        <mat-form-field appearance="outline" class="w-full sm:w-96">
           <mat-label>{{
             "gimmicks.jokes.confirmPassword" | translate
           }}</mat-label>
