@@ -33,6 +33,6 @@ jobs:
             username: ${{ secrets.FTP_USER }}
             password: ${{ secrets.FTP_PASSWORD }}
             port: 22
-            source: "dist/aznw-routes/browser/*"
+            source: "dist/aznw-routes/*"
             target: "~/"
-            strip_components: 3
+            strip_components: 2

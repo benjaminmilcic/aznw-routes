@@ -1,8 +1,10 @@
 const ip = 'benjaminmilcic.site';
 
 // @ts-ignore
+const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 
 export const environment = {
+  stripePublishableKey: stripeKey,
   stripe: {
     // old PHP API => createApi: `api/stripe/create.php`,
     // new spring boot API => createApi: `https://87.106.117.170:8443/api/v2/stripe`,
