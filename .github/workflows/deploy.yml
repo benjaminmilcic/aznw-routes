@@ -21,13 +21,18 @@ jobs:
           npm install --force
           npm run build  # Falls du Angular oder ein anderes Build-Tool nutzt
 
+      - name: List build output
+        run: |
+          echo "Checking build output structure:"
+          ls -R dist/ || echo "dist folder not found"
+
       - name: Deploy via SFTP
         uses: appleboy/scp-action@v0.1.4
         with:
             host: ${{ secrets.FTP_SERVER }}
             username: ${{ secrets.FTP_USER }}
             password: ${{ secrets.FTP_PASSWORD }}
-            port: 22 
-            source: "dist/aznw-routes/browser/*"
+            port: 22
+            source: "dist/aznw-routes/*"
             target: "~/"
-            strip_components: 3
+            strip_components: 2
