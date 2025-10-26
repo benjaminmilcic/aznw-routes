@@ -16,6 +16,57 @@ jobs:
       - name: Repository klonen
         uses: actions/checkout@v4
 
+      - name: Create environment file
+        run: |
+          cat > src/environments/environment.prod.ts << 'EOF'
+          const ip = 'benjaminmilcic.site';
+
+          export const environment = {
+            stripePublishableKey: '${{ secrets.STRIPE_PUBLISHABLE_KEY }}',
+            stripe: {
+              createApi: `https://${ip}:3000/stripe`,
+              returnUrl: `https://auf-zu-neuen-welten.de`,
+            },
+            guestbook: {
+              getAllPostsApi: `https://${ip}:3000/guestbook`,
+              addPostApi: `https://${ip}:3000/guestbook`,
+              filesUrl: `https://${ip}:3000/files`,
+            },
+            contact: {
+              form2mailApi: `https://${ip}:3000/form2email`,
+            },
+            auth: {
+              getJokesFile: `https://${ip}:3000/auth/jokes`,
+              login: `https://${ip}:3000/auth/login`,
+              signup: `https://${ip}:3000/auth/signup`,
+            },
+            moorhuhn: {
+              moorhuhnApi: `https://${ip}:3000/moorhuhn`,
+            },
+            error: {
+              errorMessageApi: `https://${ip}:3000/error2email`,
+            },
+            yahtzeeGame: {
+              webSocketsUrl: `https://${ip}:3000/yahtzee-game`,
+            },
+            geoLocation: {
+              reverseGeoCodeApi: `https://${ip}:3000/geolocation/reverse-geocode`,
+              geoCodeApi: `https://${ip}:3000/geolocation/geocode`,
+              citiesApi: `https://${ip}:3000/geolocation/cities`,
+            },
+            googleLogin: {
+              loginApi: `https://${ip}:3000/auth/google`,
+            },
+            recipes: {
+              recipesApi: `https://${ip}:3000/recipes`,
+              filesUrl: `https://${ip}:3000/files`,
+              translationEmail: 'benjamin.milcic@gmail.com',
+            },
+            production: true,
+            version: new Date().getTime(),
+          };
+          EOF
+
       - name: Build (optional)
         run: |
           npm install --force
