@@ -5,16 +5,11 @@
 // const ip = '10.39.128.38';
 const ip = 'localhost';
 
+// @ts-ignore
+const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 
 export const environment = {
-  firebase: {
-    projectId: 'aznw-1753b',
-    appId: '1:881209153407:web:4d2619f64cf2f3b2632c4a',
-    storageBucket: 'aznw-1753b.appspot.com',
-    apiKey: 'AIzaSyBzuR3T7b8V2iC-K5-0wmfqRxnjWnh8QGs',
-    authDomain: 'aznw-1753b.firebaseapp.com',
-    messagingSenderId: '881209153407',
-  },
+  stripePublishableKey: stripeKey,
   stripe: {
     //old PHP API => createApi: `http://${ip}:80/create.php`,
     // new spring boot API => createApi: `https://${ip}:8443/api/v2/stripe`,

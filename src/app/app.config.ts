@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './app.routes';
 import {
-  HTTP_INTERCEPTORS,
   HttpBackend,
   HttpClient,
   provideHttpClient,
@@ -16,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { environment } from '../environments/environment';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { AuthInterceptorService } from './pages/gimmicks/auth/auth-interceptor.service';
 import { provideNgxStripe } from 'ngx-stripe';
 import { LocationStrategy } from '@angular/common';
 import { ParameterHashLocationStrategy } from './ParameterHashLocationStrategy';
@@ -62,9 +60,7 @@ export const appConfig: ApplicationConfig = {
     //   useClass: AuthInterceptorService,
     //   multi: true,
     // },
-    provideNgxStripe(
-      'pk_test_51P05azL6Qm22ltjdlDi75OKMXcdkImE9eB6U7pS709irbBgVW1OuvSEho05cYC3OdwAt4nJh2Zfike65t3OKhviN00RWkBd4Qa'
-    ),
+    provideNgxStripe(environment.stripePublishableKey),
     {
       provide: LocationStrategy,
       useClass: ParameterHashLocationStrategy,

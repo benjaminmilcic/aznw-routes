@@ -17,11 +17,11 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { User } from '../user.model.js';
+import { User } from '../user.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { ImageCropperComponent } from '../image-cropper/image-cropper.component.js';
+import { ImageCropperComponent } from '../image-cropper/image-cropper.component';
 
 @Component({
     selector: 'app-drawer-content',
