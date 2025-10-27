@@ -95,7 +95,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   openEmail() {
-    window.location.href = 'mailto:benjamin.milcic.com';
+    window.location.href = 'mailto:benjamin.milcic@gmail.com';
   }
 
   callNumber() {
