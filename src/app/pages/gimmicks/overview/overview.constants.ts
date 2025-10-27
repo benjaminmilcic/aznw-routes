@@ -7,6 +7,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-cloud text-amber-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'Nest.js API',
       'OpenStreetMap API',
@@ -31,6 +32,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-map text-yellow-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'Google Maps API',
       'gimmicks.overview.searchTypeahead',
@@ -54,6 +56,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-calendar text-red-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'SVG',
       'Popup modal',
@@ -77,6 +80,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-book text-green-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'gimmicks.overview.youtubePlayer',
       'Popup modal',
@@ -100,6 +104,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-chart-simple text-orange-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'gimmicks.overview.charts',
       'gimmicks.overview.imageManipulation',
@@ -121,6 +126,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: true,
     iconClasses: 'fa-face-smile text-violet-100',
     imageSrc: '',
+    emoji: '',
     elements: [
       'gimmicks.jokes.auth',
       'Nest.js API',
@@ -142,6 +148,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     icon: false,
     iconClasses: '',
     imageSrc: 'assets/svg/tic-tac-toe.svg',
+    emoji: '',
     elements: [
       'Nest.js API',
       'Websocket',
@@ -161,7 +168,8 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     header: 'gimmicks.menu.recipes',
     icon: false,
     iconClasses: '',
-    imageSrc: 'assets/svg/tic-tac-toe.svg',
+    imageSrc: '',
+    emoji: '🍲',
     elements: [
       'NgRx',
       'Nest.js API',

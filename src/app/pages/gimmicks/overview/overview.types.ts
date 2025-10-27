@@ -4,6 +4,7 @@ export interface GimmicksOverviewSetting {
   icon: boolean;
   iconClasses: string;
   imageSrc: string;
+  emoji: string;
   elements: string[];
   showDescription: boolean;
   playAudio: boolean;

@@ -1,5 +1,7 @@
 <section class="bg-blue-900 min-h-[calc(100vh-49px)]">
-  <div class="relative flex justify-between items-center text-xl px-8 py-6 backdrop-blur-sm bg-black/20 border-b border-blue-700/30">
+  <div
+    class="relative flex justify-between items-center text-xl px-8 py-6 backdrop-blur-sm bg-black/20 border-b border-blue-700/30"
+  >
     <div>
       <mat-icon
         id="click-trigger2"
@@ -9,14 +11,18 @@
       <ion-popover trigger="click-trigger2" triggerAction="click">
         <ng-template>
           <ion-content class="ion-padding"
-            ><div class="p-4 bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-700 text-gray-700">
+            ><div
+              class="p-4 bg-gradient-to-br from-blue-500 to-blue-600 border border-blue-700 text-gray-700"
+            >
               {{ "gimmicks.overview.contextMenu" | translate }}
             </div>
           </ion-content>
         </ng-template>
       </ion-popover>
     </div>
-    <div class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-full border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:bg-black/40">
+    <div
+      class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-full border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:bg-black/40"
+    >
       <i class="fa-brands fa-github text-gray-300"></i>
       <a
         class="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
@@ -37,7 +43,9 @@
     >
       <mat-menu #contextMenu class="px-2 !min-w-[320px]">
         <div (click)="$event.stopPropagation()">
-          <div class="text-xl my-1">{{ "gimmicks.overview.settings" | translate }}</div>
+          <div class="text-xl my-1">
+            {{ "gimmicks.overview.settings" | translate }}
+          </div>
           <div class="border-t mt-1 mb-3"></div>
           <mat-slide-toggle
             labelPosition="before"
@@ -138,14 +146,19 @@
               <div class="text-xl font-bold">
                 {{ setting.header | translate }}
               </div>
-              <div class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14">
+              <div
+                class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14"
+              >
                 @if (setting.icon) {
-                <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
-  
+                <i
+                  class="fa-solid text-4xl"
+                  [ngClass]="setting.iconClasses"
+                ></i>
+
+                }@else { @if (setting.emoji) {<span class="text-[34px]">{{ setting.emoji }}</span>
                 }@else {
                 <img class="w-8 h-8" [src]="setting.imageSrc" />
-                }
-
+                } }
               </div>
             </div>
             @if (settings[settingIndex].showDescription) {
