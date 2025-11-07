@@ -87,3 +87,12 @@ p {
 .mat-languageMenu {
   @apply !bg-color1;
 }
+
+.sidebar-profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color1);
+  object-fit: cover;
+  object-position: center 10%;
+}

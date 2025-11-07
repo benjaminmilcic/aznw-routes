@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  onClick(target: string = '#') {
+  onClick() {
     this.onToggleSidebar(null);
   }
 
