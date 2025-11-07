@@ -32,6 +32,7 @@
       </div>
 
       <editor
+        *ngIf="editorInitialized"
         apiKey="p8kzw066uvdiavhwv4gt5t1iqdqygdfatlxf194isih8d5rr"
         [init]="config"
         [(ngModel)]="postContent"

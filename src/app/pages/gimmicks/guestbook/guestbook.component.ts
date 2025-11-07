@@ -20,7 +20,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './guestbook.model';
 import { registerLocaleData } from '@angular/common';
 import * as de from '@angular/common/locales/de';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { environment } from '../../../../environments/environment';
 import { HttpErrorService } from '../../http-error/http-error.service';
@@ -48,88 +48,95 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
   postName: string;
   postContent: string;
   posts: Post[] = [];
+  editorInitialized = false;
 
-  config: EditorComponent['init'] = {
-    plugins: 'lists link image table code help wordcount',
-    toolbar:
-      'undo redo | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
-    toolbar_mode: 'wrap',
-    file_picker_types: 'image',
-    // image_advtab: false,
-    image_description: false,
-    // image_dimensions: false,
-    block_unsupported_drop: true,
-    images_reuse_filename: true,
-    paste_data_images: false,
-    // images_upload_handler: (blobInfo) => {
-    //   const file = blobInfo.blob();
-    //   const filePath = `${Date.now()}-${blobInfo.filename()}`;
-    //   const ref = this.storage.ref(filePath);
-    //   const task = this.storage.upload(filePath, file);
-    //   const promise = new Promise<string>((resolve, reject) => {
-    //     task
-    //       .snapshotChanges()
-    //       .pipe(
-    //         finalize(() =>
-    //           ref
-    //             .getDownloadURL()
-    //             .pipe(last())
-    //             .subscribe((url) => {
-    //               resolve(url);
-    //             })
-    //         )
-    //       )
-    //       .subscribe((_) => {
-    //         // do nothing
-    //       });
-    //   });
-    //   return promise;
-    // },
-    images_upload_handler: (blobInfo, progress) =>
-      new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        let url = environment.guestbook.filesUrl;
-        xhr.open('POST', url + '/upload');
+  get config(): EditorComponent['init'] {
+    return {
+      language: this.translateService.currentLang || 'en',
+      plugins: 'lists link image table code help wordcount',
+      external_plugins: {
+        customemoji: '/assets/tinymce/plugins/customemoji/plugin.js'
+      },
+      toolbar:
+        'undo redo | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist numlist outdent indent | link image | customemoji',
+      toolbar_mode: 'wrap',
+      file_picker_types: 'image',
+      // image_advtab: false,
+      image_description: false,
+      // image_dimensions: false,
+      block_unsupported_drop: true,
+      images_reuse_filename: true,
+      paste_data_images: false,
+      // images_upload_handler: (blobInfo) => {
+      //   const file = blobInfo.blob();
+      //   const filePath = `${Date.now()}-${blobInfo.filename()}`;
+      //   const ref = this.storage.ref(filePath);
+      //   const task = this.storage.upload(filePath, file);
+      //   const promise = new Promise<string>((resolve, reject) => {
+      //     task
+      //       .snapshotChanges()
+      //       .pipe(
+      //         finalize(() =>
+      //           ref
+      //             .getDownloadURL()
+      //             .pipe(last())
+      //             .subscribe((url) => {
+      //               resolve(url);
+      //             })
+      //         )
+      //       )
+      //       .subscribe((_) => {
+      //         // do nothing
+      //       });
+      //   });
+      //   return promise;
+      // },
+      images_upload_handler: (blobInfo, progress) =>
+        new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.withCredentials = false;
+          let url = environment.guestbook.filesUrl;
+          xhr.open('POST', url + '/upload');
 
-        xhr.upload.onprogress = (e) => {
-          progress((e.loaded / e.total) * 100);
-        };
+          xhr.upload.onprogress = (e) => {
+            progress((e.loaded / e.total) * 100);
+          };
 
-        xhr.onload = () => {
-          if (xhr.status === 403) {
-            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-            return;
-          }
+          xhr.onload = () => {
+            if (xhr.status === 403) {
+              reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+              return;
+            }
 
-          if (xhr.status < 200 || xhr.status >= 300) {
-            reject('HTTP Error: ' + xhr.status);
-            return;
-          }
+            if (xhr.status < 200 || xhr.status >= 300) {
+              reject('HTTP Error: ' + xhr.status);
+              return;
+            }
 
-          const json = JSON.parse(xhr.responseText);
+            const json = JSON.parse(xhr.responseText);
 
-          if (!json || typeof json.file != 'string') {
-            reject('Invalid JSON: ' + xhr.responseText);
-            return;
-          }
+            if (!json || typeof json.file != 'string') {
+              reject('Invalid JSON: ' + xhr.responseText);
+              return;
+            }
 
-          resolve(url + '/download/' + json.file);
-        };
+            resolve(url + '/download/' + json.file);
+          };
 
-        xhr.onerror = () => {
-          reject(
-            'Image upload failed due to a XHR Transport error. Code: ' +
-              xhr.status
-          );
-        };
+          xhr.onerror = () => {
+            reject(
+              'Image upload failed due to a XHR Transport error. Code: ' +
+                xhr.status
+            );
+          };
 
-        const formData = new FormData();
-        formData.append('file', blobInfo.blob(), blobInfo.filename());
+          const formData = new FormData();
+          formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-        xhr.send(formData);
-      }),
-  };
+          xhr.send(formData);
+        }),
+    };
+  }
 
   @ViewChild('youTubePlayer') youTubePlayer: ElementRef<HTMLDivElement>;
 
@@ -140,9 +147,22 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
     public sanitizer: DomSanitizer,
     private http: HttpClient,
     private changeDetectorRef: ChangeDetectorRef,
-    private httpErrorService: HttpErrorService
+    private httpErrorService: HttpErrorService,
+    private translateService: TranslateService
   ) {
     registerLocaleData(de.default);
+
+    // Subscribe to language changes and reinitialize editor if dialog is open
+    this.translateService.onLangChange.subscribe(() => {
+      if (this.showcreatePostDialog && this.editorInitialized) {
+        // Reinitialize editor with new language
+        this.editorInitialized = false;
+        setTimeout(() => {
+          this.editorInitialized = true;
+          this.changeDetectorRef.detectChanges();
+        }, 0);
+      }
+    });
   }
 
   async ngOnInit() {
@@ -174,7 +194,13 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
   onCreatePost() {
     this.postName = '';
     this.postContent = '';
-    this.showcreatePostDialog = true;
+    // Reinitialize editor with current language
+    this.editorInitialized = false;
+    setTimeout(() => {
+      this.editorInitialized = true;
+      this.showcreatePostDialog = true;
+      this.changeDetectorRef.detectChanges();
+    }, 0);
   }
 
   private async saveToDatabase() {
