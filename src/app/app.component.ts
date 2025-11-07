@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   HostListener,
   OnInit,
