@@ -21,21 +21,136 @@ section:before {
   background-size: cover;
 }
 
+.wood-frame {
+  border: 8px solid transparent;
+  border-image: url('/assets/wood-frame.jpg') 30 round;
+  box-shadow:
+    inset 0 0 8px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .flipbox-active {
   transform-origin: left;
   transition: transform 0.45s;
+  position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/wood-frame.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.25;
+    // mix-blend-mode: multiply;
+    pointer-events: none;
+    border-radius: 4px;
+  }
 }
 .flipbox:hover .flipbox-active {
   transform: perspective(1200px) rotateY(20deg);
 }
 
-.doorknob {
-  transform-origin: left center;
+.door-rosette {
+  width: 24px;
+  height: 60px;
+  background: linear-gradient(135deg,
+    #6B4423 0%,
+    #8B5A3C 20%,
+    #A0684A 50%,
+    #8B5A3C 70%,
+    #5D3819 100%
+  );
+  border-radius: 4px;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 200, 150, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding-bottom: 6px;
+}
+
+.keyhole {
+  position: relative;
+  width: 12px;
+  height: 18px;
+}
+
+.keyhole-top {
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.keyhole-bottom {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 10px solid rgba(0, 0, 0, 0.8);
+  margin: 0 auto;
+  filter: drop-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.doorknob-container {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  transform-origin: right center;
   transition: transform 0.3s ease;
 }
 
-.flipbox:hover .doorknob {
-  transform: rotate(35deg);
+.doorknob {
+  width: 42px;
+  height: 14px;
+  background: linear-gradient(to right,
+    #8B5A3C 0%,    /* dunkles Kupfer außen */
+    #B87333 20%,   /* mittleres Kupfer */
+    #D4956B 50%,   /* helles Kupfer Mitte */
+    #B87333 80%,   /* mittleres Kupfer */
+    #8B5A3C 100%   /* dunkles Kupfer am Gelenk */
+  );
+  /* Geschwungene Form: links flacher, rechts runder */
+  border-radius: 3px 7px 7px 3px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  position: relative;
+
+  /* Dicke am Gelenk, dann gerade schmal */
+  clip-path: path('M 0,4 L 28,4 Q 35,3 42,2 L 42,12 Q 35,11 28,10 L 0,10 Z');
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 8px;  /* Nicht bis ganz zum Gelenk */
+    bottom: 0;
+    background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.4) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+    clip-path: inherit;
+  }
+}
+
+.flipbox:hover .doorknob-container {
+  transform: rotate(-35deg);
 }
 
 ul li::marker {

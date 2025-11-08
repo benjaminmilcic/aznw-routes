@@ -36,7 +36,7 @@
   <div #doors class="flex flex-wrap justify-center relative">
     <div
       *ngFor="let setting of settings; let settingIndex = index"
-      class="flipbox m-8 rounded-lg cursor-pointer border-8 border-blue-200 h-fit bg-[#ffffff40]"
+      class="flipbox m-8 rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40]"
       (click)="goToPage([setting.goToPage])"
       (mouseenter)="playAudio(settingIndex)"
       [matContextMenuTriggerFor]="contextMenu"
@@ -132,12 +132,20 @@
       <div
         class="text-white sm:h-[400px] p-8 w-60 shadow-lg flipbox-active relative"
       >
-        <div class="absolute top-[calc(50%-10px)] right-[40px] z-50">
+        <div class="absolute top-[calc(50%-30px)] right-[10px] z-50">
           <div class="relative">
-            <div class="w-[20px] h-[20px] rounded-full bg-gray-600"></div>
-            <div
-              class="absolute top-[5px] left-[10px] w-[40px] h-[10px] rounded bg-yellow-200 doorknob"
-            ></div>
+            <!-- Türrosette mit Schlüsselloch -->
+            <div class="door-rosette">
+              <!-- Schlüsselloch -->
+              <div class="keyhole">
+                <div class="keyhole-top"></div>
+                <div class="keyhole-bottom"></div>
+              </div>
+            </div>
+            <!-- Türklinke -->
+            <div class="doorknob-container">
+              <div class="doorknob"></div>
+            </div>
           </div>
         </div>
         <div class="flex flex-col justify-between h-full">
