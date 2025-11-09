@@ -745,13 +745,16 @@
         // Responsive height: adapt to viewport height
         var viewportHeight = window.innerHeight;
         var maxContentHeight = Math.min(300, viewportHeight - 200);
-        contentArea.style.cssText = 'max-height: ' + maxContentHeight + 'px; overflow-y: auto; overflow-x: hidden; padding: 8px; box-sizing: border-box;';
+        // Reduce padding on small screens to give more space for emojis
+        var contentPadding = viewportWidth < 640 ? '6px' : '8px';
+        contentArea.style.cssText = 'max-height: ' + maxContentHeight + 'px; overflow-y: auto; overflow-x: hidden; padding: ' + contentPadding + '; box-sizing: border-box;';
 
         // Add emoji groups
         emojiGroups.forEach(function(group) {
             var section = document.createElement('div');
             section.id = 'emoji-section-' + group.id;
             section.className = 'emoji-section';
+            section.style.cssText = 'box-sizing: border-box; width: 100%;';
 
             // Group header
             var groupHeader = document.createElement('div');
@@ -761,9 +764,9 @@
 
             // Emoji grid for this group
             var groupGrid = document.createElement('div');
-            // Responsive columns: fewer on small screens
-            var gridColumns = viewportWidth < 320 ? 6 : (viewportWidth < 640 ? 7 : 8);
-            groupGrid.style.cssText = 'display: grid; grid-template-columns: repeat(' + gridColumns + ', 1fr); gap: 1px; margin-bottom: 8px; box-sizing: border-box; width: 100%;';
+            // Responsive columns: fewer on small screens to account for scrollbar
+            var gridColumns = viewportWidth < 320 ? 5 : (viewportWidth < 640 ? 6 : 8);
+            groupGrid.style.cssText = 'display: grid; grid-template-columns: repeat(' + gridColumns + ', 1fr); gap: 1px; margin-bottom: 8px; box-sizing: border-box; width: 100%; max-width: 100%;';
 
             group.emojis.forEach(function(item) {
                 var emojiBtn = document.createElement('button');
@@ -772,7 +775,7 @@
                 emojiBtn.dataset.name = item.name;
                 emojiBtn.textContent = item.emoji;
                 emojiBtn.title = item.name;
-                emojiBtn.style.cssText = 'font-size: 24px; border: none; background: transparent; cursor: pointer; padding: 5px; border-radius: 3px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 34px;';
+                emojiBtn.style.cssText = 'font-size: 24px; border: none; background: transparent; cursor: pointer; padding: 5px; border-radius: 3px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 34px; box-sizing: border-box; overflow: hidden;';
 
                 emojiBtn.onmouseover = function() {
                     this.style.background = '#f0f0f0';
