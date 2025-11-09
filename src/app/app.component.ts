@@ -1,8 +1,4 @@
-import {
-  Component,
-  HostListener,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
@@ -30,7 +26,33 @@ export class AppComponent implements OnInit {
     private title: Title
   ) {
     translate.setDefaultLang('de');
-    translate.use('de');
+    const language = navigator.language || (navigator as any).userLanguage;
+    let translateLanguage = 'de';
+    switch (language) {
+      case 'de-DE':
+      case 'de-AT':
+      case 'de-CH':
+      case 'de-LU':
+      case 'de-LI':
+      case 'de-BE':
+      case 'de':
+        translateLanguage = 'de';
+        break;
+      case 'hr-HR':
+      case 'bs-BA':
+      case 'sr-RS':
+      case 'sr-ME':
+      case 'cnr-ME':
+      case 'sr-Latn-RS':
+      case 'sr-Cyrl-RS':
+        translateLanguage = 'hr';
+        break;
+
+      default:
+        translateLanguage = 'en';
+        break;
+    }
+    translate.use(translateLanguage);
   }
 
   ngOnInit(): void {
