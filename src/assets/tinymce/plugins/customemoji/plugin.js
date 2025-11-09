@@ -651,7 +651,12 @@
         var panel = document.createElement('div');
         panel.id = panelId;
         panel.className = 'tinymce-emoji-panel';
-        panel.style.cssText = 'position: fixed; z-index: 10000; background: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); width: 280px; overflow: hidden; display: flex; flex-direction: column;';
+
+        // Responsive width: use viewport width on small screens
+        var viewportWidth = window.innerWidth;
+        var panelWidth = viewportWidth < 320 ? viewportWidth - 20 : Math.min(280, viewportWidth - 20);
+
+        panel.style.cssText = 'position: fixed; z-index: 10000; background: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); width: ' + panelWidth + 'px; overflow: hidden; display: flex; flex-direction: column; max-width: calc(100vw - 20px);';
 
         // Create header with category navigation
         var header = document.createElement('div');
@@ -737,7 +742,10 @@
 
         // Create scrollable content area
         var contentArea = document.createElement('div');
-        contentArea.style.cssText = 'max-height: 300px; overflow-y: auto; overflow-x: hidden; padding: 8px;';
+        // Responsive height: adapt to viewport height
+        var viewportHeight = window.innerHeight;
+        var maxContentHeight = Math.min(300, viewportHeight - 200);
+        contentArea.style.cssText = 'max-height: ' + maxContentHeight + 'px; overflow-y: auto; overflow-x: hidden; padding: 8px; box-sizing: border-box;';
 
         // Add emoji groups
         emojiGroups.forEach(function(group) {
@@ -753,7 +761,9 @@
 
             // Emoji grid for this group
             var groupGrid = document.createElement('div');
-            groupGrid.style.cssText = 'display: grid; grid-template-columns: repeat(8, 1fr); gap: 1px; margin-bottom: 8px;';
+            // Responsive columns: fewer on small screens
+            var gridColumns = viewportWidth < 320 ? 6 : (viewportWidth < 640 ? 7 : 8);
+            groupGrid.style.cssText = 'display: grid; grid-template-columns: repeat(' + gridColumns + ', 1fr); gap: 1px; margin-bottom: 8px; box-sizing: border-box; width: 100%;';
 
             group.emojis.forEach(function(item) {
                 var emojiBtn = document.createElement('button');
@@ -865,24 +875,42 @@
                 }
             }
 
-            if (button) {
+            var panelHeight = panel.offsetHeight;
+            var panelWidth = panel.offsetWidth;
+            var isMobile = window.innerWidth < 640; // Check if mobile screen
+
+            if (isMobile) {
+                // On mobile: center the dialog
+                panel.style.top = '50%';
+                panel.style.left = '50%';
+                panel.style.transform = 'translate(-50%, -50%)';
+            } else if (button) {
+                // On desktop: position near button
                 var rect = button.getBoundingClientRect();
-                var panelHeight = panel.offsetHeight;
-                var panelWidth = panel.offsetWidth;
 
                 var top = rect.bottom + window.scrollY + 5;
                 var left = rect.left + window.scrollX;
 
+                // Ensure panel stays within viewport horizontally
                 if (left + panelWidth > window.innerWidth) {
                     left = window.innerWidth - panelWidth - 10;
                 }
+                if (left < 10) {
+                    left = 10;
+                }
+
+                // Ensure panel stays within viewport vertically
                 if (top + panelHeight > window.innerHeight + window.scrollY) {
                     top = rect.top + window.scrollY - panelHeight - 5;
+                }
+                if (top < window.scrollY + 10) {
+                    top = window.scrollY + 10;
                 }
 
                 panel.style.top = top + 'px';
                 panel.style.left = left + 'px';
             } else {
+                // Fallback: center the dialog
                 panel.style.top = '50%';
                 panel.style.left = '50%';
                 panel.style.transform = 'translate(-50%, -50%)';
@@ -902,23 +930,31 @@
                 return;
             }
 
-            // Check if click is on the emoji button or inside TinyMCE toolbar
+            // Check if click is on the emoji button specifically
             var target = e.target;
+            var isEmojiButton = false;
+
             while (target && target !== document.body) {
-                // Check for TinyMCE button
+                // Check specifically for the emoji button
                 if (target.tagName === 'BUTTON' || target.tagName === 'A') {
                     var ariaLabel = target.getAttribute('aria-label');
                     var title = target.getAttribute('title');
                     if (ariaLabel && ariaLabel.toLowerCase().includes('emoji') ||
                         title && title.toLowerCase().includes('emoji') ||
                         target.textContent && target.textContent.includes('😀')) {
-                        return; // Don't close if clicking the button
+                        isEmojiButton = true;
+                        break;
                     }
                 }
                 target = target.parentElement;
             }
 
-            // Close panel
+            // Don't close if clicking the emoji button (to allow toggling)
+            if (isEmojiButton) {
+                return;
+            }
+
+            // Close panel for any other click (including other toolbar buttons)
             panel.remove();
             document.removeEventListener('click', closeHandler, true);
         };
