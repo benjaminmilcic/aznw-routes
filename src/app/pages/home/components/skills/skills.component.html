@@ -1,4 +1,3 @@
-
 <section id="skills">
   <div class="flex-col place-items-center w-full content hidden md:flex">
     <h3 class="mb-40 text-white">{{ "sidebar.skills" | translate }}</h3>
@@ -51,11 +50,14 @@
         (click)="openLink('https://angular.io/')"
       >
         <div class="circle-image">
-          <img
-            src="assets/svg/angular.svg"
+          <div class="translate-x-[2px]">
+            <img
+            src="assets/angular_logo.png"
             width="36px"
             class="rotate-[-83deg]"
           />
+          </div>
+          
         </div>
 
         <p
@@ -266,7 +268,7 @@
             class="item-wrapper group cursor-pointer"
             (click)="openLink('https://angular.io/')"
           >
-            <img src="assets/svg/angular.svg" />
+            <img src="assets/angular_logo.png" />
             <p class="!font-semibold group-hover:!font-bold">Angular</p>
           </div>
         </li>
@@ -363,14 +365,11 @@
       </ul>
     </div>
   </div>
- 
 
   <div class="relative text-center mt-[60px] md:mt-[200px]">
     <a class="next-section-button" [routerLink]="['/']" fragment="portfolio">
       <div class="flex gap-2 items-center">
-        <mat-icon
-          fontIcon="business_center"
-        ></mat-icon>
+        <mat-icon fontIcon="business_center"></mat-icon>
         <div>Portfolio</div>
       </div>
     </a>
