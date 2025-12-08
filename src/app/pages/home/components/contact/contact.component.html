@@ -10,23 +10,25 @@
     </p>
     <div class="contact-wrapper">
       <div
-        class="bg-white bg-opacity-40 flex w-full gap-4 rounded-lg shadow-lg hover:shadow-xl hover:translate-y-[-4px] cursor-pointer items-center contact-box"
-         (click)="callNumber()"
+        class="bg-white bg-opacity-40 flex w-full gap-4 rounded-lg shadow-lg hover:shadow-xl hover:translate-y-[-4px] items-center contact-box"
       >
         <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
         <div class="flex flex-col justify-around items-start h-full">
-          <div class="text-black sm:text-xl">{{ "contact.phone" | translate }}</div>
+          <div class="text-black sm:text-xl">
+            {{ "contact.phone" | translate }}
+          </div>
           <div class="text-[#64748b] sm:text-lg">+49 176 41942532</div>
         </div>
       </div>
       <div
-        class="bg-white bg-opacity-40 flex w-full gap-4 rounded-lg shadow-lg hover:shadow-xl hover:translate-y-[-4px] cursor-pointer items-center contact-box"
-        (click)="openEmail()"
+        class="bg-white bg-opacity-40 flex w-full gap-4 rounded-lg shadow-lg hover:shadow-xl hover:translate-y-[-4px] items-center contact-box"
       >
         <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
         <div class="flex flex-col justify-around items-start h-full">
           <div class="text-black sm:text-xl">Email</div>
-          <div class="text-[#64748b] sm:text-lg underline">benjamin.milcic&#64;gmail.com</div>
+          <div class="text-[#64748b] sm:text-lg underline">
+            benjamin.milcic&#64;gmail.com
+          </div>
         </div>
       </div>
     </div>
