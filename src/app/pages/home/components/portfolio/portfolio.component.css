@@ -923,34 +923,40 @@ dialog::backdrop {
   }
 }
 
-@keyframes shake {
+@keyframes unpin {
   0% {
-    transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1) translateY(0);
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
   }
-  20% {
-    transform: rotate(3deg) scale(1.03);
+  15% {
+    transform: rotate(-3deg) scale(1.02) translateY(-3px);
+    filter: drop-shadow(0 12px 35px rgba(0, 0, 0, 0.32));
   }
-  40% {
-    transform: rotate(-3deg) scale(1.06);
+  30% {
+    transform: rotate(-2deg) scale(1.04) translateY(-6px);
+    filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.35));
   }
-  60% {
-    transform: rotate(3deg) scale(1.09);
+  50% {
+    transform: rotate(-1deg) scale(1.08) translateY(-9px);
+    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.38));
   }
-  80% {
-    transform: rotate(-3deg) scale(1.12);
+  70% {
+    transform: rotate(0deg) scale(1.11) translateY(-11px);
+    filter: drop-shadow(0 25px 60px rgba(0, 0, 0, 0.4));
   }
   100% {
-    transform: rotate(0deg) scale(1.15);
+    transform: rotate(0deg) scale(1.15) translateY(-12px);
+    filter: drop-shadow(0 30px 70px rgba(0, 0, 0, 0.42));
   }
 }
 
 .shake {
   display: inline-block;
-  transition: transform 0.3s; /* sanfter Übergang */
+  transition: transform 0.3s, filter 0.3s; /* sanfter Übergang */
 }
 
 /* Animation nur bei Hover auslösen */
 .shake:hover {
-  animation: shake 0.5s ease-in-out forwards; /* Dauer & Timing */
+  animation: unpin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; /* Dauer & Timing mit bounce effect */
   animation-iteration-count: 1; /* einmal abspielen */
 }
