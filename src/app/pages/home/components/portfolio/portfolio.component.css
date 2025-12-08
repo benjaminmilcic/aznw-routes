@@ -238,6 +238,66 @@ dialog::backdrop {
   height: 50px;
 }
 
+.pin-2 {
+  --pin-color: #22c55e;
+  --pin-dark: #16a34a;
+  --pin-light: #86efac;
+
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  width: 60px;
+  height: 50px;
+}
+
+.pin-3 {
+  --pin-color: #eab308;
+  --pin-dark: #ca8a04;
+  --pin-light: #fde047;
+
+  position: absolute;
+  left: 80%;
+  top: -10px;
+  width: 60px;
+  height: 50px;
+}
+
+.pin-4 {
+  --pin-color: #3b82f6;
+  --pin-dark: #1d4ed8;
+  --pin-light: #93c5fd;
+
+  position: absolute;
+  left: 20%;
+  top: -10px;
+  width: 60px;
+  height: 50px;
+}
+
+.pin-5 {
+  --pin-color: #22c55e;
+  --pin-dark: #16a34a;
+  --pin-light: #86efac;
+
+  position: absolute;
+  left: 90%;
+  top: -10px;
+  width: 60px;
+  height: 50px;
+}
+
+.pin-6 {
+  --pin-color: #d02627;
+  --pin-dark: #9e0608;
+  --pin-light: #fc7e7d;
+
+  position: absolute;
+  left: 10%;
+  top: -10px;
+  width: 60px;
+  height: 50px;
+}
+
 .shadow {
   position: absolute;
   top: 18px;
@@ -583,6 +643,25 @@ dialog::backdrop {
     height: 25px;
   }
 
+  .pin-2 {
+    left: 50%;
+    width: 30px;
+    height: 25px;
+  }
+
+  .pin-3 {
+    left: 80%;
+    width: 30px;
+    height: 25px;
+  }
+
+  .pin-4,
+  .pin-5,
+  .pin-6 {
+    width: 30px;
+    height: 25px;
+  }
+
   .shadow {
     top: 18px;
     left: -8px;
@@ -718,8 +797,6 @@ dialog::backdrop {
     font-size: 0.75rem;
   }
 }
-
-
 
 @media screen and (max-width: 550px) {
   .image {
