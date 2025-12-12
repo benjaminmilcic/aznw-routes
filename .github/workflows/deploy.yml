@@ -63,7 +63,7 @@ jobs:
               translationEmail: 'benjamin.milcic@gmail.com',
             },
             analytics: {
-               sendData: `http://${ip}:3000/analytics/visitor-data`,
+               sendData: `https://${ip}:3000/analytics/visitor-data`,
             },
             production: true,
             version: new Date().getTime(),
