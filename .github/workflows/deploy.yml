@@ -62,6 +62,9 @@ jobs:
               filesUrl: `https://${ip}:3000/files`,
               translationEmail: 'benjamin.milcic@gmail.com',
             },
+            analytics: {
+               sendData: `http://${ip}:3000/analytics/visitor-data`,
+            },
             production: true,
             version: new Date().getTime(),
           };
