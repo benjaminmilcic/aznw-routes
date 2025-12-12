@@ -6,6 +6,8 @@ import { ScrollToTopComponent } from './pages/scroll-to-top/scroll-to-top.compon
 import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.service';
 import { AuthService } from './pages/gimmicks/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { AnalyticsService } from './services/analytics.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +25,8 @@ export class AppComponent implements OnInit {
     private chartsHelperService: ChartsHelperService,
     private authService: AuthService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    private analyticsService: AnalyticsService
   ) {
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;
@@ -63,5 +66,10 @@ export class AppComponent implements OnInit {
         'Passionate developer with a focus on modern web technologies. I transform ideas into elegant, functional solutions. Core competencies: Angular, Ionic and NestJS',
     });
     this.authService.autoLogin();
+
+    // Analytics-Tracking beim App-Start initialisieren
+    if (environment.production) {
+      this.analyticsService.initTracking();
+    }
   }
 }

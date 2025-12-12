@@ -68,6 +68,9 @@ export const environment = {
     filesUrl: `https://${ip}:3000/files`,
     translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
   },
+  analytics: {
+    sendData: `http://${ip}:3000/analytics/visitor-data`,
+  },
   production: true,
   version: new Date().getTime(),
 };
