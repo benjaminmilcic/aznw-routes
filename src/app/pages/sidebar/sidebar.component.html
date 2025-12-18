@@ -1,10 +1,15 @@
-<a (click)="onToggleSidebar($event)" class="menu-toggle" href="#" [class.active]="sidebarActivated"
+<a
+  (click)="onToggleSidebar($event)"
+  class="menu-toggle"
+  href="#"
+  [class.active]="sidebarActivated"
   ><i class="fas fa-bars menu-button"></i
 ></a>
 <nav
+  #sidebarWrapper
   id="sidebar-wrapper"
   [ngClass]="{ active: sidebarActivated }"
-  class="overflow-y-auto"
+  class="overflow-y-auto overflow-x-hidden"
 >
   <ul>
     <li>
@@ -78,56 +83,71 @@
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="header">
         <div class="sidebar-item">
-          <i class="fa-solid fa-house"></i>
-          <p>{{ "sidebar.home" | translate }}</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-house"></i>
+            <p>{{ "sidebar.home" | translate }}</p>
+          </div>
         </div>
       </a>
     </li>
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="about">
         <div class="sidebar-item">
-          <i class="fa-solid fa-user"></i>
-          <p>{{ "sidebar.aboutMe" | translate }}</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-user"></i>
+            <p>{{ "sidebar.aboutMe" | translate }}</p>
+          </div>
         </div>
       </a>
     </li>
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="skills">
         <div class="sidebar-item">
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <p class="col ms-2">{{ "sidebar.skills" | translate }}</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <p class="col ms-2">{{ "sidebar.skills" | translate }}</p>
+          </div>
         </div>
       </a>
     </li>
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="portfolio">
         <div class="sidebar-item">
-          <i class="fa-solid fa-toolbox"></i>
-          <p>Portfolio</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-toolbox"></i>
+            <p>Portfolio</p>
+          </div>
         </div>
       </a>
     </li>
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="contact">
         <div class="sidebar-item">
-          <i class="fa-solid fa-id-card"></i>
-          <p>{{ "sidebar.contact" | translate }}</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-id-card"></i>
+            <p>{{ "sidebar.contact" | translate }}</p>
+          </div>
         </div>
       </a>
     </li>
     <li>
       <a (click)="onClick()" [routerLink]="['/']" fragment="footer">
         <div class="sidebar-item">
-          <i class="fa-solid fa-link"></i>
-          <p>Links</p>
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-link"></i>
+            <p>Links</p>
+          </div>
         </div>
       </a>
     </li>
+    <hr class="border border-[#a9c25d] mx-4">
     <li>
       <a (click)="onClick()" [routerLink]="['/gimmicks']" fragment="header">
-        <div class="sidebar-item">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <p>Gimmicks</p>
+        <div class="sidebar-item gimmicks">
+          <div class="flex gap-1 items-center">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <p>Gimmicks</p>
+          </div>
         </div>
       </a>
     </li>

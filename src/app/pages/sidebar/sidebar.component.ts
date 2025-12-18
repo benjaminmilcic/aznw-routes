@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateSendButtonService } from '../home/components/shared/translate-send-button.service';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
   language: string = this.translate.currentLang;
 
   @ViewChild(MatMenuTrigger) languageMenuTrigger!: MatMenuTrigger;
+  @ViewChild('sidebarWrapper') sidebarWrapper!: ElementRef;
 
   constructor(
     private translate: TranslateService,
@@ -41,6 +42,13 @@ export class SidebarComponent implements OnInit {
     }
 
     this.sidebarActivated = !this.sidebarActivated;
+
+    // Reset scroll position when opening sidebar
+    if (this.sidebarActivated && this.sidebarWrapper) {
+      setTimeout(() => {
+        this.sidebarWrapper.nativeElement.scrollTop = 0;
+      }, 0);
+    }
 
     // this is necessary because ngClass does not work with FontAwesome CSS Libary
     // Next time better use FontAwesome Angular Package

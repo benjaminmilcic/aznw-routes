@@ -62,15 +62,57 @@ a {
   padding-left: 15px;
 }
 
+
+
 .sidebar-item {
   display: flex;
   padding: 15px;
   color: var(--color1);
   align-items: center;
+  position: relative;
+}
+
+.gimmicks{
+  color: var(--color5) !important;
+
+}
+
+.sidebar-item::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 3px;
+  background-color: var(--color1);
+  transition: transform 0.5s;
+}
+
+.sidebar-item.gimmicks::after {
+  background-color: var(--color5) !important;
+}
+
+.sidebar-item div {
+  transition: all 0.5s;
 }
 
 .sidebar-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--color1);
+}
+
+.sidebar-item:hover.gimmicks {
+  background-color: rgba(55, 55, 55, 0.3) !important;
+  border-left: 4px solid var(--color5) !important;
+}
+
+.sidebar-item:hover::after {
+  transform: translateX(-30px);
+}
+
+.sidebar-item:hover div {
+  transform: translateX(20px);
 }
 
 p {
