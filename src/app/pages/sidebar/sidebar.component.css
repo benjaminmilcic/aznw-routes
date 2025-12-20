@@ -73,7 +73,7 @@ a {
 }
 
 .gimmicks{
-  color: var(--color5) !important;
+  color: #e9a554 !important;
 
 }
 
@@ -90,7 +90,7 @@ a {
 }
 
 .sidebar-item.gimmicks::after {
-  background-color: var(--color5) !important;
+  background-color: #e9a554 !important;
 }
 
 .sidebar-item div {
@@ -104,7 +104,7 @@ a {
 
 .sidebar-item:hover.gimmicks {
   background-color: rgba(55, 55, 55, 0.3) !important;
-  border-left: 4px solid var(--color5) !important;
+  border-left: 4px solid #e9a554 !important;
 }
 
 .sidebar-item:hover::after {
