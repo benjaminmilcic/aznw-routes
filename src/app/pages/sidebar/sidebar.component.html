@@ -5,6 +5,14 @@
   [class.active]="sidebarActivated"
   ><i class="fas fa-bars menu-button"></i
 ></a>
+
+<!-- Overlay to close sidebar when clicking outside -->
+<div
+  *ngIf="sidebarActivated"
+  class="sidebar-overlay"
+  (click)="onToggleSidebar(null)"
+></div>
+
 <nav
   #sidebarWrapper
   id="sidebar-wrapper"

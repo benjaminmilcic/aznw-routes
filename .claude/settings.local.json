@@ -7,7 +7,8 @@
       "WebSearch",
       "Bash(npm install:*)",
       "Bash(ng serve)",
-      "Bash(timeout /t 15)"
+      "Bash(timeout /t 15)",
+      "Skill(frontend-design)"
     ],
     "deny": [],
     "ask": []

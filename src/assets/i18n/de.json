@@ -52,9 +52,9 @@
     }
   },
   "contact": {
-    "headline": "Lass uns Kontakt aufnehmen!",
-    "text1": "Bist du bereit, dein nächstes Projekt mit mir zu starten?",
-    "text2": "Schicke mir eine Nachricht!",
+    "headline": "Lassen Sie uns Kontakt aufnehmen!",
+    "text1": "Sind Sie bereit, Ihr nächstes Projekt mit mir zu starten?",
+    "text2": "Schicken Sie mir eine Nachricht!",
     "firstName": "Vorname",
     "lastName": "Nachname",
     "message": "Nachricht",
@@ -70,7 +70,8 @@
     }
   },
   "footer": {
-    "visitMe": "Besuche mich auf"
+    "visitMe": "Besuchen Sie mich auf",
+    "croatia": "Kroatien"
   },
   "sidebar": {
     "home": "Start",
@@ -443,6 +444,7 @@
     "httpErrorOccurs2":"Es ist ein Datenübertragungsfehler aufgetreten.",
     "emailWasSendToMe":"Eine Email wurde an mich gesendet. Ich werde mich umgehend um den Fehler kümmern.",
     "checkInternetConnection":"Bitte überprüfen Sie auch Ihre Internetverbindung. Eventuell liegt es daran.",
-    "errorOccurs":"Ein Fehler ist aufgetreten!"
+    "errorOccurs":"Ein Fehler ist aufgetreten!",
+    "copied":"In Zwischenablage kopiert"
   }
 }

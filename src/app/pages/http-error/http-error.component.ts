@@ -25,4 +25,17 @@ interface DialogData {
 export class HttpErrorComponent {
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   email = 'benjamin.milcic@gmail.com';
+  showCopiedMessage = false;
+
+  async copyEmail() {
+    try {
+      await navigator.clipboard.writeText(this.email);
+      this.showCopiedMessage = true;
+      setTimeout(() => {
+        this.showCopiedMessage = false;
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  }
 }

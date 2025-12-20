@@ -53,8 +53,8 @@
   },
   "contact": {
     "headline": "Let's Get In Touch!",
-    "text1": "Ready to start your next project with me?",
-    "text2": "Send me a message!",
+    "text1": "Are you ready to start your next project with me?",
+    "text2": "Please send me a message!",
     "firstName": "First name",
     "lastName": "Last name",
     "message": "Message",
@@ -70,7 +70,8 @@
     }
   },
   "footer": {
-    "visitMe": "Visit me on"
+    "visitMe": "Visit me on",
+    "croatia": "Croatia"
   },
   "sidebar": {
     "home": "Home",
@@ -443,6 +444,7 @@
     "httpErrorOccurs2": "A data transfer error occurred.",
     "emailWasSendToMe": "An email has been sent to me. I will take care of the error immediately.",
     "checkInternetConnection": "Please also check your internet connection. This may be the cause.",
-    "errorOccurs": "An error has occurred!"
+    "errorOccurs": "An error has occurred!",
+    "copied": "Copied to clipboard"
   }
 }

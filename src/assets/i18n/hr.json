@@ -53,7 +53,7 @@
   },
   "contact": {
     "headline": "Javite mi se!",
-    "text1": "Spremni ste započeti svoj sljedeći projekt sa mnom?",
+    "text1": "Jeste li spremni započeti Vaš sljedeći projekt sa mnom?",
     "text2": "Pošaljite mi poruku!",
     "firstName": "Ime",
     "lastName": "Prezime",
@@ -70,7 +70,8 @@
     }
   },
   "footer": {
-    "visitMe": "Posjetite me na"
+    "visitMe": "Posjetite me na",
+    "croatia": "Hrvatska"
   },
   "sidebar": {
     "home": "Početna",
@@ -443,6 +444,7 @@
     "httpErrorOccurs2": "Došlo je do pogreške u prijenosu podataka.",
     "emailWasSendToMe": "E-mail mi je poslan. Odmah ću se pobrinuti za grešku.",
     "checkInternetConnection": "Također provjerite svoju internetsku vezu. Ovo može biti uzrok.",
-    "errorOccurs": "Došlo je do pogreške!"
+    "errorOccurs": "Došlo je do pogreške!",
+    "copied": "Kopirano u međuspremnik"
   }
 }

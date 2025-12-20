@@ -241,3 +241,20 @@ button.alert-button.alert-button-confirm:hover {
 .mat-select-search-panel {
   background: rgb(182, 136, 151) !important;
 }
+
+/* HTTP Error Dialog Container Styling */
+.http-error-dialog-container {
+  .mat-mdc-dialog-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+  }
+
+  .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+  }
+}
