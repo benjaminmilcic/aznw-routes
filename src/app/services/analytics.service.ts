@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export interface VisitorData {
+  sessionId: string;
   timestamp: string;
   userAgent: string;
   language: string;
@@ -26,19 +29,59 @@ export interface VisitorData {
   online: boolean;
 }
 
+export interface PageViewData {
+  sessionId: string;
+  route: string;
+  timestamp: string;
+  referrer?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
   private readonly ANALYTICS_API_URL = environment.analytics.sendData;
+  private readonly PAGE_VIEW_API_URL = `${environment.analytics.sendData.replace('/visitor-data', '/page-view')}`;
+  private readonly SESSION_ID_KEY = 'analytics_session_id';
+  private sessionId: string;
+  private lastRoute: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.sessionId = this.getOrCreateSessionId();
+  }
+
+  /**
+   * Generiert oder lädt eine bestehende Session-ID
+   */
+  private getOrCreateSessionId(): string {
+    let sessionId = localStorage.getItem(this.SESSION_ID_KEY);
+
+    if (!sessionId) {
+      // Generiere UUID v4
+      sessionId = this.generateUUID();
+      localStorage.setItem(this.SESSION_ID_KEY, sessionId);
+    }
+
+    return sessionId;
+  }
+
+  /**
+   * Generiert eine UUID v4
+   */
+  private generateUUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
 
   /**
    * Sammelt alle verfügbaren Besucherdaten ohne Genehmigung
    */
   collectVisitorData(): VisitorData {
     const data: VisitorData = {
+      sessionId: this.sessionId,
       timestamp: new Date().toISOString(),
       userAgent: navigator.userAgent,
       language: navigator.language,
@@ -96,11 +139,48 @@ export class AnalyticsService {
   }
 
   /**
+   * Sendet PageView-Daten an die API
+   */
+  private sendPageView(route: string, referrer?: string): void {
+    const pageViewData: PageViewData = {
+      sessionId: this.sessionId,
+      route: route,
+      timestamp: new Date().toISOString(),
+      referrer: referrer,
+    };
+
+    this.http.post(this.PAGE_VIEW_API_URL, pageViewData).subscribe({
+      next: (response) => {
+        // PageView erfolgreich gesendet
+      },
+      error: (error) => {
+        // Fehler werden stillschweigend ignoriert
+      }
+    });
+  }
+
+  /**
+   * Trackt einen PageView
+   */
+  private trackPageView(url: string): void {
+    const referrer = this.lastRoute || undefined;
+    this.sendPageView(url, referrer);
+    this.lastRoute = url;
+  }
+
+  /**
    * Initialisiert das Analytics-Tracking
    * Sollte beim App-Start aufgerufen werden
    */
   initTracking(): void {
     // Daten direkt beim Start senden
     this.sendVisitorData();
+
+    // Router-Events abonnieren für PageView-Tracking
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.trackPageView(event.urlAfterRedirects);
+      });
   }
 }
