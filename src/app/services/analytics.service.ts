@@ -52,14 +52,15 @@ export class AnalyticsService {
 
   /**
    * Generiert oder lädt eine bestehende Session-ID
+   * Verwendet sessionStorage, damit jeder neue Tab/Window eine neue Session bekommt
    */
   private getOrCreateSessionId(): string {
-    let sessionId = localStorage.getItem(this.SESSION_ID_KEY);
+    let sessionId = sessionStorage.getItem(this.SESSION_ID_KEY);
 
     if (!sessionId) {
       // Generiere UUID v4
       sessionId = this.generateUUID();
-      localStorage.setItem(this.SESSION_ID_KEY, sessionId);
+      sessionStorage.setItem(this.SESSION_ID_KEY, sessionId);
     }
 
     return sessionId;
