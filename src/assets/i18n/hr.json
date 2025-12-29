@@ -383,8 +383,8 @@
       "climaChart":{
         "title":"Klimatski dijagram iz podataka posljednjih 30 godina",
         "loading":"Klimatski podaci se učitavaju...",
-        "avgTemperature":"∅ Temperatura",
-        "avgPrecipitation":"∅ Oborine",
+        "avgTemperature":"Ø Temperatura",
+        "avgPrecipitation":"Ø Oborine",
         "yearlyAvgTemp":"Godišnja prosječna temperatura",
         "yearlyTotalPrecip":"Ukupne oborine",
         "elevation":"Nadmorska visina",

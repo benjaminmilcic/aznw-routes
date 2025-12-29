@@ -383,8 +383,8 @@
       "climaChart":{
         "title":"Climate diagram from the last 30 years of data",
         "loading":"Climate data is loading...",
-        "avgTemperature":"∅ Temperature",
-        "avgPrecipitation":"∅ Precipitation",
+        "avgTemperature":"Ø Temperature",
+        "avgPrecipitation":"Ø Precipitation",
         "yearlyAvgTemp":"Annual average temperature",
         "yearlyTotalPrecip":"Total precipitation",
         "elevation":"Elevation above sea level",

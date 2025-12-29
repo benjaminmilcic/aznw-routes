@@ -9,7 +9,8 @@
       "Bash(ng serve)",
       "Bash(timeout /t 15)",
       "Skill(frontend-design)",
-      "Bash(start \"\" \"C:\\\\Users\\\\User\\\\.claude\\\\plugins\\\\cache\\\\claude-code-plugins\\\\frontend-design\\\\1.0.0\\\\skills\\\\frontend-design\\\\gimmicks-color-demo.html\")"
+      "Bash(start \"\" \"C:\\\\Users\\\\User\\\\.claude\\\\plugins\\\\cache\\\\claude-code-plugins\\\\frontend-design\\\\1.0.0\\\\skills\\\\frontend-design\\\\gimmicks-color-demo.html\")",
+      "Bash(ng build:*)"
     ],
     "deny": [],
     "ask": []
