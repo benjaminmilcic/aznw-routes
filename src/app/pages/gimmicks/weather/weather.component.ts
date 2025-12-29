@@ -52,6 +52,7 @@ import {
   IonSegmentButton,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ClimaChartComponent } from './clima-chart/clima-chart.component';
 
 @Component({
   selector: 'app-weather',
@@ -77,6 +78,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     IonSegment,
     IonSegmentButton,
     TranslateModule,
+    ClimaChartComponent
   ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css',
@@ -112,6 +114,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   selectedChart: 'temp' | 'rain' | 'wind' = 'temp';
   selectedWay: 'location' | 'search' = 'location';
   loading = false;
+  showClimaChart = false;
 
 
   constructor(
@@ -472,6 +475,19 @@ export class WeatherComponent implements OnInit, OnDestroy {
 
   displayCity(city: any) {
     return city ? city.display_name : '';
+  }
+
+  handleClimaChartError(errorMessage: string) {
+    // Prüfe ob diese Fehlermeldung bereits existiert
+    if (this.error && this.error.includes(errorMessage)) {
+      return; // Fehler bereits vorhanden, nicht doppelt hinzufügen
+    }
+
+    if (this.error) {
+      this.error += '<br>' + errorMessage;
+    } else {
+      this.error = errorMessage;
+    }
   }
 
   ngOnDestroy() {

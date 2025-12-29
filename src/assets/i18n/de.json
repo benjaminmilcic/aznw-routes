@@ -377,7 +377,37 @@
       "errorOnAddress":"Fehler beim Abrufen der Adresse.",
       "errorOnSearch":"Fehler beim Suchen. Stadt nicht gefunden oder keine Wetterdaten für diese Stadt.",
       "weatherDataIsLoading":"Wetterdaten werden geladen...",
-      "error":"Fehler"
+      "error":"Fehler",
+      "currentWeatherData":"aktuelle Wetterdaten",
+      "climaDiagram":"Klimadiagramm",
+      "climaChart":{
+        "title":"Klimadiagramm aus den Daten der letzten 30 Jahre",
+        "loading":"Klimadaten werden geladen...",
+        "avgTemperature":"∅ Temperatur",
+        "avgPrecipitation":"∅ Niederschlag",
+        "yearlyAvgTemp":"Temperaturjahresmittel",
+        "yearlyTotalPrecip":"Gesamtniederschlag",
+        "elevation":"Höhe ü. Meeresspiegel",
+        "precipitationAxis":"Niederschlag (mm)",
+        "temperatureAxis":"Temperatur (°C)",
+        "error429":"Klimadaten konnten nicht geladen werden: Zu viele Anfragen. Bitte versuchen Sie es später erneut.",
+        "errorNetwork":"Klimadaten konnten nicht geladen werden: Netzwerkfehler.",
+        "errorGeneric":"Klimadaten konnten nicht geladen werden",
+        "months":{
+          "january":"Januar",
+          "february":"Februar",
+          "march":"März",
+          "april":"April",
+          "may":"Mai",
+          "june":"Juni",
+          "july":"Juli",
+          "august":"August",
+          "september":"September",
+          "october":"Oktober",
+          "november":"November",
+          "december":"Dezember"
+        }
+      }
     },
     "recipes":{
       "manager":"Rezepte Manager",
