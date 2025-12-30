@@ -495,6 +495,45 @@ export class WeatherComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleRemoveError(translationKey: string) {
+    if (!this.error) {
+      return;
+    }
+
+    // Hole die Übersetzungen in allen drei Sprachen
+    const languages = ['de', 'en', 'hr'];
+    const translatedMessages: string[] = [];
+
+    languages.forEach(lang => {
+      const translations = this.translateService.translations[lang];
+      if (translations) {
+        const keys = translationKey.split('.');
+        let value: any = translations;
+        for (const key of keys) {
+          value = value?.[key];
+        }
+        if (typeof value === 'string') {
+          translatedMessages.push(value);
+        }
+      }
+    });
+
+    // Entferne die Fehlermeldung in allen Sprachen aus dem error-String
+    translatedMessages.forEach(message => {
+      // Entferne sowohl mit führendem <br> als auch ohne
+      this.error = this.error.replace('<br>' + message, '');
+      this.error = this.error.replace(message, '');
+    });
+
+    // Bereinige übriggebliebene <br> Tags am Anfang
+    this.error = this.error.replace(/^(<br>)+/, '');
+
+    // Wenn der error-String leer ist, setze ihn auf null
+    if (this.error.trim() === '' || this.error === '<br>') {
+      this.error = '';
+    }
+  }
+
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();

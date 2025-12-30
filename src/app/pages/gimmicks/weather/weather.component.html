@@ -441,6 +441,7 @@
         [lat]="cityLatitude"
         [lng]="cityLongitude"
         (errorOccurred)="handleClimaChartError($event)"
+        (removeError)="handleRemoveError($event)"
       ></app-location-map>
     </div>
 

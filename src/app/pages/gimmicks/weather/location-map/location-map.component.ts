@@ -11,6 +11,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as L from 'leaflet';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-location-map',
@@ -22,6 +23,7 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   @Input() lat: number;
   @Input() lng: number;
   @Output() errorOccurred = new EventEmitter<string>();
+  @Output() removeError = new EventEmitter<string>();
   private map!: L.Map;
   private restaurantMarkers: L.Marker[] = [];
   private supermarketMarkers: L.Marker[] = [];
@@ -224,98 +226,58 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
     this.gasStationMarkers = [];
   }
 
-  private overpassServers = [
-    'https://overpass-api.de/api/interpreter',
-    'https://overpass.kumi.systems/api/interpreter',
-    'https://overpass.openstreetmap.ru/api/interpreter',
-  ];
-  private currentServerIndex = 0;
-
-  private queryOverpass(query: string, retryCount = 0): Promise<any> {
-    const server = this.overpassServers[this.currentServerIndex];
+  private queryGeoapify(category: string, radius: number): Promise<any> {
+    const apiKey = environment.geoapify.apiKey;
+    const url = `https://api.geoapify.com/v2/places?categories=${category}&filter=circle:${this.lng},${this.lat},${radius}&bias=proximity:${this.lng},${this.lat}&limit=50&apiKey=${apiKey}`;
 
     return new Promise((resolve, reject) => {
-      this.http
-        .post(server, query, {
-          headers: { 'Content-Type': 'text/plain' },
-          responseType: 'text',
-        })
-        .subscribe({
-          next: (response: string) => {
-            try {
-              const data = JSON.parse(response);
-              resolve(data);
-            } catch (e) {
-              console.error('JSON Parse Error:', e);
-              console.error('Response:', response.substring(0, 200));
-
-              // Versuche nächsten Server
-              if (retryCount < this.overpassServers.length - 1) {
-                this.currentServerIndex =
-                  (this.currentServerIndex + 1) % this.overpassServers.length;
-                console.log(
-                  `Versuche nächsten Server: ${
-                    this.overpassServers[this.currentServerIndex]
-                  }`
-                );
-                this.queryOverpass(query, retryCount + 1)
-                  .then(resolve)
-                  .catch(reject);
-              } else {
-                reject(new Error('Alle Overpass Server sind nicht erreichbar'));
-              }
-            }
-          },
-          error: (error) => {
-            console.error(`Server ${server} Fehler:`, error);
-
-            // Versuche nächsten Server
-            if (retryCount < this.overpassServers.length - 1) {
-              this.currentServerIndex =
-                (this.currentServerIndex + 1) % this.overpassServers.length;
-              console.log(
-                `Versuche nächsten Server: ${
-                  this.overpassServers[this.currentServerIndex]
-                }`
-              );
-              this.queryOverpass(query, retryCount + 1)
-                .then(resolve)
-                .catch(reject);
-            } else {
-              reject(error);
-            }
-          },
-        });
+      this.http.get<any>(url).subscribe({
+        next: (data) => {
+          resolve(data);
+        },
+        error: (error) => {
+          console.error('Geoapify API Fehler:', error);
+          reject(error);
+        },
+      });
     });
   }
 
   loadRestaurants(): void {
     this.isLoadingRestaurants = true;
     const radius = this.restaurantRadius || 500;
-    const query = `[out:json][timeout:25];(node["amenity"="restaurant"](around:${radius},${this.lat},${this.lng}););out body;`;
 
-    this.queryOverpass(query)
+    this.queryGeoapify('catering.restaurant', radius)
       .then((res) => {
-        if (res.elements) {
-          res.elements.forEach((el: any) => {
-            const marker = L.marker([el.lat, el.lon], {
+        if (res.features) {
+          res.features.forEach((feature: any) => {
+            const lat = feature.properties.lat;
+            const lon = feature.properties.lon;
+            const name =
+              feature.properties.name ||
+              this.translateService.instant('gimmicks.weather.restaurant');
+
+            const marker = L.marker([lat, lon], {
               icon: this.restaurantIcon,
             })
               .addTo(this.map)
               .bindPopup(
-                `<b>${
-                  el.tags.name || this.translateService.instant('gimmicks.weather.restaurant')
-                }</b><br><small>${this.translateService.instant('gimmicks.weather.restaurant')}</small>`
+                `<b>${name}</b><br><small>${this.translateService.instant(
+                  'gimmicks.weather.restaurant'
+                )}</small>`
               );
             this.restaurantMarkers.push(marker);
           });
-          console.log(`${res.elements.length} Restaurants geladen`);
+          console.log(`${res.features.length} Restaurants geladen`);
+          this.removeError.emit('gimmicks.weather.errorLoadingRestaurants');
         }
       })
       .catch((error) => {
         console.error('Fehler beim Laden der Restaurants:', error);
         this.errorOccurred.emit(
-          this.translateService.instant('gimmicks.weather.errorLoadingRestaurants')
+          this.translateService.instant(
+            'gimmicks.weather.errorLoadingRestaurants'
+          )
         );
       })
       .finally(() => {
@@ -326,30 +288,38 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   loadSupermarkets(): void {
     this.isLoadingSupermarkets = true;
     const radius = this.supermarketRadius || 500;
-    const query = `[out:json][timeout:25];(node["shop"="supermarket"](around:${radius},${this.lat},${this.lng}););out body;`;
 
-    this.queryOverpass(query)
+    this.queryGeoapify('commercial.supermarket', radius)
       .then((res) => {
-        if (res.elements) {
-          res.elements.forEach((el: any) => {
-            const marker = L.marker([el.lat, el.lon], {
+        if (res.features) {
+          res.features.forEach((feature: any) => {
+            const lat = feature.properties.lat;
+            const lon = feature.properties.lon;
+            const name =
+              feature.properties.name ||
+              this.translateService.instant('gimmicks.weather.supermarket');
+
+            const marker = L.marker([lat, lon], {
               icon: this.supermarketIcon,
             })
               .addTo(this.map)
               .bindPopup(
-                `<b>${
-                  el.tags.name || this.translateService.instant('gimmicks.weather.supermarket')
-                }</b><br><small>${this.translateService.instant('gimmicks.weather.supermarket')}</small>`
+                `<b>${name}</b><br><small>${this.translateService.instant(
+                  'gimmicks.weather.supermarket'
+                )}</small>`
               );
             this.supermarketMarkers.push(marker);
           });
-          console.log(`${res.elements.length} Supermärkte geladen`);
+          console.log(`${res.features.length} Supermärkte geladen`);
+          this.removeError.emit('gimmicks.weather.errorLoadingSupermarkets');
         }
       })
       .catch((error) => {
         console.error('Fehler beim Laden der Supermärkte:', error);
         this.errorOccurred.emit(
-          this.translateService.instant('gimmicks.weather.errorLoadingSupermarkets')
+          this.translateService.instant(
+            'gimmicks.weather.errorLoadingSupermarkets'
+          )
         );
       })
       .finally(() => {
@@ -360,30 +330,38 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   loadGasStations(): void {
     this.isLoadingGasStations = true;
     const radius = this.gasStationRadius || 500;
-    const query = `[out:json][timeout:25];(node["amenity"="fuel"](around:${radius},${this.lat},${this.lng}););out body;`;
 
-    this.queryOverpass(query)
+    this.queryGeoapify('service.vehicle.fuel', radius)
       .then((res) => {
-        if (res.elements) {
-          res.elements.forEach((el: any) => {
-            const marker = L.marker([el.lat, el.lon], {
+        if (res.features) {
+          res.features.forEach((feature: any) => {
+            const lat = feature.properties.lat;
+            const lon = feature.properties.lon;
+            const name =
+              feature.properties.name ||
+              this.translateService.instant('gimmicks.weather.gasStation');
+
+            const marker = L.marker([lat, lon], {
               icon: this.gasStationIcon,
             })
               .addTo(this.map)
               .bindPopup(
-                `<b>${
-                  el.tags.name || this.translateService.instant('gimmicks.weather.gasStation')
-                }</b><br><small>${this.translateService.instant('gimmicks.weather.gasStation')}</small>`
+                `<b>${name}</b><br><small>${this.translateService.instant(
+                  'gimmicks.weather.gasStation'
+                )}</small>`
               );
             this.gasStationMarkers.push(marker);
           });
-          console.log(`${res.elements.length} Tankstellen geladen`);
+          console.log(`${res.features.length} Tankstellen geladen`);
+          this.removeError.emit('gimmicks.weather.errorLoadingGasStations');
         }
       })
       .catch((error) => {
         console.error('Fehler beim Laden der Tankstellen:', error);
         this.errorOccurred.emit(
-          this.translateService.instant('gimmicks.weather.errorLoadingGasStations')
+          this.translateService.instant(
+            'gimmicks.weather.errorLoadingGasStations'
+          )
         );
       })
       .finally(() => {

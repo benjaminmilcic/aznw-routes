@@ -71,6 +71,9 @@ export const environment = {
   analytics: {
     sendData: `https://${ip}:3000/analytics/visitor-data`,
   },
+  geoapify: {
+    apiKey: '9e033ff54fde4dbd9b87ad9d6258a9ca', // Hier Ihren kostenlosen API-Key von https://www.geoapify.com/ eintragen
+  },
   production: true,
   version: new Date().getTime(),
 };
