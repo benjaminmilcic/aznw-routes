@@ -22,3 +22,64 @@ section:before {
   background-position: 50% 0;
   background-size: cover;
 }
+
+/* Custom styling for mat-button-toggle-group */
+:host ::ng-deep mat-button-toggle-group {
+  @apply bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200/50 shadow-sm;
+  height: auto;
+  gap: 0;
+}
+
+:host ::ng-deep mat-button-toggle {
+  @apply transition-all duration-300;
+  height: 40px !important;
+  border: none !important;
+  border-right: 1px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+:host ::ng-deep mat-button-toggle:last-child {
+  border-right: none !important;
+}
+
+:host ::ng-deep .mat-button-toggle-button {
+  @apply px-3 flex items-center justify-center;
+  height: 40px !important;
+  line-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+:host ::ng-deep .mat-button-toggle-label-content {
+  @apply flex items-center justify-center;
+  line-height: normal !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep mat-button-toggle:not(.mat-button-toggle-checked) {
+  @apply text-gray-600;
+}
+
+:host ::ng-deep mat-button-toggle:not(.mat-button-toggle-checked):hover {
+  @apply bg-blue-100/50;
+}
+
+:host ::ng-deep mat-button-toggle.mat-button-toggle-checked {
+  @apply bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg shadow-md;
+  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+:host ::ng-deep mat-button-toggle.mat-button-toggle-checked:last-child {
+  border-right: none !important;
+}
+
+:host ::ng-deep mat-button-toggle.mat-button-toggle-checked .mat-button-toggle-button {
+  @apply text-white font-medium;
+}
+
+:host ::ng-deep mat-button-toggle:first-child {
+  @apply rounded-l-lg;
+}
+
+:host ::ng-deep mat-button-toggle:last-child {
+  @apply rounded-r-lg;
+}

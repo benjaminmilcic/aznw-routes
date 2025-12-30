@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Leaflet CSS Import */
+@import '~leaflet/dist/leaflet.css';
+
+
 :root {
   --color1: #f5eec2;
   --color2: #416a59;

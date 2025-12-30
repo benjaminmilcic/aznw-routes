@@ -176,20 +176,37 @@
           </div>
         </div>
         <div *ngIf="cityLatitude && cityLongitude" class="mt-2">
-          <button
-            mat-raised-button
-            (click)="showClimaChart = !showClimaChart"
-            class="!bg-gradient-to-r !from-purple-500 !to-pink-500 hover:!from-purple-600 hover:!to-pink-600 !text-white !font-medium !py-2 !px-4 !rounded-xl !shadow-md hover:!shadow-lg !transition-all !duration-300 !border-0"
+          <mat-button-toggle-group
+            name="displayType"
+            [hideSingleSelectionIndicator]="true"
+            [(ngModel)]="displayType"
           >
-            <span class="flex items-center gap-2">
-              <span class="text-xl">{{ showClimaChart ? "🌡️" : "📈" }}</span>
-              <span>{{ (showClimaChart ? "gimmicks.weather.currentWeatherData" : "gimmicks.weather.climaDiagram") | translate }}</span>
-            </span>
-          </button>
+            <mat-button-toggle
+              value="weather-data"
+              [matTooltip]="'gimmicks.weather.currentWeatherData' | translate"
+              >🌡️&nbsp;<span *ngIf="displayType === 'weather-data'">{{
+                "gimmicks.weather.currentWeatherData" | translate
+              }}</span></mat-button-toggle
+            >
+            <mat-button-toggle
+              value="clima-diagram"
+              [matTooltip]="'gimmicks.weather.climaDiagram' | translate"
+              >📈&nbsp;<span *ngIf="displayType === 'clima-diagram'">{{
+                "gimmicks.weather.climaDiagram" | translate
+              }}</span></mat-button-toggle
+            >
+            <mat-button-toggle
+              value="map"
+              [matTooltip]="'gimmicks.weather.map' | translate"
+              >🗺️&nbsp;<span *ngIf="displayType === 'map'">{{
+                "gimmicks.weather.map" | translate
+              }}</span></mat-button-toggle
+            >
+          </mat-button-toggle-group>
         </div>
       </div>
     </div>
-    @if (!showClimaChart) {
+    @if (displayType==='weather-data') {
     <div class="flex flex-col w-full">
       <div
         *ngIf="showDisplay"
@@ -410,7 +427,7 @@
         </div>
       </div>
     </div>
-    }@else {
+    } @if (displayType==='clima-diagram') {
     <div *ngIf="!loading">
       <app-clima-chart
         [lat]="cityLatitude"
@@ -418,6 +435,15 @@
         (errorOccurred)="handleClimaChartError($event)"
       ></app-clima-chart>
     </div>
+    } @if (displayType==='map') {
+    <div *ngIf="!loading">
+      <app-location-map
+        [lat]="cityLatitude"
+        [lng]="cityLongitude"
+        (errorOccurred)="handleClimaChartError($event)"
+      ></app-location-map>
+    </div>
+
     }
 
     <div *ngIf="error" class="p-6 mx-6 mb-4">

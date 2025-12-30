@@ -378,8 +378,9 @@
       "errorOnSearch":"Fehler beim Suchen. Stadt nicht gefunden oder keine Wetterdaten für diese Stadt.",
       "weatherDataIsLoading":"Wetterdaten werden geladen...",
       "error":"Fehler",
-      "currentWeatherData":"aktuelle Wetterdaten",
+      "currentWeatherData":"Wetterdaten",
       "climaDiagram":"Klimadiagramm",
+      "map":"Karte",
       "climaChart":{
         "title":"Klimadiagramm aus den Daten der letzten 30 Jahre",
         "loading":"Klimadaten werden geladen...",
@@ -407,7 +408,18 @@
           "november":"November",
           "december":"Dezember"
         }
-      }
+      },
+      "restaurants":"Restaurants",
+      "supermarkets":"Supermärkte",
+      "gasStations":"Tankstellen",
+      "radius":"im Umkreis von",
+      "meters":"m",
+      "restaurant":"Restaurant",
+      "supermarket":"Supermarkt",
+      "gasStation":"Tankstelle",
+      "errorLoadingRestaurants":"Restaurants konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "errorLoadingSupermarkets":"Supermärkte konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "errorLoadingGasStations":"Tankstellen konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
     },
     "recipes":{
       "manager":"Rezepte Manager",

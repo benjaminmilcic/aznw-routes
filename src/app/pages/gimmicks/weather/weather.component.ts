@@ -53,6 +53,9 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClimaChartComponent } from './clima-chart/clima-chart.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { LocationMapComponent } from './location-map/location-map.component';
 
 @Component({
   selector: 'app-weather',
@@ -78,7 +81,10 @@ import { ClimaChartComponent } from './clima-chart/clima-chart.component';
     IonSegment,
     IonSegmentButton,
     TranslateModule,
-    ClimaChartComponent
+    ClimaChartComponent,
+    MatButtonToggleModule,
+    MatTooltipModule,
+    LocationMapComponent,
   ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css',
@@ -114,8 +120,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   selectedChart: 'temp' | 'rain' | 'wind' = 'temp';
   selectedWay: 'location' | 'search' = 'location';
   loading = false;
-  showClimaChart = false;
-
+  displayType: 'weather-data' | 'clima-diagram' | 'map' = 'weather-data';
 
   constructor(
     private http: HttpClient,
@@ -436,7 +441,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
         });
       this.loading = false;
       return;
-    } 
+    }
 
     const url = `${
       environment.geoLocation.geoCodeApi
@@ -559,11 +564,10 @@ export class WeatherComponent implements OnInit, OnDestroy {
   selectChart(chart: 'temp' | 'rain' | 'wind') {
     this.selectedChart = chart;
     setTimeout(() => {
-      
       const el = document.getElementById(chart + '-chart');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    },100);
+    }, 100);
   }
 }
