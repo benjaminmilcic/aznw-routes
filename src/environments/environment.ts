@@ -7,6 +7,8 @@ const ip = 'localhost';
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
+const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
+
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -68,7 +70,7 @@ export const environment = {
     sendData: `http://${ip}:3000/analytics/visitor-data`,
   },
   geoapify: {
-    apiKey: '9e033ff54fde4dbd9b87ad9d6258a9ca', // Hier Ihren kostenlosen API-Key von https://www.geoapify.com/ eintragen
+    apiKey: geoapifyKey, // Hier Ihren kostenlosen API-Key von https://www.geoapify.com/ eintragen
   },
   production: false,
   version: new Date().getTime(),
