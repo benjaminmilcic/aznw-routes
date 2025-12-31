@@ -419,7 +419,17 @@
       "gasStation":"Gas Station",
       "errorLoadingRestaurants":"Restaurants could not be loaded. Please try again later.",
       "errorLoadingSupermarkets":"Supermarkets could not be loaded. Please try again later.",
-      "errorLoadingGasStations":"Gas stations could not be loaded. Please try again later."
+      "errorLoadingGasStations":"Gas stations could not be loaded. Please try again later.",
+      "clickForDetails":"Click for details",
+      "loading":"Loading...",
+      "errorLoadingDetails":"Error loading details",
+      "openingHours":"Opening Hours",
+      "phone":"Phone",
+      "website":"Website",
+      "visitWebsite":"Visit Website",
+      "wheelchair":"Wheelchair Access",
+      "yes":"Yes",
+      "no":"No"
     },
     "recipes":{
       "manager":"Recipe Manager",

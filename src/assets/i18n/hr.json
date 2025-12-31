@@ -419,7 +419,17 @@
       "gasStation":"Benzinska postaja",
       "errorLoadingRestaurants":"Restorani nisu mogli biti učitani. Molimo pokušajte kasnije.",
       "errorLoadingSupermarkets":"Supermarketi nisu mogli biti učitani. Molimo pokušajte kasnije.",
-      "errorLoadingGasStations":"Benzinske postaje nisu mogle biti učitane. Molimo pokušajte kasnije."
+      "errorLoadingGasStations":"Benzinske postaje nisu mogle biti učitane. Molimo pokušajte kasnije.",
+      "clickForDetails":"Kliknite za detalje",
+      "loading":"Učitavanje...",
+      "errorLoadingDetails":"Pogreška pri učitavanju detalja",
+      "openingHours":"Radno vrijeme",
+      "phone":"Telefon",
+      "website":"Web stranica",
+      "visitWebsite":"Posjetite web stranicu",
+      "wheelchair":"Pristup za invalidska kolica",
+      "yes":"Da",
+      "no":"Ne"
     },
     "recipes":{
       "manager":"Menadžer recepata",

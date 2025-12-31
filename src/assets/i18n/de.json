@@ -419,7 +419,17 @@
       "gasStation":"Tankstelle",
       "errorLoadingRestaurants":"Restaurants konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
       "errorLoadingSupermarkets":"Supermärkte konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
-      "errorLoadingGasStations":"Tankstellen konnten nicht geladen werden. Bitte versuchen Sie es später erneut."
+      "errorLoadingGasStations":"Tankstellen konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+      "clickForDetails":"Klicken für Details",
+      "loading":"Wird geladen...",
+      "errorLoadingDetails":"Fehler beim Laden der Details",
+      "openingHours":"Öffnungszeiten",
+      "phone":"Telefon",
+      "website":"Webseite",
+      "visitWebsite":"Webseite besuchen",
+      "wheelchair":"Rollstuhlzugang",
+      "yes":"Ja",
+      "no":"Nein"
     },
     "recipes":{
       "manager":"Rezepte Manager",
