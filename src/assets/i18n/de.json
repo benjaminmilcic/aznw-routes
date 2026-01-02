@@ -432,7 +432,9 @@
       "no":"Nein",
       "clouds":"Wolken",
       "pressure":"Luftdruck",
-      "globeProjection":"Globus"
+      "globeProjection":"Globus",
+      "errorLoadingMap":"Fehler beim Laden der Karte. Bitte versuchen Sie es später erneut.",
+      "errorLoadingWeatherLayer":"Fehler beim Laden des Wetter-Layers. Bitte versuchen Sie es später erneut."
     },
     "recipes":{
       "manager":"Rezepte Manager",

@@ -432,7 +432,9 @@
       "no":"No",
       "clouds":"Clouds",
       "pressure":"Pressure",
-      "globeProjection":"Globe"
+      "globeProjection":"Globe",
+      "errorLoadingMap":"Error loading map. Please try again later.",
+      "errorLoadingWeatherLayer":"Error loading weather layer. Please try again later."
     },
     "recipes":{
       "manager":"Recipe Manager",

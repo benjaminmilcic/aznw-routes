@@ -432,7 +432,9 @@
       "no":"Ne",
       "clouds":"Oblaci",
       "pressure":"Tlak",
-      "globeProjection":"Globus"
+      "globeProjection":"Globus",
+      "errorLoadingMap":"Pogreška pri učitavanju karte. Molimo pokušajte kasnije.",
+      "errorLoadingWeatherLayer":"Pogreška pri učitavanju vremenskog sloja. Molimo pokušajte kasnije."
     },
     "recipes":{
       "manager":"Menadžer recepata",

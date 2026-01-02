@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
+  Output,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as maptilerSDK from '@maptiler/sdk';
@@ -28,6 +30,8 @@ type WeatherLayerType = 'wind' | 'temperature' | 'precipitation' | 'pressure';
 export class LocationMapComponent implements AfterViewInit, OnDestroy {
   @Input() lat: number;
   @Input() lng: number;
+  @Output() errorOccurred = new EventEmitter<string>();
+  @Output() removeError = new EventEmitter<string>();
 
   private map!: Map;
   private currentWeatherLayer: any = null;
@@ -46,103 +50,126 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   }
 
   private initMap(): void {
-    const lang = this.translateService.currentLang || 'de';
+    try {
+      const lang = this.translateService.currentLang || 'de';
 
-    // Define locale for control tooltips
-    const locale: any = {};
-    if (lang === 'de') {
-      locale['NavigationControl.ResetBearing'] = 'Ausrichtung nach Norden zurücksetzen';
-      locale['NavigationControl.ZoomIn'] = 'Vergrößern';
-      locale['NavigationControl.ZoomOut'] = 'Verkleinern';
-      locale['GeolocateControl.FindMyLocation'] = 'Meinen Standort finden';
-      locale['GeolocateControl.LocationNotAvailable'] = 'Standort nicht verfügbar';
-    } else if (lang === 'hr') {
-      locale['NavigationControl.ResetBearing'] = 'Resetiraj orijentaciju prema sjeveru';
-      locale['NavigationControl.ZoomIn'] = 'Povećaj';
-      locale['NavigationControl.ZoomOut'] = 'Smanji';
-      locale['GeolocateControl.FindMyLocation'] = 'Pronađi moju lokaciju';
-      locale['GeolocateControl.LocationNotAvailable'] = 'Lokacija nije dostupna';
-    }
-    // English is default, no need to set
-
-    this.map = new maptilerSDK.Map({
-      container: 'map',
-      style: maptilerSDK.MapStyle.STREETS,
-      center: [this.lng, this.lat],
-      zoom: 5,
-      apiKey: environment.maptiler.apiKey,
-      language: lang as any,
-      navigationControl: 'top-right', // Use default navigation control with all buttons
-      locale: Object.keys(locale).length > 0 ? locale : undefined
-    });
-
-    this.map.on('load', () => {
-      this.addWeatherLayer(this.activeLayer);
-    });
-
-    this.translateService.onLangChange.subscribe((event) => {
-      if (this.map) {
-        this.map.setLanguage(event.lang as any);
+      // Define locale for control tooltips
+      const locale: any = {};
+      if (lang === 'de') {
+        locale['NavigationControl.ResetBearing'] = 'Ausrichtung nach Norden zurücksetzen';
+        locale['NavigationControl.ZoomIn'] = 'Vergrößern';
+        locale['NavigationControl.ZoomOut'] = 'Verkleinern';
+        locale['GeolocateControl.FindMyLocation'] = 'Meinen Standort finden';
+        locale['GeolocateControl.LocationNotAvailable'] = 'Standort nicht verfügbar';
+      } else if (lang === 'hr') {
+        locale['NavigationControl.ResetBearing'] = 'Resetiraj orijentaciju prema sjeveru';
+        locale['NavigationControl.ZoomIn'] = 'Povećaj';
+        locale['NavigationControl.ZoomOut'] = 'Smanji';
+        locale['GeolocateControl.FindMyLocation'] = 'Pronađi moju lokaciju';
+        locale['GeolocateControl.LocationNotAvailable'] = 'Lokacija nije dostupna';
       }
-    });
+      // English is default, no need to set
+
+      this.map = new maptilerSDK.Map({
+        container: 'map',
+        style: maptilerSDK.MapStyle.STREETS,
+        center: [this.lng, this.lat],
+        zoom: 5,
+        apiKey: environment.maptiler.apiKey,
+        language: lang as any,
+        navigationControl: 'top-right', // Use default navigation control with all buttons
+        locale: Object.keys(locale).length > 0 ? locale : undefined
+      });
+
+      this.map.on('load', () => {
+        this.addWeatherLayer(this.activeLayer);
+        this.removeError.emit('gimmicks.weather.errorLoadingMap');
+      });
+
+      this.map.on('error', (e) => {
+        console.error('Map error:', e);
+        this.errorOccurred.emit(
+          this.translateService.instant('gimmicks.weather.errorLoadingMap')
+        );
+      });
+
+      this.translateService.onLangChange.subscribe((event) => {
+        if (this.map) {
+          this.map.setLanguage(event.lang as any);
+        }
+      });
+    } catch (error) {
+      console.error('Fehler beim Initialisieren der Karte:', error);
+      this.errorOccurred.emit(
+        this.translateService.instant('gimmicks.weather.errorLoadingMap')
+      );
+    }
   }
 
   private async addWeatherLayer(layerType: WeatherLayerType): Promise<void> {
     if (!this.map) return;
 
-    // Remove current layer if exists
-    if (this.currentLayerId && this.map.getLayer(this.currentLayerId)) {
-      this.map.removeLayer(this.currentLayerId);
-      this.currentWeatherLayer = null;
-      this.currentLayerId = null;
-    }
+    try {
+      // Remove current layer if exists
+      if (this.currentLayerId && this.map.getLayer(this.currentLayerId)) {
+        this.map.removeLayer(this.currentLayerId);
+        this.currentWeatherLayer = null;
+        this.currentLayerId = null;
+      }
 
-    let layerId: string;
-    let newLayer: any;
+      let layerId: string;
+      let newLayer: any;
 
-    switch (layerType) {
-      case 'wind':
-        layerId = 'wind-layer';
-        newLayer = new WindLayer({
-          id: layerId,
-          opacity: 0.7
-        });
-        break;
-      case 'temperature':
-        layerId = 'temperature-layer';
-        newLayer = new TemperatureLayer({
-          id: layerId,
-          opacity: 0.7
-        });
-        break;
-      case 'precipitation':
-        layerId = 'precipitation-layer';
-        newLayer = new PrecipitationLayer({
-          id: layerId,
-          opacity: 0.7
-        });
-        break;
-      case 'pressure':
-        layerId = 'pressure-layer';
-        newLayer = new PressureLayer({
-          id: layerId,
-          opacity: 0.7
-        });
-        break;
-      default:
-        return;
-    }
+      switch (layerType) {
+        case 'wind':
+          layerId = 'wind-layer';
+          newLayer = new WindLayer({
+            id: layerId,
+            opacity: 0.7
+          });
+          break;
+        case 'temperature':
+          layerId = 'temperature-layer';
+          newLayer = new TemperatureLayer({
+            id: layerId,
+            opacity: 0.7
+          });
+          break;
+        case 'precipitation':
+          layerId = 'precipitation-layer';
+          newLayer = new PrecipitationLayer({
+            id: layerId,
+            opacity: 0.7
+          });
+          break;
+        case 'pressure':
+          layerId = 'pressure-layer';
+          newLayer = new PressureLayer({
+            id: layerId,
+            opacity: 0.7
+          });
+          break;
+        default:
+          return;
+      }
 
-    // Only add if not already on map
-    if (!this.map.getLayer(layerId)) {
-      this.map.addLayer(newLayer);
-      this.currentWeatherLayer = newLayer;
-      this.currentLayerId = layerId;
-      // Animation disabled - showing only current weather data
-      // newLayer.animateByFactor(3600);
+      // Only add if not already on map
+      if (!this.map.getLayer(layerId)) {
+        this.map.addLayer(newLayer);
+        this.currentWeatherLayer = newLayer;
+        this.currentLayerId = layerId;
+        // Animation disabled - showing only current weather data
+        // newLayer.animateByFactor(3600);
 
-      // Update legend with actual colors from the layer
-      this.updateLegendFromLayer(newLayer);
+        // Update legend with actual colors from the layer
+        this.updateLegendFromLayer(newLayer);
+        this.removeError.emit('gimmicks.weather.errorLoadingWeatherLayer');
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden des Wetter-Layers:', error);
+      this.errorOccurred.emit(
+        this.translateService.instant('gimmicks.weather.errorLoadingWeatherLayer')
+      );
     }
   }
 
