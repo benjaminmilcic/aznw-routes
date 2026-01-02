@@ -429,7 +429,10 @@
       "visitWebsite":"Visit Website",
       "wheelchair":"Wheelchair Access",
       "yes":"Yes",
-      "no":"No"
+      "no":"No",
+      "clouds":"Clouds",
+      "pressure":"Pressure",
+      "globeProjection":"Globe"
     },
     "recipes":{
       "manager":"Recipe Manager",

@@ -1,0 +1,25 @@
+.map {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+input[type="number"]:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+input[type="number"] {
+  transition: all 0.2s ease;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}

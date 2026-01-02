@@ -429,7 +429,10 @@
       "visitWebsite":"Webseite besuchen",
       "wheelchair":"Rollstuhlzugang",
       "yes":"Ja",
-      "no":"Nein"
+      "no":"Nein",
+      "clouds":"Wolken",
+      "pressure":"Luftdruck",
+      "globeProjection":"Globus"
     },
     "recipes":{
       "manager":"Rezepte Manager",

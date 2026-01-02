@@ -12,7 +12,18 @@
       "Bash(start \"\" \"C:\\\\Users\\\\User\\\\.claude\\\\plugins\\\\cache\\\\claude-code-plugins\\\\frontend-design\\\\1.0.0\\\\skills\\\\frontend-design\\\\gimmicks-color-demo.html\")",
       "Bash(ng build:*)",
       "WebFetch(domain:openrouteservice.org)",
-      "WebFetch(domain:apidocs.geoapify.com)"
+      "WebFetch(domain:apidocs.geoapify.com)",
+      "WebFetch(domain:www.maptiler.com)",
+      "Bash(ren location-map.component.ts location-map-old.component.ts)",
+      "Bash(ren location-map.component.html location-map-old.component.html)",
+      "Bash(ren:*)",
+      "WebFetch(domain:docs.maptiler.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:maplibre.org)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

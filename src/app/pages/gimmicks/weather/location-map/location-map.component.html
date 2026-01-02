@@ -1,89 +1,66 @@
 <div class="px-4">
-  <div id="map" class="map"></div>
-  <div class="flex flex-wrap gap-4 items-center mt-2">
-    <div>
-      <div class="flex items-center gap-1">
-        <input
-          type="checkbox"
-          [(ngModel)]="showRestaurants"
-          (change)="onRestaurantToggle()"
-          [disabled]="isLoadingRestaurants"
-        />
-        <span class="ml-1 text-gray-400">{{ 'gimmicks.weather.restaurants' | translate }}</span>
-        <div
-          *ngIf="isLoadingRestaurants"
-          class="ml-2 w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin"
-        ></div>
-      </div>
-      <div class="flex gap-1 items-center">
-        <input
-          type="number"
-          [(ngModel)]="restaurantRadius"
-          (ngModelChange)="onRestaurantRadiusChange()"
-          [placeholder]="'gimmicks.weather.radius' | translate"
-          class="border border-black p-2 rounded w-[140px]"
-          min="0"
-          step="1"
-          [disabled]="!showRestaurants || isLoadingRestaurants"
-        />
-        <p class="text-gray-400">{{ 'gimmicks.weather.meters' | translate }}</p>
+  <div class="map-container">
+    <div id="map" class="map"></div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item" *ngFor="let item of legendData">
+        <div class="legend-color" [style.background-color]="item.color"></div>
+        <span class="legend-label">{{ item.label }}</span>
       </div>
     </div>
-    <div>
-      <div class="flex items-center gap-1">
-        <input
-          type="checkbox"
-          [(ngModel)]="showSupermarkets"
-          (change)="onSupermarketToggle()"
-          [disabled]="isLoadingSupermarkets"
-        />
-        <span class="ml-1 text-gray-400">{{ 'gimmicks.weather.supermarkets' | translate }}</span>
-        <div
-          *ngIf="isLoadingSupermarkets"
-          class="ml-2 w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin"
-        ></div>
-      </div>
-      <div class="flex gap-1 items-center">
-        <input
-          type="number"
-          [(ngModel)]="supermarketRadius"
-          (ngModelChange)="onSupermarketRadiusChange()"
-          [placeholder]="'gimmicks.weather.radius' | translate"
-          class="border border-black p-2 rounded w-[140px]"
-          min="0"
-          step="1"
-          [disabled]="!showSupermarkets || isLoadingSupermarkets"
-        />
-        <p class="text-gray-400">{{ 'gimmicks.weather.meters' | translate }}</p>
-      </div>
-    </div>
-    <div>
-      <div class="flex items-center gap-1">
-        <input
-          type="checkbox"
-          [(ngModel)]="showGasStations"
-          (change)="onGasStationToggle()"
-          [disabled]="isLoadingGasStations"
-        />
-        <span class="ml-1 text-gray-400">{{ 'gimmicks.weather.gasStations' | translate }}</span>
-        <div
-          *ngIf="isLoadingGasStations"
-          class="ml-2 w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"
-        ></div>
-      </div>
-      <div class="flex gap-1 items-center">
-        <input
-          type="number"
-          [(ngModel)]="gasStationRadius"
-          (ngModelChange)="onGasStationRadiusChange()"
-          [placeholder]="'gimmicks.weather.radius' | translate"
-          class="border border-black p-2 rounded w-[140px]"
-          min="0"
-          step="1"
-          [disabled]="!showGasStations || isLoadingGasStations"
-        />
-        <p class="text-gray-400">{{ 'gimmicks.weather.meters' | translate }}</p>
-      </div>
-    </div>
+  </div>
+
+  <!-- Weather layer controls -->
+  <div class="flex flex-wrap gap-2 mt-3 justify-center">
+    <button
+      (click)="switchLayer('temperature')"
+      [class.active]="activeLayer === 'temperature'"
+      class="weather-btn"
+      [title]="'gimmicks.weather.temperature' | translate"
+    >
+      <span class="icon">🌡️</span>
+      <span class="text">{{ 'gimmicks.weather.temperature' | translate }}</span>
+    </button>
+
+    <button
+      (click)="switchLayer('wind')"
+      [class.active]="activeLayer === 'wind'"
+      class="weather-btn"
+      [title]="'gimmicks.weather.wind' | translate"
+    >
+      <span class="icon">💨</span>
+      <span class="text">{{ 'gimmicks.weather.wind' | translate }}</span>
+    </button>
+
+    <button
+      (click)="switchLayer('precipitation')"
+      [class.active]="activeLayer === 'precipitation'"
+      class="weather-btn"
+      [title]="'gimmicks.weather.precipitation' | translate"
+    >
+      <span class="icon">🌧️</span>
+      <span class="text">{{ 'gimmicks.weather.precipitation' | translate }}</span>
+    </button>
+
+    <button
+      (click)="switchLayer('pressure')"
+      [class.active]="activeLayer === 'pressure'"
+      class="weather-btn"
+      [title]="'gimmicks.weather.pressure' | translate"
+    >
+      <span class="icon">📊</span>
+      <span class="text">{{ 'gimmicks.weather.pressure' | translate }}</span>
+    </button>
+
+    <button
+      (click)="toggleGlobeProjection()"
+      [class.active]="isGlobeProjection"
+      class="weather-btn"
+      [title]="'gimmicks.weather.globeProjection' | translate"
+    >
+      <span class="icon">🌍</span>
+      <span class="text">{{ 'gimmicks.weather.globeProjection' | translate }}</span>
+    </button>
   </div>
 </div>

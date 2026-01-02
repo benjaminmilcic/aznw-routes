@@ -1,557 +1,241 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
-  Output,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import * as L from 'leaflet';
+import * as maptilerSDK from '@maptiler/sdk';
+import { Map } from '@maptiler/sdk';
+import {
+  WindLayer,
+  TemperatureLayer,
+  PrecipitationLayer,
+  PressureLayer,
+  ColorRamp,
+} from '@maptiler/weather';
 import { environment } from '../../../../../environments/environment';
+
+type WeatherLayerType = 'wind' | 'temperature' | 'precipitation' | 'pressure';
 
 @Component({
   selector: 'app-location-map',
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './location-map.component.html',
   styleUrl: './location-map.component.css',
 })
 export class LocationMapComponent implements AfterViewInit, OnDestroy {
   @Input() lat: number;
   @Input() lng: number;
-  @Output() errorOccurred = new EventEmitter<string>();
-  @Output() removeError = new EventEmitter<string>();
-  private map!: L.Map;
-  private restaurantMarkers: L.Marker[] = [];
-  private supermarketMarkers: L.Marker[] = [];
-  private gasStationMarkers: L.Marker[] = [];
 
-  // UI Controls
-  showRestaurants = false;
-  showSupermarkets = false;
-  showGasStations = false;
-  restaurantRadius = 500;
-  supermarketRadius = 500;
-  gasStationRadius = 500;
+  private map!: Map;
+  private currentWeatherLayer: any = null;
+  private currentLayerId: string | null = null;
 
-  // Loading States
-  isLoadingRestaurants = false;
-  isLoadingSupermarkets = false;
-  isLoadingGasStations = false;
+  activeLayer: WeatherLayerType = 'temperature';
+  isGlobeProjection: boolean = false;
 
-  // Debounce Timeouts
-  private restaurantDebounceTimer: any;
-  private supermarketDebounceTimer: any;
-  private gasStationDebounceTimer: any;
+  // Legend data for each layer type
+  legendData: { color: string; label: string }[] = [];
 
-  // Custom Icons
-  private restaurantIcon = L.divIcon({
-    className: 'custom-div-icon',
-    html: '<div style="background-color: #ef4444; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"><span style="font-size: 14px;">🍴</span></div>',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
-
-  private supermarketIcon = L.divIcon({
-    className: 'custom-div-icon',
-    html: '<div style="background-color: #22c55e; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"><span style="font-size: 14px;">🛒</span></div>',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
-
-  private gasStationIcon = L.divIcon({
-    className: 'custom-div-icon',
-    html: '<div style="background-color: #f97316; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"><span style="font-size: 14px;">⛽</span></div>',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
-
-  constructor(
-    private http: HttpClient,
-    private translateService: TranslateService
-  ) {}
+  constructor(private translateService: TranslateService) {}
 
   ngAfterViewInit(): void {
     this.initMap();
-    if (this.showRestaurants) {
-      this.loadRestaurants();
-    }
-    if (this.showSupermarkets) {
-      this.loadSupermarkets();
-    }
-    if (this.showGasStations) {
-      this.loadGasStations();
-    }
-
-    // Bei Sprachwechsel POIs neu laden, damit Popups aktualisiert werden
-    this.translateService.onLangChange.subscribe(() => {
-      this.reloadAllMarkers();
-    });
-  }
-
-  private reloadAllMarkers(): void {
-    if (this.showRestaurants && this.restaurantRadius > 0) {
-      this.clearRestaurantMarkers();
-      this.loadRestaurants();
-    }
-    if (this.showSupermarkets && this.supermarketRadius > 0) {
-      this.clearSupermarketMarkers();
-      this.loadSupermarkets();
-    }
-    if (this.showGasStations && this.gasStationRadius > 0) {
-      this.clearGasStationMarkers();
-      this.loadGasStations();
-    }
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([this.lat, this.lng], 12);
+    const lang = this.translateService.currentLang || 'de';
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(this.map);
-
-    L.circleMarker([this.lat, this.lng], {
-      radius: 8,
-      fillColor: '#3b82f6',
-      color: '#ffffff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.8,
-    }).addTo(this.map);
-  }
-
-  onRestaurantToggle(): void {
-    if (this.showRestaurants && this.restaurantRadius > 0) {
-      this.loadRestaurants();
-    } else {
-      this.clearRestaurantMarkers();
+    // Define locale for control tooltips
+    const locale: any = {};
+    if (lang === 'de') {
+      locale['NavigationControl.ResetBearing'] = 'Ausrichtung nach Norden zurücksetzen';
+      locale['NavigationControl.ZoomIn'] = 'Vergrößern';
+      locale['NavigationControl.ZoomOut'] = 'Verkleinern';
+      locale['GeolocateControl.FindMyLocation'] = 'Meinen Standort finden';
+      locale['GeolocateControl.LocationNotAvailable'] = 'Standort nicht verfügbar';
+    } else if (lang === 'hr') {
+      locale['NavigationControl.ResetBearing'] = 'Resetiraj orijentaciju prema sjeveru';
+      locale['NavigationControl.ZoomIn'] = 'Povećaj';
+      locale['NavigationControl.ZoomOut'] = 'Smanji';
+      locale['GeolocateControl.FindMyLocation'] = 'Pronađi moju lokaciju';
+      locale['GeolocateControl.LocationNotAvailable'] = 'Lokacija nije dostupna';
     }
-  }
+    // English is default, no need to set
 
-  onSupermarketToggle(): void {
-    if (this.showSupermarkets && this.supermarketRadius > 0) {
-      this.loadSupermarkets();
-    } else {
-      this.clearSupermarketMarkers();
-    }
-  }
+    this.map = new maptilerSDK.Map({
+      container: 'map',
+      style: maptilerSDK.MapStyle.STREETS,
+      center: [this.lng, this.lat],
+      zoom: 5,
+      apiKey: environment.maptiler.apiKey,
+      language: lang as any,
+      navigationControl: 'top-right', // Use default navigation control with all buttons
+      locale: Object.keys(locale).length > 0 ? locale : undefined
+    });
 
-  onGasStationToggle(): void {
-    if (this.showGasStations && this.gasStationRadius > 0) {
-      this.loadGasStations();
-    } else {
-      this.clearGasStationMarkers();
-    }
-  }
+    this.map.on('load', () => {
+      this.addWeatherLayer(this.activeLayer);
+    });
 
-  onRestaurantRadiusChange(): void {
-    // Lösche vorherigen Timer
-    if (this.restaurantDebounceTimer) {
-      clearTimeout(this.restaurantDebounceTimer);
-    }
-
-    // Wenn Input leer ist, Marker sofort entfernen
-    if (!this.restaurantRadius || this.restaurantRadius <= 0) {
-      this.clearRestaurantMarkers();
-      return;
-    }
-
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
-    this.restaurantDebounceTimer = setTimeout(() => {
-      if (this.showRestaurants && this.restaurantRadius > 0) {
-        this.clearRestaurantMarkers();
-        this.loadRestaurants();
+    this.translateService.onLangChange.subscribe((event) => {
+      if (this.map) {
+        this.map.setLanguage(event.lang as any);
       }
-    }, 500);
-  }
-
-  onSupermarketRadiusChange(): void {
-    // Lösche vorherigen Timer
-    if (this.supermarketDebounceTimer) {
-      clearTimeout(this.supermarketDebounceTimer);
-    }
-
-    // Wenn Input leer ist, Marker sofort entfernen
-    if (!this.supermarketRadius || this.supermarketRadius <= 0) {
-      this.clearSupermarketMarkers();
-      return;
-    }
-
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
-    this.supermarketDebounceTimer = setTimeout(() => {
-      if (this.showSupermarkets && this.supermarketRadius > 0) {
-        this.clearSupermarketMarkers();
-        this.loadSupermarkets();
-      }
-    }, 500);
-  }
-
-  onGasStationRadiusChange(): void {
-    // Lösche vorherigen Timer
-    if (this.gasStationDebounceTimer) {
-      clearTimeout(this.gasStationDebounceTimer);
-    }
-
-    // Wenn Input leer ist, Marker sofort entfernen
-    if (!this.gasStationRadius || this.gasStationRadius <= 0) {
-      this.clearGasStationMarkers();
-      return;
-    }
-
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
-    this.gasStationDebounceTimer = setTimeout(() => {
-      if (this.showGasStations && this.gasStationRadius > 0) {
-        this.clearGasStationMarkers();
-        this.loadGasStations();
-      }
-    }, 500);
-  }
-
-  private clearRestaurantMarkers(): void {
-    this.restaurantMarkers.forEach((marker) => marker.remove());
-    this.restaurantMarkers = [];
-  }
-
-  private clearSupermarketMarkers(): void {
-    this.supermarketMarkers.forEach((marker) => marker.remove());
-    this.supermarketMarkers = [];
-  }
-
-  private clearGasStationMarkers(): void {
-    this.gasStationMarkers.forEach((marker) => marker.remove());
-    this.gasStationMarkers = [];
-  }
-
-  private queryGeoapify(category: string, radius: number): Promise<any> {
-    const apiKey = environment.geoapify.apiKey;
-    const url = `https://api.geoapify.com/v2/places?categories=${category}&filter=circle:${this.lng},${this.lat},${radius}&bias=proximity:${this.lng},${this.lat}&limit=50&apiKey=${apiKey}`;
-
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(url).subscribe({
-        next: (data) => {
-          resolve(data);
-        },
-        error: (error) => {
-          console.error('Geoapify API Fehler:', error);
-          reject(error);
-        },
-      });
     });
   }
 
-  private loadPlaceDetails(placeId: string): Promise<any> {
-    const apiKey = environment.geoapify.apiKey;
-    const lang = this.translateService.currentLang || 'de';
-    const url = `https://api.geoapify.com/v2/place-details?id=${placeId}&lang=${lang}&apiKey=${apiKey}`;
+  private async addWeatherLayer(layerType: WeatherLayerType): Promise<void> {
+    if (!this.map) return;
 
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(url).subscribe({
-        next: (data) => {
-          resolve(data);
-        },
-        error: (error) => {
-          console.error('Place Details API Fehler:', error);
-          reject(error);
-        },
+    // Remove current layer if exists
+    if (this.currentLayerId && this.map.getLayer(this.currentLayerId)) {
+      this.map.removeLayer(this.currentLayerId);
+      this.currentWeatherLayer = null;
+      this.currentLayerId = null;
+    }
+
+    let layerId: string;
+    let newLayer: any;
+
+    switch (layerType) {
+      case 'wind':
+        layerId = 'wind-layer';
+        newLayer = new WindLayer({
+          id: layerId,
+          opacity: 0.7
+        });
+        break;
+      case 'temperature':
+        layerId = 'temperature-layer';
+        newLayer = new TemperatureLayer({
+          id: layerId,
+          opacity: 0.7
+        });
+        break;
+      case 'precipitation':
+        layerId = 'precipitation-layer';
+        newLayer = new PrecipitationLayer({
+          id: layerId,
+          opacity: 0.7
+        });
+        break;
+      case 'pressure':
+        layerId = 'pressure-layer';
+        newLayer = new PressureLayer({
+          id: layerId,
+          opacity: 0.7
+        });
+        break;
+      default:
+        return;
+    }
+
+    // Only add if not already on map
+    if (!this.map.getLayer(layerId)) {
+      this.map.addLayer(newLayer);
+      this.currentWeatherLayer = newLayer;
+      this.currentLayerId = layerId;
+      // Animation disabled - showing only current weather data
+      // newLayer.animateByFactor(3600);
+
+      // Update legend with actual colors from the layer
+      this.updateLegendFromLayer(newLayer);
+    }
+  }
+
+  switchLayer(layerType: WeatherLayerType): void {
+    this.activeLayer = layerType;
+    this.addWeatherLayer(layerType);
+  }
+
+  toggleGlobeProjection(): void {
+    if (!this.map) return;
+
+    this.isGlobeProjection = !this.isGlobeProjection;
+
+    if (this.isGlobeProjection) {
+      this.map.enableGlobeProjection();
+      // Zoom out to see the entire globe
+      this.map.flyTo({
+        zoom: 0.5,
+        center: [this.lng, this.lat],
+        duration: 1500
       });
+    } else {
+      this.map.enableMercatorProjection();
+      // Zoom back to regional view
+      this.map.flyTo({
+        zoom: 5,
+        center: [this.lng, this.lat],
+        duration: 1500
+      });
+    }
+  }
+
+  private updateLegendFromLayer(layer: any): void {
+    let colorRamp: ColorRamp;
+    let values: number[];
+    let unit: string;
+
+    switch (this.activeLayer) {
+      case 'temperature':
+        // Default: ColorRamp.builtin.TEMPERATURE_2 (range: -70.15°C to 46.85°C)
+        colorRamp = ColorRamp.builtin.TEMPERATURE_2;
+        values = [-40, -30, -20, -10, 0, 10, 20, 30, 40];
+        unit = '°C';
+        break;
+      case 'wind':
+        // Default: ColorRamp.builtin.VIRIDIS (range: 0 to 40 m/s)
+        // VIRIDIS is defined in [0,1], so we use it without scaling
+        colorRamp = ColorRamp.builtin.VIRIDIS;
+        // We'll normalize these values to [0,1] when getting colors
+        values = [0, 5, 10, 15, 20, 25, 30, 35, 40];
+        unit = ' m/s';
+        break;
+      case 'precipitation':
+        // Default: ColorRamp.builtin.PRECIPITATION (range: 0 to 50 mm/h)
+        colorRamp = ColorRamp.builtin.PRECIPITATION;
+        values = [0.5, 1, 2, 5, 10, 20, 30, 40, 50];
+        unit = ' mm/h';
+        break;
+      case 'pressure':
+        // Default: ColorRamp.builtin.PRESSURE_2 (range: 900 to 1080 hPa)
+        colorRamp = ColorRamp.builtin.PRESSURE_2;
+        values = [920, 940, 960, 980, 1000, 1020, 1040, 1060];
+        unit = ' hPa';
+        break;
+      default:
+        return;
+    }
+
+    // Generate legend data from the actual color ramp
+    this.legendData = values.map(value => {
+      let colorValue = value;
+
+      // For wind layer, VIRIDIS is in [0,1], so normalize the value from [0,40] to [0,1]
+      if (this.activeLayer === 'wind') {
+        colorValue = value / 40; // Normalize to [0,1]
+      }
+
+      const color = colorRamp.getColor(colorValue);
+      // Ensure alpha is set to 1 for visibility (some ColorRamps may have alpha=0)
+      const alpha = color[3] > 0 ? color[3] : 1;
+      return {
+        color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`,
+        label: `${value}${unit}`
+      };
     });
-  }
-
-  private translateWeekdays(openingHours: string): string {
-    const lang = this.translateService.currentLang || 'de';
-
-    const weekdayMap: { [key: string]: { [key: string]: string } } = {
-      'Mo': { 'de': 'Mo', 'en': 'Mo', 'hr': 'pon' },
-      'Tu': { 'de': 'Di', 'en': 'Tu', 'hr': 'uto' },
-      'We': { 'de': 'Mi', 'en': 'We', 'hr': 'sri' },
-      'Th': { 'de': 'Do', 'en': 'Th', 'hr': 'čet' },
-      'Fr': { 'de': 'Fr', 'en': 'Fr', 'hr': 'pet' },
-      'Sa': { 'de': 'Sa', 'en': 'Sa', 'hr': 'sub' },
-      'Su': { 'de': 'So', 'en': 'Su', 'hr': 'ned' }
-    };
-
-    let translated = openingHours;
-
-    for (const [english, translations] of Object.entries(weekdayMap)) {
-      const regex = new RegExp(english, 'g');
-      translated = translated.replace(regex, translations[lang] || english);
-    }
-
-    return translated;
-  }
-
-  private formatPlaceDetails(details: any): string {
-    let html = '';
-    const props = details?.features?.[0]?.properties;
-
-    if (!props) return '';
-
-    // Öffnungszeiten
-    if (props.opening_hours) {
-      html += `<br><b>${this.translateService.instant('gimmicks.weather.openingHours')}:</b><br>`;
-      html += `<small>${this.translateWeekdays(props.opening_hours)}</small>`;
-    }
-
-    // Telefon
-    if (props.contact?.phone) {
-      html += `<br><b>${this.translateService.instant('gimmicks.weather.phone')}:</b> `;
-      html += `<a href="tel:${props.contact.phone}">${props.contact.phone}</a>`;
-    }
-
-    // Website
-    if (props.website) {
-      html += `<br><b>${this.translateService.instant('gimmicks.weather.website')}:</b> `;
-      html += `<a href="${props.website}" target="_blank">${this.translateService.instant('gimmicks.weather.visitWebsite')}</a>`;
-    }
-
-    // Email
-    if (props.contact?.email) {
-      html += `<br><b>Email:</b> <a href="mailto:${props.contact.email}">${props.contact.email}</a>`;
-    }
-
-    // Rollstuhlzugang
-    if (props.wheelchair !== undefined) {
-      const accessible = props.wheelchair === 'yes' || props.wheelchair === true;
-      html += `<br>${accessible ? '♿' : '🚫'} ${this.translateService.instant('gimmicks.weather.wheelchair')}: `;
-      html += `${accessible ? this.translateService.instant('gimmicks.weather.yes') : this.translateService.instant('gimmicks.weather.no')}`;
-    }
-
-    return html;
-  }
-
-  loadRestaurants(): void {
-    this.isLoadingRestaurants = true;
-    const radius = this.restaurantRadius || 500;
-
-    this.queryGeoapify('catering.restaurant', radius)
-      .then((res) => {
-        if (res.features) {
-          res.features.forEach((feature: any) => {
-            const lat = feature.properties.lat;
-            const lon = feature.properties.lon;
-            const name =
-              feature.properties.name ||
-              this.translateService.instant('gimmicks.weather.restaurant');
-            const placeId = feature.properties.place_id;
-
-            const marker = L.marker([lat, lon], {
-              icon: this.restaurantIcon,
-            }).addTo(this.map);
-
-            const initialPopupContent = `<b>${name}</b><br><small>${this.translateService.instant(
-              'gimmicks.weather.restaurant'
-            )}</small><br><small style="color: #666;">${this.translateService.instant('gimmicks.weather.clickForDetails')}</small>`;
-
-            marker.bindPopup(initialPopupContent);
-
-            marker.on('click', () => {
-              const popup = marker.getPopup();
-              if (popup) {
-                popup.setContent(
-                  `<b>${name}</b><br><small>${this.translateService.instant(
-                    'gimmicks.weather.restaurant'
-                  )}</small><br><i>${this.translateService.instant('gimmicks.weather.loading')}</i>`
-                );
-
-                this.loadPlaceDetails(placeId)
-                  .then((details) => {
-                    const detailsHtml = this.formatPlaceDetails(details);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.restaurant'
-                      )}</small>${detailsHtml}`
-                    );
-                  })
-                  .catch((error) => {
-                    console.error('Fehler beim Laden der Details:', error);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.restaurant'
-                      )}</small><br><i style="color: red;">${this.translateService.instant('gimmicks.weather.errorLoadingDetails')}</i>`
-                    );
-                  });
-              }
-            });
-
-            this.restaurantMarkers.push(marker);
-          });
-          console.log(`${res.features.length} Restaurants geladen`);
-          this.removeError.emit('gimmicks.weather.errorLoadingRestaurants');
-        }
-      })
-      .catch((error) => {
-        console.error('Fehler beim Laden der Restaurants:', error);
-        this.errorOccurred.emit(
-          this.translateService.instant(
-            'gimmicks.weather.errorLoadingRestaurants'
-          )
-        );
-      })
-      .finally(() => {
-        this.isLoadingRestaurants = false;
-      });
-  }
-
-  loadSupermarkets(): void {
-    this.isLoadingSupermarkets = true;
-    const radius = this.supermarketRadius || 500;
-
-    this.queryGeoapify('commercial.supermarket', radius)
-      .then((res) => {
-        if (res.features) {
-          res.features.forEach((feature: any) => {
-            const lat = feature.properties.lat;
-            const lon = feature.properties.lon;
-            const name =
-              feature.properties.name ||
-              this.translateService.instant('gimmicks.weather.supermarket');
-            const placeId = feature.properties.place_id;
-
-            const marker = L.marker([lat, lon], {
-              icon: this.supermarketIcon,
-            }).addTo(this.map);
-
-            const initialPopupContent = `<b>${name}</b><br><small>${this.translateService.instant(
-              'gimmicks.weather.supermarket'
-            )}</small><br><small style="color: #666;">${this.translateService.instant('gimmicks.weather.clickForDetails')}</small>`;
-
-            marker.bindPopup(initialPopupContent);
-
-            marker.on('click', () => {
-              const popup = marker.getPopup();
-              if (popup) {
-                popup.setContent(
-                  `<b>${name}</b><br><small>${this.translateService.instant(
-                    'gimmicks.weather.supermarket'
-                  )}</small><br><i>${this.translateService.instant('gimmicks.weather.loading')}</i>`
-                );
-
-                this.loadPlaceDetails(placeId)
-                  .then((details) => {
-                    const detailsHtml = this.formatPlaceDetails(details);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.supermarket'
-                      )}</small>${detailsHtml}`
-                    );
-                  })
-                  .catch((error) => {
-                    console.error('Fehler beim Laden der Details:', error);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.supermarket'
-                      )}</small><br><i style="color: red;">${this.translateService.instant('gimmicks.weather.errorLoadingDetails')}</i>`
-                    );
-                  });
-              }
-            });
-
-            this.supermarketMarkers.push(marker);
-          });
-          console.log(`${res.features.length} Supermärkte geladen`);
-          this.removeError.emit('gimmicks.weather.errorLoadingSupermarkets');
-        }
-      })
-      .catch((error) => {
-        console.error('Fehler beim Laden der Supermärkte:', error);
-        this.errorOccurred.emit(
-          this.translateService.instant(
-            'gimmicks.weather.errorLoadingSupermarkets'
-          )
-        );
-      })
-      .finally(() => {
-        this.isLoadingSupermarkets = false;
-      });
-  }
-
-  loadGasStations(): void {
-    this.isLoadingGasStations = true;
-    const radius = this.gasStationRadius || 500;
-
-    this.queryGeoapify('service.vehicle.fuel', radius)
-      .then((res) => {
-        if (res.features) {
-          res.features.forEach((feature: any) => {
-            const lat = feature.properties.lat;
-            const lon = feature.properties.lon;
-            const name =
-              feature.properties.name ||
-              this.translateService.instant('gimmicks.weather.gasStation');
-            const placeId = feature.properties.place_id;
-
-            const marker = L.marker([lat, lon], {
-              icon: this.gasStationIcon,
-            }).addTo(this.map);
-
-            const initialPopupContent = `<b>${name}</b><br><small>${this.translateService.instant(
-              'gimmicks.weather.gasStation'
-            )}</small><br><small style="color: #666;">${this.translateService.instant('gimmicks.weather.clickForDetails')}</small>`;
-
-            marker.bindPopup(initialPopupContent);
-
-            marker.on('click', () => {
-              const popup = marker.getPopup();
-              if (popup) {
-                popup.setContent(
-                  `<b>${name}</b><br><small>${this.translateService.instant(
-                    'gimmicks.weather.gasStation'
-                  )}</small><br><i>${this.translateService.instant('gimmicks.weather.loading')}</i>`
-                );
-
-                this.loadPlaceDetails(placeId)
-                  .then((details) => {
-                    const detailsHtml = this.formatPlaceDetails(details);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.gasStation'
-                      )}</small>${detailsHtml}`
-                    );
-                  })
-                  .catch((error) => {
-                    console.error('Fehler beim Laden der Details:', error);
-                    popup.setContent(
-                      `<b>${name}</b><br><small>${this.translateService.instant(
-                        'gimmicks.weather.gasStation'
-                      )}</small><br><i style="color: red;">${this.translateService.instant('gimmicks.weather.errorLoadingDetails')}</i>`
-                    );
-                  });
-              }
-            });
-
-            this.gasStationMarkers.push(marker);
-          });
-          console.log(`${res.features.length} Tankstellen geladen`);
-          this.removeError.emit('gimmicks.weather.errorLoadingGasStations');
-        }
-      })
-      .catch((error) => {
-        console.error('Fehler beim Laden der Tankstellen:', error);
-        this.errorOccurred.emit(
-          this.translateService.instant(
-            'gimmicks.weather.errorLoadingGasStations'
-          )
-        );
-      })
-      .finally(() => {
-        this.isLoadingGasStations = false;
-      });
   }
 
   ngOnDestroy(): void {
-    // Cleanup: Timer löschen
-    if (this.restaurantDebounceTimer) {
-      clearTimeout(this.restaurantDebounceTimer);
+    if (this.currentLayerId && this.map && this.map.getLayer(this.currentLayerId)) {
+      this.map.removeLayer(this.currentLayerId);
     }
-    if (this.supermarketDebounceTimer) {
-      clearTimeout(this.supermarketDebounceTimer);
-    }
-    if (this.gasStationDebounceTimer) {
-      clearTimeout(this.gasStationDebounceTimer);
+    if (this.map) {
+      this.map.remove();
     }
   }
 }

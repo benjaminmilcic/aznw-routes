@@ -429,7 +429,10 @@
       "visitWebsite":"Posjetite web stranicu",
       "wheelchair":"Pristup za invalidska kolica",
       "yes":"Da",
-      "no":"Ne"
+      "no":"Ne",
+      "clouds":"Oblaci",
+      "pressure":"Tlak",
+      "globeProjection":"Globus"
     },
     "recipes":{
       "manager":"Menadžer recepata",

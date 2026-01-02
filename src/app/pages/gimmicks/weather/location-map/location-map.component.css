@@ -1,25 +1,103 @@
-.map {
-  height: 400px;
+.map-container {
+  position: relative;
   width: 100%;
-  border-radius: 12px;
 }
 
-input[type="number"]:disabled {
-  background-color: #f3f4f6;
-  cursor: not-allowed;
-  opacity: 0.6;
+.map {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-input[type="checkbox"] {
+.legend {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  z-index: 1000;
+  max-width: 150px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.legend-item:last-child {
+  margin-bottom: 0;
+}
+
+.legend-color {
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  margin-right: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.legend-label {
+  color: #374151;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.weather-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #e5e7eb;
+  background-color: white;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-input[type="number"] {
   transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
 }
 
-input[type="number"]:focus {
-  outline: none;
+.weather-btn:hover {
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: #eff6ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.weather-btn.active {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.weather-btn .icon {
+  font-size: 1.25rem;
+}
+
+.weather-btn .text {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .weather-btn .text {
+    display: none;
+  }
+
+  .weather-btn {
+    padding: 0.5rem;
+    min-width: 48px;
+    justify-content: center;
+  }
+
+  .weather-btn .icon {
+    font-size: 1.5rem;
+  }
 }

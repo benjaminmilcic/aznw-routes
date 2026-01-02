@@ -3,6 +3,8 @@ const ip = 'benjaminmilcic.site';
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
+const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
+
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -13,6 +15,7 @@ export const environment = {
     // new nest api:
     createApi: `https://${ip}:3000/stripe`,
     returnUrl: `https://auf-zu-neuen-welten.de`,
+    
   },
   guestbook: {
     // old PHP API =>
@@ -73,7 +76,10 @@ export const environment = {
     sendData: `https://${ip}:3000/analytics/visitor-data`,
   },
   geoapify: {
-    apiKey: geoapifyKey, 
+    apiKey: geoapifyKey,
+  },
+  maptiler: {
+    apiKey: maptilerKey,
   },
   production: true,
   version: new Date().getTime(),

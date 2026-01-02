@@ -68,6 +68,9 @@ jobs:
             geoapify: {
                apiKey: '${{ secrets.GEOAPIFY_API_KEY }}',
             },
+            maptiler: {
+              apiKey: '${{ secrets.MAPTILER_API_KEY }}', 
+            },
             production: true,
             version: new Date().getTime(),
           };

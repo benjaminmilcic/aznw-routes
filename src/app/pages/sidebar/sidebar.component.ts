@@ -72,5 +72,10 @@ export class SidebarComponent implements OnInit {
     this.language = language;
     this.translate.use(this.language);
     this.translateSendButtonService.translateSendButton.next();
+
+    // Close sidebar after language change
+    if (this.sidebarActivated) {
+      this.onToggleSidebar(null);
+    }
   }
 }
