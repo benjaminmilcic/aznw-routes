@@ -58,6 +58,8 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     imageSrc: '',
     emoji: '',
     elements: [
+      'MyMemory API',
+      'Wikimedia API',
       'SVG',
       'Popup modal',
       'Bottom drawer',

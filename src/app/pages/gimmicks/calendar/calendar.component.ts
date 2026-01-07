@@ -13,6 +13,10 @@ import { QuizBottomSheetComponent } from './quiz-bottom-sheet/quiz-bottom-sheet.
 import { Router } from '@angular/router';
 import { AnalogClockComponent } from './analog-clock/analog-clock.component';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
+import { Subscription, forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-calendar',
@@ -46,18 +50,200 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ];
 
   showBackDrop = false;
+  onThisDayEvents: any[] = [];
+  loadingEvents = false;
+  private langChangeSubscription: Subscription;
 
   constructor(
     private modalCtrl: ModalController,
     public translateService: TranslateService,
     private _bottomSheet: MatBottomSheet,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     const today = new Date();
     this.currentYear = today.getFullYear();
     this.currentMonth = today.getMonth();
+    this.loadOnThisDayEvents();
+
+    // Bei Sprachwechsel die Events neu laden
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => {
+      this.loadOnThisDayEvents();
+    });
+  }
+
+  loadOnThisDayEvents(): void {
+    this.loadingEvents = true;
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const currentLang = this.translateService.currentLang || 'en';
+
+    // Für Kroatisch: Lade Events auf Englisch und übersetze sie
+    const apiLang = currentLang === 'hr' ? 'en' : currentLang;
+    const apiUrl = `https://api.wikimedia.org/feed/v1/wikipedia/${apiLang}/onthisday/events/${month}/${day}`;
+
+    this.http.get(apiUrl).subscribe({
+      next: (response: any) => {
+        const events = response.events?.slice(0, 5) || [];
+
+        // Wenn Kroatisch: Übersetze die Events
+        if (currentLang === 'hr' && events.length > 0) {
+          this.translateEvents(events).subscribe({
+            next: (translatedEvents) => {
+              this.onThisDayEvents = translatedEvents;
+              this.loadingEvents = false;
+            },
+            error: (error) => {
+              console.error('Error translating events:', error);
+              // Bei Fehler: Zeige englische Events
+              this.onThisDayEvents = events;
+              this.loadingEvents = false;
+            }
+          });
+        } else {
+          this.onThisDayEvents = events;
+          this.loadingEvents = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error loading On This Day events:', error);
+        this.loadingEvents = false;
+      }
+    });
+  }
+
+  private translateEvents(events: any[]) {
+    const translations$ = events.map(event =>
+      this.translateText(event.text, 'en', 'hr').pipe(
+        map(translatedText => ({
+          ...event,
+          text: translatedText
+        }))
+      )
+    );
+
+    return forkJoin(translations$);
+  }
+
+  private translateText(text: string, sourceLang: string, targetLang: string) {
+    if (!text || text.trim().length === 0) {
+      return of(text);
+    }
+
+    const MAX_CHARS = 450; // Sicherheitspuffer unter dem 500-Zeichen-Limit
+
+    // Wenn Text kurz genug ist, direkt übersetzen
+    if (text.length <= MAX_CHARS) {
+      return this.translateTextChunk(text, sourceLang, targetLang);
+    }
+
+    // Text in Chunks aufteilen
+    const chunks = this.splitTextIntoChunks(text, MAX_CHARS);
+
+    // Alle Chunks parallel übersetzen
+    const translations$ = chunks.map((chunk) =>
+      this.translateTextChunk(chunk.text, sourceLang, targetLang)
+    );
+
+    // Alle Übersetzungen zusammenfügen mit Original-Separatoren
+    return forkJoin(translations$).pipe(
+      map((translatedChunks) => {
+        let result = '';
+        translatedChunks.forEach((translated, idx) => {
+          result += translated;
+          if (idx < chunks.length - 1) {
+            // Verwende den Original-Separator
+            result += chunks[idx].separator || ' ';
+          }
+        });
+        return result;
+      })
+    );
+  }
+
+  private translateTextChunk(text: string, sourceLang: string, targetLang: string) {
+    const MYMEMORY_API = 'https://api.mymemory.translated.net/get';
+    const langPair = `${sourceLang}|${targetLang}`;
+    const email = environment.recipes.translationEmail || '';
+    const url = `${MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=${langPair}&de=${encodeURIComponent(email)}`;
+
+    return this.http.get<any>(url).pipe(
+      map(response => {
+        if (response.responseStatus === 200) {
+          return response.responseData.translatedText;
+        } else {
+          console.warn('Translation failed, using original text');
+          return text;
+        }
+      }),
+      catchError(error => {
+        console.error('Translation API error:', error);
+        return of(text); // Bei Fehler: Original-Text zurückgeben
+      })
+    );
+  }
+
+  private splitTextIntoChunks(
+    text: string,
+    maxLength: number
+  ): Array<{ text: string; separator: string }> {
+    const chunks: Array<{ text: string; separator: string }> = [];
+    let currentChunk = '';
+    let chunkSeparator = '';
+
+    // Splitte Text an allen Whitespace-Grenzen und behalte die Separatoren
+    const parts = text.split(/(\s+)/);
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+
+      // Überspringe leere Parts
+      if (!part) continue;
+
+      // Ist es ein Separator (Leerzeichen/Zeilenumbrüche)?
+      if (/^\s+$/.test(part)) {
+        // Füge Separator zum aktuellen Chunk hinzu
+        chunkSeparator += part;
+        continue;
+      }
+
+      // Es ist ein Textteil (Wort oder Phrase)
+      const word = part;
+
+      // Prüfe ob das Wort in den aktuellen Chunk passt
+      const wouldBeLength =
+        currentChunk.length + chunkSeparator.length + word.length;
+
+      if (wouldBeLength <= maxLength || !currentChunk) {
+        // Füge zum aktuellen Chunk hinzu
+        currentChunk += chunkSeparator + word;
+        chunkSeparator = '';
+      } else {
+        // Chunk ist voll - speichere ihn mit dem gesammelten Separator
+        chunks.push({
+          text: currentChunk,
+          separator: chunkSeparator,
+        });
+
+        // Starte neuen Chunk mit dem aktuellen Wort
+        currentChunk = word;
+        chunkSeparator = '';
+      }
+    }
+
+    // Letzten Chunk hinzufügen
+    if (currentChunk) {
+      chunks.push({
+        text: currentChunk,
+        separator: chunkSeparator,
+      });
+    }
+
+    return chunks;
   }
 
   async openBottomSheet() {
@@ -232,5 +418,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._bottomSheet.dismiss();
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
   }
 }

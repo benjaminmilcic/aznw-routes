@@ -185,7 +185,9 @@
       "thur": "Thur",
       "fri": "Fri",
       "sat": "Sat",
-      "sun": "Sun"
+      "sun": "Sun",
+      "onThisDay": "On Today in History",
+      "noEvents": "No events found"
     },
     "guestbook": {
       "createComment": "Create Comment",

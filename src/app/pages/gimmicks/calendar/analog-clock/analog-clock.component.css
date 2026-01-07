@@ -9,14 +9,14 @@
 
 .clock{
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 173px;
+    height: 173px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #fff;
     border-radius: 50%;
-    border: 20px solid #fff;
+    border: 5px solid #fff;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.1), 0 20px 20px rgba(0,0,0,.2), 0 0 0 4px rgba(255,255,255,1);
 }
 

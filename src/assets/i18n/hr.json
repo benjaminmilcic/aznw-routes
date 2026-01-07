@@ -185,7 +185,9 @@
       "thur": "Čet",
       "fri": "Pet",
       "sat": "Sub",
-      "sun": "Ned"
+      "sun": "Ned",
+      "onThisDay": "Na današnji dan u povijesti",
+      "noEvents": "Nema pronađenih događaja"
     },
     "guestbook": {
       "createComment": "Napišite komentar",

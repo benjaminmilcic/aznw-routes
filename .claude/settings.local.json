@@ -23,7 +23,9 @@
       "Bash(grep:*)",
       "Bash(npm uninstall:*)",
       "WebFetch(domain:maplibre.org)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.wikimedia.org)",
+      "WebFetch(domain:history.muffinlabs.com)"
     ],
     "deny": [],
     "ask": []
