@@ -13,7 +13,18 @@
 
         <!-- On This Day Events -->
         <div class="flex-1 pt-4 border-t border-white/30 overflow-y-auto">
-          <div class="text-white font-bold text-lg mb-4 text-center flex items-center justify-center gap-2">
+          <div class="text-center text-white">
+            {{
+              today
+                | date
+                  : (translateService.currentLang === "en"
+                      ? "dd/MM/yyyy"
+                      : "dd.MM.yyyy")
+            }}
+          </div>
+          <div
+            class="text-white font-bold text-lg mb-4 text-center flex items-center justify-center gap-2"
+          >
             <mat-icon class="text-yellow-400">event_note</mat-icon>
             <span>{{ "gimmicks.calendar.onThisDay" | translate }}</span>
           </div>
@@ -22,20 +33,30 @@
             <mat-icon class="animate-spin text-white">refresh</mat-icon>
           </div>
 
-          <div *ngIf="!loadingEvents && onThisDayEvents.length === 0" class="text-white/70 text-center py-4 text-sm">
+          <div
+            *ngIf="!loadingEvents && onThisDayEvents.length === 0"
+            class="text-white/70 text-center py-4 text-sm"
+          >
             {{ "gimmicks.calendar.noEvents" | translate }}
           </div>
 
-          <div *ngIf="!loadingEvents && onThisDayEvents.length > 0" class="space-y-3">
+          <div
+            *ngIf="!loadingEvents && onThisDayEvents.length > 0"
+            class="space-y-3"
+          >
             <div
               *ngFor="let event of onThisDayEvents"
               class="bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-all duration-200"
             >
               <div class="flex items-start gap-2">
-                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full px-2 py-1 text-xs font-bold text-white min-w-fit">
+                <div
+                  class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full px-2 py-1 text-xs font-bold text-white min-w-fit"
+                >
                   {{ event.year }}
                 </div>
-                <p class="text-white text-xs leading-relaxed">{{ event.text }}</p>
+                <p class="text-white text-xs leading-relaxed">
+                  {{ event.text }}
+                </p>
               </div>
             </div>
           </div>
@@ -121,7 +142,7 @@
             }"
             (click)="openDayModal(i + 1, months[currentMonth], currentYear)"
           >
-            <div  class="translate-y-[-2px]">
+            <div class="translate-y-[-2px]">
               {{ i + 1 }}
             </div>
           </div>

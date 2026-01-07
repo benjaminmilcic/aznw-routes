@@ -11,23 +11,24 @@ import * as de from '@angular/common/locales/de';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-quiz-bottom-sheet',
-    imports: [
-        MatBottomSheetModule,
-        CommonModule,
-        ScratchCardComponent,
-        TranslateModule,
-    ],
-    providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
-    templateUrl: './quiz-bottom-sheet.component.html',
-    styleUrl: './quiz-bottom-sheet.component.css'
+  selector: 'app-quiz-bottom-sheet',
+  imports: [
+    MatBottomSheetModule,
+    CommonModule,
+    ScratchCardComponent,
+    TranslateModule,
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],
+  templateUrl: './quiz-bottom-sheet.component.html',
+  styleUrl: './quiz-bottom-sheet.component.css',
 })
 export class QuizBottomSheetComponent implements OnInit {
   holiday: Holiday;
   constructor(
     private translate: TranslateService,
     private _bottomSheetRef: MatBottomSheetRef<QuizBottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { year: number }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { year: number },
+    public translateService: TranslateService
   ) {
     registerLocaleData(de.default);
   }
@@ -51,17 +52,29 @@ export class QuizBottomSheetComponent implements OnInit {
       case 'OSTERMONTAG':
         return this.translate.instant('gimmicks.calendar.holidays.OSTERMONTAG');
       case 'TAG_DER_ARBEIT':
-        return this.translate.instant('gimmicks.calendar.holidays.TAG_DER_ARBEIT');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.TAG_DER_ARBEIT'
+        );
       case 'CHRISTIHIMMELFAHRT':
-        return this.translate.instant('gimmicks.calendar.holidays.CHRISTIHIMMELFAHRT');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.CHRISTIHIMMELFAHRT'
+        );
       case 'PFINGSTMONTAG':
-        return this.translate.instant('gimmicks.calendar.holidays.PFINGSTMONTAG');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.PFINGSTMONTAG'
+        );
       case 'DEUTSCHEEINHEIT':
-        return this.translate.instant('gimmicks.calendar.holidays.DEUTSCHEEINHEIT');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.DEUTSCHEEINHEIT'
+        );
       case 'ERSTERWEIHNACHTSFEIERTAG':
-        return this.translate.instant('gimmicks.calendar.holidays.ERSTERWEIHNACHTSFEIERTAG');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.ERSTERWEIHNACHTSFEIERTAG'
+        );
       case 'ZWEITERWEIHNACHTSFEIERTAG':
-        return this.translate.instant('gimmicks.calendar.holidays.ZWEITERWEIHNACHTSFEIERTAG');
+        return this.translate.instant(
+          'gimmicks.calendar.holidays.ZWEITERWEIHNACHTSFEIERTAG'
+        );
 
       default:
         return '';

@@ -7,7 +7,14 @@
         {{ "gimmicks.calendar.which" | translate }}&nbsp;
       </span>
       <span class="font-bold text-lg">
-        {{ holiday.date | date : undefined : undefined : "de" }} ?
+        {{
+          holiday.date
+            | date
+              : (translateService.currentLang === "en"
+                  ? "dd/MM/yyyy"
+                  : "dd.MM.yyyy")
+        }}
+        ?
       </span>
     </div>
     <div class="flex justify-center items-center">

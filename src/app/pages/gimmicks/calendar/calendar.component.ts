@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   onThisDayEvents: any[] = [];
   loadingEvents = false;
   private langChangeSubscription: Subscription;
+  today = new Date();
 
   constructor(
     private modalCtrl: ModalController,
@@ -69,9 +70,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.loadOnThisDayEvents();
 
     // Bei Sprachwechsel die Events neu laden
-    this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => {
-      this.loadOnThisDayEvents();
-    });
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe(
+      () => {
+        this.loadOnThisDayEvents();
+      }
+    );
   }
 
   loadOnThisDayEvents(): void {
@@ -102,7 +105,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
               // Bei Fehler: Zeige englische Events
               this.onThisDayEvents = events;
               this.loadingEvents = false;
-            }
+            },
           });
         } else {
           this.onThisDayEvents = events;
@@ -112,16 +115,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
       error: (error) => {
         console.error('Error loading On This Day events:', error);
         this.loadingEvents = false;
-      }
+      },
     });
   }
 
   private translateEvents(events: any[]) {
-    const translations$ = events.map(event =>
+    const translations$ = events.map((event) =>
       this.translateText(event.text, 'en', 'hr').pipe(
-        map(translatedText => ({
+        map((translatedText) => ({
           ...event,
-          text: translatedText
+          text: translatedText,
         }))
       )
     );
@@ -165,14 +168,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private translateTextChunk(text: string, sourceLang: string, targetLang: string) {
+  private translateTextChunk(
+    text: string,
+    sourceLang: string,
+    targetLang: string
+  ) {
     const MYMEMORY_API = 'https://api.mymemory.translated.net/get';
     const langPair = `${sourceLang}|${targetLang}`;
     const email = environment.recipes.translationEmail || '';
-    const url = `${MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=${langPair}&de=${encodeURIComponent(email)}`;
+    const url = `${MYMEMORY_API}?q=${encodeURIComponent(
+      text
+    )}&langpair=${langPair}&de=${encodeURIComponent(email)}`;
 
     return this.http.get<any>(url).pipe(
-      map(response => {
+      map((response) => {
         if (response.responseStatus === 200) {
           return response.responseData.translatedText;
         } else {
@@ -180,7 +189,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
           return text;
         }
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error('Translation API error:', error);
         return of(text); // Bei Fehler: Original-Text zurückgeben
       })
