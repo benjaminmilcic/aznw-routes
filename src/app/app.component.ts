@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+  appLoaded = false;
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.chartsHelperService.detectChanges.next();
@@ -70,6 +71,21 @@ export class AppComponent implements OnInit {
     // Analytics-Tracking beim App-Start initialisieren
     if (environment.production) {
       this.analyticsService.initTracking();
+    }
+
+    // Ladeanimation ausblenden, sobald die App bereit ist
+    this.appLoaded = true;
+    this.hideLoader();
+  }
+
+  private hideLoader(): void {
+    const loader = document.getElementById('appLoader');
+    if (loader) {
+      loader.classList.add('loaded');
+      // Element nach der Fade-Out-Animation komplett entfernen
+      setTimeout(() => {
+        loader.remove();
+      }, 500);
     }
   }
 }
