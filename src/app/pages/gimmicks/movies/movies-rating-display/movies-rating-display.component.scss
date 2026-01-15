@@ -1,0 +1,29 @@
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-icon {
+  color: #ffd700;
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.rating-value {
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+}
+
+.rating-max {
+  color: #666;
+  font-size: 14px;
+}
+
+.vote-count {
+  color: #999;
+  font-size: 0.85em;
+  margin-left: 4px;
+}

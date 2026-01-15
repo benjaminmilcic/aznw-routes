@@ -91,7 +91,8 @@
       "games": "Games",
       "weather": "Weather",
       "menu": "Gimmicks Menu",
-      "recipes": "Recipes"
+      "recipes": "Recipes",
+      "movies":"Movies"
     },
     "overview": {
       "header1": "So far I have created enterprise applications that can only be accessed with a login and password. That's why you'll find",
@@ -438,6 +439,72 @@
       "errorLoadingMap":"Error loading map. Please try again later.",
       "errorLoadingWeatherLayer":"Error loading weather layer. Please try again later."
     },
+    "movies": {
+      "moviePortal": "Movie portal",
+      "back": "Back",
+      "overview": "Overview",
+      "birthday": "Birthday",
+      "deathday": "Date of Death",
+      "placeOfBirth": "Place of Birth",
+      "knownFor": "Known For",
+      "biography": "Biography",
+      "filmography": "Filmography",
+      "years": "years",
+      "showMore": "Show more",
+      "sortBy": "Sort by",
+      "sort": {
+        "year": "Year",
+        "rating": "Rating",
+        "title": "Title",
+        "popularity": "Popularity"
+      },
+      "tabs": {
+        "popular": "Popular",
+        "topRated": "Top Rated",
+        "nowPlaying": "Now Playing",
+        "search": "Search"
+      },
+      "noResults": "No results found",
+      "searchPlaceholder": "Search a movie...",
+      "startTyping": "Start typing to search...",
+      "whereToWatch": "Where to Watch",
+      "plot": "Plot",
+      "director": "Director",
+      "budget": "Budget",
+      "revenue": "Revenue",
+      "status": "Status",
+      "cast": "Cast",
+      "trailer": "Trailer",
+      "similarMovies": "Similar Movies",
+      "stream": "Stream",
+      "rent": "Rent",
+      "buy": "Buy",
+      "moreOnTMDB": "More details on TMDB",
+      "noStreamingInfo": "No streaming information available",
+      "unknown": "Unknown",
+      "movieStatus": {
+        "Rumored": "Rumored",
+        "Planned": "Planned",
+        "In Production": "In Production",
+        "Post Production": "Post Production",
+        "Released": "Released",
+        "Canceled": "Canceled"
+      },
+      "department": {
+        "Acting": "Acting",
+        "Directing": "Directing",
+        "Writing": "Writing",
+        "Production": "Production",
+        "Sound": "Sound",
+        "Camera": "Camera",
+        "Art": "Art",
+        "Costume & Make-Up": "Costume & Make-Up",
+        "Editing": "Editing",
+        "Visual Effects": "Visual Effects",
+        "Lighting": "Lighting",
+        "Crew": "Crew"
+      }
+    },
     "recipes":{
       "manager":"Recipe Manager",
       "errorOccurred":"An error has occurred!",
@@ -505,5 +572,14 @@
     "checkInternetConnection": "Please also check your internet connection. This may be the cause.",
     "errorOccurs": "An error has occurred!",
     "copied": "Copied to clipboard"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Items per page:",
+    "NEXT_PAGE": "Next page",
+    "PREVIOUS_PAGE": "Previous page",
+    "FIRST_PAGE": "First page",
+    "LAST_PAGE": "Last page",
+    "RANGE_PAGE_LABEL_1": "0 of {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
   }
 }

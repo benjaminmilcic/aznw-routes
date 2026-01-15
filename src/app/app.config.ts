@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './app.routes';
 import {
+  HTTP_INTERCEPTORS,
   HttpBackend,
   HttpClient,
   provideHttpClient,
@@ -24,6 +25,7 @@ import { recipeReducer } from './pages/gimmicks/recipes/store/reducers/recipe.re
 import { provideEffects } from '@ngrx/effects';
 import { RecipeEffects } from './pages/gimmicks/recipes/store/effects/recipe.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { MoviesInterceptorDiAdapter } from './pages/gimmicks/movies/movies-di-adapter.interceptor';
 
 export function HttpLoaderFactory(httpHandler: HttpBackend) {
   const http = new HttpClient(httpHandler);
@@ -55,6 +57,11 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular(),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MoviesInterceptorDiAdapter,
+      multi: true,
+    },
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptorService,

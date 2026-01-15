@@ -91,7 +91,8 @@
       "games": "Igre",
       "weather": "Vrijeme",
       "menu": "Gimmicks Izbornik",
-      "recipes": "Recepti"
+      "recipes": "Recepti",
+      "movies": "Filmovi"
     },
     "overview": {
       "header1": "Do sada sam izradio poslovne aplikacije koje su dostupne samo uz prijavu i lozinku. Zato ćete pronaći",
@@ -438,6 +439,72 @@
       "errorLoadingMap":"Pogreška pri učitavanju karte. Molimo pokušajte kasnije.",
       "errorLoadingWeatherLayer":"Pogreška pri učitavanju vremenskog sloja. Molimo pokušajte kasnije."
     },
+    "movies": {
+      "moviePortal": "Filmski portal",
+      "back": "Natrag",
+      "overview": "Pregled",
+      "birthday": "Datum rođenja",
+      "deathday": "Datum smrti",
+      "placeOfBirth": "Mjesto rođenja",
+      "knownFor": "Poznat po",
+      "biography": "Biografija",
+      "filmography": "Filmografija",
+      "years": "godina",
+      "showMore": "Prikaži više",
+      "sortBy": "Sortiraj po",
+      "sort": {
+        "year": "Godina",
+        "rating": "Ocjena",
+        "title": "Naslov",
+        "popularity": "Popularnost"
+      },
+      "tabs": {
+        "popular": "Popularno",
+        "topRated": "Najbolje ocijenjeno",
+        "nowPlaying": "Trenutno u kinu",
+        "search": "Pretraži"
+      },
+      "noResults": "Nema rezultata",
+      "searchPlaceholder": "Pretraži film...",
+      "startTyping": "Počnite tipkati za pretragu...",
+      "whereToWatch": "Gdje gledati",
+      "plot": "Radnja",
+      "director": "Redatelj",
+      "budget": "Budžet",
+      "revenue": "Prihod",
+      "status": "Status",
+      "cast": "Glumci",
+      "trailer": "Trailer",
+      "similarMovies": "Slični filmovi",
+      "stream": "Stream",
+      "rent": "Posudi",
+      "buy": "Kupi",
+      "moreOnTMDB": "Više detalja na TMDB",
+      "noStreamingInfo": "Nema dostupnih informacija o streamingu",
+      "unknown": "Nepoznato",
+      "movieStatus": {
+        "Rumored": "Glasina",
+        "Planned": "Planirano",
+        "In Production": "U proizvodnji",
+        "Post Production": "Postprodukcija",
+        "Released": "Objavljeno",
+        "Canceled": "Otkazano"
+      },
+      "department": {
+        "Acting": "Gluma",
+        "Directing": "Režija",
+        "Writing": "Scenarij",
+        "Production": "Produkcija",
+        "Sound": "Zvuk",
+        "Camera": "Kamera",
+        "Art": "Scenografija",
+        "Costume & Make-Up": "Kostim i šminka",
+        "Editing": "Montaža",
+        "Visual Effects": "Vizualni efekti",
+        "Lighting": "Rasvjeta",
+        "Crew": "Ekipa"
+      }
+    },
     "recipes":{
       "manager":"Menadžer recepata",
       "errorOccurred":"Došlo je do pogreške!",
@@ -505,5 +572,14 @@
     "checkInternetConnection": "Također provjerite svoju internetsku vezu. Ovo može biti uzrok.",
     "errorOccurs": "Došlo je do pogreške!",
     "copied": "Kopirano u međuspremnik"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Stavki po stranici:",
+    "NEXT_PAGE": "Sljedeća stranica",
+    "PREVIOUS_PAGE": "Prethodna stranica",
+    "FIRST_PAGE": "Prva stranica",
+    "LAST_PAGE": "Zadnja stranica",
+    "RANGE_PAGE_LABEL_1": "0 od {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} od {{length}}"
   }
 }

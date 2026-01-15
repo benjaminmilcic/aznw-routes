@@ -1,4 +1,4 @@
-import { GimmicksOverviewSetting } from "./overview.types";
+import { GimmicksOverviewSetting } from './overview.types';
 
 export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
   {
@@ -190,4 +190,25 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     opacity: 128,
     hex: '',
   },
-];  
+  {
+    goToPage: '/gimmicks/movies',
+    header: 'gimmicks.menu.movies',
+    icon: false,
+    iconClasses: '',
+    imageSrc: '',
+    emoji: '🎬',
+    elements: [
+      'gimmicks.overview.youtubePlayer',
+      'TMDB API',
+      'Responsive design',
+      'gimmicks.differentLanguages',
+    ],
+    showDescription: true,
+    playAudio: false,
+    red: 255,
+    green: 255,
+    blue: 0,
+    opacity: 128,
+    hex: '',
+  },
+];

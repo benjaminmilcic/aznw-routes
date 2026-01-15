@@ -1,0 +1,52 @@
+<div class="flex flex-col flex-1 items-center w-full px-2 box-border">
+  <mat-form-field
+    class="w-full sm:w-[600px]"
+    appearance="outline"
+    subscriptSizing="dynamic"
+  >
+    <input
+      matInput
+      [formControl]="searchControl"
+      [placeholder]="'gimmicks.movies.searchPlaceholder' | translate"
+    />
+    <mat-icon matPrefix class="text-white">search</mat-icon>
+  </mat-form-field>
+  <div class="flex flex-1 flex-col items-center mt-4 w-full">
+    <div class="flex flex-wrap justify-center flex-1 max-w-[1200px]">
+      @if (loading()) {
+      <mat-spinner></mat-spinner>
+      } @else if (results().length > 0) { @for (item of paginatedResults();
+      track item.id) {
+      <div class="p-4">
+        <app-movie-card [media]="item" (cardClick)="onMovieCardClick()" />
+      </div>
+      } } @else if (searchControl.value && searchControl.value.length > 2) {
+      <div>
+        <div class="flex gap-4 items-center md:text-2xl text-white">
+          <mat-icon>search_off</mat-icon>
+          <p>{{ 'gimmicks.movies.noResults' | translate }}</p>
+        </div>
+      </div>
+
+      } @else {
+      <div>
+        <div class="flex gap-4 items-center md:text-2xl text-white">
+          <mat-icon>search</mat-icon>
+          <p>{{ 'gimmicks.movies.startTyping' | translate }}</p>
+        </div>
+      </div>
+      }
+    </div>
+    @if (results().length > 0) {
+    <mat-paginator
+      [length]="results().length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[5, 10, 20, 50, 100]"
+      [showFirstLastButtons]="true"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+    }
+  </div>
+</div>

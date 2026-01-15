@@ -1,6 +1,6 @@
 <div id="header">
   <div
-    *ngIf="innerWidth >= 1270"
+    *ngIf="innerWidth >= 1400"
     class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 text-gray-100 px-8 flex flex-wrap gap-6 h-12 place-items-center shadow-lg backdrop-blur-sm border-b border-blue-700/30"
   >
     <div
@@ -80,9 +80,16 @@
       <div class="text-[20px] mt-[-2px]">🍲</div>
       <div class="font-medium">{{ "gimmicks.menu.recipes" | translate }}</div>
     </div>
+    <div
+      class="relative group hover:text-white cursor-pointer flex gap-1 items-center px-3 py-1 rounded-lg transition-all duration-300 hover:bg-yellow-300/50 hover:shadow-md"
+      [routerLink]="['movies']"
+    >
+      <div class="text-[20px] mt-[-2px]">🎬</div>
+      <div class="font-medium mt-[2px]">{{ "gimmicks.menu.movies" | translate }}</div>
+    </div>
   </div>
   <div
-    *ngIf="innerWidth < 1270"
+    *ngIf="innerWidth < 1400"
     class="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 h-12 flex flex-col shadow-lg border-b border-blue-700/30"
   >
     <button
@@ -268,6 +275,23 @@
           class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
         >
           {{ "gimmicks.menu.recipes" | translate }}
+        </div>
+      </div>
+      <div
+        class="flex gap-3 items-center ml-2 mt-2 w-fit z-[9999] group eighthItemIn cursor-pointer"
+        [ngClass]="{ eighthItemOut: fadeOut }"
+        [routerLink]="['movies']"
+        (click)="hideSubMenu()"
+      >
+        <button
+          class="w-12 h-12 rounded-full shadow-lg bg-yellow-500 group-hover:bg-yellow-600 cursor-pointer text-white text-xl"
+        >
+          🎬
+        </button>
+        <div
+          class="border border-white bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl text-white text-sm text-center min-w-[164px] py-[10px] rounded-lg group-hover:from-blue-600 group-hover:to-blue-700"
+        >
+          {{ "gimmicks.menu.movies" | translate }}
         </div>
       </div>
     </ng-container>

@@ -97,6 +97,17 @@
   }
 }
 
+@keyframes slideEighthItemIn {
+  0% {
+    translate: 0px -329px;
+    opacity: 0;
+  }
+  100% {
+    translate: 0px 0px;
+    opacity: 1;
+  }
+}
+
 @keyframes slideOverviewOut {
   0% {
     translate: 0px 0px;
@@ -196,6 +207,17 @@
   }
 }
 
+@keyframes slideEighthItemOut {
+  0% {
+    translate: 0px 0px;
+    opacity: 1;
+  }
+  100% {
+    translate: 0px -329px;
+    opacity: 0;
+  }
+}
+
 @keyframes slideSubMenuButton {
   0% {
     rotate: 90deg;
@@ -250,6 +272,10 @@
   animation: 0.3s ease-out slideSeventhItemIn;
 }
 
+.eighthItemIn {
+  animation: 0.3s ease-out slideEighthItemIn;
+}
+
 .overviewOut {
   animation: 0.3s ease-out slideOverviewOut;
 }
@@ -284,6 +310,10 @@
 
 .seventhItemOut {
   animation: 0.3s ease-out slideSeventhItemOut;
+}
+
+.eighthItemOut {
+  animation: 0.3s ease-out slideEighthItemOut;
 }
 
 .subMenuButton {

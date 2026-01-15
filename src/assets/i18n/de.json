@@ -91,7 +91,8 @@
       "games":"Spiele",
       "weather":"Wetter",
       "menu":"Gimmicks Menü",
-      "recipes":"Rezepte"
+      "recipes":"Rezepte",
+      "movies":"Filme"
     },
     "overview": {
       "header1": "Bisher habe ich Unternehmensanwendungen erstellt, auf die nur mit Login und Passwort zugegriffen werden kann. Deshalb finden Sie",
@@ -438,6 +439,72 @@
       "errorLoadingMap":"Fehler beim Laden der Karte. Bitte versuchen Sie es später erneut.",
       "errorLoadingWeatherLayer":"Fehler beim Laden des Wetter-Layers. Bitte versuchen Sie es später erneut."
     },
+    "movies": {
+      "moviePortal":"Filmportal",
+      "back": "Zurück",
+      "overview": "Übersicht",
+      "birthday": "Geburtstag",
+      "deathday": "Todestag",
+      "placeOfBirth": "Geburtsort",
+      "knownFor": "Bekannt für",
+      "biography": "Biografie",
+      "filmography": "Filmografie",
+      "years": "Jahre",
+      "showMore": "Mehr anzeigen",
+      "sortBy": "Sortieren nach",
+      "sort": {
+        "year": "Jahr",
+        "rating": "Bewertung",
+        "title": "Titel",
+        "popularity": "Beliebtheit"
+      },
+      "tabs": {
+        "popular": "Beliebt",
+        "topRated": "Top bewertet",
+        "nowPlaying": "Aktuell im Kino",
+        "search": "Suche"
+      },
+      "noResults": "Keine Ergebnisse gefunden",
+      "searchPlaceholder": "Film suchen...",
+      "startTyping": "Tippen Sie, um zu suchen...",
+      "whereToWatch": "Wo ansehen",
+      "plot": "Handlung",
+      "director": "Regisseur",
+      "budget": "Budget",
+      "revenue": "Einnahmen",
+      "status": "Status",
+      "cast": "Hauptdarsteller",
+      "trailer": "Trailer",
+      "similarMovies": "Ähnliche Filme",
+      "stream": "Streamen",
+      "rent": "Leihen",
+      "buy": "Kaufen",
+      "moreOnTMDB": "Mehr Details auf TMDB",
+      "noStreamingInfo": "Keine Streaming-Informationen verfügbar",
+      "unknown": "Unbekannt",
+      "movieStatus": {
+        "Rumored": "Gerücht",
+        "Planned": "Geplant",
+        "In Production": "In Produktion",
+        "Post Production": "Postproduktion",
+        "Released": "Veröffentlicht",
+        "Canceled": "Abgesagt"
+      },
+      "department": {
+        "Acting": "Schauspiel",
+        "Directing": "Regie",
+        "Writing": "Drehbuch",
+        "Production": "Produktion",
+        "Sound": "Ton",
+        "Camera": "Kamera",
+        "Art": "Ausstattung",
+        "Costume & Make-Up": "Kostüm & Maske",
+        "Editing": "Schnitt",
+        "Visual Effects": "Visuelle Effekte",
+        "Lighting": "Beleuchtung",
+        "Crew": "Crew"
+      }
+    },
     "recipes":{
       "manager":"Rezepte Manager",
       "errorOccurred":"Es ist ein Fehler aufgetreten!",
@@ -505,5 +572,14 @@
     "checkInternetConnection":"Bitte überprüfen Sie auch Ihre Internetverbindung. Eventuell liegt es daran.",
     "errorOccurs":"Ein Fehler ist aufgetreten!",
     "copied":"In Zwischenablage kopiert"
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Einträge pro Seite:",
+    "NEXT_PAGE": "Nächste Seite",
+    "PREVIOUS_PAGE": "Vorherige Seite",
+    "FIRST_PAGE": "Erste Seite",
+    "LAST_PAGE": "Letzte Seite",
+    "RANGE_PAGE_LABEL_1": "0 von {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} von {{length}}"
   }
 }

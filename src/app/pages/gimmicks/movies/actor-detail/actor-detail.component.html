@@ -1,0 +1,132 @@
+<div class="flex flex-1 flex-col items-center w-full">
+  <!-- Navigation Buttons -->
+  <div class="w-full max-w-[1200px] flex gap-2 py-2">
+    @if (hasNavigationHistory()) {
+    <button
+      mat-raised-button
+      color="primary"
+      class="ml-4"
+      (click)="onBackClick()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'gimmicks.movies.back' | translate }}
+    </button>
+    }
+    <button mat-raised-button class="ml-4" (click)="onOverviewClick()">
+      <mat-icon>home</mat-icon>
+      {{ 'gimmicks.movies.overview' | translate }}
+    </button>
+  </div>
+
+  <div class="flex flex-col items-center flex-1 w-full max-w-[1200px]">
+    @if (loading()) {
+    <mat-spinner></mat-spinner>
+    } @if (actor(); as a) {
+    <!-- Actor Header -->
+    <div class="w-full flex flex-col md:flex-row gap-6 p-4 box-border">
+      <!-- Profile Image -->
+      <div class="flex-shrink-0 flex justify-center md:justify-start">
+        <img
+          [src]="getProfileUrl(a.profile_path)"
+          [alt]="a.name"
+          class="w-[200px] h-[300px] md:w-[300px] md:h-[450px] object-cover rounded-lg shadow-lg"
+        />
+      </div>
+
+      <!-- Actor Info -->
+      <div class="flex-1 text-white">
+        <h1 class="text-2xl md:text-4xl font-bold mb-4">{{ a.name }}</h1>
+
+        <div class="space-y-3 text-sm md:text-base">
+          @if (a.birthday) {
+          <div class="flex flex-col md:flex-row md:gap-2">
+            <span class="text-gray-400 font-bold">{{
+              'gimmicks.movies.birthday' | translate
+            }}:</span>
+            <span>
+              {{ formatDate(a.birthday) }}
+              @if (calculateAge(a.birthday, a.deathday); as age) {
+              <span class="text-gray-400"
+                >({{ age }} {{ 'gimmicks.movies.years' | translate }})</span
+              >
+              }
+            </span>
+          </div>
+          } @if (a.deathday) {
+          <div class="flex flex-col md:flex-row md:gap-2">
+            <span class="text-gray-400 font-bold">{{
+              'gimmicks.movies.deathday' | translate
+            }}:</span>
+            <span>{{ formatDate(a.deathday) }}</span>
+          </div>
+          } @if (a.place_of_birth) {
+          <div class="flex flex-col md:flex-row md:gap-2">
+            <span class="text-gray-400 font-bold">{{
+              'gimmicks.movies.placeOfBirth' | translate
+            }}:</span>
+            <span>{{ a.place_of_birth }}</span>
+          </div>
+          } @if (a.known_for_department) {
+          <div class="flex flex-col md:flex-row md:gap-2">
+            <span class="text-gray-400 font-bold">{{
+              'gimmicks.movies.knownFor' | translate
+            }}:</span>
+            <span>{{ getTranslatedDepartment(a.known_for_department) }}</span>
+          </div>
+          }
+        </div>
+
+        @if (a.biography) {
+        <div class="mt-6">
+          <h2 class="text-lg md:text-xl font-bold mb-2 text-gray-300">
+            {{ 'gimmicks.movies.biography' | translate }}
+          </h2>
+          <p
+            class="text-sm md:text-base leading-relaxed text-gray-200 max-w-[800px]"
+          >
+            {{ a.biography }}
+          </p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Filmography -->
+    @if (getFilmography(); as filmography) { @if (filmography.length > 0) {
+    <section class="mt-6 md:mt-8 w-full px-4 box-border">
+      <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-4">
+        <h2 class="text-lg md:text-xl text-white font-bold">
+          {{ 'gimmicks.movies.filmography' | translate }} ({{ filmography.length }})
+        </h2>
+        <mat-form-field appearance="outline" class="sort-select">
+          <mat-label>{{ 'gimmicks.movies.sortBy' | translate }}</mat-label>
+          <mat-select [value]="sortOption()" (selectionChange)="onSortChange($event.value)">
+            @for (option of sortOptions; track option) {
+              <mat-option [value]="option">
+                {{ 'gimmicks.movies.sort.' + option | translate }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-wrap justify-center">
+        @for (movie of getVisibleFilmography(); track movie.id) {
+        <div class="p-2 md:p-4">
+          <app-movie-card
+            [media]="movie"
+            (cardClick)="onMovieCardClick(movie.id)"
+          />
+        </div>
+        }
+      </div>
+      @if (hasMoreFilms()) {
+      <div class="flex justify-center mt-4 mb-6">
+        <button mat-raised-button color="primary" (click)="showMoreFilms()">
+          {{ 'gimmicks.movies.showMore' | translate }}
+        </button>
+      </div>
+      }
+    </section>
+    } } }
+  </div>
+</div>

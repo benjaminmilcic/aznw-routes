@@ -1,0 +1,31 @@
+<div class="flex flex-1 flex-col items-center w-full overflow-auto">
+  <div class="flex flex-wrap justify-center flex-1 max-w-[1200px]">
+    @if (loading()) {
+    <mat-spinner></mat-spinner>
+    } @else if (results().length > 0) { @for (item of paginatedResults(); track
+    item.id) {
+    <div class="p-4">
+      <app-movie-card [media]="item" (cardClick)="onMovieCardClick()" />
+    </div>
+    } } @else {
+    <div>
+      <div class="flex gap-4 items-center text-2xl text-white">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ 'gimmicks.movies.noResults' | translate }}</p>
+      </div>
+    </div>
+
+    }
+  </div>
+  @if (results().length > 0) {
+  <mat-paginator
+    [length]="results().length"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+    [showFirstLastButtons]="true"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+  }
+</div>

@@ -25,7 +25,8 @@
       "WebFetch(domain:maplibre.org)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:api.wikimedia.org)",
-      "WebFetch(domain:history.muffinlabs.com)"
+      "WebFetch(domain:history.muffinlabs.com)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

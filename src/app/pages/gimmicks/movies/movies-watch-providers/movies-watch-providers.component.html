@@ -1,0 +1,72 @@
+@if (hasAnyProviders) {
+  <div class="watch-providers-container">
+    @if (streamingProviders.length > 0) {
+      <div class="provider-section">
+        <h4 class="text-[12px] md:text-base">
+          <mat-icon class="scale-75 md:scale-100">play_circle</mat-icon>
+          {{ 'gimmicks.movies.stream' | translate }}
+        </h4>
+        <div class="provider-logos">
+          @for (provider of streamingProviders; track provider.provider_id) {
+            <img
+              [src]="getProviderLogoUrl(provider.logo_path)"
+              [alt]="provider.provider_name"
+              [matTooltip]="provider.provider_name"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px]"
+            />
+          }
+        </div>
+      </div>
+    }
+
+    @if (rentProviders.length > 0) {
+      <div class="provider-section">
+        <h4 class="text-[12px] md:text-base">
+          <mat-icon class="scale-75 md:scale-100">movie_filter</mat-icon>
+          {{ 'gimmicks.movies.rent' | translate }}
+        </h4>
+        <div class="provider-logos">
+          @for (provider of rentProviders; track provider.provider_id) {
+            <img
+              [src]="getProviderLogoUrl(provider.logo_path)"
+              [alt]="provider.provider_name"
+              [matTooltip]="provider.provider_name"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px]"
+            />
+          }
+        </div>
+      </div>
+    }
+
+    @if (buyProviders.length > 0) {
+      <div class="provider-section">
+        <h4 class="text-[12px] md:text-base">
+          <mat-icon class="scale-75 md:scale-100">shopping_cart</mat-icon>
+          {{ 'gimmicks.movies.buy' | translate }}
+        </h4>
+        <div class="provider-logos">
+          @for (provider of buyProviders; track provider.provider_id) {
+            <img
+              [src]="getProviderLogoUrl(provider.logo_path)"
+              [alt]="provider.provider_name"
+              [matTooltip]="provider.provider_name"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px]"
+            />
+          }
+        </div>
+      </div>
+    }
+
+    @if (linkToTMDB) {
+      <a [href]="linkToTMDB" target="_blank" rel="noopener" class="tmdb-link">
+        <mat-icon>open_in_new</mat-icon>
+        {{ 'gimmicks.movies.moreOnTMDB' | translate }}
+      </a>
+    }
+  </div>
+} @else {
+  <div class="no-providers">
+    <mat-icon>info</mat-icon>
+    <p>{{ 'gimmicks.movies.noStreamingInfo' | translate }}</p>
+  </div>
+}

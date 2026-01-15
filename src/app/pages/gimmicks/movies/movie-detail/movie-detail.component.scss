@@ -1,0 +1,60 @@
+@use "@angular/material" as mat;
+
+mat-chip-set,
+mat-chip {
+  @include mat.chips-overrides(
+    (
+      label-text-color: gray,
+      outline-color: gray,
+      elevated-container-color:transparent,
+      outline-width:2px,
+    )
+  );
+}
+
+.backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+}
+
+.poster-large {
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.movie-info {
+  flex: 1;
+  color: white;
+
+  h1 {
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .tagline {
+    font-style: italic;
+    opacity: 0.9;
+    margin: 0 0 16px 0;
+  }
+
+  .metadata {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+
+    .separator {
+      opacity: 0.6;
+    }
+  }
+}

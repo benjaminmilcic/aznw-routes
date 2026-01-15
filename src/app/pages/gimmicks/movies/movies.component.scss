@@ -1,0 +1,44 @@
+@use "@angular/material" as mat;
+
+mat-tab-group,
+mat-tab {
+  @include mat.tabs-overrides(
+    (
+      active-focus-indicator-color: yellow,
+      active-focus-label-text-color: yellow,
+      active-hover-indicator-color: yellow,
+      active-hover-label-text-color: yellow,
+      active-indicator-color: yellow,
+      active-label-text-color: yellow,
+      active-ripple-color: yellow,
+      disabled-ripple-color: yellow,
+      inactive-focus-label-text-color: white,
+      inactive-hover-label-text-color: yellow,
+      inactive-label-text-color: white,
+      pagination-icon-color: white,
+    )
+  );
+}
+
+section {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+section:before {
+  content: " ";
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 0.1;
+  background-image: url(/assets/skimming-stone-asteroid-meta.png);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+  z-index: 0;
+  pointer-events: none;
+}

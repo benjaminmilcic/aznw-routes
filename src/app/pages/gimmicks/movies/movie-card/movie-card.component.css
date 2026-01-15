@@ -1,0 +1,7 @@
+.rating-overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 4px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}

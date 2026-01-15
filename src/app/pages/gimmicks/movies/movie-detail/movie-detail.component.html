@@ -1,0 +1,153 @@
+<div class="flex flex-1 flex-col items-center w-full">
+  <!-- Navigation Buttons -->
+  <div class="w-full max-w-[1200px] flex gap-2 py-2">
+    @if (hasNavigationHistory()) {
+    <button
+      mat-raised-button
+      color="primary"
+      class="ml-4"
+      (click)="onBackClick()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'gimmicks.movies.back' | translate }}
+    </button>
+    }
+    <button mat-raised-button class="ml-4" (click)="onOverviewClick()">
+      <mat-icon>home</mat-icon>
+      {{ 'gimmicks.movies.overview' | translate }}
+    </button>
+  </div>
+
+  <div class="flex flex-col items-center flex-1 w-full max-w-[1200px]">
+    @if (loading()) {
+    <mat-spinner></mat-spinner>
+    } @if (movie(); as m) {
+    <div
+      class="relative w-full h-[330px] md:h-[500px] bg-cover bg-center"
+      [style.background-image]="'url(' + getBackdropUrl(m.backdrop_path) + ')'"
+    >
+      <div class="backdrop-overlay">
+        <div
+          class="flex gap-[32px] p-[12px] md:p-[32px] max-w-[1200px] w-full mx-0 my-auto"
+        >
+          <img
+            [src]="getPosterUrl(m.poster_path)"
+            [alt]="m.title"
+            class="poster-large w-[150px] md:w-[300px] h-auto self-start"
+          />
+          <div class="movie-info">
+            <h1 class="text-[1rem] md:text-[3rem]">{{ m.title }}</h1>
+            @if (m.tagline) {
+            <p class="tagline text-[0.75rem] md:text-[1.25rem]">
+              {{ m.tagline }}
+            </p>
+            }
+            <div
+              class="flex flex-wrap items-center gap-2 mb-4 text-[1.1rem] scale-75 md:scale-100 origin-top-left"
+            >
+              <app-movies-rating-display
+                [rating]="m.vote_average"
+                [voteCount]="m.vote_count"
+              />
+              <span class="separator">•</span>
+              <span class="text-[14px]">{{
+                m.release_date | date : "yyyy"
+              }}</span>
+              @if (m.runtime) {
+              <span class="separator">•</span>
+              <span class="text-[14px]">{{ formatRuntime(m.runtime) }}</span>
+              }
+            </div>
+            <mat-chip-set class="scale-75 md:scale-100 origin-top-left">
+              @for (genre of m.genres.slice(0, maxGenreDisplay()); track
+              genre.id) {
+              <mat-chip>{{ genre.name }}</mat-chip>
+              }
+            </mat-chip-set>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
+      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.whereToWatch' | translate }}</h2>
+      <app-movies-watch-providers [providers]="watchProviders()" />
+    </section>
+    <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
+      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.plot' | translate }}</h2>
+      <p class="text-[12px] md:text-[18px] leading-6 mb-[24px] max-w-[600px]">
+        {{ m.overview }}
+      </p>
+
+      <div class="flex gap-x-12 gap-y-4 flex-wrap text-[12px] md:text-base">
+        @if (getDirector()) {
+        <div class="flex flex-col">
+          <div class="text-gray-400 font-bold">{{ 'gimmicks.movies.director' | translate }}:</div>
+          <span>{{ getDirector() }}</span>
+        </div>
+        } @if (m.budget) {
+        <div class="flex flex-col">
+          <strong class="text-gray-400">{{ 'gimmicks.movies.budget' | translate }}:</strong>
+          <span>{{ formatBudget(m.budget) }}</span>
+        </div>
+        } @if (m.revenue) {
+        <div class="flex flex-col">
+          <strong class="text-gray-400">{{ 'gimmicks.movies.revenue' | translate }}:</strong>
+          <span>{{ formatBudget(m.revenue) }}</span>
+        </div>
+        } @if (m.status) {
+        <div class="flex flex-col">
+          <strong class="text-gray-400">{{ 'gimmicks.movies.status' | translate }}:</strong>
+          <span>{{ getTranslatedStatus(m.status) }}</span>
+        </div>
+        }
+      </div>
+    </section>
+    @if (m.credits?.cast; as cast) { @if (cast.length > 0) {
+    <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
+      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.cast' | translate }}</h2>
+      <div class="flex gap-2 overflow-auto w-full pb-4">
+        @for (member of cast; track member.id) {
+        <div
+          class="cursor-pointer hover:opacity-80 transition-opacity hover:translate-y-2"
+          (click)="onActorClick(member.id)"
+        >
+          <img
+            [src]="getProfileUrl(member.profile_path)"
+            [alt]="member.name"
+            loading="lazy"
+            class="w-[93px] h-[139px] md:w-[185px] md:h-[278px]"
+          />
+          <div class="text-[12px] md:text-base">
+            <div class="text-center text-white">{{ member.name }}</div>
+            <div class="text-center text-gray-400">{{ member.character }}</div>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+
+    } } @if (getTrailerKey(); as trailerKey) {
+    <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
+      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.trailer' | translate }}</h2>
+      <div #youTubePlayer class="w-full flex justify-center">
+        <youtube-player
+          [videoId]="trailerKey"
+          [width]="videoWidth"
+          [height]="videoHeight"
+        />
+      </div>
+    </section>
+    } @if (m.similar?.results; as results) { @if (results.length > 0) {
+    <section class="mt-4 md:mt-8 w-full px-4 box-border">
+      <h2 class="text-[0.9rem] md:text-[1.5em] text-white">{{ 'gimmicks.movies.similarMovies' | translate }}</h2>
+      <div class="flex flex-wrap justify-center">
+        @for (item of results.slice(0, 10); track item.id) {
+        <div class="p-4">
+          <app-movie-card [media]="item" (cardClick)="onMovieCardClick()" />
+        </div>
+        }
+      </div>
+    </section>
+    } } }
+  </div>
+</div>

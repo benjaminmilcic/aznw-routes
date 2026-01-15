@@ -1,0 +1,8 @@
+<div class="rating-container">
+  <mat-icon class="star-icon">star</mat-icon>
+  <span class="rating-value">{{ rating() | number: '1.1-1' }}</span>
+  <span class="rating-max">/10</span>
+  @if (voteCount(); as count) {
+    <span class="vote-count">({{ count }})</span>
+  }
+</div>

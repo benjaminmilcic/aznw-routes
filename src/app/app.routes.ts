@@ -29,6 +29,11 @@ import { RecipesListComponent } from './pages/gimmicks/recipes/recipes-list/reci
 import { RecipeItemComponent } from './pages/gimmicks/recipes/recipe-item/recipe-item.component';
 import { AddRecipeComponent } from './pages/gimmicks/recipes/add-recipe/add-recipe.component';
 import { RecipePrintComponent } from './pages/gimmicks/recipes/recipe-print/recipe-print.component';
+import { MoviesComponent } from './pages/gimmicks/movies/movies.component';
+import { MoviesSearchComponent } from './pages/gimmicks/movies/movies-search/movies-search.component';
+import { MoviesPopularComponent } from './pages/gimmicks/movies/movies-popular/movies-popular.component';
+import { MovieDetailComponent } from './pages/gimmicks/movies/movie-detail/movie-detail.component';
+import { ActorDetailComponent } from './pages/gimmicks/movies/actor-detail/actor-detail.component';
 
 export const routes: Routes = [
   {
@@ -155,6 +160,41 @@ export const routes: Routes = [
           {
             path: 'update/:id',
             component: AddRecipeComponent,
+          },
+        ],
+      },
+      {
+        path: 'movies',
+        component: MoviesComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: '/gimmicks/movies/popular',
+            pathMatch: 'full',
+          },
+          {
+            path: 'search',
+            component: MoviesSearchComponent,
+          },
+          {
+            path: 'popular',
+            component: MoviesPopularComponent,
+          },
+          {
+            path: 'top-rated',
+            component: MoviesPopularComponent,
+          },
+          {
+            path: 'now-playing',
+            component: MoviesPopularComponent,
+          },
+          {
+            path: 'movie/:id',
+            component: MovieDetailComponent,
+          },
+          {
+            path: 'actor/:id',
+            component: ActorDetailComponent,
           },
         ],
       },

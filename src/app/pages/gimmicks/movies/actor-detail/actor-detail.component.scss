@@ -1,0 +1,27 @@
+// Actor detail component styles
+
+.sort-select {
+  width: 180px;
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .mat-mdc-select-value,
+    .mat-mdc-floating-label,
+    .mat-mdc-select-arrow {
+      color: white !important;
+    }
+  }
+}
