@@ -147,7 +147,8 @@
       "population": "Stanovnika",
       "federalState": "Savezna država",
       "cityInfo": "Informacije o gradu",
-      "noFunctions": "Karta je premala za funkcije. Povucite kartu malo veću!"
+      "noFunctions": "Karta je premala za funkcije. Povucite kartu malo veću!",
+      "name": "Ime"
     },
     "calendar": {
       "months": {

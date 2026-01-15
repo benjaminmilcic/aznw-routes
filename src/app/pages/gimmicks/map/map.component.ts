@@ -14,7 +14,11 @@ import LatLng = google.maps.LatLng;
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonItem, IonCheckbox } from '@ionic/angular/standalone';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 import { City, CityInfo, MapDimension } from './map.models';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -34,6 +38,7 @@ import {
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { MapService } from './map.service';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomPaginatorIntl } from '../movies/custom-paginator-intl';
 
 @Component({
   selector: 'app-map',
@@ -57,6 +62,7 @@ import { MatIconModule } from '@angular/material/icon';
     TranslateModule,
     MatIconModule,
   ],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })

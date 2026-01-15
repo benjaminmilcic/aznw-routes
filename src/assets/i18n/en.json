@@ -147,7 +147,8 @@
       "population": "Residents",
       "federalState": "Federal state",
       "cityInfo": "City info",
-      "noFunctions": "Map is too small for functions. Pull the map a little bigger!"
+      "noFunctions": "Map is too small for functions. Pull the map a little bigger!",
+      "name": "Name"
     },
     "calendar": {
       "months": {
