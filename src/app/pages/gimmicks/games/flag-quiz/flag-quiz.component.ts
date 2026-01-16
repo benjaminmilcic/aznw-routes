@@ -53,6 +53,8 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
     'Faroe Islands',
     'Svalbard and Jan Mayen',
     'Switzerland',
+    'Andorra',
+    'France',
   ];
 
   async ngOnInit() {
@@ -75,6 +77,14 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
       this.enteredCountryName.set('');
       await this.setRandomCountry();
       this.isLoading.set(false);
+      // // Log all countries with their translations
+      // console.log('--- Country Translations ---');
+      // for (const country of filteredData) {
+      //   const original = country.name.common;
+      //   const translated = await this.translateCountryName(original);
+      //   console.log(`${original} -> ${translated}`);
+      // }
+      // console.log('--- End ---');
     });
   }
 
