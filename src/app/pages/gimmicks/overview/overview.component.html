@@ -33,153 +33,162 @@
     </div>
     <div></div>
   </div>
-  <div #doors class="flex flex-wrap justify-center relative">
-    <div
-      *ngFor="let setting of settings; let settingIndex = index"
-      class="flipbox m-8 rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40]"
-      (click)="goToPage([setting.goToPage])"
-      (mouseenter)="playAudio(settingIndex)"
-      [matContextMenuTriggerFor]="contextMenu"
-    >
-      <mat-menu #contextMenu class="px-2 !min-w-[320px]">
-        <div (click)="$event.stopPropagation()">
-          <div class="text-xl my-1">
-            {{ "gimmicks.overview.settings" | translate }}
-          </div>
-          <div class="border-t mt-1 mb-3"></div>
-          <mat-slide-toggle
-            labelPosition="before"
-            [(ngModel)]="settings[settingIndex].showDescription"
-            class="ml-3 py-2"
-            ><div class="text-base font-normal">
-              {{ "gimmicks.overview.showDescription" | translate }}
-            </div></mat-slide-toggle
-          >
-          <mat-slide-toggle
-            labelPosition="before"
-            [(ngModel)]="settings[settingIndex].playAudio"
-            class="ml-3 py-2"
-            ><div class="text-base font-normal">
-              {{ "gimmicks.overview.playAudio" | translate }}
-            </div></mat-slide-toggle
-          >
-          <div class="border-t"></div>
-          <div class="pl-3 mt-3">
-            {{ "gimmicks.overview.bgGradient" | translate }}
-          </div>
-          <table class="ml-6">
-            <tr>
-              <td class="text-[#FB001A]">
-                {{ "gimmicks.overview.red" | translate }}:
-              </td>
-              <td>
-                <mat-slider min="0" max="255" class="red-slider">
-                  <input
-                    matSliderThumb
-                    [(ngModel)]="settings[settingIndex].red"
-                    (ngModelChange)="changeColor(settingIndex)"
-                  />
-                </mat-slider>
-              </td>
-              <td class="text-[#FB001A]">{{ settings[settingIndex].red }}</td>
-            </tr>
-            <tr>
-              <td class="text-[#107E15]">
-                {{ "gimmicks.overview.green" | translate }}:
-              </td>
-              <td>
-                <mat-slider min="0" max="255" class="green-slider">
-                  <input
-                    matSliderThumb
-                    [(ngModel)]="settings[settingIndex].green"
-                    (ngModelChange)="changeColor(settingIndex)"
-                  />
-                </mat-slider>
-              </td>
-              <td class="text-[#107E15]">{{ settings[settingIndex].green }}</td>
-            </tr>
-            <tr>
-              <td class="text-[#2303F8]">
-                {{ "gimmicks.overview.blue" | translate }}:
-              </td>
-              <td>
-                <mat-slider min="0" max="255" class="blue-slider">
-                  <input
-                    matSliderThumb
-                    [(ngModel)]="settings[settingIndex].blue"
-                    (ngModelChange)="changeColor(settingIndex)"
-                  />
-                </mat-slider>
-              </td>
-              <td class="text-[#2303F8]">{{ settings[settingIndex].blue }}</td>
-            </tr>
-            <tr>
-              <td>{{ "gimmicks.overview.opacity" | translate }}:</td>
-              <td>
-                <mat-slider min="0" max="255" class="opacity-slider">
-                  <input
-                    matSliderThumb
-                    [(ngModel)]="settings[settingIndex].opacity"
-                    (ngModelChange)="changeColor(settingIndex)"
-                  />
-                </mat-slider>
-              </td>
-              <td>{{ settings[settingIndex].opacity }}</td>
-            </tr>
-          </table>
-        </div>
-      </mat-menu>
+  <div class="flex justify-center relative">
+    <div #doors class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-start my-4 gap-8">
       <div
-        class="text-white sm:h-[400px] p-8 w-60 shadow-lg flipbox-active relative"
+        *ngFor="let setting of settings; let settingIndex = index"
+        class="flipbox rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40] [zoom:0.8]"
+        (click)="goToPage([setting.goToPage])"
+        (mouseenter)="playAudio(settingIndex)"
+        [matContextMenuTriggerFor]="contextMenu"
       >
-        <div class="absolute top-[calc(50%-30px)] right-[10px] z-50">
-          <div class="relative">
-            <!-- Türrosette mit Schlüsselloch -->
-            <div class="door-rosette">
-              <!-- Schlüsselloch -->
-              <div class="keyhole">
-                <div class="keyhole-top"></div>
-                <div class="keyhole-bottom"></div>
-              </div>
+        <mat-menu #contextMenu class="px-2 !min-w-[320px]">
+          <div (click)="$event.stopPropagation()">
+            <div class="text-xl my-1">
+              {{ "gimmicks.overview.settings" | translate }}
             </div>
-            <!-- Türklinke -->
-            <div class="doorknob-container">
-              <div class="doorknob"></div>
+            <div class="border-t mt-1 mb-3"></div>
+            <mat-slide-toggle
+              labelPosition="before"
+              [(ngModel)]="settings[settingIndex].showDescription"
+              class="ml-3 py-2"
+              ><div class="text-base font-normal">
+                {{ "gimmicks.overview.showDescription" | translate }}
+              </div></mat-slide-toggle
+            >
+            <mat-slide-toggle
+              labelPosition="before"
+              [(ngModel)]="settings[settingIndex].playAudio"
+              class="ml-3 py-2"
+              ><div class="text-base font-normal">
+                {{ "gimmicks.overview.playAudio" | translate }}
+              </div></mat-slide-toggle
+            >
+            <div class="border-t"></div>
+            <div class="pl-3 mt-3">
+              {{ "gimmicks.overview.bgGradient" | translate }}
+            </div>
+            <table class="ml-6">
+              <tr>
+                <td class="text-[#FB001A]">
+                  {{ "gimmicks.overview.red" | translate }}:
+                </td>
+                <td>
+                  <mat-slider min="0" max="255" class="red-slider">
+                    <input
+                      matSliderThumb
+                      [(ngModel)]="settings[settingIndex].red"
+                      (ngModelChange)="changeColor(settingIndex)"
+                    />
+                  </mat-slider>
+                </td>
+                <td class="text-[#FB001A]">{{ settings[settingIndex].red }}</td>
+              </tr>
+              <tr>
+                <td class="text-[#107E15]">
+                  {{ "gimmicks.overview.green" | translate }}:
+                </td>
+                <td>
+                  <mat-slider min="0" max="255" class="green-slider">
+                    <input
+                      matSliderThumb
+                      [(ngModel)]="settings[settingIndex].green"
+                      (ngModelChange)="changeColor(settingIndex)"
+                    />
+                  </mat-slider>
+                </td>
+                <td class="text-[#107E15]">
+                  {{ settings[settingIndex].green }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-[#2303F8]">
+                  {{ "gimmicks.overview.blue" | translate }}:
+                </td>
+                <td>
+                  <mat-slider min="0" max="255" class="blue-slider">
+                    <input
+                      matSliderThumb
+                      [(ngModel)]="settings[settingIndex].blue"
+                      (ngModelChange)="changeColor(settingIndex)"
+                    />
+                  </mat-slider>
+                </td>
+                <td class="text-[#2303F8]">
+                  {{ settings[settingIndex].blue }}
+                </td>
+              </tr>
+              <tr>
+                <td>{{ "gimmicks.overview.opacity" | translate }}:</td>
+                <td>
+                  <mat-slider min="0" max="255" class="opacity-slider">
+                    <input
+                      matSliderThumb
+                      [(ngModel)]="settings[settingIndex].opacity"
+                      (ngModelChange)="changeColor(settingIndex)"
+                    />
+                  </mat-slider>
+                </td>
+                <td>{{ settings[settingIndex].opacity }}</td>
+              </tr>
+            </table>
+          </div>
+        </mat-menu>
+        <div
+          class="text-white sm:h-[400px] p-8 w-60 shadow-lg flipbox-active relative"
+        >
+          <div class="absolute top-[calc(50%-30px)] right-[10px] z-50">
+            <div class="relative">
+              <!-- Türrosette mit Schlüsselloch -->
+              <div class="door-rosette">
+                <!-- Schlüsselloch -->
+                <div class="keyhole">
+                  <div class="keyhole-top"></div>
+                  <div class="keyhole-bottom"></div>
+                </div>
+              </div>
+              <!-- Türklinke -->
+              <div class="doorknob-container">
+                <div class="doorknob"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <div class="flex justify-between items-center mb-6">
-              <div class="text-xl font-bold">
-                {{ setting.header | translate }}
-              </div>
-              <div
-                class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14"
-              >
-                @if (setting.icon) {
-                <i
-                  class="fa-solid text-4xl"
-                  [ngClass]="setting.iconClasses"
-                ></i>
+          <div class="flex flex-col justify-between h-full">
+            <div>
+              <div class="flex justify-between items-center mb-6">
+                <div class="text-xl font-bold">
+                  {{ setting.header | translate }}
+                </div>
+                <div
+                  class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14"
+                >
+                  @if (setting.icon) {
+                  <i
+                    class="fa-solid text-4xl"
+                    [ngClass]="setting.iconClasses"
+                  ></i>
 
-                }@else { @if (setting.emoji) {<span class="text-[34px] translate-y-[-3px]">{{ setting.emoji }}</span>
-                }@else {
-                <img class="w-8 h-8" [src]="setting.imageSrc" />
-                } }
+                  }@else { @if (setting.emoji) {<span
+                    class="text-[34px] translate-y-[-3px]"
+                    >{{ setting.emoji }}</span
+                  >
+                  }@else {
+                  <img class="w-8 h-8" [src]="setting.imageSrc" />
+                  } }
+                </div>
               </div>
-            </div>
-            @if (settings[settingIndex].showDescription) {
+              @if (settings[settingIndex].showDescription) {
 
-            <div class="mb-2 text-gray-200 font-medium">
-              {{ "gimmicks.overview.elements" | translate }}:
+              <div class="mb-2 text-gray-200 font-medium">
+                {{ "gimmicks.overview.elements" | translate }}:
+              </div>
+              <ul class="mb-8 text-sm text-gray-200 font-medium mr-[50px]">
+                <li *ngFor="let element of setting.elements">
+                  {{ element | translate }}
+                </li>
+              </ul>
+              }
             </div>
-            <ul class="mb-8 text-sm text-gray-200 font-medium mr-[50px]">
-              <li *ngFor="let element of setting.elements">
-                {{ element | translate }}
-              </li>
-            </ul>
-            }
           </div>
         </div>
       </div>
