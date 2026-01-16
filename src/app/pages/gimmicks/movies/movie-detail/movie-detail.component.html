@@ -69,16 +69,16 @@
       </div>
     </div>
     <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
-      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.whereToWatch' | translate }}</h2>
+      <h2 class="text-base md:text-[1.5em]">{{ 'gimmicks.movies.whereToWatch' | translate }}</h2>
       <app-movies-watch-providers [providers]="watchProviders()" />
     </section>
     <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
-      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.plot' | translate }}</h2>
-      <p class="text-[12px] md:text-[18px] leading-6 mb-[24px] max-w-[600px]">
+      <h2 class="text-base md:text-[1.5em]">{{ 'gimmicks.movies.plot' | translate }}</h2>
+      <p class="text-[14px] md:text-[18px] leading-6 mb-[24px] max-w-[600px]">
         {{ m.overview }}
       </p>
 
-      <div class="flex gap-x-12 gap-y-4 flex-wrap text-[12px] md:text-base">
+      <div class="flex gap-x-12 gap-y-4 flex-wrap text-[14px] md:text-base">
         @if (getDirector()) {
         <div class="flex flex-col">
           <div class="text-gray-400 font-bold">{{ 'gimmicks.movies.director' | translate }}:</div>
@@ -104,7 +104,7 @@
     </section>
     @if (m.credits?.cast; as cast) { @if (cast.length > 0) {
     <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
-      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.cast' | translate }}</h2>
+      <h2 class="text-base md:text-[1.5em]">{{ 'gimmicks.movies.cast' | translate }}</h2>
       <div class="flex gap-2 overflow-auto w-full pb-4">
         @for (member of cast; track member.id) {
         <div
@@ -117,7 +117,7 @@
             loading="lazy"
             class="w-[93px] h-[139px] md:w-[185px] md:h-[278px]"
           />
-          <div class="text-[12px] md:text-base">
+          <div class="text-[14px] md:text-base">
             <div class="text-center text-white">{{ member.name }}</div>
             <div class="text-center text-gray-400">{{ member.character }}</div>
           </div>
@@ -128,7 +128,7 @@
 
     } } @if (getTrailerKey(); as trailerKey) {
     <section class="text-white mt-4 md:mt-8 w-full px-4 box-border">
-      <h2 class="text-[0.9rem] md:text-[1.5em]">{{ 'gimmicks.movies.trailer' | translate }}</h2>
+      <h2 class="text-base md:text-[1.5em]">{{ 'gimmicks.movies.trailer' | translate }}</h2>
       <div #youTubePlayer class="w-full flex justify-center">
         <youtube-player
           [videoId]="trailerKey"
@@ -139,7 +139,7 @@
     </section>
     } @if (m.similar?.results; as results) { @if (results.length > 0) {
     <section class="mt-4 md:mt-8 w-full px-4 box-border">
-      <h2 class="text-[0.9rem] md:text-[1.5em] text-white">{{ 'gimmicks.movies.similarMovies' | translate }}</h2>
+      <h2 class="text-base md:text-[1.5em] text-white">{{ 'gimmicks.movies.similarMovies' | translate }}</h2>
       <div class="flex flex-wrap justify-center">
         @for (item of results.slice(0, 10); track item.id) {
         <div class="p-4">

@@ -1,17 +1,17 @@
-<mat-card class="w-[100px] h-[222px] md:w-[200px] md:h-[445px] min-h-fit !bg-gray-300 cursor-pointer hover:-translate-y-2"  (click)="onCardClick()">
+<mat-card class="w-[130px] h-[289px] md:w-[200px] md:h-[445px] min-h-fit !bg-gray-300 cursor-pointer hover:-translate-y-2"  (click)="onCardClick()">
   <img
     mat-card-image
     [src]="posterUrl"
     loading="lazy"
-    class="w-[100px h-[150px] md:w-[200px] md:h-[300px]"
+    class="w-[130px] h-[195px] md:w-[200px] md:h-[300px]"
   />
   <div class="rating-overlay top-2 right-[2px] md:right-2 scale-75 md:scale-100 object-right-top">
     <app-movies-rating-display [rating]="media().vote_average" />
   </div>
   <mat-card-content class="!px-1 md:!px-4 !pt-[6px] md:!pt-4 !pb-0">
-    <h4 class="text-[12px] md:text-base m-0 mb-1 md:mb-2 leading-tight">{{ media().title || ('gimmicks.movies.unknown' | translate) }}</h4>
+    <h4 class="text-[14px] md:text-base m-0 mb-1 md:mb-2 leading-tight">{{ media().title || ('gimmicks.movies.unknown' | translate) }}</h4>
     @if (this.media().release_date) {
-    <p class="text-[10px] md:text-sm m-0 leading-tight">{{ this.media().release_date | date : "yyyy" }}</p>
+    <p class="text-[12px] md:text-sm m-0 leading-tight">{{ this.media().release_date | date : "yyyy" }}</p>
     }
   </mat-card-content>
 </mat-card>

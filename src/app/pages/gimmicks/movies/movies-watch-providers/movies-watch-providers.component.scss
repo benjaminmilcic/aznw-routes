@@ -74,7 +74,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 16px;
   background: #f5f5f5;
   border-radius: 8px;
   color: #666;
@@ -85,8 +84,5 @@
     height: 20px;
   }
 
-  p {
-    margin: 0;
-    font-size: 0.95rem;
-  }
+  
 }
