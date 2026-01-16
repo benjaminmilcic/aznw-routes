@@ -34,6 +34,7 @@ import { MoviesSearchComponent } from './pages/gimmicks/movies/movies-search/mov
 import { MoviesPopularComponent } from './pages/gimmicks/movies/movies-popular/movies-popular.component';
 import { MovieDetailComponent } from './pages/gimmicks/movies/movie-detail/movie-detail.component';
 import { ActorDetailComponent } from './pages/gimmicks/movies/actor-detail/actor-detail.component';
+import { FlagQuizComponent } from './pages/gimmicks/games/flag-quiz/flag-quiz.component';
 
 export const routes: Routes = [
   {
@@ -129,6 +130,10 @@ export const routes: Routes = [
           {
             path: 'minesweeper',
             component: MinesweeperComponent,
+          },
+          {
+            path: 'flag-quiz',
+            component: FlagQuizComponent,
           },
         ],
       },

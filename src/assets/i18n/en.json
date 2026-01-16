@@ -362,7 +362,20 @@
       "player1": "Player 1",
       "player2": "Player 2",
       "bestPlayedWithMouse": "The game is best played with a mouse. Playing on a touch-only device like a smartphone is not recommended. It's better to play it on a PC.",
-      "bestTime":"Best time"
+      "bestTime": "Best time",
+      "flagQuiz": {
+        "title": "Flag Quiz",
+        "loading": "Loading flags...",
+        "enterCountry": "Enter country name...",
+        "check": "Check",
+        "correct": "Correct!",
+        "wrong": "Wrong!",
+        "nextFlag": "Next Flag",
+        "restart": "Restart",
+        "score": "Score",
+        "accuracy": "Accuracy",
+        "whichCountry": "Which country does this flag belong to?"
+      }
     },
     "weather": {
       "useLocation": "Use location",

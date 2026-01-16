@@ -94,6 +94,14 @@ export class GamesComponent {
         this.gameName = 'Minesweeper';
         this.gameIconSrc = '/assets/minesweeper.png';
         break;
+      case 'flag-quiz':
+        this.translate
+          .get('gimmicks.games.flagQuiz.title')
+          .subscribe((res: string) => {
+            this.gameName = res;
+          });
+        this.gameIconSrc = '/assets/svg/gb.svg';
+        break;
 
       default:
         break;
@@ -128,6 +136,9 @@ export class GamesComponent {
         break;
       case 'Minesweeper':
         this.gameIconSrc = '/assets/minesweeper.png';
+        break;
+      case 'gimmicks.games.flagQuiz.title':
+        this.gameIconSrc = '/assets/svg/gb.svg';
         break;
 
       default:

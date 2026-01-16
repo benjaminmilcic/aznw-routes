@@ -362,7 +362,20 @@
       "player1": "Spieler 1",
       "player2": "Spieler 2",
       "bestPlayedWithMouse":"Das Spiel lässt sich am besten mit der Maus spielen. Das Spielen auf einem reinen Touch-Gerät wie einem Smartphone wird nicht empfohlen. Besser ist es, es auf einem PC zu spielen.",
-      "bestTime":"Bestzeit"
+      "bestTime":"Bestzeit",
+      "flagQuiz": {
+        "title": "Flaggen-Quiz",
+        "loading": "Lade Flaggen...",
+        "enterCountry": "Ländernamen eingeben...",
+        "check": "Prüfen",
+        "correct": "Richtig!",
+        "wrong": "Falsch!",
+        "nextFlag": "Nächste Flagge",
+        "restart": "Neustart",
+        "score": "Punkte",
+        "accuracy": "Genauigkeit",
+        "whichCountry": "Zu welchem Land gehört diese Flagge?"
+      }
     },
     "weather":{
       "useLocation":"Nutze Standort",

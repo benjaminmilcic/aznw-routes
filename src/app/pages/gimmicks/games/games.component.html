@@ -94,6 +94,17 @@
           <div>Minesweeper</div>
         </div>
       </button>
+      <button
+        mat-menu-item
+        (click)="changeGame('gimmicks.games.flagQuiz.title')"
+        [routerLink]="['/gimmicks/games/flag-quiz']"
+        routerLinkActive="router-link-active"
+      >
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/gb.svg" />
+          <div>{{ "gimmicks.games.flagQuiz.title" | translate }}</div>
+        </div>
+      </button>
       <!-- <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.jigsaw')"
