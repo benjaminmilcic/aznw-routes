@@ -195,3 +195,13 @@ ul li::marker {
     )
   );
 }
+
+.door {
+    transform: scale(0.8);
+    transform-origin: top left;
+
+    @supports (zoom: 0.8) {
+      zoom: 0.8;
+      transform: none;
+    }
+  }

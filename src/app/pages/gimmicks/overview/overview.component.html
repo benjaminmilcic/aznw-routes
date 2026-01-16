@@ -37,7 +37,7 @@
     <div #doors class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-start my-4 gap-8">
       <div
         *ngFor="let setting of settings; let settingIndex = index"
-        class="flipbox rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40] [zoom:0.8]"
+        class="flipbox rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40] door"
         (click)="goToPage([setting.goToPage])"
         (mouseenter)="playAudio(settingIndex)"
         [matContextMenuTriggerFor]="contextMenu"
