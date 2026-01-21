@@ -26,7 +26,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:api.wikimedia.org)",
       "WebFetch(domain:history.muffinlabs.com)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx ng build:*)"
     ],
     "deny": [],
     "ask": []

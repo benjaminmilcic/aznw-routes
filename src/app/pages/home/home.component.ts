@@ -6,24 +6,24 @@ import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { HomeService } from './home.service';
 
 @Component({
-    selector: 'app-home',
-    imports: [
-        CommonModule,
-        HeaderComponent,
-        AboutComponent,
-        SkillsComponent,
-        PortfolioComponent,
-        ContactComponent,
-        FooterComponent,
-        TranslateModule,
-    ],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.css'
+  selector: 'app-home',
+  imports: [
+    CommonModule,
+    HeaderComponent,
+    AboutComponent,
+    SkillsComponent,
+    PortfolioComponent,
+    ContactComponent,
+    FooterComponent,
+    TranslateModule,
+  ],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
   @HostListener('document:DOMContentLoaded')
@@ -44,7 +44,5 @@ export class HomeComponent {
     allAnimatedElements.forEach((element) => observer.observe(element));
   }
 
-  constructor(public homeService:HomeService) {
-    
-  }
+  constructor(public homeService: HomeService) {}
 }

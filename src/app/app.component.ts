@@ -1,22 +1,30 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { SidebarComponent } from './pages/sidebar/sidebar.component';
-import { ScrollToTopComponent } from './pages/scroll-to-top/scroll-to-top.component';
+import { filter, Subscription } from 'rxjs';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.service';
 import { AuthService } from './pages/gimmicks/auth/auth.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { AnalyticsService } from './services/analytics.service';
 import { environment } from '../environments/environment';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent, ScrollToTopComponent],
+  imports: [
+    RouterOutlet,
+    ScrollToTopComponent,
+    NavbarComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   appLoaded = false;
+  private routerSub?: Subscription;
+  private previousRoute = '';
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.chartsHelperService.detectChanges.next();
@@ -27,7 +35,8 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private meta: Meta,
     private title: Title,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private router: Router,
   ) {
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;
@@ -76,6 +85,45 @@ export class AppComponent implements OnInit {
     // Ladeanimation ausblenden, sobald die App bereit ist
     this.appLoaded = true;
     this.hideLoader();
+
+    // Handle fragment scrolling on navigation (including browser back/forward)
+    this.routerSub = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const url = event.urlAfterRedirects;
+
+        // Extract route path (before any fragment)
+        const routePath = url.split('#')[0] || '/';
+        // Extract fragment from URL (handles hash routing with fragments like /#/#portfolio)
+        const fragmentMatch = url.match(/#([^#]+)$/);
+        const fragment = fragmentMatch ? fragmentMatch[1] : null;
+
+        // Check if we navigated to a different route
+        const routeChanged = this.previousRoute !== routePath;
+        this.previousRoute = routePath;
+
+        if (fragment) {
+          // Small delay to ensure DOM is ready after navigation
+          setTimeout(() => {
+            const element = document.getElementById(fragment);
+            if (element) {
+              const navbarOffset = 70;
+              const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({
+                top: elementPosition - navbarOffset,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
+        } else if (routeChanged) {
+          // Scroll to top when navigating to a different route without fragment
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSub?.unsubscribe();
   }
 
   private hideLoader(): void {

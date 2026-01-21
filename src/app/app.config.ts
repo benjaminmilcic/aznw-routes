@@ -38,7 +38,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       RouterModule.forRoot(routes, {
         anchorScrolling: 'enabled',
-        scrollPositionRestoration: 'top',
+        scrollPositionRestoration: 'disabled',
+        scrollOffset: [0, 70],
         useHash: true,
       })
     ),

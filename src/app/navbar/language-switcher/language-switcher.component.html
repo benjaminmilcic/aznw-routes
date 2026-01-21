@@ -1,0 +1,51 @@
+<div class="cursor-pointer">
+  <button
+    mat-stroked-button
+    color="languageMenu"
+    [matMenuTriggerFor]="languageMenu"
+    class="!p-0"
+  >
+    <div class="flex gap-2 items-center mt-[4px]">
+      <div *ngIf="language === 'de'">
+        <img src="/assets/svg/Flag_of_Germany.svg" width="24px" height="24px" />
+      </div>
+      <div *ngIf="language === 'en'">
+        <img
+          src="/assets/svg/Flag_of_the_United_Kingdom.svg"
+          width="24px"
+          height="24px"
+        />
+      </div>
+      <div *ngIf="language === 'hr'">
+        <img src="/assets/svg/hr.svg" width="24px" height="24px" />
+      </div>
+      <div class="-mt-[8px]">
+        <i class="fa-solid fa-sort-down text-[#94a3b8]"></i>
+      </div>
+    </div>
+  </button>
+  <mat-menu #languageMenu="matMenu" class="language-menu">
+    <button mat-menu-item (click)="toggleLanguage('de')">
+      <div class="flex gap-2">
+        <img src="/assets/svg/Flag_of_Germany.svg" width="24px" height="24px" />
+        <div>Deutsch</div>
+      </div>
+    </button>
+    <button mat-menu-item (click)="toggleLanguage('en')">
+      <div class="flex gap-2">
+        <img
+          src="/assets/svg/Flag_of_the_United_Kingdom.svg"
+          width="24px"
+          height="24px"
+        />
+        <div>English</div>
+      </div>
+    </button>
+    <button mat-menu-item (click)="toggleLanguage('hr')">
+      <div class="flex gap-2">
+        <img src="/assets/svg/hr.svg" width="24px" height="24px" />
+        <div>Hrvatski</div>
+      </div>
+    </button>
+  </mat-menu>
+</div>

@@ -1,0 +1,451 @@
+<nav
+  class="fixed top-0 left-0 right-0 h-[70px] bg-[#0F172AD9] backdrop-blur-xl border-b-[#94A3B81A] z-[1000] transition-all duration-300 ease-in-out"
+  [ngClass]="{
+    '!shadow-[0_4px_30px_rgba(0,0,0,0.3)] !bg-[#0F172A]': isScrolled,
+  }"
+>
+  <div
+    class="flex justify-between items-center max-w-[1400px] mx-auto h-full px-[24px]"
+  >
+    <!-- Logo/Brand -->
+    <a
+      class="flex items-center gap-3 no-underline transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+      [routerLink]="['/']"
+      fragment="header"
+    >
+      <img
+        src="assets/5x7_changed.jpg"
+        class="w-[42px] h-[42px] rounded-xl object-cover object-[center_10%] border-2 border-[#60a5fa] shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all duration-300 ease-in-out"
+        alt="Profile"
+      />
+      <!-- <span
+        class="font-sans text-[1.25rem] font-bold tracking-[2px] bg-gradient-to-br from-[#60a5fa] to-[#a78bfa] bg-clip-text text-transparent"
+        >Benjamin Milčić</span
+      > -->
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="flex items-center gap-2 nav-links">
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'header'"
+        [routerLink]="['/']"
+        fragment="header"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span>{{ "sidebar.home" | translate }}</span>
+      </a>
+
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'about'"
+        [routerLink]="['/']"
+        fragment="about"
+      >
+        <i class="fa-solid fa-user"></i>
+        <span>{{ "sidebar.aboutMe" | translate }}</span>
+      </a>
+
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'skills'"
+        [routerLink]="['/']"
+        fragment="skills"
+      >
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        <span>{{ "sidebar.skills" | translate }}</span>
+      </a>
+
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'portfolio'"
+        [routerLink]="['/']"
+        fragment="portfolio"
+      >
+        <i class="fa-solid fa-toolbox"></i>
+        <span>Portfolio</span>
+      </a>
+
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'contact'"
+        [routerLink]="['/']"
+        fragment="contact"
+      >
+        <i class="fa-solid fa-id-card"></i>
+        <span>{{ "sidebar.contact" | translate }}</span>
+      </a>
+
+      <a
+        class="nav-link"
+        [class.active]="!isGimmicksRoute && activeFragment === 'footer'"
+        [routerLink]="['/']"
+        fragment="footer"
+      >
+        <i class="fa-solid fa-link"></i>
+        <span>Links</span>
+      </a>
+
+      <!-- Gimmicks Dropdown -->
+      <div
+        class="nav-link gimmicks-trigger"
+        [class.active]="isGimmicksRoute"
+        [class.activated]="gimmicksExpanded"
+        (mouseenter)="onGimmicksHover(true)"
+        (mouseleave)="onGimmicksHover(false)"
+      >
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>Gimmicks</span>
+        <span class="dropdown-arrow" [class.rotated]="gimmicksExpanded"
+          ><i class="fa-solid fa-chevron-right"></i
+        ></span>
+
+        <!-- Gimmicks Mega Menu -->
+        <div class="mega-menu" [class.visible]="gimmicksExpanded">
+          <div class="mega-menu-grid">
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon blue">
+                <i class="fa-solid fa-eye"></i>
+              </div>
+              <span>{{ "gimmicks.menu.overview" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/weather']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon amber">
+                <i class="fa-solid fa-cloud"></i>
+              </div>
+              <span>{{ "gimmicks.menu.weather" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/map']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon yellow">
+                <i class="fa-solid fa-map"></i>
+              </div>
+              <span>{{ "gimmicks.menu.map" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/calendar']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon red">
+                <i class="fa-solid fa-calendar"></i>
+              </div>
+              <span>{{ "gimmicks.menu.calendar" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/guestbook']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon green">
+                <i class="fa-solid fa-book"></i>
+              </div>
+              <span>{{ "gimmicks.menu.guestbook" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/charts']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon purple">
+                <i class="fa-solid fa-chart-simple"></i>
+              </div>
+              <span>{{ "gimmicks.menu.charts" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/auth/main']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon orange">
+                <i class="fa-solid fa-face-smile"></i>
+              </div>
+              <span>{{ "gimmicks.menu.jokes" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/games']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon pink">
+                <img
+                  class="game-icon"
+                  src="assets/svg/tic-tac-toe-small.svg"
+                  alt="Games"
+                />
+              </div>
+              <span>{{ "gimmicks.menu.games" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/recipes']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon coral">
+                <span class="emoji-icon translate-y-[-2px]">🍲</span>
+              </div>
+              <span>{{ "gimmicks.menu.recipes" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/movies']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon gold">
+                <span class="emoji-icon translate-y-[-2px]">🎬</span>
+              </div>
+              <span>{{ "gimmicks.menu.movies" | translate }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- navigation actions -->
+    <div class="flex items-center gap-3">
+      <!-- Language switcher -->
+      <app-language-switcher></app-language-switcher>
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="mobile-toggle"
+        (click)="toggleMobileMenu()"
+        [class.active]="mobileMenuOpen"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div
+  class="mobile-overlay"
+  [class.active]="mobileMenuOpen"
+  (click)="closeMobileMenu()"
+></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" [class.active]="mobileMenuOpen">
+  <div class="mobile-header">
+    <a
+      class="flex items-center gap-3 no-underline transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+      [routerLink]="['/']"
+      (click)="closeMobileMenu()"
+    >
+      <img
+        src="assets/5x7_changed.jpg"
+        class="w-[42px] h-[42px] rounded-xl object-cover object-[center_10%] border-2 border-[#60a5fa] shadow-[0_0_20px_rgba(96,165,250,0.3)] transition-all duration-300 ease-in-out"
+        alt="Profile"
+      />
+    </a>
+    <button class="mobile-close" (click)="closeMobileMenu()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div
+    #mobileMenuContent
+    class="flex-1 flex flex-col gap-1 px-5 py-4 overflow-y-auto"
+  >
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="header"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.05s'"
+    >
+      <i class="fa-solid fa-house"></i>
+      <span>{{ "sidebar.home" | translate }}</span>
+    </a>
+
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="about"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.1s'"
+    >
+      <i class="fa-solid fa-user"></i>
+      <span>{{ "sidebar.aboutMe" | translate }}</span>
+    </a>
+
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="skills"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.15s'"
+    >
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+      <span>{{ "sidebar.skills" | translate }}</span>
+    </a>
+
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="portfolio"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.2s'"
+    >
+      <i class="fa-solid fa-toolbox"></i>
+      <span>Portfolio</span>
+    </a>
+
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="contact"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.25s'"
+    >
+      <i class="fa-solid fa-id-card"></i>
+      <span>{{ "sidebar.contact" | translate }}</span>
+    </a>
+
+    <a
+      class="mobile-link"
+      [routerLink]="['/']"
+      fragment="footer"
+      (click)="closeMobileMenu()"
+      [style.animation-delay]="'0.3s'"
+    >
+      <i class="fa-solid fa-link"></i>
+      <span>Links</span>
+    </a>
+
+    <!-- Gimmicks Section -->
+    <div class="mobile-section" [style.animation-delay]="'0.35s'">
+      <button
+        class="mobile-section-header"
+        (click)="mobileGimmicksExpanded = !mobileGimmicksExpanded"
+      >
+        <div class="mobile-section-title">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Gimmicks</span>
+        </div>
+        <span class="section-arrow" [class.rotated]="mobileGimmicksExpanded"
+          ><i class="fa-solid fa-chevron-right"></i
+        ></span>
+      </button>
+
+      <div class="mobile-submenu" [class.expanded]="mobileGimmicksExpanded">
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon blue"><i class="fa-solid fa-eye"></i></div>
+          <span>{{ "gimmicks.menu.overview" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/weather']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon amber">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <span>{{ "gimmicks.menu.weather" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/map']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon yellow"><i class="fa-solid fa-map"></i></div>
+          <span>{{ "gimmicks.menu.map" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/calendar']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon red">
+            <i class="fa-solid fa-calendar"></i>
+          </div>
+          <span>{{ "gimmicks.menu.calendar" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/guestbook']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon green"><i class="fa-solid fa-book"></i></div>
+          <span>{{ "gimmicks.menu.guestbook" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/charts']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon purple">
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+          <span>{{ "gimmicks.menu.charts" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/auth/main']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon orange">
+            <i class="fa-solid fa-face-smile"></i>
+          </div>
+          <span>{{ "gimmicks.menu.jokes" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/games']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon pink">
+            <img src="assets/svg/tic-tac-toe-small.svg" alt="Games" />
+          </div>
+          <span>{{ "gimmicks.menu.games" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/recipes']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon coral">
+            <span class="translate-y-[-2px]">🍲</span>
+          </div>
+          <span>{{ "gimmicks.menu.recipes" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/movies']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon gold">
+            <span class="translate-y-[-2px]">🎬</span>
+          </div>
+          <span>{{ "gimmicks.menu.movies" | translate }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

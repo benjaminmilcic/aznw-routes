@@ -1,5 +1,5 @@
-<mat-drawer-container class="min-h-[calc(100%-49px)]">
-  <mat-drawer #drawer mode="over" disableClose="true"
+<mat-drawer-container class="min-h-full pt-[70px]">
+  <mat-drawer #drawer mode="over" disableClose="true" class="pt-[70px]"
     ><app-drawer-content
       *ngIf="user"
       [user]="user"
@@ -15,7 +15,7 @@
       (saveUser)="onSaveNewUser($event)"
     ></app-drawer-content
   ></mat-drawer>
-  <mat-drawer-content class="bg-blue-900">
+  <mat-drawer-content class="bg-blue-900 pb-2 box-border">
     <div class="flex flex-col lg:flex-row gap-10 lg:gap-0 pt-4">
       <div class="flex flex-col relative place-items-center lg:w-1/2">
         <ion-segment

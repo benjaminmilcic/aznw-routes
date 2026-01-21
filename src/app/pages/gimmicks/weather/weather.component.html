@@ -1,4 +1,6 @@
-<section class="flex justify-center min-h-[calc(100%-49px)] bg-blue-900">
+<section
+  class="flex justify-center min-h-full pt-[70px] bg-blue-900 box-border"
+>
   <div
     class="flex flex-col w-full max-w-full sm:max-w-[700px] my-4 relative bg-gradient-to-br from-red-900/60 to-red-700/60 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl"
   >
@@ -206,245 +208,252 @@
         </div>
       </div>
     </div>
-    @if (displayType==='weather-data') {
-    <div class="flex flex-col w-full">
-      <div
-        *ngIf="showDisplay"
-        class="flex items-center justify-between p-4 w-full flex-wrap"
-      >
-        <div class="flex gap-3 items-center">
-          <div class="xs:bg-blue-300 xs:p-3 xs:rounded-xl xs:shadow-md">
-            <img
-              [src]="displayedIcon"
-              class="w-[48px] h-[48px] xs:w-[72px] xs:h-[72px]"
-            />
-          </div>
-          <div class="flex gap-2 items-center">
-            <div class="text-bold text-[48px] text-blue-600 font-light">
-              {{ displayedTemp.toFixed(0) }}
+    @if (displayType === "weather-data") {
+      <div class="flex flex-col w-full">
+        <div
+          *ngIf="showDisplay"
+          class="flex items-center justify-between p-4 w-full flex-wrap"
+        >
+          <div class="flex gap-3 items-center">
+            <div class="xs:bg-blue-300 xs:p-3 xs:rounded-xl xs:shadow-md">
+              <img
+                [src]="displayedIcon"
+                class="w-[48px] h-[48px] xs:w-[72px] xs:h-[72px]"
+              />
             </div>
-            <div class="text-2xl text-blue-500 font-medium">°C</div>
-          </div>
-          <div class="text-sm space-y-1 p-3 rounded-lg">
-            <div class="whitespace-nowrap flex items-center gap-2">
-              <div class="hidden xs:block">
-                <mat-icon class="!text-blue-500 !text-base"
-                  >water_drop</mat-icon
+            <div class="flex gap-2 items-center">
+              <div class="text-bold text-[48px] text-blue-600 font-light">
+                {{ displayedTemp.toFixed(0) }}
+              </div>
+              <div class="text-2xl text-blue-500 font-medium">°C</div>
+            </div>
+            <div class="text-sm space-y-1 p-3 rounded-lg">
+              <div class="whitespace-nowrap flex items-center gap-2">
+                <div class="hidden xs:block">
+                  <mat-icon class="!text-blue-500 !text-base"
+                    >water_drop</mat-icon
+                  >
+                </div>
+                <span class="font-medium text-gray-400"
+                  >{{ "gimmicks.weather.precipitation" | translate }}:</span
+                >
+                <span class="text-blue-500 font-semibold"
+                  >{{ displayedPrecipitation_probability }}%</span
                 >
               </div>
-              <span class="font-medium text-gray-400"
-                >{{ "gimmicks.weather.precipitation" | translate }}:</span
-              >
-              <span class="text-blue-500 font-semibold"
-                >{{ displayedPrecipitation_probability }}%</span
-              >
-            </div>
-            <div class="whitespace-nowrap flex items-center gap-2">
-              <div class="hidden xs:block">
-                <img
-                  src="assets/svg/humidity_percentage.svg"
-                  class="w-4 mr-2"
-                />
+              <div class="whitespace-nowrap flex items-center gap-2">
+                <div class="hidden xs:block">
+                  <img
+                    src="assets/svg/humidity_percentage.svg"
+                    class="w-4 mr-2"
+                  />
+                </div>
+                <span class="font-medium text-gray-400"
+                  >{{ "gimmicks.weather.humidity" | translate }}:</span
+                >
+                <span class="text-blue-500 font-semibold"
+                  >{{ displayedHumidity.toFixed(0) }}%</span
+                >
               </div>
-              <span class="font-medium text-gray-400"
-                >{{ "gimmicks.weather.humidity" | translate }}:</span
-              >
-              <span class="text-blue-500 font-semibold"
-                >{{ displayedHumidity.toFixed(0) }}%</span
-              >
-            </div>
-            <div class="whitespace-nowrap flex items-center gap-2">
-              <div class="hidden xs:block">
-                <mat-icon class="!text-blue-500 !text-base">air</mat-icon>
+              <div class="whitespace-nowrap flex items-center gap-2">
+                <div class="hidden xs:block">
+                  <mat-icon class="!text-blue-500 !text-base">air</mat-icon>
+                </div>
+                <span class="font-medium text-gray-400"
+                  >{{ "gimmicks.weather.wind" | translate }}:</span
+                >
+                <span class="text-blue-500 font-semibold"
+                  >{{ displayedWind }} km/h</span
+                >
               </div>
-              <span class="font-medium text-gray-400"
-                >{{ "gimmicks.weather.wind" | translate }}:</span
-              >
-              <span class="text-blue-500 font-semibold"
-                >{{ displayedWind }} km/h</span
-              >
             </div>
           </div>
-        </div>
-        <div class="flex flex-col items-end p-4 rounded-lg">
-          <div class="text-xl font-bold whitespace-nowrap text-gray-300 mb-2">
-            {{ "gimmicks.weather.weather" | translate }}
-          </div>
-          <div class="text-sm whitespace-nowrap text-gray-400 font-medium">
-            {{ displayedTime }}
-          </div>
-          <div
-            class="text-base whitespace-nowrap text-blue-500 font-semibold mt-1"
-          >
-            {{ displayedWeather }}
-          </div>
-        </div>
-      </div>
-      <div *ngIf="hourlyForecast" class="flex flex-col p-4 w-full">
-        <div class="flex gap-1 w-full mb-6 rounded-xl p-1">
-          <div
-            id="temp-chart"
-            class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
-            [ngClass]="{
-              'border-b-2 border-orange-300 text-blue-500':
-                selectedChart === 'temp',
-              'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
-                selectedChart !== 'temp'
-            }"
-            (click)="selectChart('temp')"
-          >
-            <div class="flex flex-col sm:flex-row items-center justify-center">
-              <mat-icon class="!text-base mr-1">thermostat</mat-icon>
-              {{ "gimmicks.weather.temperature" | translate }}
+          <div class="flex flex-col items-end p-4 rounded-lg">
+            <div class="text-xl font-bold whitespace-nowrap text-gray-300 mb-2">
+              {{ "gimmicks.weather.weather" | translate }}
             </div>
-          </div>
-          <div
-            id="rain-chart"
-            class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
-            [ngClass]="{
-              'border-b-2 border-orange-300 text-blue-500':
-                selectedChart === 'rain',
-              'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
-                selectedChart !== 'rain'
-            }"
-            (click)="selectChart('rain')"
-          >
-            <div class="flex flex-col sm:flex-row items-center justify-center">
-              <mat-icon class="!text-base mr-1">water_drop</mat-icon>
-              {{ "gimmicks.weather.precipitation" | translate }}
+            <div class="text-sm whitespace-nowrap text-gray-400 font-medium">
+              {{ displayedTime }}
             </div>
-          </div>
-          <div
-            id="wind-chart"
-            class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
-            [ngClass]="{
-              'border-b-2 border-orange-300 text-blue-500':
-                selectedChart === 'wind',
-              'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
-                selectedChart !== 'wind'
-            }"
-            (click)="selectChart('wind')"
-          >
-            <div class="flex flex-col sm:flex-row items-center justify-center">
-              <mat-icon class="!text-base mr-1">air</mat-icon>
-              {{ "gimmicks.weather.wind" | translate }}
-            </div>
-          </div>
-        </div>
-        <app-temperature-chart
-          *ngIf="hourlyForecast && selectedChart === 'temp'"
-          [hourlyForecast]="hourlyForecast"
-          [dayIndex]="dailyForcastIndex"
-          (hourClicked)="displayHourlyWeather($event)"
-        ></app-temperature-chart>
-        <app-rain-chart
-          *ngIf="hourlyForecast && selectedChart === 'rain'"
-          [hourlyForecast]="hourlyForecast"
-          [dayIndex]="dailyForcastIndex"
-        ></app-rain-chart>
-        <div
-          *ngIf="hourlyForecast && selectedChart === 'wind'"
-          class="flex justify-between w-full sm:h-[168px] rounded-xl sm:py-4 sm:px-4"
-        >
-          <ng-container
-            *ngFor="
-              let hour of hourlyForecast[dailyForcastIndex].hours;
-              let i = index
-            "
-          >
             <div
-              *ngIf="i % 3 === 0"
-              class="flex flex-col h-full items-center justify-between py-2 sm:px-2 bg-gradient-to-b from-blue-50/30 to-white/50 rounded-lg shadow-sm border border-blue-100/50"
+              class="text-base whitespace-nowrap text-blue-500 font-semibold mt-1"
+            >
+              {{ displayedWeather }}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="hourlyForecast" class="flex flex-col p-4 w-full">
+          <div class="flex gap-1 w-full mb-6 rounded-xl p-1">
+            <div
+              id="temp-chart"
+              class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
+              [ngClass]="{
+                'border-b-2 border-orange-300 text-blue-500':
+                  selectedChart === 'temp',
+                'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
+                  selectedChart !== 'temp',
+              }"
+              (click)="selectChart('temp')"
             >
               <div
-                class="text-xs xs:text-sm text-center font-semibold text-blue-800"
+                class="flex flex-col sm:flex-row items-center justify-center"
               >
-                <div class="flex flex-col items-center justify-center">
-                  <div>
-                    {{ hour.wind.toFixed(0) }}
+                <mat-icon class="!text-base mr-1">thermostat</mat-icon>
+                {{ "gimmicks.weather.temperature" | translate }}
+              </div>
+            </div>
+            <div
+              id="rain-chart"
+              class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
+              [ngClass]="{
+                'border-b-2 border-orange-300 text-blue-500':
+                  selectedChart === 'rain',
+                'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
+                  selectedChart !== 'rain',
+              }"
+              (click)="selectChart('rain')"
+            >
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center"
+              >
+                <mat-icon class="!text-base mr-1">water_drop</mat-icon>
+                {{ "gimmicks.weather.precipitation" | translate }}
+              </div>
+            </div>
+            <div
+              id="wind-chart"
+              class="cursor-pointer px-4 py-3 text-sm font-medium transition-all duration-300 flex-1 text-center"
+              [ngClass]="{
+                'border-b-2 border-orange-300 text-blue-500':
+                  selectedChart === 'wind',
+                'text-gray-400 hover:text-blue-900 hover:bg-blue-300/50':
+                  selectedChart !== 'wind',
+              }"
+              (click)="selectChart('wind')"
+            >
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center"
+              >
+                <mat-icon class="!text-base mr-1">air</mat-icon>
+                {{ "gimmicks.weather.wind" | translate }}
+              </div>
+            </div>
+          </div>
+          <app-temperature-chart
+            *ngIf="hourlyForecast && selectedChart === 'temp'"
+            [hourlyForecast]="hourlyForecast"
+            [dayIndex]="dailyForcastIndex"
+            (hourClicked)="displayHourlyWeather($event)"
+          ></app-temperature-chart>
+          <app-rain-chart
+            *ngIf="hourlyForecast && selectedChart === 'rain'"
+            [hourlyForecast]="hourlyForecast"
+            [dayIndex]="dailyForcastIndex"
+          ></app-rain-chart>
+          <div
+            *ngIf="hourlyForecast && selectedChart === 'wind'"
+            class="flex justify-between w-full sm:h-[168px] rounded-xl sm:py-4 sm:px-4"
+          >
+            <ng-container
+              *ngFor="
+                let hour of hourlyForecast[dailyForcastIndex].hours;
+                let i = index
+              "
+            >
+              <div
+                *ngIf="i % 3 === 0"
+                class="flex flex-col h-full items-center justify-between py-2 sm:px-2 bg-gradient-to-b from-blue-50/30 to-white/50 rounded-lg shadow-sm border border-blue-100/50"
+              >
+                <div
+                  class="text-xs xs:text-sm text-center font-semibold text-blue-800"
+                >
+                  <div class="flex flex-col items-center justify-center">
+                    <div>
+                      {{ hour.wind.toFixed(0) }}
+                    </div>
+                    <div>km/h</div>
                   </div>
-                  <div>km/h</div>
+                </div>
+                <div class="xs:p-2 bg-white/80 rounded-full shadow-sm">
+                  <mat-icon
+                    class="text-blue-600 !text-xl"
+                    [style.transform]="'rotate(' + hour.wind_direction + 'deg)'"
+                    >arrow_downward_alt</mat-icon
+                  >
+                </div>
+                <div class="text-xs text-gray-600 font-medium">
+                  <span *ngIf="hour.hour.toString().length === 1">0</span
+                  >{{ hour.hour }}:00
                 </div>
               </div>
-              <div class="xs:p-2 bg-white/80 rounded-full shadow-sm">
-                <mat-icon
-                  class="text-blue-600 !text-xl"
-                  [style.transform]="'rotate(' + hour.wind_direction + 'deg)'"
-                  >arrow_downward_alt</mat-icon
-                >
-              </div>
-              <div class="text-xs text-gray-600 font-medium">
-                <span *ngIf="hour.hour.toString().length === 1">0</span
-                >{{ hour.hour }}:00
-              </div>
-            </div>
-          </ng-container>
+            </ng-container>
+          </div>
         </div>
-      </div>
-      <div
-        *ngIf="currentWeather"
-        class="flex border border-blue-400 mx-4"
-      ></div>
-      <div *ngIf="dailyForecast" class="p-4 w-full flex justify-center">
-        <div class="flex justify-between w-full overflow-x-auto">
-          <div
-            *ngFor="let day of dailyForecast.time; let i = index"
-            class="flex flex-col items-center rounded-xl px-1 py-2 xs:px-2 sm:px-3 cursor-pointer transition-all duration-300 min-w-fit"
-            [ngClass]="{
-              'bg-gradient-to-b from-blue-500 to-indigo-500 text-white shadow-lg':
-                dailyForecast.active[i],
-              'bg-yellow-100/70 hover:bg-blue-50/80 text-gray-700 shadow-sm border border-gray-200/50':
-                !dailyForecast.active[i]
-            }"
-            (click)="displayDailyWeather(i)"
-          >
-            <div class="text-xs font-medium mb-1 xs:mb-2">
-              {{ dailyForecast.weekday[i] }}
-            </div>
+        <div
+          *ngIf="currentWeather"
+          class="flex border border-blue-400 mx-4"
+        ></div>
+        <div *ngIf="dailyForecast" class="p-4 w-full flex justify-center">
+          <div class="flex justify-between w-full overflow-x-auto">
             <div
-              class="bg-white/20 p-[2px] xs:p-2 rounded-lg mb-1"
+              *ngFor="let day of dailyForecast.time; let i = index"
+              class="flex flex-col items-center rounded-xl px-1 py-2 xs:px-2 sm:px-3 cursor-pointer transition-all duration-300 min-w-fit"
               [ngClass]="{
-                'bg-white/20': dailyForecast.active[i],
-                'bg-blue-200': !dailyForecast.active[i]
+                'bg-gradient-to-b from-blue-500 to-indigo-500 text-white shadow-lg':
+                  dailyForecast.active[i],
+                'bg-yellow-100/70 hover:bg-blue-50/80 text-gray-700 shadow-sm border border-gray-200/50':
+                  !dailyForecast.active[i],
               }"
+              (click)="displayDailyWeather(i)"
             >
-              <img [src]="dailyForecast.icon[i]" class="w-[32px] h-[32px]" />
-            </div>
-            <div class="flex flex-col gap-1 text-xs text-center">
-              <div class="font-bold">
-                {{ dailyForecast.temperature_2m_max[i].toFixed(0) }}°
+              <div class="text-xs font-medium mb-1 xs:mb-2">
+                {{ dailyForecast.weekday[i] }}
               </div>
               <div
+                class="bg-white/20 p-[2px] xs:p-2 rounded-lg mb-1"
                 [ngClass]="{
-                  'text-blue-200': dailyForecast.active[i],
-                  'text-gray-500': !dailyForecast.active[i]
+                  'bg-white/20': dailyForecast.active[i],
+                  'bg-blue-200': !dailyForecast.active[i],
                 }"
               >
-                {{ dailyForecast.temperature_2m_min[i].toFixed(0) }}°
+                <img [src]="dailyForecast.icon[i]" class="w-[32px] h-[32px]" />
+              </div>
+              <div class="flex flex-col gap-1 text-xs text-center">
+                <div class="font-bold">
+                  {{ dailyForecast.temperature_2m_max[i].toFixed(0) }}°
+                </div>
+                <div
+                  [ngClass]="{
+                    'text-blue-200': dailyForecast.active[i],
+                    'text-gray-500': !dailyForecast.active[i],
+                  }"
+                >
+                  {{ dailyForecast.temperature_2m_min[i].toFixed(0) }}°
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    } @if (displayType==='clima-diagram') {
-    <div *ngIf="!loading">
-      <app-clima-chart
-        [lat]="cityLatitude"
-        [lng]="cityLongitude"
-        (errorOccurred)="handleClimaChartError($event)"
-      ></app-clima-chart>
-    </div>
-    } @if (displayType==='map') {
-    <div *ngIf="!loading">
-      <app-location-map
-        [lat]="cityLatitude"
-        [lng]="cityLongitude"
-        (errorOccurred)="handleClimaChartError($event)"
-        (removeError)="handleRemoveError($event)"
-      ></app-location-map>
-    </div>
-
+    }
+    @if (displayType === "clima-diagram") {
+      <div *ngIf="!loading">
+        <app-clima-chart
+          [lat]="cityLatitude"
+          [lng]="cityLongitude"
+          (errorOccurred)="handleClimaChartError($event)"
+        ></app-clima-chart>
+      </div>
+    }
+    @if (displayType === "map") {
+      <div *ngIf="!loading">
+        <app-location-map
+          [lat]="cityLatitude"
+          [lng]="cityLongitude"
+          (errorOccurred)="handleClimaChartError($event)"
+          (removeError)="handleRemoveError($event)"
+        ></app-location-map>
+      </div>
     }
 
     <div *ngIf="error" class="p-6 mx-6 mb-4">
