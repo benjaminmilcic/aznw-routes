@@ -284,3 +284,18 @@ button.alert-button.alert-button-confirm:hover {
     }
   }
 }
+
+/* Rounded Popover Styling */
+ion-popover.rounded-popover {
+  --border-radius: 12px;
+  --background: transparent;
+
+  &::part(content) {
+    border-radius: 12px;
+    background: transparent;
+  }
+
+  ion-content {
+    --background: transparent;
+  }
+}
