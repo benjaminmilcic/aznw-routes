@@ -36,31 +36,17 @@
       <div class="flex mr-[12px]">
         <form (ngSubmit)="onSubmit(form)" #form="ngForm" class="mt-6">
           <div class="name">
-            <div class="firstname">
-              <label for="firstname">{{
-                "contact.firstName" | translate
-              }}</label>
-              <input
-                type="text"
-                name="firstname"
-                id="firstname"
-                ngModel
-                required
-              />
-            </div>
-            <div class="lastname">
-              <label for="lastname">{{ "contact.lastName" | translate }}</label>
-              <input
-                type="text"
-                name="lastname"
-                id="lastname"
-                ngModel
-                required
-              />
-            </div>
+            <label for="name">{{ "contact.name" | translate }}:</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              ngModel
+              required
+            />
           </div>
           <div class="email">
-            <label for="email">eMail</label>
+            <label for="email">Email:</label>
             <input
               type="email"
               name="email"
@@ -71,7 +57,7 @@
             />
           </div>
           <div class="message">
-            <label for="message">{{ "contact.message" | translate }}</label>
+            <label for="message">{{ "contact.message" | translate }}:</label>
             <textarea
               name="message"
               id="message"
@@ -87,11 +73,15 @@
               type="submit"
               class="submit-btn"
             >
-              @if (isSending) {<span class="mr-2"
-                ><i class="fa-solid fa-spinner fa-spin"></i></span
-              >}@else {<span class="mr-2"
-                ><i class="fa-solid fa-paper-plane"></i></span
-              >}
+              @if (isSending) {
+                <span class="mr-2"
+                  ><i class="fa-solid fa-spinner fa-spin"></i
+                ></span>
+              } @else {
+                <span class="mr-2"
+                  ><i class="fa-solid fa-paper-plane"></i
+                ></span>
+              }
 
               {{ sendButtonText }}
             </button>

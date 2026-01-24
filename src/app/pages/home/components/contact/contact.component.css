@@ -51,14 +51,7 @@ hr {
   margin-top: 40px;
 }
 
-.name {
-  display: flex;
-  gap: 32px;
-  width: 100%;
-}
-
-.firstname,
-.lastname,
+.name,
 .email,
 .message {
   display: flex;
@@ -74,21 +67,15 @@ hr {
   margin-right: -20px;
 }
 
-.firstname,
-.lastname {
-  width: 50%;
-}
-
-.firstname {
-  margin-right: 20px;
+.name {
+  width: 100%;
 }
 
 label {
   margin-bottom: 10px;
 }
 
-.firstname input,
-.lastname input,
+.name input,
 .email input,
 .message textarea {
   width: 100%;
@@ -203,11 +190,6 @@ textarea:focus {
     padding: 3rem 40px;
   }
 
-  .name {
-    flex-direction: column;
-    gap: 0px;
-  }
-
   .contact-wrapper {
     flex-direction: column;
     margin-right: 16px;
@@ -217,13 +199,11 @@ textarea:focus {
     padding: 12px;
   }
 
-  .firstname,
-  .lastname {
+  .name{
     width: 100%;
   }
 
-  .firstname input,
-  .lastname input,
+  .name input,
   .email input,
   .message textarea {
     max-width: 95%;
