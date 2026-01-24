@@ -9,6 +9,8 @@ This is the code of my personal homepage.
   </a>
 </p>
 
+The page is build with Angular.
+
 The repository is public, because I made this website to demonstrate my skills.
 The backend that is used by this website can be viewed here: [Backend repository for this frontend](https://github.com/benjaminmilcic/nest-aznw-api). It is also public.
 
