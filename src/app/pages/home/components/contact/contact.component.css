@@ -192,7 +192,7 @@ textarea:focus {
 
   .contact-wrapper {
     flex-direction: column;
-    margin-right: 16px;
+    /* margin-right: 16px; */
   }
 
   .contact-box {
@@ -206,7 +206,7 @@ textarea:focus {
   .name input,
   .email input,
   .message textarea {
-    max-width: 95%;
+    max-width: 100%;
   }
 
   h2 {
