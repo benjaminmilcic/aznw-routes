@@ -16,3 +16,7 @@
 <a *ngIf="currentRoute==='/gimmicks/auth/main'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks/auth/main']" fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
+<a *ngIf="currentRoute.includes('/gimmicks/movies')" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="[currentRoute]" fragment="movies-scroll-container"
+  ><i class="fas fa-angle-up"></i
+></a>
+
