@@ -1,22 +1,49 @@
-<a *ngIf="currentRoute==='/'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/']" fragment="header"
+<a
+  *ngIf="currentRoute === '/'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute==='/gimmicks'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks']" fragment="header"
+<a
+  *ngIf="currentRoute === '/gimmicks'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/gimmicks']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute==='/gimmicks/guestbook'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks/guestbook']" fragment="header"
+<a
+  *ngIf="currentRoute === '/gimmicks/guestbook'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/gimmicks/guestbook']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute==='/gimmicks/map'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks/map']" fragment="header"
+<a
+  *ngIf="currentRoute === '/gimmicks/map'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/gimmicks/map']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute==='/gimmicks/auth/login'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks/auth/login']" fragment="header"
+<a
+  *ngIf="currentRoute === '/gimmicks/auth/login'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/gimmicks/auth/login']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute==='/gimmicks/auth/main'" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="['/gimmicks/auth/main']" fragment="header"
+<a
+  *ngIf="currentRoute === '/gimmicks/auth/main'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/gimmicks/auth/main']"
+  fragment="header"
   ><i class="fas fa-angle-up"></i
 ></a>
-<a *ngIf="currentRoute.includes('/gimmicks/movies')" [ngClass]="{ visible: scrollToTopVisible }"  [routerLink]="[currentRoute]" fragment="movies-scroll-container"
+<a
+  *ngIf="currentRoute && currentRoute.includes('/gimmicks/movies')"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="[currentRoute]"
+  fragment="movies-scroll-container"
   ><i class="fas fa-angle-up"></i
 ></a>
-
