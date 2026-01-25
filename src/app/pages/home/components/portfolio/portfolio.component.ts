@@ -20,12 +20,15 @@ export class PortfolioComponent {
 
   closeDialog(dialog: HTMLDialogElement) {
     dialog.close();
-    this.homeService.overflowHidden = false;
     this.router.navigate(['/'], { fragment: 'portfolio' });
   }
 
   openDialog(dialog: HTMLDialogElement) {
     dialog.showModal();
     this.homeService.overflowHidden = true;
+
+    dialog.addEventListener('close', () => {
+      this.homeService.overflowHidden = false;
+    }, { once: true });
   }
 }
