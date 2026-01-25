@@ -6,13 +6,13 @@
           <mat-icon class="scale-75 md:scale-100">play_circle</mat-icon>
           {{ 'gimmicks.movies.stream' | translate }}
         </h4>
-        <div class="provider-logos">
+        <div class="provider-logos !touch-auto">
           @for (provider of streamingProviders; track provider.provider_id) {
             <img
               [src]="getProviderLogoUrl(provider.logo_path)"
               [alt]="provider.provider_name"
               [matTooltip]="provider.provider_name"
-              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] touch-auto"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] !touch-auto"
             />
           }
         </div>
@@ -25,13 +25,13 @@
           <mat-icon class="scale-75 md:scale-100">movie_filter</mat-icon>
           {{ 'gimmicks.movies.rent' | translate }}
         </h4>
-        <div class="provider-logos">
+        <div class="provider-logos !touch-auto">
           @for (provider of rentProviders; track provider.provider_id) {
             <img
               [src]="getProviderLogoUrl(provider.logo_path)"
               [alt]="provider.provider_name"
               [matTooltip]="provider.provider_name"
-              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] touch-auto"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] !touch-auto"
             />
           }
         </div>
@@ -44,13 +44,13 @@
           <mat-icon class="scale-75 md:scale-100">shopping_cart</mat-icon>
           {{ 'gimmicks.movies.buy' | translate }}
         </h4>
-        <div class="provider-logos">
+        <div class="provider-logos !touch-auto">
           @for (provider of buyProviders; track provider.provider_id) {
             <img
               [src]="getProviderLogoUrl(provider.logo_path)"
               [alt]="provider.provider_name"
               [matTooltip]="provider.provider_name"
-              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] touch-auto"
+              class="provider-logo w-[25px] h-[25px] md:w-[50px] md:h-[50px] !touch-auto"
             />
           }
         </div>
