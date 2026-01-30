@@ -83,55 +83,95 @@ h3 {
   border-radius: 16px;
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: #ffffff;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-}
-
+/* === Doorbell Button Base === */
+.btn-primary,
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 50%, #fb923c 100%);
-  color: #ffffff;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 0.9rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(251, 146, 60, 0.4);
-  border: none;
+  position: relative;
+  /* Pill / oval shape like a real doorbell */
+  border-radius: 50px;
+  /* Metallic ring border */
+  border: 3px solid;
+  border-color: #b0b8c8;
+  /* Transition for press effect */
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.15s ease,
+    border-color 0.2s ease;
+}
+
+/* === Primary: Blue doorbell === */
+.btn-primary {
+  background:
+    radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.45) 0%, transparent 55%),
+    linear-gradient(180deg, #a8d4fd 0%, #93c5fd 40%, #7db8fc 100%);
+  color: #1e3a5f;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  border-color: #8a9bb5;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 4px 2px rgba(0,0,0,0.25),
+    0 6px 12px rgba(96,165,250,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.4),
+    inset 0 -3px 6px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+  border-color: #a0b0cc;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.2),
+    0 4px 2px rgba(0,0,0,0.25),
+    0 6px 16px rgba(96,165,250,0.4),
+    0 0 20px rgba(191,219,254,0.2),
+    inset 0 2px 4px rgba(255,255,255,0.45),
+    inset 0 -3px 6px rgba(0,0,0,0.1);
+}
+
+/* === Secondary: Orange doorbell === */
+.btn-secondary {
+  background:
+    radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.45) 0%, transparent 55%),
+    linear-gradient(160deg, #fed7aa 0%, #fdba74 50%, #fb923c 100%);
+  color: #0c4a6e;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  border-color: #c2764a;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 4px 2px rgba(0,0,0,0.25),
+    0 6px 12px rgba(253,186,116,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.4),
+    inset 0 -3px 6px rgba(0,0,0,0.1);
 }
 
 .btn-secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(251, 146, 60, 0.5);
-  background: linear-gradient(135deg, #fdba74 0%, #fb923c 50%, #f97316 100%);
+  border-color: #a0b0cc;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.2),
+    0 4px 2px rgba(0,0,0,0.25),
+    0 6px 16px rgba(253,186,116,0.4),
+    0 0 20px rgba(253,215,170,0.2),
+    inset 0 2px 4px rgba(255,255,255,0.4),
+    inset 0 -3px 6px rgba(0,0,0,0.15);
 }
 
+/* === Press effect: button pushes IN like a real doorbell === */
 .btn-primary:active,
 .btn-secondary:active {
-  transform: translateY(0);
+  transform: translateY(2px) scale(0.97);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.1),
+    0 1px 1px rgba(0,0,0,0.3),
+    0 2px 4px rgba(0,0,0,0.2),
+    inset 0 3px 8px rgba(0,0,0,0.3),
+    inset 0 -1px 2px rgba(255,255,255,0.15);
 }
 
 @media screen and (max-width: 992px) {
@@ -157,17 +197,23 @@ h3 {
 
   .btn-primary,
   .btn-secondary {
-    padding: 0.75rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     width: 100%;
-    max-width: 250px;
+    max-width: 350px;
     justify-content: center;
+    font-size: 0.875rem;
+    @apply box-border;
   }
 
   .button-wrapper {
-    margin-top: 2rem;
+    margin-top: 4rem;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    @apply box-border;
   }
 }
 
