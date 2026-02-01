@@ -9,7 +9,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     imageSrc: '',
     emoji: '',
     elements: [
-      'Nest.js API',
+      'NestJS API',
       'OpenStreetMap API',
       'Geonames API',
       'OpenMeteo API',
@@ -88,7 +88,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
       'Popup modal',
       'gimmicks.overview.editor',
       'gimmicks.overview.fileStorage',
-      'Nest.js API',
+      'NestJS API',
       'Responsive design',
       'gimmicks.differentLanguages',
     ],
@@ -131,7 +131,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     emoji: '',
     elements: [
       'gimmicks.jokes.auth',
-      'Nest.js API',
+      'NestJS API',
       'gimmicks.jokes.stripe',
       'Responsive design',
       'gimmicks.differentLanguages',
@@ -152,7 +152,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     imageSrc: 'assets/svg/tic-tac-toe.svg',
     emoji: '',
     elements: [
-      'Nest.js API',
+      'NestJS API',
       'Websocket',
       'Responsive design',
       'gimmicks.differentLanguages',
@@ -174,7 +174,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     emoji: '🍲',
     elements: [
       'NgRx',
-      'Nest.js API',
+      'NestJS API',
       'MyMemory API',
       'gimmicks.overview.imageManipulation',
       'gimmicks.overview.fileUpload',
