@@ -394,48 +394,28 @@ a.next-section-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 50px;
-  background:
-    radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.35) 0%, transparent 55%),
-    linear-gradient(180deg, #60a5fa 0%, #3b82f6 40%, #1d4ed8 100%);
-  color: #e2e8f0;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-  padding: 0.9rem 2rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #ffffff;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  position: relative;
-  border: 3px solid #60a5fa;
-  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.2s ease;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.1),
-    0 4px 2px rgba(0,0,0,0.3),
-    0 6px 12px rgba(59,130,246,0.4),
-    inset 0 2px 4px rgba(255,255,255,0.2),
-    inset 0 -3px 6px rgba(0,0,0,0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 a.next-section-button:hover {
-  border-color: #93c5fd;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.15),
-    0 4px 2px rgba(0,0,0,0.3),
-    0 6px 16px rgba(59,130,246,0.5),
-    0 0 20px rgba(59,130,246,0.25),
-    inset 0 2px 4px rgba(255,255,255,0.25),
-    inset 0 -3px 6px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
 }
 
 a.next-section-button:active {
-  transform: translateY(2px) scale(0.97);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.1),
-    0 1px 1px rgba(0,0,0,0.3),
-    0 2px 4px rgba(0,0,0,0.2),
-    inset 0 3px 8px rgba(0,0,0,0.3),
-    inset 0 -1px 2px rgba(255,255,255,0.15);
+  transform: translateY(0);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
 }
 
 @media screen and (max-width: 768px) {
