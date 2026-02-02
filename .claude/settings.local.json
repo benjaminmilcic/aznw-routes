@@ -27,7 +27,11 @@
       "WebFetch(domain:api.wikimedia.org)",
       "WebFetch(domain:history.muffinlabs.com)",
       "Bash(npm run build:*)",
-      "Bash(npx ng build:*)"
+      "Bash(npx ng build:*)",
+      "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" show 8cd12d3 --stat)",
+      "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" show 8cd12d3 --no-stat -p)",
+      "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" diff 8cd12d3^..8cd12d3)",
+      "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" revert 8cd12d3 --no-edit)"
     ],
     "deny": [],
     "ask": []
