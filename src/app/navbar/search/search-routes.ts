@@ -33,9 +33,9 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
   },
   {
     labelKey: 'sidebar.skills',
-    keywords: ['skills', 'fähigkeiten', 'vještine', 'technik', 'technologie', 'angular', 'typescript'],
+    keywords: ['skills', 'fähigkeiten', 'vještine', 'technik', 'technologie', 'angular', 'javascript', 'typescript', 'nestjs', 'ionic', 'html', 'css', 'cypress', 'bootstrap', 'tailwind', 'firebase', 'mysql', 'node', 'npm', 'docker'],
     description:
-      'Fähigkeiten Skills Vještine Technologien Technologies Tehnologije Angular TypeScript JavaScript HTML CSS SCSS Tailwind Node.js Firebase Programmiersprachen programming languages programski jezici Frameworks Frontend Backend Fullstack Kenntnisse knowledge znanje',
+      'Fähigkeiten Skills Vještine Technologien Technologies Tehnologije HTML5 CSS3 JavaScript Angular Ionic Cypress Bootstrap Tailwind Firebase MySQL Node.js NestJS npm Docker Programmiersprachen programming languages programski jezici Frameworks Frontend Backend Fullstack Mobile Testing E2E Datenbank database baza podataka Container Kenntnisse knowledge znanje',
     route: '/',
     icon: 'fa-solid fa-screwdriver-wrench',
     category: 'search.category.home',
