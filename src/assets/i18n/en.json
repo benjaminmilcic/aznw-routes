@@ -596,5 +596,12 @@
     "LAST_PAGE": "Last page",
     "RANGE_PAGE_LABEL_1": "0 of {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "navigate": "navigate",
+    "open": "open",
+    "close": "close",
+    "noResults": "No results"
   }
 }

@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
+import { SearchDialogComponent } from './search/search-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,7 @@ import { LanguageSwitcherComponent } from './language-switcher/language-switcher
     RouterModule,
     TranslateModule,
     LanguageSwitcherComponent,
+    SearchDialogComponent,
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
@@ -31,6 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     'contact',
     'footer',
   ];
+  searchOpen: boolean = false;
   gimmicksExpanded: boolean = false;
   isGimmicksRoute: boolean = false;
   private gimmicksTimeout: any;
@@ -44,15 +47,23 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isScrolled = window.scrollY > 20;
   }
 
-  // Close mobile menu on escape key
+  // Close mobile menu / search on escape key
   @HostListener('document:keydown.escape')
   onEscapeKey(): void {
+    if (this.searchOpen) {
+      this.searchOpen = false;
+      return;
+    }
     if (this.mobileMenuOpen) {
       this.closeMobileMenu();
     }
     if (this.gimmicksExpanded) {
       this.gimmicksExpanded = false;
     }
+  }
+
+  toggleSearch(): void {
+    this.searchOpen = !this.searchOpen;
   }
 
   closeMobileMenu(): void {

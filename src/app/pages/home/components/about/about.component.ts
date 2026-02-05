@@ -20,14 +20,14 @@ export class AboutComponent {
     let link: string;
     switch (this.translateService.currentLang) {
       case 'de':
-        link = '/assets/CV_DE.pdf';
+        link = '/assets/benjamin_milcic_cv_de.pdf';
         break;
       case 'hr':
-        link = '/assets/CV_HR.pdf';
+        link = '/assets/benjamin_milcic_cv_en.pdf';
         break;
 
       default:
-        link = '/assets/CV_EN.pdf';
+        link = '/assets/benjamin_milcic_cv_hr.pdf';
         break;
     }
     window.open(link, '_blank');

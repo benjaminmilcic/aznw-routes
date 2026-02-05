@@ -227,6 +227,14 @@
 
     <!-- navigation actions -->
     <div class="flex items-center gap-3">
+      <!-- Search Toggle -->
+      <button
+        class="search-toggle"
+        (click)="toggleSearch()"
+        [class.active]="searchOpen"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
       <!-- Language switcher -->
       <app-language-switcher></app-language-switcher>
       <!-- Mobile Menu Toggle -->
@@ -455,3 +463,8 @@
     </div>
   </div>
 </div>
+
+<!-- Search Dialog -->
+<app-search-dialog
+  [(open)]="searchOpen"
+></app-search-dialog>

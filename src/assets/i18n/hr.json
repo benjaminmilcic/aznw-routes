@@ -596,5 +596,12 @@
     "LAST_PAGE": "Zadnja stranica",
     "RANGE_PAGE_LABEL_1": "0 od {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} od {{length}}"
+  },
+  "search": {
+    "placeholder": "Pretraži...",
+    "navigate": "navigiraj",
+    "open": "otvori",
+    "close": "zatvori",
+    "noResults": "Nema rezultata"
   }
 }

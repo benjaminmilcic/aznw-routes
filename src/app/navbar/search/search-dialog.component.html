@@ -1,0 +1,59 @@
+@if (open) {
+<div class="search-overlay" (click)="onOverlayClick($event)">
+  <div class="search-dialog" (keydown)="onKeydown($event)">
+    <!-- Search Input -->
+    <div class="search-input-wrapper">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        #searchInput
+        type="text"
+        class="search-input"
+        [(ngModel)]="query"
+        (ngModelChange)="onSearch()"
+        [placeholder]="'search.placeholder' | translate"
+        autocomplete="off"
+      />
+      @if (query) {
+      <button class="search-clear" (click)="query = ''; onSearch()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      }
+    </div>
+
+    <!-- Results -->
+    <div class="search-results">
+      @if (query && flatResults.length === 0) {
+      <div class="search-empty">
+        <i class="fa-solid fa-face-meh"></i>
+        <span>{{ 'search.noResults' | translate }}</span>
+      </div>
+      } @for (group of groupedResults; track group.category) {
+      <div class="search-group">
+        <div class="search-group-label">{{ group.category }}</div>
+        @for (item of group.items; track item.route + (item.fragment || '')) {
+        <button
+          class="search-result-item"
+          [class.active]="getFlatIndex(item) === activeIndex"
+          (click)="navigate(item)"
+          (mouseenter)="activeIndex = getFlatIndex(item)"
+        >
+          <div class="result-icon">
+            <i [class]="item.icon"></i>
+          </div>
+          <span class="result-label">{{ item.translatedLabel }}</span>
+          <i class="fa-solid fa-arrow-right result-arrow"></i>
+        </button>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Footer -->
+    <div class="search-footer">
+      <span class="search-hint"><kbd>↑↓</kbd> {{ 'search.navigate' | translate }}</span>
+      <span class="search-hint"><kbd>↵</kbd> {{ 'search.open' | translate }}</span>
+      <span class="search-hint"><kbd>esc</kbd> {{ 'search.close' | translate }}</span>
+    </div>
+  </div>
+</div>
+}
