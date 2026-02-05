@@ -29,13 +29,13 @@
       </div>
       } @for (group of groupedResults; track group.category) {
       <div class="search-group">
-        <div class="search-group-label">{{ group.category }}</div>
+        <div class="search-group-label">{{ group.category | translate }}</div>
         @for (item of group.items; track item.route + (item.fragment || '')) {
         <button
           class="search-result-item"
           [class.active]="getFlatIndex(item) === activeIndex"
           (click)="navigate(item)"
-          (mouseenter)="activeIndex = getFlatIndex(item)"
+          (mouseenter)="onMouseEnterResult(getFlatIndex(item))"
         >
           <div class="result-icon">
             <i [class]="item.icon"></i>

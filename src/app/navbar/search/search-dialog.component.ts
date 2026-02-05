@@ -12,10 +12,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import Fuse from 'fuse.js';
 import { SEARCHABLE_ROUTES, SearchableRoute } from './search-routes';
 
 interface SearchResult extends SearchableRoute {
   translatedLabel: string;
+  matchScore: number;
 }
 
 interface GroupedResults {
@@ -39,6 +41,10 @@ export class SearchDialogComponent implements OnChanges {
   groupedResults: GroupedResults[] = [];
   flatResults: SearchResult[] = [];
   activeIndex = -1;
+  navigatingWithKeys = false;
+
+  private fuse!: Fuse<SearchableRoute & { translatedLabel: string }>;
+  private keyNavTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     private router: Router,
@@ -51,12 +57,13 @@ export class SearchDialogComponent implements OnChanges {
       this.groupedResults = [];
       this.flatResults = [];
       this.activeIndex = -1;
+      this.buildFuseIndex();
       setTimeout(() => this.searchInput?.nativeElement.focus(), 50);
     }
   }
 
   onSearch(): void {
-    const q = this.query.trim().toLowerCase();
+    const q = this.query.trim();
     if (!q) {
       this.groupedResults = [];
       this.flatResults = [];
@@ -64,13 +71,11 @@ export class SearchDialogComponent implements OnChanges {
       return;
     }
 
-    const matches: SearchResult[] = SEARCHABLE_ROUTES.filter((route) => {
-      const label = this.getLabel(route).toLowerCase();
-      if (label.includes(q)) return true;
-      return route.keywords.some((kw) => kw.toLowerCase().includes(q));
-    }).map((route) => ({
-      ...route,
-      translatedLabel: this.getLabel(route),
+    const fuseResults = this.fuse.search(q, { limit: 15 });
+
+    const matches: SearchResult[] = fuseResults.map((result) => ({
+      ...result.item,
+      matchScore: result.score ?? 1,
     }));
 
     // Group by category
@@ -85,8 +90,9 @@ export class SearchDialogComponent implements OnChanges {
       category,
       items,
     }));
-    this.flatResults = matches;
-    this.activeIndex = matches.length > 0 ? 0 : -1;
+    // flatResults must match the visual display order (grouped), not the Fuse relevance order
+    this.flatResults = this.groupedResults.flatMap((g) => g.items);
+    this.activeIndex = this.flatResults.length > 0 ? 0 : -1;
   }
 
   onKeydown(event: KeyboardEvent): void {
@@ -98,17 +104,16 @@ export class SearchDialogComponent implements OnChanges {
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      if (this.flatResults.length > 0) {
-        this.activeIndex = (this.activeIndex + 1) % this.flatResults.length;
+      this.lockKeyNav();
+      if (this.flatResults.length > 0 && this.activeIndex < this.flatResults.length - 1) {
+        this.activeIndex++;
         this.scrollActiveIntoView();
       }
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
-      if (this.flatResults.length > 0) {
-        this.activeIndex =
-          this.activeIndex <= 0
-            ? this.flatResults.length - 1
-            : this.activeIndex - 1;
+      this.lockKeyNav();
+      if (this.flatResults.length > 0 && this.activeIndex > 0) {
+        this.activeIndex--;
         this.scrollActiveIntoView();
       }
     } else if (event.key === 'Enter') {
@@ -137,6 +142,12 @@ export class SearchDialogComponent implements OnChanges {
     return this.flatResults.indexOf(result);
   }
 
+  onMouseEnterResult(index: number): void {
+    if (!this.navigatingWithKeys) {
+      this.activeIndex = index;
+    }
+  }
+
   onOverlayClick(event: MouseEvent): void {
     if ((event.target as HTMLElement).classList.contains('search-overlay')) {
       this.close();
@@ -145,6 +156,34 @@ export class SearchDialogComponent implements OnChanges {
 
   private getLabel(route: SearchableRoute): string {
     return route.label || this.translate.instant(route.labelKey);
+  }
+
+  private buildFuseIndex(): void {
+    const data = SEARCHABLE_ROUTES.map((route) => ({
+      ...route,
+      translatedLabel: this.getLabel(route),
+      descriptionTokens: route.description.split(/\s+/),
+    }));
+
+    this.fuse = new Fuse(data, {
+      keys: [
+        { name: 'translatedLabel', weight: 3 },
+        { name: 'keywords', weight: 2 },
+        { name: 'descriptionTokens', weight: 1 },
+        { name: 'category', weight: 0.5 },
+      ],
+      threshold: 0.3,
+      includeScore: true,
+      minMatchCharLength: 2,
+    });
+  }
+
+  private lockKeyNav(): void {
+    this.navigatingWithKeys = true;
+    if (this.keyNavTimeout) clearTimeout(this.keyNavTimeout);
+    this.keyNavTimeout = setTimeout(() => {
+      this.navigatingWithKeys = false;
+    }, 150);
   }
 
   private scrollActiveIntoView(): void {

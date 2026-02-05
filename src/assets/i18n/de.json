@@ -602,6 +602,13 @@
     "navigate": "navigieren",
     "open": "öffnen",
     "close": "schließen",
-    "noResults": "Keine Ergebnisse"
+    "noResults": "Keine Ergebnisse",
+    "category": {
+      "home": "Start",
+      "gimmicks": "Gimmicks",
+      "games": "Spiele",
+      "recipes": "Rezepte",
+      "movies": "Filme"
+    }
   }
 }

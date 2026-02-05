@@ -602,6 +602,13 @@
     "navigate": "navigiraj",
     "open": "otvori",
     "close": "zatvori",
-    "noResults": "Nema rezultata"
+    "noResults": "Nema rezultata",
+    "category": {
+      "home": "Početna",
+      "gimmicks": "Gimmicks",
+      "games": "Igre",
+      "recipes": "Recepti",
+      "movies": "Filmovi"
+    }
   }
 }
