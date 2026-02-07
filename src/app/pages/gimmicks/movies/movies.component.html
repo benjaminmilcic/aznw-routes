@@ -59,12 +59,14 @@
           >
             {{ "gimmicks.movies.tabs.search" | translate }}
           </div>
-          <div
-            #indicatorEl
-            class="absolute bottom-0 h-[2px] bg-yellow-200 transition-all duration-300 ease-in-out"
-            [style.left.px]="indicatorLeft()"
-            [style.width.px]="indicatorWidth()"
-          ></div>
+          @if (indicatorReady()) {
+            <div
+              #indicatorEl
+              class="absolute bottom-0 h-[2px] bg-yellow-200 transition-all duration-300 ease-in-out"
+              [style.left.px]="indicatorLeft()"
+              [style.width.px]="indicatorWidth()"
+            ></div>
+          }
         </div>
       </div>
       @if (needsScroll()) {

@@ -24,6 +24,7 @@ export class MoviesComponent implements AfterViewInit {
   isDetailView = signal(false);
   indicatorLeft = signal(0);
   indicatorWidth = signal(0);
+  indicatorReady = signal(false);
   needsScroll = signal(false);
   showLeftArrow = signal(false);
   showRightArrow = signal(false);
@@ -84,25 +85,21 @@ export class MoviesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.updateIndicator();
     this.checkScrollArrows();
     this.tabItems.changes.subscribe(() => {
       this.updateIndicator();
       this.checkScrollArrows();
     });
 
-    // Recalculate after fonts are loaded (production: fonts load async)
-    document.fonts.ready.then(() => {
-      this.updateIndicator(false);
-      this.checkScrollArrows();
-    });
-
-    // Recalculate when translations change (async translation load on reload)
+    // Show indicator after translations load + fonts ready
     this.translateService.onLangChange.subscribe(() => {
-      setTimeout(() => {
-        this.updateIndicator(false);
-        this.checkScrollArrows();
-      }, 0);
+      document.fonts.ready.then(() => {
+        setTimeout(() => {
+          this.updateIndicator(false);
+          this.checkScrollArrows();
+          this.indicatorReady.set(true);
+        }, 0);
+      });
     });
   }
 
