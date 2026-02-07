@@ -1,3 +1,11 @@
+.tab-item {
+  @media (hover: hover) {
+    &:hover {
+      color: theme('colors.yellow.200');
+    }
+  }
+}
+
 .tab-scroll-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
