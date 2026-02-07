@@ -94,21 +94,15 @@ export class ActorDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private scrollToTop(): void {
     setTimeout(() => {
-      if (this.parentScrollContainer) {
-        this.parentScrollContainer.scrollTop = 0;
-      }
       window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
     }, 100);
   }
 
   private restoreScrollPosition(actorId: string): void {
     setTimeout(() => {
-      if (this.parentScrollContainer) {
-        const scrollPos =
-          this.moviesStateService.getActorScrollPosition(actorId);
-        this.parentScrollContainer.scrollTop = scrollPos;
-      }
+      const scrollPos =
+        this.moviesStateService.getActorScrollPosition(actorId);
+      window.scrollTo(0, scrollPos);
     }, 100);
   }
 

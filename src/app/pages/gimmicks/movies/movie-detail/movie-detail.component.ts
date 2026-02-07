@@ -109,11 +109,9 @@ export class MovieDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private restoreScrollPosition(movieId: string): void {
     setTimeout(() => {
-      if (this.parentScrollContainer) {
-        const scrollPos =
-          this.moviesStateService.getDetailScrollPosition(movieId);
-        this.parentScrollContainer.scrollTop = scrollPos;
-      }
+      const scrollPos =
+        this.moviesStateService.getDetailScrollPosition(movieId);
+      window.scrollTo(0, scrollPos);
     }, 100);
   }
 
@@ -161,9 +159,7 @@ export class MovieDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Scroll to top if navigating to similar movie
           if (shouldScrollToTop) {
-            if (this.parentScrollContainer) {
-              this.parentScrollContainer.scrollTop = 0;
-            }
+            window.scrollTo(0, 0);
             this.moviesStateService.setNavigatingToSimilarMovie(false);
           }
         }, 200);

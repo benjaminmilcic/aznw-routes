@@ -60,8 +60,7 @@ export class MoviesComponent implements AfterViewInit {
             this.saveScrollPosition(currentRoute);
 
             // Push the list route to history so we can navigate back to it
-            const scrollPos = this.scrollContainer?.nativeElement.scrollTop || 0;
-            this.moviesStateService.pushToHistory(currentRoute, scrollPos, 'list');
+            this.moviesStateService.pushToHistory(currentRoute, window.scrollY, 'list');
           }
         }
       }
@@ -100,34 +99,50 @@ export class MoviesComponent implements AfterViewInit {
     if (el) {
       this.indicatorLeft.set(el.offsetLeft);
       this.indicatorWidth.set(el.offsetWidth);
-      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'nearest' });
+      this.scrollTabIntoView(el, smooth);
       setTimeout(() => this.checkScrollArrows(), smooth ? 350 : 0);
     }
   }
 
-  private saveScrollPosition(routePath: string): void {
-    if (this.scrollContainer) {
-      const scrollPosition = this.scrollContainer.nativeElement.scrollTop;
-      const state = this.moviesStateService.getState(routePath) || {
-        pageIndex: 0,
-        pageSize: 20,
-        scrollPosition: 0,
-      };
-      state.scrollPosition = scrollPosition;
-      this.moviesStateService.saveState(routePath, state);
-      this.lastListRoute = routePath;
+  private scrollTabIntoView(el: HTMLElement, smooth: boolean): void {
+    const container = this.tabScrollContainer?.nativeElement;
+    if (!container) return;
+    const elLeft = el.offsetLeft;
+    const elRight = elLeft + el.offsetWidth;
+    const scrollLeft = container.scrollLeft;
+    const containerWidth = container.clientWidth;
+
+    let target = scrollLeft;
+    if (elLeft < scrollLeft) {
+      target = elLeft;
+    } else if (elRight > scrollLeft + containerWidth) {
+      target = elRight - containerWidth;
+    }
+
+    if (target !== scrollLeft) {
+      container.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'instant' });
     }
   }
 
+  private saveScrollPosition(routePath: string): void {
+    const scrollPosition = window.scrollY;
+    const state = this.moviesStateService.getState(routePath) || {
+      pageIndex: 0,
+      pageSize: 20,
+      scrollPosition: 0,
+    };
+    state.scrollPosition = scrollPosition;
+    this.moviesStateService.saveState(routePath, state);
+    this.lastListRoute = routePath;
+  }
+
   private restoreScrollPosition(): void {
-    if (this.scrollContainer) {
-      const routePath = this.router.url;
-      const state = this.moviesStateService.getState(routePath);
-      if (state) {
-        setTimeout(() => {
-          this.scrollContainer.nativeElement.scrollTop = state.scrollPosition;
-        }, 100);
-      }
+    const routePath = this.router.url;
+    const state = this.moviesStateService.getState(routePath);
+    if (state) {
+      setTimeout(() => {
+        window.scrollTo(0, state.scrollPosition);
+      }, 100);
     }
   }
 
@@ -214,9 +229,7 @@ export class MoviesComponent implements AfterViewInit {
       this.router.navigateByUrl(historyEntry.route).then(() => {
         // Restore scroll position after navigation
         setTimeout(() => {
-          if (this.scrollContainer) {
-            this.scrollContainer.nativeElement.scrollTop = historyEntry.scrollPosition;
-          }
+          window.scrollTo(0, historyEntry.scrollPosition);
         }, 100);
       });
     } else {
