@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { CommonModule, Location } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-movies',
@@ -32,7 +32,8 @@ export class MoviesComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private moviesStateService: MoviesStateService,
-    private location: Location
+    private location: Location,
+    private translateService: TranslateService
   ) {
     // Set initial tab based on current route
     this.updateTabIndex(this.router.url);
@@ -88,6 +89,20 @@ export class MoviesComponent implements AfterViewInit {
     this.tabItems.changes.subscribe(() => {
       this.updateIndicator();
       this.checkScrollArrows();
+    });
+
+    // Recalculate after fonts are loaded (production: fonts load async)
+    document.fonts.ready.then(() => {
+      this.updateIndicator(false);
+      this.checkScrollArrows();
+    });
+
+    // Recalculate when translations change (async translation load on reload)
+    this.translateService.onLangChange.subscribe(() => {
+      setTimeout(() => {
+        this.updateIndicator(false);
+        this.checkScrollArrows();
+      }, 0);
     });
   }
 
