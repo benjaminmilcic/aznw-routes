@@ -1,23 +1,10 @@
-@use "@angular/material" as mat;
+.tab-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
-mat-tab-group,
-mat-tab {
-  @include mat.tabs-overrides(
-    (
-      active-focus-indicator-color: yellow,
-      active-focus-label-text-color: yellow,
-      active-hover-indicator-color: yellow,
-      active-hover-label-text-color: yellow,
-      active-indicator-color: yellow,
-      active-label-text-color: yellow,
-      active-ripple-color: yellow,
-      disabled-ripple-color: yellow,
-      inactive-focus-label-text-color: white,
-      inactive-hover-label-text-color: yellow,
-      inactive-label-text-color: white,
-      pagination-icon-color: white,
-    )
-  );
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 section {

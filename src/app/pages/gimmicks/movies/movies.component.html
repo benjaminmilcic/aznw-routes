@@ -7,19 +7,76 @@
     🎬 {{ "gimmicks.movies.moviePortal" | translate }}
   </div>
   @if (!isDetailView()) {
-  <div class="relative flex justify-center mb-4">
-    <mat-tab-group
-      [selectedIndex]="selectedTabIndex()"
-      (selectedIndexChange)="onTabChange($event)"
-    >
-      <mat-tab [label]="'gimmicks.movies.tabs.popular' | translate"></mat-tab>
-      <mat-tab [label]="'gimmicks.movies.tabs.topRated' | translate"></mat-tab>
-      <mat-tab
-        [label]="'gimmicks.movies.tabs.nowPlaying' | translate"
-      ></mat-tab>
-      <mat-tab [label]="'gimmicks.movies.tabs.search' | translate"></mat-tab>
-    </mat-tab-group>
-  </div>
+    <div class="relative mb-4 w-full flex items-center overflow-hidden">
+      @if (needsScroll()) {
+        <div
+          class="flex items-center justify-center w-8 shrink-0 transition-colors select-none"
+          [ngClass]="showLeftArrow() ? 'text-white cursor-pointer' : 'text-gray-500 cursor-default'"
+          (click)="showLeftArrow() && scrollTabs('left')"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </div>
+      }
+      <div #tabScrollContainer class="text-white overflow-x-auto tab-scroll-container flex-1 min-w-0" (scroll)="onTabScroll()">
+        <div class="relative flex items-center w-fit mx-auto">
+          <div
+            #tabItem
+            matRipple
+            [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
+            class="px-6 py-[10px] cursor-pointer transition-colors duration-300 hover:text-yellow-200 whitespace-nowrap"
+            [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 0 }"
+            (click)="onTabChange(0)"
+          >
+            {{ "gimmicks.movies.tabs.popular" | translate }}
+          </div>
+          <div
+            #tabItem
+            matRipple
+            [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
+            class="px-6 py-[10px] cursor-pointer transition-colors duration-300 hover:text-yellow-200 whitespace-nowrap"
+            [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 1 }"
+            (click)="onTabChange(1)"
+          >
+            {{ "gimmicks.movies.tabs.topRated" | translate }}
+          </div>
+          <div
+            #tabItem
+            matRipple
+            [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
+            class="px-6 py-[10px] cursor-pointer transition-colors duration-300 hover:text-yellow-200 whitespace-nowrap"
+            [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 2 }"
+            (click)="onTabChange(2)"
+          >
+            {{ "gimmicks.movies.tabs.nowPlaying" | translate }}
+          </div>
+          <div
+            #tabItem
+            matRipple
+            [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
+            class="px-6 py-[10px] cursor-pointer transition-colors duration-300 hover:text-yellow-200 whitespace-nowrap"
+            [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 3 }"
+            (click)="onTabChange(3)"
+          >
+            {{ "gimmicks.movies.tabs.search" | translate }}
+          </div>
+          <div
+            #indicatorEl
+            class="absolute bottom-0 h-[2px] bg-yellow-200 transition-all duration-300 ease-in-out"
+            [style.left.px]="indicatorLeft()"
+            [style.width.px]="indicatorWidth()"
+          ></div>
+        </div>
+      </div>
+      @if (needsScroll()) {
+        <div
+          class="flex items-center justify-center w-8 shrink-0 transition-colors select-none"
+          [ngClass]="showRightArrow() ? 'text-white cursor-pointer' : 'text-gray-500 cursor-default'"
+          (click)="showRightArrow() && scrollTabs('right')"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </div>
+      }
+    </div>
   }
   <div class="w-full flex-1 relative">
     <router-outlet></router-outlet>

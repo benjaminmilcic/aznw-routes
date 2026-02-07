@@ -1,25 +1,32 @@
-import { Component, signal, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, signal, ViewChild, ViewChildren, ElementRef, AfterViewInit, QueryList, effect, HostListener } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/router';
-import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
-import { filter } from 'rxjs';
 import { MoviesStateService } from './movies-state.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Location } from '@angular/common';
+import { MatRippleModule } from '@angular/material/core';
+import { CommonModule, Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-movies',
-  imports: [RouterOutlet, MatTabsModule, FormsModule, MatIconModule, MatButtonModule, TranslateModule],
+  imports: [RouterOutlet, FormsModule, MatIconModule, MatButtonModule, MatRippleModule, TranslateModule, CommonModule],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
 })
 export class MoviesComponent implements AfterViewInit {
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
+  @ViewChild('tabScrollContainer') tabScrollContainer!: ElementRef<HTMLElement>;
+  @ViewChild('indicatorEl') indicatorEl!: ElementRef<HTMLElement>;
+  @ViewChildren('tabItem') tabItems!: QueryList<ElementRef<HTMLElement>>;
 
   selectedTabIndex = signal(0);
   isDetailView = signal(false);
+  indicatorLeft = signal(0);
+  indicatorWidth = signal(0);
+  needsScroll = signal(false);
+  showLeftArrow = signal(false);
+  showRightArrow = signal(false);
   private lastListRoute: string = '';
 
   constructor(
@@ -29,6 +36,13 @@ export class MoviesComponent implements AfterViewInit {
   ) {
     // Set initial tab based on current route
     this.updateTabIndex(this.router.url);
+
+    // Update indicator when tab changes
+    effect(() => {
+      this.selectedTabIndex();
+      // Delay to ensure DOM is ready
+      setTimeout(() => this.updateIndicator(), 0);
+    });
 
     // Listen to route changes
     this.router.events.subscribe((event) => {
@@ -70,7 +84,25 @@ export class MoviesComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Component is ready
+    this.updateIndicator();
+    this.checkScrollArrows();
+    this.tabItems.changes.subscribe(() => {
+      this.updateIndicator();
+      this.checkScrollArrows();
+    });
+  }
+
+  private updateIndicator(smooth = true): void {
+    const items = this.tabItems?.toArray();
+    if (!items?.length) return;
+    const index = this.selectedTabIndex();
+    const el = items[index]?.nativeElement;
+    if (el) {
+      this.indicatorLeft.set(el.offsetLeft);
+      this.indicatorWidth.set(el.offsetWidth);
+      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'nearest' });
+      setTimeout(() => this.checkScrollArrows(), smooth ? 350 : 0);
+    }
   }
 
   private saveScrollPosition(routePath: string): void {
@@ -115,6 +147,46 @@ export class MoviesComponent implements AfterViewInit {
       this.selectedTabIndex.set(3);
     }
     // For movie and actor detail views, we don't change the tab index
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    const el = this.indicatorEl?.nativeElement;
+    if (el) {
+      el.style.transition = 'none';
+    }
+    this.updateIndicator(false);
+    this.checkScrollArrows();
+    requestAnimationFrame(() => {
+      if (el) {
+        el.style.transition = '';
+      }
+    });
+  }
+
+  scrollTabs(direction: 'left' | 'right'): void {
+    const container = this.tabScrollContainer?.nativeElement;
+    if (!container) return;
+    const scrollAmount = 150;
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  }
+
+  onTabScroll(): void {
+    this.checkScrollArrows();
+  }
+
+  private checkScrollArrows(): void {
+    const container = this.tabScrollContainer?.nativeElement;
+    if (!container) return;
+    const overflows = container.scrollWidth > container.clientWidth;
+    this.needsScroll.set(overflows);
+    this.showLeftArrow.set(overflows && container.scrollLeft > 0);
+    this.showRightArrow.set(
+      overflows && container.scrollLeft + container.clientWidth < container.scrollWidth - 1
+    );
   }
 
   onTabChange(index: number): void {
