@@ -19,6 +19,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
             height="100%"
             frameborder="0"
             allowfullscreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
             style="border: none;"
           >
           </iframe>
@@ -40,15 +41,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
               />
             </svg>
           </button>
-        </div>
-        <div class="text-[10px] text-gray-500 text-center">
-          Powered by
-          <a
-            href="https://www.windy.com"
-            target="_blank"
-            class="text-blue-500 hover:underline"
-            >Windy.com</a
-          >
         </div>
       </div>
     }

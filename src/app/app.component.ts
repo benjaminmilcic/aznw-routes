@@ -100,6 +100,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // Check if we navigated to a different route
         const routeChanged = this.previousRoute !== routePath;
+        const prevRoute = this.previousRoute;
         this.previousRoute = routePath;
 
         if (fragment) {
@@ -116,8 +117,13 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           }, 100);
         } else if (routeChanged) {
-          // Scroll to top when navigating to a different route without fragment
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Skip scroll-to-top for auth child route transitions (login <-> main)
+          const isAuthChildNav =
+            prevRoute.startsWith('/gimmicks/auth/') &&
+            routePath.startsWith('/gimmicks/auth/');
+          if (!isAuthChildNav) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
         }
       });
   }
