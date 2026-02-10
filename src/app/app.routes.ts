@@ -35,6 +35,9 @@ import { MoviesPopularComponent } from './pages/gimmicks/movies/movies-popular/m
 import { MovieDetailComponent } from './pages/gimmicks/movies/movie-detail/movie-detail.component';
 import { ActorDetailComponent } from './pages/gimmicks/movies/actor-detail/actor-detail.component';
 import { FlagQuizComponent } from './pages/gimmicks/games/flag-quiz/flag-quiz.component';
+import { CountriesComponent } from './pages/gimmicks/countries/countries.component';
+import { CountriesWorldmapComponent } from './pages/gimmicks/countries/countries-worldmap/countries-worldmap.component';
+import { CountriesDetailComponent } from './pages/gimmicks/countries/countries-detail/countries-detail.component';
 
 export const routes: Routes = [
   {
@@ -200,6 +203,20 @@ export const routes: Routes = [
           {
             path: 'actor/:id',
             component: ActorDetailComponent,
+          },
+        ],
+      },
+      {
+        path: 'countries',
+        component: CountriesComponent,
+        children: [
+          {
+            path: '',
+            component: CountriesWorldmapComponent,
+          },
+          {
+            path: 'country/:code',
+            component: CountriesDetailComponent,
           },
         ],
       },

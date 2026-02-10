@@ -47,3 +47,10 @@
   fragment="movies-scroll-container"
   ><i class="fas fa-angle-up"></i
 ></a>
+<a
+  *ngIf="currentRoute && currentRoute.includes('/gimmicks/countries')"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="[currentRoute]"
+  fragment="header"
+  ><i class="fas fa-angle-up"></i
+></a>

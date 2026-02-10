@@ -1,0 +1,572 @@
+<div class="flex justify-center w-full p-4 box-border">
+  <div class="flex flex-col max-w-[1200px] w-full text-white">
+    <div class="sticky top-[70px] z-50 pb-2 -mt-1 pt-1">
+      <button
+        mat-raised-button
+        routerLink="/gimmicks/countries"
+        color="primary"
+        class="w-fit"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        <span class="ml-2">{{
+          "gimmicks.countries.backToMap" | translate
+        }}</span>
+      </button>
+    </div>
+    @if (loading) {
+      <div class="flex items-center justify-center p-12">
+        <mat-spinner diameter="48"></mat-spinner>
+      </div>
+    } @else if (country) {
+      <div
+        class="bg-gradient-to-br from-red-900/60 to-red-700/60 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl p-4"
+      >
+        <div class="flex items-center gap-4 w-full flex-wrap">
+          <img
+            [src]="country.flags.svg"
+            [alt]="
+              country.flags.alt ||
+              countryName + ' ' + ('gimmicks.countries.flag' | translate)
+            "
+            class="w-24 h-16 object-cover rounded shadow-md"
+          />
+          <div class="flex-1 min-w-[200px]">
+            <div class="text-2xl font-bold">{{ countryName }}</div>
+            <div>{{ countryOfficialName }}</div>
+          </div>
+        </div>
+        @if (wikipediaExtract) {
+          <hr class="border-white border mt-4" />
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="">auto_stories</mat-icon>
+              {{ "gimmicks.countries.about" | translate }} {{ countryName }}
+            </h3>
+            <p class="text-sm leading-relaxed">{{ wikipediaExtract }}</p>
+          </div>
+        }
+        <hr class="border-white border mt-4" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Grundinformationen -->
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-blue-500">info</mat-icon>
+              {{ "gimmicks.countries.basicInfo" | translate }}
+            </h3>
+
+            <div class="space-y-2 text-sm">
+              @if (country.capital && country.capital.length) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.capital" | translate }}:</span
+                  >
+                  <span>{{ capitalDisplay }}</span>
+                </div>
+              }
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.region" | translate }}:</span
+                >
+                <span>{{ regionDisplay }}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.continent" | translate }}:</span
+                >
+                <span>{{ continentsDisplay }}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.population" | translate }}:</span
+                >
+                <span>{{ country.population | number: "1.0-0" }}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.area" | translate }}:</span
+                >
+                <span>{{ country.area | number: "1.0-0" }} km²</span>
+              </div>
+              @if (country.independent !== undefined) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.independent" | translate }}:</span
+                  >
+                  <span>{{
+                    country.independent
+                      ? ("gimmicks.countries.yes" | translate)
+                      : ("gimmicks.countries.no" | translate)
+                  }}</span>
+                </div>
+              }
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.unMember" | translate }}:</span
+                >
+                <span>{{
+                  country.unMember
+                    ? ("gimmicks.countries.yes" | translate)
+                    : ("gimmicks.countries.no" | translate)
+                }}</span>
+              </div>
+              <div class="flex gap-2">
+                <span class="font-medium min-w-[125px]"
+                  >{{ "gimmicks.countries.landlocked" | translate }}:</span
+                >
+                <span>{{
+                  country.landlocked
+                    ? ("gimmicks.countries.yes" | translate)
+                    : ("gimmicks.countries.no" | translate)
+                }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Währung & Sprachen -->
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-green-500">payments</mat-icon>
+              {{ "gimmicks.countries.currencyAndLanguages" | translate }}
+            </h3>
+
+            <div class="space-y-2 text-sm">
+              @if (currencies.length) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.currency" | translate }}:</span
+                  >
+                  <span>{{ currencies.join(", ") }}</span>
+                </div>
+              }
+              @if (languages.length) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.languages" | translate }}:</span
+                  >
+                  <span>{{ languages.join(", ") }}</span>
+                </div>
+              }
+              @if (phoneCode) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.dialCode" | translate }}:</span
+                  >
+                  <span>{{ phoneCode }}</span>
+                </div>
+              }
+              @if (tldDisplay) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.domain" | translate }}:</span
+                  >
+                  <span>{{ tldDisplay }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Wirtschaft & Gesellschaft -->
+          @if (
+            worldBankData &&
+            (worldBankData.gdpPerCapita || worldBankData.lifeExpectancy)
+          ) {
+            <div class="space-y-3">
+              <h3 class="font-semibold text-lg flex items-center gap-2">
+                <mat-icon class="text-emerald-500">analytics</mat-icon>
+                {{ "gimmicks.countries.economyAndSociety" | translate }}
+                @if (worldBankData.year) {
+                  <span class="text-xs text-gray-400 font-normal"
+                    >({{ worldBankData.year }})</span
+                  >
+                }
+              </h3>
+
+              <div class="space-y-2 text-sm">
+                @if (worldBankData.gdpPerCapita) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.gdpPerCapita" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.gdpPerCapita | number: "1.0-0"
+                      }}
+                      $</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.gdpTotal) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{ "gimmicks.countries.gdpTotal" | translate }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.gdpTotal / 1000000000 | number: "1.1-1"
+                      }}
+                      {{ "gimmicks.countries.billion" | translate }} $</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.lifeExpectancy) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.lifeExpectancy" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{ worldBankData.lifeExpectancy | number: "1.1-1" }}
+                      {{ "gimmicks.countries.yearsUnit" | translate }}</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.unemploymentRate !== undefined) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.unemploymentRate" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.unemploymentRate | number: "1.1-1"
+                      }}
+                      %</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.populationGrowth !== undefined) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.populationGrowth" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.populationGrowth | number: "1.2-2"
+                      }}
+                      %</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.infantMortality) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.infantMortality" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.infantMortality | number: "1.1-1"
+                      }}
+                      ‰</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.literacyRate) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.literacyRate" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.literacyRate | number: "1.1-1"
+                      }}
+                      %</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.internetUsers) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.internetUsers" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.internetUsers | number: "1.1-1"
+                      }}
+                      %</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.co2PerCapita) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.co2PerCapita" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.co2PerCapita | number: "1.1-1"
+                      }}
+                      t</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.electricityAccess) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.electricityAccess" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{
+                        worldBankData.electricityAccess | number: "1.1-1"
+                      }}
+                      %</span
+                    >
+                  </div>
+                }
+                @if (worldBankData.healthExpenditure) {
+                  <div class="flex gap-2">
+                    <span class="font-medium min-w-[125px]"
+                      >{{
+                        "gimmicks.countries.healthExpenditure" | translate
+                      }}:</span
+                    >
+                    <span
+                      >{{ worldBankData.healthExpenditure | number: "1.1-1" }} %
+                      {{ "gimmicks.countries.ofGdp" | translate }}</span
+                    >
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Zusätzliche Infos -->
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-purple-500">explore</mat-icon>
+              {{ "gimmicks.countries.moreInfo" | translate }}
+            </h3>
+
+            <div class="space-y-2 text-sm">
+              @if (country.timezones?.length) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.timezones" | translate }}:</span
+                  >
+                  <span class="break-all"
+                    >{{ sortedTimezones.slice(0, 3).join(", ")
+                    }}{{
+                      sortedTimezones.length > 3
+                        ? " (+" + (sortedTimezones.length - 3) + ")"
+                        : ""
+                    }}</span
+                  >
+                </div>
+              }
+              @if (country.car) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.drivingSide" | translate }}:</span
+                  >
+                  <span>{{
+                    country.car.side === "right"
+                      ? ("gimmicks.countries.right" | translate)
+                      : ("gimmicks.countries.left" | translate)
+                  }}</span>
+                </div>
+              }
+              @if (country.startOfWeek) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.startOfWeek" | translate }}:</span
+                  >
+                  <span>{{
+                    country.startOfWeek === "monday"
+                      ? ("gimmicks.countries.monday" | translate)
+                      : country.startOfWeek === "sunday"
+                        ? ("gimmicks.countries.sunday" | translate)
+                        : country.startOfWeek
+                  }}</span>
+                </div>
+              }
+              @if (country.fifa) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.fifaCode" | translate }}:</span
+                  >
+                  <span>{{ country.fifa }}</span>
+                </div>
+              }
+              @if (country.gini && giniInfo) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.giniIndex" | translate }}:</span
+                  >
+                  <span>{{ giniInfo }}</span>
+                </div>
+              }
+              @if (country.latlng && country.latlng.length >= 2) {
+                <div class="flex gap-2">
+                  <span class="font-medium min-w-[125px]"
+                    >{{ "gimmicks.countries.coordinates" | translate }}:</span
+                  >
+                  <span
+                    >{{ country.latlng[0] | number: "1.2-2" }}°,
+                    {{ country.latlng[1] | number: "1.2-2" }}°</span
+                  >
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Codes -->
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-orange-500">code</mat-icon>
+              {{ "gimmicks.countries.countryCodes" | translate }}
+            </h3>
+
+            <div class="flex flex-wrap gap-2">
+              <mat-chip-set>
+                <mat-chip>ISO 3166-1 alpha-2: {{ country.cca2 }}</mat-chip>
+                <mat-chip>ISO 3166-1 alpha-3: {{ country.cca3 }}</mat-chip>
+              </mat-chip-set>
+            </div>
+          </div>
+        </div>
+        <!-- Nachbarländer -->
+        @if (neighborCountries.length) {
+          <hr class="border-white border mt-4" />
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-teal-500">near_me</mat-icon>
+              {{ "gimmicks.countries.neighborCountries" | translate }}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              @for (neighbor of neighborCountries; track neighbor.cca3) {
+                <a
+                  mat-stroked-button
+                  [routerLink]="['/gimmicks/countries/country', neighbor.cca2]"
+                  class="!text-white !border-white neighbor-btn"
+                >
+                  <div class="flex flex-col gap-2 items-center">
+                    <img
+                      [src]="neighbor.flags.svg"
+                      class="w-5 h-3 object-cover rounded"
+                    />
+                    <div>
+                      {{
+                        neighbor.translations?.[translationKey]?.common ||
+                          neighbor.name.common
+                      }}
+                    </div>
+                  </div>
+                </a>
+              }
+            </div>
+          </div>
+        }
+
+        <hr class="border-white border mt-4" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Wappen -->
+          @if (coatOfArmsSvg) {
+            <div class="space-y-3">
+              <h3 class="font-semibold text-lg flex items-center gap-2">
+                <mat-icon class="text-amber-500">shield</mat-icon>
+                {{ "gimmicks.countries.coatOfArms" | translate }}
+              </h3>
+              <img
+                [src]="coatOfArmsSvg"
+                [alt]="
+                  ('gimmicks.countries.coatOfArms' | translate) +
+                  ' ' +
+                  countryName
+                "
+                class="h-32 object-contain"
+              />
+            </div>
+          }
+          <!-- Links -->
+          <div class="space-y-3">
+            <h3 class="font-semibold text-lg flex items-center gap-2">
+              <mat-icon class="text-blue-500">link</mat-icon>
+              Links
+            </h3>
+            <div class="flex gap-2 py-4 flex-wrap">
+              <div class="flex gap-2 flex-wrap">
+                <a
+                  mat-raised-button
+                  color="accent"
+                  [href]="wikipediaUrl"
+                  target="_blank"
+                >
+                  <mat-icon>menu_book</mat-icon>
+                  Wikipedia
+                </a>
+                @if (country.maps) {
+                  <a
+                    mat-raised-button
+                    color="accent"
+                    [href]="country.maps.googleMaps"
+                    target="_blank"
+                  >
+                    <mat-icon>map</mat-icon>
+                    Google Maps
+                  </a>
+                  <a
+                    mat-raised-button
+                    color="accent"
+                    [href]="country.maps.openStreetMaps"
+                    target="_blank"
+                  >
+                    <mat-icon>public</mat-icon>
+                    OpenStreetMap
+                  </a>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wetter & Wetterkarte -->
+        @if (hasCoordinates) {
+          <hr class="border-white border mt-4" />
+          <div class="space-y-3">
+            <h3
+              class="font-semibold text-lg flex items-center gap-2"
+            >
+              <mat-icon class="text-cyan-500">{{
+                weather?.isDay ? "wb_sunny" : "nights_stay"
+              }}</mat-icon>
+              {{ "gimmicks.countries.weatherFor" | translate }} {{ countryName }}
+            </h3>
+
+            <!-- Weather Map -->
+            <app-countries-weather-map
+              [lat]="countryLat"
+              [lon]="countryLon"
+              [area]="country.area"
+              [lang]="currentLang"
+            >
+            </app-countries-weather-map>
+          </div>
+        }
+      </div>
+    } @else if (!loading) {
+      <div class="flex flex-col gap-6 items-center p-8 w-full">
+        <mat-icon class="text-gray-400 !text-6xl !w-16 !h-16 !leading-[4rem]"
+          >error_outline</mat-icon
+        >
+        <p class="text-gray-400 mt-4">
+          {{ "gimmicks.countries.countryNotFound" | translate }}
+        </p>
+      </div>
+    }
+  </div>
+</div>

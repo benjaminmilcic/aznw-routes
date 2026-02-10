@@ -32,7 +32,14 @@
       "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" show 8cd12d3 --no-stat -p)",
       "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" diff 8cd12d3^..8cd12d3)",
       "Bash(git -C \"C:\\\\eigene Projekte\\\\aznw-routes\" revert 8cd12d3 --no-edit)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(git log:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:restcountries.com)",
+      "Bash(curl:*)",
+      "Bash(python -c:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

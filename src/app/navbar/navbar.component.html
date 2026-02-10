@@ -173,6 +173,17 @@
 
             <a
               class="mega-item"
+              [routerLink]="['/gimmicks/countries']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon teal">
+                <span class="emoji-icon translate-y-[-2px]">🌍</span>
+              </div>
+              <span>{{ "gimmicks.menu.countries" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
               [routerLink]="['/gimmicks/auth/main']"
               (click)="gimmicksExpanded = false"
             >
@@ -421,6 +432,16 @@
         </a>
         <a
           class="mobile-sublink"
+          [routerLink]="['/gimmicks/countries']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon teal">
+            <span class="translate-y-[-2px]">🌍</span>
+          </div>
+          <span>{{ "gimmicks.menu.countries" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
           [routerLink]="['/gimmicks/auth/main']"
           (click)="closeMobileMenu()"
         >
@@ -435,7 +456,12 @@
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon pink">
-            <img src="assets/svg/tic-tac-toe-small.svg" width="32" height="32" alt="Games" />
+            <img
+              src="assets/svg/tic-tac-toe-small.svg"
+              width="32"
+              height="32"
+              alt="Games"
+            />
           </div>
           <span>{{ "gimmicks.menu.games" | translate }}</span>
         </a>
@@ -465,6 +491,4 @@
 </div>
 
 <!-- Search Dialog -->
-<app-search-dialog
-  [(open)]="searchOpen"
-></app-search-dialog>
+<app-search-dialog [(open)]="searchOpen"></app-search-dialog>

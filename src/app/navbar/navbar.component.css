@@ -213,6 +213,10 @@
   background: rgba(251, 113, 133, 0.2);
   color: #fb7185;
 }
+.mega-icon.teal {
+  background: rgba(20, 184, 166, 0.2);
+  color: #2dd4bf;
+}
 .mega-icon.gold {
   background: rgba(250, 204, 21, 0.2);
   color: #fde047;
@@ -565,6 +569,10 @@
 .sublink-icon.coral {
   background: rgba(251, 113, 133, 0.2);
   color: #fb7185;
+}
+.sublink-icon.teal {
+  background: rgba(20, 184, 166, 0.2);
+  color: #2dd4bf;
 }
 .sublink-icon.gold {
   background: rgba(250, 204, 21, 0.2);
