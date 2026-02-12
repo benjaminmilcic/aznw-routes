@@ -6,45 +6,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   selector: 'app-countries-weather-map',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    @if (isReady && mapUrl) {
-      <div class="space-y-2">
-        <div
-          class="relative rounded-lg overflow-hidden border border-gray-200"
-          style="height: 450px;"
-        >
-          <iframe
-            [src]="mapUrl"
-            width="100%"
-            height="100%"
-            frameborder="0"
-            allowfullscreen
-            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-            style="border: none;"
-          >
-          </iframe>
-          <button
-            (click)="resetMap()"
-            class="absolute top-1 left-1 bg-white/80 hover:bg-white text-gray-600 rounded p-0.5 shadow transition-all z-10"
-            title="Karte zurücksetzen"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-3 w-3"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    }
-  `,
+  templateUrl: './countries-weather-map.component.html',
+  styleUrl: './countries-weather-map.component.scss',
 })
 export class CountriesWeatherMapComponent implements OnChanges {
   @Input() lat: number | undefined;
