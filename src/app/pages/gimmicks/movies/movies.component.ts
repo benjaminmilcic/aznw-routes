@@ -91,7 +91,18 @@ export class MoviesComponent implements AfterViewInit {
       this.checkScrollArrows();
     });
 
-    // Show indicator after translations load + fonts ready
+    // If translations are already loaded (navigated from another page), show indicator immediately
+    if (this.translateService.currentLang) {
+      document.fonts.ready.then(() => {
+        setTimeout(() => {
+          this.updateIndicator(false);
+          this.checkScrollArrows();
+          this.indicatorReady.set(true);
+        }, 0);
+      });
+    }
+
+    // Show indicator after translations load (initial page load) + language changes
     this.translateService.onLangChange.subscribe(() => {
       document.fonts.ready.then(() => {
         setTimeout(() => {
