@@ -272,7 +272,7 @@
       "tryAgain": "Try again",
       "paymentFailed": "The payment with PayPal failed.",
       "clickToRotate": "Click on book to rotate",
-      "textToSpeech": "The TextToSpeech API used here is a free demo version and only supports 10 minutes of audio per month. After that, the API stops working. But that should be enough for demo purposes.",
+      "textToSpeech": "The TextToSpeech API used here is a free demo version and only supports 20 minutes of audio per month. After that, the API stops working. But that should be enough for demo purposes.",
       "loginWithGoogle": "Sign in with Google"
     },
     "games": {

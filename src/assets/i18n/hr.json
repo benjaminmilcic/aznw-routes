@@ -272,7 +272,7 @@
       "tryAgain": "Pokušajte ponovno",
       "paymentFailed": "Plaćanje putem PayPal-a nije uspjelo.",
       "clickToRotate": "Kliknite na knjigu da je rotirate",
-      "textToSpeech": "TextToSpeech API koji se ovdje koristi je besplatna demo verzija i podržava samo 10 minuta audio zapisa mjesečno. Nakon toga, API prestaje raditi. Ali to bi trebalo biti dovoljno za demonstraciju.",
+      "textToSpeech": "TextToSpeech API koji se ovdje koristi je besplatna demo verzija i podržava samo 20 minuta audio zapisa mjesečno. Nakon toga, API prestaje raditi. Ali to bi trebalo biti dovoljno za demonstraciju.",
       "loginWithGoogle": "Prijavite se putem Googlea"
     },
     "games": {
