@@ -6,6 +6,81 @@
     [formGroup]="paymentElementForm"
     class="flex flex-col"
   >
+    <div class="flex justify-center text-sm text-center">
+      {{ "gimmicks.jokes.testFormInfo" | translate }}&nbsp;<mat-icon
+        id="click-trigger3"
+        fontIcon="info"
+        class="shrink-0 cursor-pointer text-blue-300 hover:text-blue-400 transition-all duration-300"
+      ></mat-icon>
+      <ion-popover
+        trigger="click-trigger3"
+        triggerAction="click"
+        class="rounded-popover"
+      >
+        <ng-template>
+          <ion-content class="ion-padding"
+            ><div
+              id="container2"
+              class="p-4 backdrop-blur-sm bg-blue-950/90 border border-blue-700/40 text-gray-200 rounded-xl"
+            >
+              {{ "gimmicks.jokes.text6b" | translate }}
+              <div
+                class="bg-white/80 border border-white rounded p-2 text-xs grid grid-cols-2 my-2"
+              >
+                <div class="text-blue-500 mb-1">
+                  {{ "gimmicks.jokes.paymentSucceeds" | translate }}
+                </div>
+                <div class="text-blue-500 flex justify-end">
+                  <div>4242 4242 4242 4242</div>
+                  <div (click)="copyToClipboard('4242 4242 4242 4242', $event)">
+                    <i
+                      class="fa-regular fa-clipboard ml-1 hover:text-blue-700 cursor-pointer"
+                    ></i>
+                  </div>
+                </div>
+                <div class="text-orange-500 mb-1">
+                  {{ "gimmicks.jokes.paymentRequiresAuth" | translate }}
+                </div>
+                <div class="text-orange-500 flex justify-end">
+                  <div>4000 0025 0000 3155</div>
+                  <div (click)="copyToClipboard('4000 0025 0000 3155', $event)">
+                    <i
+                      class="fa-regular fa-clipboard ml-1 hover:text-orange-700 cursor-pointer"
+                    ></i>
+                  </div>
+                </div>
+                <div class="text-red-500">
+                  {{ "gimmicks.jokes.paymentDeclined" | translate }}
+                </div>
+                <div class="text-red-500 flex justify-end">
+                  <div>4000 0000 0000 9995</div>
+                  <div (click)="copyToClipboard('4000 0000 0000 9995', $event)">
+                    <i
+                      class="fa-regular fa-clipboard ml-1 hover:text-red-700 cursor-pointer"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              {{ "gimmicks.jokes.text7" | translate }}
+              <br />
+              <br />
+              {{ "gimmicks.jokes.text7a" | translate }}
+              <br />
+              <br />
+              {{ "gimmicks.jokes.text8" | translate }}
+              <a
+                href="https://www.amazon.de/Vicevi-dva-jezika-Sprachen-kroatisch/dp/B0CTXX39KZ/ref=sr_1_1?dib=eyJ2IjoiMSJ9.5PQfH2ltLtUPlA2ZafYO-Q.CSLZZD2SZp04jpj0y3zHZlaO3KokFMTL-OxcmiVQkw4&dib_tag=se&qid=1711988862&refinements=p_27%3ABenjamin+Mil%C4%8Di%C4%87&s=books&sr=1-1&text=Benjamin+Mil%C4%8Di%C4%87"
+                target="_blank"
+                class="text-sky-300 hover:text-sky-200 underline transition-colors duration-300"
+                >{{ "gimmicks.jokes.text9" | translate }}</a
+              >
+              {{ "gimmicks.jokes.text10" | translate }}
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+    <hr class="border-white border-b w-full mb-2" />
     <div
       class="flex justify-center mb-4 sm:text-lg lg:text-base xl:text-lg text-center"
     >

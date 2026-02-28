@@ -237,11 +237,13 @@
       "text3": "als Passwort verwenden.",
       "text4": "Sie finden hier auch ein Formular um das Buches zu bestellen. Das funktioniert über den Service von",
       "text5": "Stripe",
-      "text6": "Da es sich jedoch nur um eine Demo-Website handelt, können Sie das Buch mit diesem Formular nicht wirklich bestellen. Wenn Sie die Funktionalität ausprobieren möchten, geben Sie einfach eine beliebige Adresse und eine der folgenden Testkarten des Stripe-Dienstes ein, um eine Zahlung zu simulieren.",
+      "text6a":"Da es sich jedoch nur um eine Demo-Website handelt, können Sie das Buch mit diesem Formular nicht wirklich bestellen. ",
+      "text6b":"Wenn Sie die Funktionalität ausprobieren möchten, geben Sie einfach eine beliebige Adresse und eine der folgenden Testkarten des Stripe-Dienstes ein, um eine Zahlung zu simulieren.",
       "paymentSucceeds": "Zahlung erfolgreich",
       "paymentRequiresAuth": "Zahlung erfordert Authentifizierung",
       "paymentDeclined": "Zahlung abgelehnt",
       "text7": "Schließlich ein beliebiges Datum in der Zunkunft als Ablaufdatum und eine beliebige dreistellige Zahl als Prüfziffer.",
+      "text7a":"Oder wählen Sie PayPal aus, um eine Zahlung mit PayPal zu simulieren. Sie gelangen dort auf eine Demo-Checkout-Webseite von Paypal.",
       "text8": "Wenn Sie mein Buch wirklich lesen möchten, können Sie es",
       "text9": "hier",
       "text10": "bei Amazon bestellen.",
@@ -273,7 +275,8 @@
       "paymentFailed": "Die Zahlung mit PayPal ist fehlgeschlagen.",
       "clickToRotate": "Zum Umdrehen aufs Buch klicken",
       "textToSpeech": "Die TextToSpeech API die hier genutzt wird ist eine kostenlose Demo-Version und unterstützt nur 20 Minuten Audio pro Monat. Danach funktioniert die API nicht mehr. Aber für Demo-Zwecke sollte das reichen.",
-      "loginWithGoogle": "Mit Google anmelden"
+      "loginWithGoogle": "Mit Google anmelden",
+      "testFormInfo": "Dies ist nur ein Testformular. Sie können das Buch hier nicht wirklich kaufen."
     },
     "games": {
       "connectFour": "4 Gewinnt",

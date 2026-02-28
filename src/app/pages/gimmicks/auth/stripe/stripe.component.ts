@@ -36,21 +36,26 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { environment } from '../../../../../environments/environment';
 import { HttpErrorService } from '../../../http-error/http-error.service';
+import { IonPopover, IonContent } from '@ionic/angular/standalone';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-stripe',
-    imports: [
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        CommonModule,
-        NgxStripeModule,
-        MatInputModule,
-        FormsModule,
-        IonSpinner,
-        TranslateModule,
-    ],
-    templateUrl: './stripe.component.html',
-    styleUrl: './stripe.component.scss'
+  selector: 'app-stripe',
+  imports: [
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    CommonModule,
+    NgxStripeModule,
+    MatInputModule,
+    FormsModule,
+    IonSpinner,
+    TranslateModule,
+    IonPopover,
+    IonContent,
+    MatIconModule,
+  ],
+  templateUrl: './stripe.component.html',
+  styleUrl: './stripe.component.scss',
 })
 export class StripeComponent implements OnInit {
   @ViewChild(StripePaymentElementComponent)
@@ -113,7 +118,7 @@ export class StripeComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private authService: AuthService,
-    private httpErrorService: HttpErrorService
+    private httpErrorService: HttpErrorService,
   ) {}
 
   // async ngOnInit() {
@@ -142,8 +147,8 @@ export class StripeComponent implements OnInit {
           take(1),
           map((authUser) => {
             return !authUser;
-          })
-        )
+          }),
+        ),
       );
 
       if (isNotAuthenticated) {
@@ -158,7 +163,7 @@ export class StripeComponent implements OnInit {
         .pop();
 
       const { paymentIntent, error } = await lastValueFrom(
-        this.stripe.retrievePaymentIntent(clientSecret)
+        this.stripe.retrievePaymentIntent(clientSecret),
       );
 
       if (error) {
@@ -196,7 +201,7 @@ export class StripeComponent implements OnInit {
     const items = [{ items: 'book' }];
     const headers = new HttpHeaders().set(
       'Content-Type',
-      'application/json; charset=utf-8'
+      'application/json; charset=utf-8',
     );
     try {
       // spring boot api
@@ -214,8 +219,8 @@ export class StripeComponent implements OnInit {
       const { clientSecret } = await lastValueFrom(
         this.http.post<{ clientSecret: string }>(
           environment.stripe.createApi,
-          JSON.stringify({ items, lang: this.translate.currentLang })
-        )
+          JSON.stringify({ items, lang: this.translate.currentLang }),
+        ),
       );
 
       this.elementsOptions.clientSecret = clientSecret;
@@ -310,5 +315,29 @@ export class StripeComponent implements OnInit {
     this.paymentElementForm.controls['address'].setValue('');
     this.paymentElementForm.controls['zipcode'].setValue('');
     this.paymentElementForm.controls['city'].setValue('');
+  }
+
+  copyToClipboard(text: string, event: any) {
+    navigator.clipboard.writeText(text);
+    let div = document.createElement('div');
+    div.id = 'copiedDiv2';
+    div.innerHTML = this.translate.instant('gimmicks.jokes.copied');
+    div.style.width = 'fit-content';
+    div.style.height = 'fit-content';
+    div.style.background = 'rgba(0, 0, 0, 0.9)';
+    div.style.borderRadius = '12px';
+    div.style.padding = '4px';
+    div.style.color = 'white';
+    div.style.position = 'fixed';
+    div.style.transform = 'translate(-50%, 0)';
+    div.style.transition = 'all .1s ease';
+    div.style.zIndex = '99999';
+    document.body.appendChild(div);
+    let rect = div.getClientRects();
+    div.style.top = (event.clientY - rect[0].height - 10).toString() + 'px';
+    div.style.left = event.clientX.toString() + 'px';
+    setTimeout(() => {
+      document.body.removeChild(div);
+    }, 3000);
   }
 }

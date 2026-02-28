@@ -4,10 +4,10 @@
   
   <div class="flex w-full justify-between relative">
     <mat-icon id="click-trigger" fontIcon="info" class="cursor-pointer text-red-400"></mat-icon>
-    <ion-popover trigger="click-trigger" triggerAction="click">
+    <ion-popover trigger="click-trigger" triggerAction="click" class="rounded-popover">
       <ng-template>
         <ion-content class="ion-padding"
-          ><div class="p-4">{{ "gimmicks.jokes.textToSpeech" | translate }}</div>
+          ><div class="p-4 backdrop-blur-sm bg-blue-950/90 border border-blue-700/40 text-gray-200 rounded-xl">{{ "gimmicks.jokes.textToSpeech" | translate }}</div>
           </ion-content
         >
       </ng-template>

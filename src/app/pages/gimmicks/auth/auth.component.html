@@ -1,7 +1,9 @@
 <section
   class="flex flex-col lg:flex-row bg-blue-900 min-h-full pt-[70px] box-border items-center lg:items-start justify-center gap-7 lg:gap-6 xl:gap-10"
 >
-  <div class="relative flex flex-col gap-4 w-[calc(100%-20px)] sm:w-[600px] lg:mb-8">
+  <div
+    class="relative flex flex-col gap-4 w-[calc(100%-20px)] sm:w-[600px] lg:mb-8"
+  >
     <div
       class="flex flex-col sm:flex-row bg-gradient-to-br from-red-900/60 to-red-700/60 border border-white text-white rounded-xl items-center sm:items-start shadow-2xl mt-2 sm:mt-4 lg:mt-8 px-4 sm:px-8 pb-4 sm:pb-8 sm:gap-8"
     >
@@ -28,8 +30,11 @@
         <a href="https://stripe.com/" target="_blank">{{
           "gimmicks.jokes.text5" | translate
         }}</a
-        >. {{ "gimmicks.jokes.text6" | translate }}
-        <div class="bg-white/80 border border-white rounded p-2 text-xs grid grid-cols-2 my-2">
+        >. {{ "gimmicks.jokes.text6a" | translate
+        }}{{ "gimmicks.jokes.text6b" | translate }}
+        <div
+          class="bg-white/80 border border-white rounded p-2 text-xs grid grid-cols-2 my-2"
+        >
           <div class="text-blue-500 mb-1">
             {{ "gimmicks.jokes.paymentSucceeds" | translate }}
           </div>
@@ -65,6 +70,9 @@
           </div>
         </div>
         {{ "gimmicks.jokes.text7" | translate }}
+        <br />
+        <br />
+        {{ "gimmicks.jokes.text7a" | translate }}
         <br />
         <br />
         {{ "gimmicks.jokes.text8" | translate }}

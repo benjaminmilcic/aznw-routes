@@ -237,11 +237,13 @@
       "text3": "za lozinku.",
       "text4": "Postoji i obrazac za naručivanje knjige koristeći",
       "text5": "stripe uslugu",
-      "text6": "Ali budući da je ovo samo demonstracijska web stranica, ne možete stvarno naručiti knjigu putem ovog obrasca. Ako želite isprobati funkcionalnost, unesite bilo koju adresu, jednu od sljedećih testnih kartica koje pruža stripe usluga za simulaciju plaćanja.",
+      "text6a":"Ali budući da je ovo samo demonstracijska web stranica, ne možete stvarno naručiti knjigu putem ovog obrasca. ",
+      "text6b":"Ako želite isprobati funkcionalnost, unesite bilo koju adresu, jednu od sljedećih testnih kartica koje pruža stripe usluga za simulaciju plaćanja.",
       "paymentSucceeds": "Plaćanje uspijeva",
       "paymentRequiresAuth": "Plaćanje zahtijeva autentifikaciju",
       "paymentDeclined": "Plaćanje je odbijeno",
       "text7": "Zatim bilo koji budući datum kao datum isteka i bilo koji 3-znamenkasti broj kao CVC.",
+      "text7a": "Ili odaberite PayPal za simulaciju plaćanja putem PayPala. Bit ćete preusmjereni na demo stranicu za naplatu od PayPala.",
       "text8": "Ako stvarno želite pročitati moju knjigu, možete je naručiti na Amazonu putem",
       "text9": "ovog",
       "text10": "linka.",
@@ -273,7 +275,8 @@
       "paymentFailed": "Plaćanje putem PayPal-a nije uspjelo.",
       "clickToRotate": "Kliknite na knjigu da je rotirate",
       "textToSpeech": "TextToSpeech API koji se ovdje koristi je besplatna demo verzija i podržava samo 20 minuta audio zapisa mjesečno. Nakon toga, API prestaje raditi. Ali to bi trebalo biti dovoljno za demonstraciju.",
-      "loginWithGoogle": "Prijavite se putem Googlea"
+      "loginWithGoogle": "Prijavite se putem Googlea",
+      "testFormInfo": "Ovo je samo testni obrazac. Ovdje ne možete stvarno kupiti knjigu."
     },
     "games": {
       "connectFour": "Connect 4",

@@ -237,11 +237,13 @@
       "text3": "for password.",
       "text4": "There is also a form for ordering the book using the",
       "text5": "stripe service",
-      "text6": "But because this is only a demonstration website you can not really order the book with this form. If you want to try out the functionality just enter any address, one of the following test cards provided from the stripe service to simulate a payment.",
+      "text6a":"But because this is only a demonstration website you can not really order the book with this form. ",
+      "text6b":"If you want to try out the functionality just enter any address, one of the following test cards provided from the stripe service to simulate a payment.",
       "paymentSucceeds": "Payment succeeds",
       "paymentRequiresAuth": "Payment requires authentication",
       "paymentDeclined": "Payment is declined",
       "text7": "Then any future date as expiration and any 3-digit number as CVC.",
+      "text7a": "Or select PayPal to simulate a payment with PayPal. You will be redirected to a demo checkout page from PayPal.",
       "text8": "If you really want to read my book, you can order it on amazon with",
       "text9": "this",
       "text10": "link.",
@@ -273,7 +275,8 @@
       "paymentFailed": "The payment with PayPal failed.",
       "clickToRotate": "Click on book to rotate",
       "textToSpeech": "The TextToSpeech API used here is a free demo version and only supports 20 minutes of audio per month. After that, the API stops working. But that should be enough for demo purposes.",
-      "loginWithGoogle": "Sign in with Google"
+      "loginWithGoogle": "Sign in with Google",
+      "testFormInfo": "This is just a test form. You cannot actually buy the book here."
     },
     "games": {
       "connectFour": "Connect 4",
