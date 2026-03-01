@@ -44,6 +44,7 @@
         >
           <mat-label>{{ 'gimmicks.games.flagQuiz.enterCountry' | translate }}</mat-label>
           <input
+            #countryInput
             matInput
             [(ngModel)]="enteredCountryName"
             [disabled]="answered() || isTranslating()"
@@ -96,9 +97,11 @@
           }
         </div>
         <button
+          #nextButton
           mat-mini-fab
           color="accent"
           (click)="onNext()"
+          (keyup.enter)="onNext()"
           class="shrink-0"
         >
           <mat-icon>arrow_forward</mat-icon>

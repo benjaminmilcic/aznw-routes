@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { FlaqQuizCountry, MyMemoryResponse } from './flag-quiz.model';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -36,6 +36,8 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
   isTranslating = signal<boolean>(false);
   score = signal<number>(0);
   totalAnswered = signal<number>(0);
+  @ViewChild('nextButton', { read: ElementRef }) nextButton: ElementRef;
+  @ViewChild('countryInput', { read: ElementRef }) countryInput: ElementRef;
   langChangeSub: Subscription;
 
   private readonly MYMEMORY_API = 'https://api.mymemory.translated.net/get';
@@ -152,12 +154,14 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
     if (isCorrect) {
       this.score.update((s) => s + 1);
     }
+    setTimeout(() => this.nextButton?.nativeElement?.focus());
   }
 
-  onNext() {
+  async onNext() {
     this.answered.set(false);
     this.enteredCountryName.set('');
-    this.setRandomCountry();
+    await this.setRandomCountry();
+    setTimeout(() => this.countryInput?.nativeElement?.focus());
   }
 
   onRestart() {
