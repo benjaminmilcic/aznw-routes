@@ -71,6 +71,10 @@ jobs:
             maptiler: {
               apiKey: '${{ secrets.MAPTILER_API_KEY }}', 
             },
+            telegram: {
+              apiId: '${{ secrets.TELEGRAM_API_ID }}',
+              apiHash: '${{ secrets.TELEGRAM_API_HASH }}',
+            },
             production: true,
             version: new Date().getTime(),
           };

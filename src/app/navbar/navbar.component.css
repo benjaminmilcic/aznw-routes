@@ -178,8 +178,8 @@
 }
 
 .mega-icon.blue {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background: rgba(173, 216, 230, 0.2);
+  color: lightblue;
 }
 .mega-icon.amber {
   background: rgba(245, 158, 11, 0.2);
@@ -220,6 +220,11 @@
 .mega-icon.gold {
   background: rgba(250, 204, 21, 0.2);
   color: #fde047;
+}
+
+.mega-icon.light-blue {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
 }
 
 .mega-icon .game-icon {
@@ -535,8 +540,8 @@
 }
 
 .sublink-icon.blue {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background: rgba(173, 216, 230, 0.2);
+  color: lightblue;
 }
 .sublink-icon.amber {
   background: rgba(245, 158, 11, 0.2);
@@ -577,4 +582,9 @@
 .sublink-icon.gold {
   background: rgba(250, 204, 21, 0.2);
   color: #fde047;
+}
+
+.sublink-icon.light-blue {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
 }

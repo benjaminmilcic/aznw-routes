@@ -1,0 +1,99 @@
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <mat-card class="w-full max-w-md mx-4">
+    <mat-card-header>
+      <mat-card-title class="flex items-center gap-2 text-2xl">
+        <mat-icon class="text-blue-500">telegram</mat-icon>
+        {{ 'gimmicks.telegram.title' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle class="text-center">{{ 'gimmicks.telegram.login.subtitle' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="mt-6">
+      <!-- Step 1: Credentials -->
+      @if (step() === 'credentials') {
+        <form (ngSubmit)="sendCode()" class="flex flex-col gap-4">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'gimmicks.telegram.login.phoneNumber' | translate }}</mat-label>
+            <input matInput [(ngModel)]="phoneNumber" name="phoneNumber" required placeholder="+49123456789">
+            <mat-icon matPrefix>phone</mat-icon>
+          </mat-form-field>
+
+          @if (error()) {
+            <div class="text-red-500 text-sm">{{ error() }}</div>
+          }
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading() || !phoneNumber">
+            @if (loading()) {
+              <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner>
+            }
+            {{ 'gimmicks.telegram.login.sendCode' | translate }}
+          </button>
+        </form>
+      }
+
+      <!-- Step 2: Verification Code -->
+      @if (step() === 'code') {
+        <div class="flex flex-col gap-4">
+          <p class="text-gray-600 text-center">
+            {{ 'gimmicks.telegram.login.codeInfo' | translate }}
+          </p>
+
+          <div class="flex gap-3 justify-center my-2">
+            @for (_ of otpDigits; track $index) {
+              <input
+                #otpInput
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                class="otp-input"
+                [disabled]="loading()"
+                (input)="onOtpInput($index, $event)"
+                (keydown)="onOtpKeydown($index, $event)"
+                (paste)="onOtpPaste($event)">
+            }
+          </div>
+
+          @if (error()) {
+            <div class="text-red-500 text-sm text-center">{{ error() }}</div>
+          }
+
+          @if (loading()) {
+            <div class="flex justify-center">
+              <mat-spinner diameter="24"></mat-spinner>
+            </div>
+          }
+
+          <button mat-button type="button" (click)="step.set('credentials')">
+            {{ 'gimmicks.telegram.login.back' | translate }}
+          </button>
+        </div>
+      }
+
+      <!-- Step 3: 2FA Password -->
+      @if (step() === '2fa') {
+        <form (ngSubmit)="signIn2FA()" class="flex flex-col gap-4">
+          <p class="text-gray-600">
+            {{ 'gimmicks.telegram.login.twoFaInfo' | translate }}
+          </p>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'gimmicks.telegram.login.twoFaPassword' | translate }}</mat-label>
+            <input matInput [(ngModel)]="password" name="password" required type="password" autofocus>
+            <mat-icon matPrefix>security</mat-icon>
+          </mat-form-field>
+
+          @if (error()) {
+            <div class="text-red-500 text-sm">{{ error() }}</div>
+          }
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading() || !password">
+            @if (loading()) {
+              <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner>
+            }
+            {{ 'gimmicks.telegram.login.confirm' | translate }}
+          </button>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

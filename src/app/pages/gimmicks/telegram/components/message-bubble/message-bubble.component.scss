@@ -1,0 +1,101 @@
+.message-wrapper {
+  display: flex;
+  margin-bottom: 4px;
+  padding: 0 16px;
+
+  &.outgoing {
+    justify-content: flex-end;
+
+    .bubble {
+      background-color: #dcf8c6;
+      border-radius: 12px 12px 0 12px;
+    }
+  }
+
+  &.incoming {
+    justify-content: flex-start;
+
+    .bubble {
+      background-color: white;
+      border-radius: 12px 12px 12px 0;
+    }
+  }
+}
+
+.bubble {
+  max-width: 65%;
+  padding: 8px 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  img, video {
+    max-height: 300px;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+}
+
+.sticker-img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.check-icon {
+  font-size: 14px;
+  height: 14px;
+  width: 14px;
+  vertical-align: middle;
+  margin-left: 2px;
+  color: rgba(0, 0, 0, 0.35);
+
+  &.read {
+    color: #4fae4e;
+  }
+}
+
+.media-file {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.audio-player {
+  audio {
+    display: block;
+    width: 100%;
+    min-width: 250px;
+    height: 36px;
+  }
+}
+
+.message-text ::ng-deep .message-link {
+  color: #3390ec;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 1023px) {
+  .message-wrapper {
+    padding: 0 8px;
+  }
+
+  .bubble {
+    max-width: 85%;
+
+    img, video {
+      max-height: 200px;
+    }
+  }
+
+  .sticker-img {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  .audio-player audio {
+    min-width: 0;
+  }
+}

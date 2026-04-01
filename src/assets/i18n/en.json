@@ -630,6 +630,56 @@
       "neighborCountries":"Neighboring Countries",
       "coatOfArms":"Coat of Arms",
       "weatherFor":"Weather for"
+    },
+    "telegram": {
+      "title": "Telegram Webchat",
+      "logout": "Log out",
+      "login": {
+        "subtitle": "Sign in with your Telegram account",
+        "phoneNumber": "Phone number",
+        "sendCode": "Send code",
+        "codeInfo": "A verification code has been sent to your Telegram account.",
+        "back": "Back",
+        "twoFaInfo": "Your account has two-factor authentication enabled. Please enter your password.",
+        "twoFaPassword": "2FA password",
+        "confirm": "Confirm",
+        "errorSendCode": "Error sending the code",
+        "wrongCode": "Wrong code",
+        "wrongPassword": "Wrong password"
+      },
+      "chatList": {
+        "searchPlaceholder": "Search chat...",
+        "clearHistory": "Clear chat history",
+        "leaveChannel": "Leave channel",
+        "leaveGroup": "Leave group",
+        "deleteChat": "Delete chat",
+        "blockUser": "Block user",
+        "mediaContent": "Media content",
+        "clearHistoryConfirmTitle": "Clear chat history?",
+        "clearHistoryConfirmMessage": "Clear chat history of \"{{title}}\"?",
+        "blockConfirmTitle": "Block?",
+        "blockConfirmMessage": "Block \"{{title}}\"?"
+      },
+      "chatView": {
+        "channel": "Channel",
+        "group": "Group",
+        "noMessages": "No messages",
+        "messagePlaceholder": "Type a message...",
+        "selectChat": "Select a chat to start",
+        "you": "You",
+        "today": "Today",
+        "yesterday": "Yesterday"
+      },
+      "messageBubble": {
+        "photo": "Photo",
+        "sticker": "Sticker",
+        "file": "File",
+        "mediaContent": "Media content"
+      },
+      "dialog": {
+        "yes": "Yes",
+        "no": "No"
+      }
     }
   },
   "pageNotFound": {

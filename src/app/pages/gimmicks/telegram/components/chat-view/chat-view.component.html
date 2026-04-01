@@ -1,0 +1,101 @@
+<div class="chat-view-container flex flex-col h-full">
+  @if (chat()) {
+    <!-- Header -->
+    <mat-toolbar class="chat-header flex items-center gap-3 border-b border-gray-200">
+      <button mat-icon-button class="back-btn" (click)="back.emit()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="flex items-center gap-3 flex-1">
+        @if (chat()!.avatar && !avatarFailed) {
+          <img [src]="chat()!.avatar" [alt]="chat()!.title" class="w-10 h-10 rounded-full object-cover"
+               (error)="avatarFailed = true">
+        } @else {
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm"
+               [style.background]="getAvatarColor(chat()!.id)">
+            {{ getInitials(chat()!.title) }}
+          </div>
+        }
+        <div>
+          <div class="font-medium text-base">{{ chat()!.title }}</div>
+          <div class="text-xs text-gray-500">
+            @if (chat()!.isChannel) {
+              {{ 'gimmicks.telegram.chatView.channel' | translate }}
+            } @else if (chat()!.isGroup) {
+              {{ 'gimmicks.telegram.chatView.group' | translate }}
+            }
+          </div>
+        </div>
+      </div>
+    </mat-toolbar>
+
+    <!-- Messages -->
+    <div
+      #messagesContainer
+      class="flex-1 overflow-y-auto py-4 messages-area"
+      (scroll)="onScroll($event)">
+
+      @if (loading()) {
+        <div class="flex justify-center items-center h-full">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      } @else {
+        @for (msg of messages(); track msg.id; let i = $index) {
+          @if (shouldShowDateSeparator(i)) {
+            <div class="date-separator">
+              <span class="date-separator-label">{{ getDateLabel(msg.date) }}</span>
+            </div>
+          }
+          <app-message-bubble
+            [message]="msg"
+            [chatId]="chat()!.id"
+            [mediaBaseUrl]="getMediaBaseUrl()"
+            [readOutboxMaxId]="readOutboxMaxId()"
+            (mediaLoaded)="onMediaLoaded()">
+          </app-message-bubble>
+        }
+
+        @if (messages().length === 0) {
+          <div class="flex justify-center items-center h-full text-gray-400">
+            {{ 'gimmicks.telegram.chatView.noMessages' | translate }}
+          </div>
+        }
+      }
+    </div>
+
+    <!-- Input -->
+    <div class="input-area flex items-center gap-2 p-3 border-t border-gray-200 bg-white">
+      <input type="file" #fileInput class="hidden" (change)="onFileSelected($event)">
+
+      <button mat-icon-button (click)="fileInput.click()" [disabled]="sending()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+
+      <mat-form-field appearance="outline" class="flex-1 message-input">
+        <textarea
+          matInput
+          [(ngModel)]="messageText"
+          (keydown)="handleKeydown($event)"
+          [placeholder]="'gimmicks.telegram.chatView.messagePlaceholder' | translate"
+          rows="1"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5">
+        </textarea>
+      </mat-form-field>
+
+      <button mat-fab color="primary" class="send-btn" (click)="sendMessage()" [disabled]="sending() || !messageText.trim()">
+        @if (sending()) {
+          <mat-spinner diameter="24" class="white-spinner"></mat-spinner>
+        } @else {
+          <mat-icon>send</mat-icon>
+        }
+      </button>
+    </div>
+  } @else {
+    <!-- No chat selected -->
+    <div class="flex flex-col items-center justify-center h-full text-gray-400">
+      <mat-icon class="text-6xl mb-4" style="font-size: 64px; width: 64px; height: 64px;">chat</mat-icon>
+      <p class="text-lg">{{ 'gimmicks.telegram.chatView.selectChat' | translate }}</p>
+    </div>
+  }
+</div>

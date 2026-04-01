@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  padding-top: 70px;
+  height: calc(100vh - 70px);
+  height: calc(100dvh - 70px);
+}
+
+.chat-layout {
+  height: 100%;
+  overflow: hidden;
+}
+
+.app-toolbar {
+  height: auto;
+  min-height: 56px;
+  flex-shrink: 0;
+}
+
+.sidebar {
+  width: 384px;
+  max-width: 384px;
+  min-width: 300px;
+  background: white;
+}
+
+@media (max-width: 1023px) {
+  .app-toolbar.mobile-hidden {
+    display: none;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .sidebar.mobile-hidden {
+    display: none;
+  }
+
+  .chat-area.mobile-hidden {
+    display: none;
+  }
+}

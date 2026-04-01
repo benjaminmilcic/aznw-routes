@@ -1,0 +1,8 @@
+<h2 mat-dialog-title class="bg-blue-900 text-white">{{data.title}}</h2>
+<mat-dialog-content>
+  <p class="mt-4">{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton class="bg-blue-900 text-white"  (click)="onYesClick()">{{ 'gimmicks.telegram.dialog.yes' | translate }}</button>
+  <button matButton [mat-dialog-close] class="bg-red-900 text-white" cdkFocusInitial>{{ 'gimmicks.telegram.dialog.no' | translate }}</button>
+</mat-dialog-actions>

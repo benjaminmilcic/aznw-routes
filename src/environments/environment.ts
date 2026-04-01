@@ -4,12 +4,14 @@
 
 // const ip = '10.39.128.38';
 const ip = 'localhost';
+const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
-
+const telegramApiId = process.env['TELEGRAM_API_ID'] || '0';
+const telegramApiHash = process.env['TELEGRAM_API_HASH'] || '';
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -52,7 +54,7 @@ export const environment = {
     errorMessageApi: `http://${ip}:3000/error2email`,
   },
   yahtzeeGame: {
-    webSocketsUrl: `http://10.250.248.38:3000/yahtzee-game`, //je nach aktueller IP anpassen
+    webSocketsUrl: `http://${localIp}:3000/yahtzee-game`,
   },
   geoLocation: {
     reverseGeoCodeApi: `http://${ip}:3000/geolocation/reverse-geocode`,
@@ -71,10 +73,16 @@ export const environment = {
     sendData: `http://${ip}:3000/analytics/visitor-data`,
   },
   geoapify: {
-    apiKey: geoapifyKey, 
+    apiKey: geoapifyKey,
   },
   maptiler: {
-    apiKey: maptilerKey, 
+    apiKey: maptilerKey,
+  },
+  telegram: {
+    apiId: telegramApiId,
+    apiHash: telegramApiHash,
+    apiUrl: `http://${ip}:3000/telegram`,
+    webSocketsUrl: `http://${localIp}:3000/telegramws`,
   },
   production: false,
   version: new Date().getTime(),

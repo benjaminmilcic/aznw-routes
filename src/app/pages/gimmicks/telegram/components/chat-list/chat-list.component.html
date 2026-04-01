@@ -1,0 +1,91 @@
+<div class="chat-list-container flex flex-col h-full">
+  <!-- Search -->
+  <div class="p-3 border-b border-gray-200">
+    <mat-form-field appearance="outline" class="w-full search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" [placeholder]="'gimmicks.telegram.chatList.searchPlaceholder' | translate">
+    </mat-form-field>
+  </div>
+
+  <!-- Dialog List -->
+  <div class="flex-1 overflow-y-auto">
+    @if (loading()) {
+      <div class="flex justify-center p-8">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else {
+      <mat-nav-list>
+        @for (dialog of filteredDialogs(); track dialog.id) {
+          <mat-list-item
+            class="dialog-item"
+            [class.selected]="selectedId() === dialog.id"
+            (click)="selectChat(dialog)"
+            (contextmenu)="onContextMenu($event, dialog)">
+            <div class="flex items-center gap-3 w-full py-1">
+              <!-- Avatar -->
+              <div class="avatar flex-shrink-0">
+                @if (dialog.avatar && !avatarFailed.has(dialog.id)) {
+                  <img [src]="dialog.avatar" [alt]="dialog.title" class="w-12 h-12 rounded-full object-cover"
+                       (error)="onAvatarError(dialog.id)">
+                } @else {
+                  <div class="avatar-fallback w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-lg"
+                       [style.background]="getAvatarColor(dialog.id)">
+                    {{ getInitials(dialog.title) }}
+                  </div>
+                }
+              </div>
+
+              <!-- Info -->
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium truncate">{{ dialog.title }}</span>
+                  <span class="flex items-center text-xs text-gray-400 flex-shrink-0 ml-2">
+                    @if (dialog.lastMessageOut) {
+                      <mat-icon class="dialog-check-icon" [class.read]="dialog.lastMessageId <= dialog.readOutboxMaxId">
+                        {{ dialog.lastMessageId <= dialog.readOutboxMaxId ? 'done_all' : 'done' }}
+                      </mat-icon>
+                    }
+                    {{ formatDate(dialog.lastMessageDate) }}
+                  </span>
+                </div>
+                <div class="flex justify-between items-center mt-0.5">
+                  <span class="text-sm text-gray-500 truncate">{{ dialog.lastMessage }}</span>
+                  @if (dialog.unreadCount > 0) {
+                    <span class="bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 ml-2 flex-shrink-0">
+                      {{ dialog.unreadCount }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          </mat-list-item>
+        }
+      </mat-nav-list>
+    }
+  </div>
+
+  <!-- Context Menu -->
+  <div
+    class="context-menu-trigger"
+    [style.left.px]="contextMenuX"
+    [style.top.px]="contextMenuY"
+    [matMenuTriggerFor]="contextMenu">
+  </div>
+
+  <mat-menu class="!bg-white" #contextMenu="matMenu">
+    <button mat-menu-item (click)="clearHistory()">
+      <mat-icon>delete_sweep</mat-icon>
+      <span>{{ 'gimmicks.telegram.chatList.clearHistory' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="deleteChat()">
+      <mat-icon class="!text-red-500">delete</mat-icon>
+      <span>{{ contextDialog?.isChannel ? ('gimmicks.telegram.chatList.leaveChannel' | translate) : contextDialog?.isGroup ? ('gimmicks.telegram.chatList.leaveGroup' | translate) : ('gimmicks.telegram.chatList.deleteChat' | translate) }}</span>
+    </button>
+    @if (contextDialog && !contextDialog.isGroup && !contextDialog.isChannel) {
+      <button mat-menu-item (click)="blockUser()">
+        <mat-icon>block</mat-icon>
+        <span>{{ 'gimmicks.telegram.chatList.blockUser' | translate }}</span>
+      </button>
+    }
+  </mat-menu>
+</div>

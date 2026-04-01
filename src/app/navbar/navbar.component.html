@@ -231,6 +231,17 @@
               </div>
               <span>{{ "gimmicks.menu.movies" | translate }}</span>
             </a>
+
+            <a
+              class="mega-item"
+              [routerLink]="['/gimmicks/telegram']"
+              (click)="gimmicksExpanded = false"
+            >
+             <div class="mega-icon light-blue">
+                <i class="fab fa-telegram"></i>
+              </div>
+              <span>Telegram</span>
+            </a>
           </div>
         </div>
       </div>
@@ -484,6 +495,14 @@
             <span class="translate-y-[-2px]">🎬</span>
           </div>
           <span>{{ "gimmicks.menu.movies" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/telegram']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon light-blue"><i class="fab fa-telegram"></i></div>
+          <span>Telegram</span>
         </a>
       </div>
     </div>

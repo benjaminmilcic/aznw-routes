@@ -38,6 +38,10 @@ import { FlagQuizComponent } from './pages/gimmicks/games/flag-quiz/flag-quiz.co
 import { CountriesComponent } from './pages/gimmicks/countries/countries.component';
 import { CountriesWorldmapComponent } from './pages/gimmicks/countries/countries-worldmap/countries-worldmap.component';
 import { CountriesDetailComponent } from './pages/gimmicks/countries/countries-detail/countries-detail.component';
+import { TelegramComponent } from './pages/gimmicks/telegram/telegram.component';
+import { TelegramLoginComponent } from './pages/gimmicks/telegram/components/login/telegram-login.component';
+import { TelgramAuthGuard } from './pages/gimmicks/telegram/guards/telegram-auth.guard';
+import { TelegramChatLayoutComponent } from './pages/gimmicks/telegram/components/telegram-chat-layout/telegram-chat-layout.component';
 
 export const routes: Routes = [
   {
@@ -217,6 +221,26 @@ export const routes: Routes = [
           {
             path: 'country/:code',
             component: CountriesDetailComponent,
+          },
+        ],
+      },
+      {
+        path: 'telegram',
+        component: TelegramComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: '/gimmicks/telegram/chat',
+            pathMatch: 'full',
+          },
+          {
+            path: 'login',
+            component: TelegramLoginComponent,
+          },
+          {
+            path: 'chat',
+            canActivate: [TelgramAuthGuard],
+            component: TelegramChatLayoutComponent,
           },
         ],
       },

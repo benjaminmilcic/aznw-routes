@@ -1,0 +1,33 @@
+<div class="chat-layout flex flex-col">
+  <!-- Top Toolbar -->
+  <mat-toolbar color="primary" class="app-toolbar" [class.mobile-hidden]="selectedChat()">
+    <div class="flex gap-2 flex-wrap items-center justify-between w-full py-2">
+      <div class="flex items-center gap-1">
+        <mat-icon class="mr-1">telegram</mat-icon>
+        <span class="font-medium">{{ 'gimmicks.telegram.title' | translate }}</span>
+      </div>
+      <div class="flex items-center gap-1 ml-auto">
+        <span class="text-sm mr-3 opacity-80">{{ telegramService.displayName() }}</span>
+        <button mat-icon-button (click)="logout()" [matTooltip]="'gimmicks.telegram.logout' | translate">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <div
+      class="sidebar border-r border-gray-200 flex-shrink-0"
+      [class.mobile-hidden]="selectedChat()"
+    >
+      <app-chat-list (chatSelected)="onChatSelected($event)" (chatDeleted)="onChatDeleted($event)"></app-chat-list>
+    </div>
+
+    <!-- Chat View -->
+    <div class="chat-area flex-1" [class.mobile-hidden]="!selectedChat()">
+      <app-chat-view [chat]="selectedChat()" (back)="onBackToList()"></app-chat-view>
+    </div>
+  </div>
+</div>

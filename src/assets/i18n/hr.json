@@ -630,6 +630,56 @@
       "neighborCountries":"Susjedne zemlje",
       "coatOfArms":"Grb",
       "weatherFor":"Vrijeme za"
+    },
+    "telegram": {
+      "title": "Telegram Webchat",
+      "logout": "Odjava",
+      "login": {
+        "subtitle": "Prijavite se sa svojim Telegram računom",
+        "phoneNumber": "Telefonski broj",
+        "sendCode": "Pošalji kod",
+        "codeInfo": "Verifikacijski kod je poslan na vaš Telegram račun.",
+        "back": "Natrag",
+        "twoFaInfo": "Vaš račun ima aktiviranu dvofaktorsku autentifikaciju. Molimo unesite svoju lozinku.",
+        "twoFaPassword": "2FA lozinka",
+        "confirm": "Potvrdi",
+        "errorSendCode": "Pogreška pri slanju koda",
+        "wrongCode": "Pogrešan kod",
+        "wrongPassword": "Pogrešna lozinka"
+      },
+      "chatList": {
+        "searchPlaceholder": "Pretraži chat...",
+        "clearHistory": "Obriši povijest razgovora",
+        "leaveChannel": "Napusti kanal",
+        "leaveGroup": "Napusti grupu",
+        "deleteChat": "Obriši chat",
+        "blockUser": "Blokiraj korisnika",
+        "mediaContent": "Medijski sadržaj",
+        "clearHistoryConfirmTitle": "Obrisati povijest razgovora?",
+        "clearHistoryConfirmMessage": "Obrisati povijest razgovora \"{{title}}\"?",
+        "blockConfirmTitle": "Blokirati?",
+        "blockConfirmMessage": "Blokirati \"{{title}}\"?"
+      },
+      "chatView": {
+        "channel": "Kanal",
+        "group": "Grupa",
+        "noMessages": "Nema poruka",
+        "messagePlaceholder": "Unesite poruku...",
+        "selectChat": "Odaberite chat za početak",
+        "you": "Vi",
+        "today": "Danas",
+        "yesterday": "Jučer"
+      },
+      "messageBubble": {
+        "photo": "Fotografija",
+        "sticker": "Naljepnica",
+        "file": "Datoteka",
+        "mediaContent": "Medijski sadržaj"
+      },
+      "dialog": {
+        "yes": "Da",
+        "no": "Ne"
+      }
     }
   },
   "pageNotFound": {
