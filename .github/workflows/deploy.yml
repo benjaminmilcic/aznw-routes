@@ -74,6 +74,8 @@ jobs:
             telegram: {
               apiId: '${{ secrets.TELEGRAM_API_ID }}',
               apiHash: '${{ secrets.TELEGRAM_API_HASH }}',
+              apiUrl: `https://${ip}:3000/telegram`,
+              webSocketsUrl: `https://${ip}:3000/telegramws`,
             },
             production: true,
             version: new Date().getTime(),
