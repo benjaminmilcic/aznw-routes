@@ -2,6 +2,7 @@ import { Injectable, signal, OnDestroy } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Message } from '../models/telegram-interfaces';
 import { environment } from '../../../../../environments/environment';
+import { TelegramService } from './telegram.service';
 
 @Injectable({ providedIn: 'root' })
 export class TelegramWebSocketService implements OnDestroy {
@@ -11,11 +12,17 @@ export class TelegramWebSocketService implements OnDestroy {
   readonly lastMessage = signal<(Message & { chatId: string }) | null>(null);
   readonly lastReadEvent = signal<{ chatId: string; maxId: number } | null>(null);
 
+  constructor(private readonly telegramService: TelegramService) {}
+
   connect(): void {
     if (this.socket?.connected) return;
 
+    const sessionId = this.telegramService.getSessionId();
+    if (!sessionId) return;
+
     this.socket = io(environment.telegram.webSocketsUrl, {
       transports: ['websocket'],
+      query: { sessionId },
     });
 
     this.socket.on('connect', () => {

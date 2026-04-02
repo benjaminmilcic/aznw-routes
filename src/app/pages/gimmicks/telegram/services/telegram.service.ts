@@ -1,8 +1,10 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { AuthStatus, Dialog, Message, TelegramUser } from '../models/telegram-interfaces';
 import { environment } from '../../../../../environments/environment';
+
+const SESSION_KEY = 'telegram_session_id';
 
 @Injectable({ providedIn: 'root' })
 export class TelegramService {
@@ -18,9 +20,32 @@ export class TelegramService {
 
   constructor(private readonly http: HttpClient) {}
 
+  getSessionId(): string | null {
+    return localStorage.getItem(SESSION_KEY);
+  }
+
+  private setSessionId(id: string): void {
+    localStorage.setItem(SESSION_KEY, id);
+  }
+
+  private clearSessionId(): void {
+    localStorage.removeItem(SESSION_KEY);
+  }
+
+  private getHeaders(): HttpHeaders {
+    const sessionId = this.getSessionId();
+    let headers = new HttpHeaders();
+    if (sessionId) {
+      headers = headers.set('x-telegram-session', sessionId);
+    }
+    return headers;
+  }
+
   async checkAuthStatus(): Promise<AuthStatus> {
     const status = await firstValueFrom(
-      this.http.get<AuthStatus>(`${this.baseUrl}/auth/status`),
+      this.http.get<AuthStatus>(`${this.baseUrl}/auth/status`, {
+        headers: this.getHeaders(),
+      }),
     );
     this.authenticated.set(status.authenticated);
     if (status.user) {
@@ -29,20 +54,26 @@ export class TelegramService {
     return status;
   }
 
-  async sendCode(phoneNumber: string): Promise<{ phoneCodeHash: string }> {
-    return firstValueFrom(
-      this.http.post<{ phoneCodeHash: string }>(`${this.baseUrl}/auth/send-code`, {
-        phoneNumber,
-      }),
+  async sendCode(phoneNumber: string): Promise<{ phoneCodeHash: string; sessionId: string }> {
+    const result = await firstValueFrom(
+      this.http.post<{ phoneCodeHash: string; sessionId: string }>(
+        `${this.baseUrl}/auth/send-code`,
+        { phoneNumber },
+        { headers: this.getHeaders() },
+      ),
     );
+    // Backend returns a new sessionId – store it
+    this.setSessionId(result.sessionId);
+    return result;
   }
 
   async signIn(phoneNumber: string, phoneCode: string): Promise<{ status: string; user?: TelegramUser }> {
     const result = await firstValueFrom(
-      this.http.post<{ status: string; user?: TelegramUser }>(`${this.baseUrl}/auth/sign-in`, {
-        phoneNumber,
-        phoneCode,
-      }),
+      this.http.post<{ status: string; user?: TelegramUser }>(
+        `${this.baseUrl}/auth/sign-in`,
+        { phoneNumber, phoneCode },
+        { headers: this.getHeaders() },
+      ),
     );
     if (result.status === 'success' && result.user) {
       this.authenticated.set(true);
@@ -53,9 +84,11 @@ export class TelegramService {
 
   async signIn2FA(password: string): Promise<{ status: string; user?: TelegramUser }> {
     const result = await firstValueFrom(
-      this.http.post<{ status: string; user?: TelegramUser }>(`${this.baseUrl}/auth/sign-in-2fa`, {
-        password,
-      }),
+      this.http.post<{ status: string; user?: TelegramUser }>(
+        `${this.baseUrl}/auth/sign-in-2fa`,
+        { password },
+        { headers: this.getHeaders() },
+      ),
     );
     if (result.status === 'success' && result.user) {
       this.authenticated.set(true);
@@ -65,14 +98,20 @@ export class TelegramService {
   }
 
   async logout(): Promise<void> {
-    await firstValueFrom(this.http.post(`${this.baseUrl}/auth/logout`, {}));
+    await firstValueFrom(
+      this.http.post(`${this.baseUrl}/auth/logout`, {}, {
+        headers: this.getHeaders(),
+      }),
+    );
     this.authenticated.set(false);
     this.currentUser.set(null);
+    this.clearSessionId();
   }
 
   async getDialogs(limit = 30, offset = 0): Promise<Dialog[]> {
     return firstValueFrom(
       this.http.get<Dialog[]>(`${this.baseUrl}/dialogs`, {
+        headers: this.getHeaders(),
         params: { limit: limit.toString(), offset: offset.toString() },
       }),
     );
@@ -80,25 +119,33 @@ export class TelegramService {
 
   async getDialog(chatId: string): Promise<Dialog> {
     return firstValueFrom(
-      this.http.get<Dialog>(`${this.baseUrl}/dialogs/${chatId}`),
+      this.http.get<Dialog>(`${this.baseUrl}/dialogs/${chatId}`, {
+        headers: this.getHeaders(),
+      }),
     );
   }
 
   async deleteChat(chatId: string): Promise<void> {
     await firstValueFrom(
-      this.http.delete(`${this.baseUrl}/dialogs/${chatId}`),
+      this.http.delete(`${this.baseUrl}/dialogs/${chatId}`, {
+        headers: this.getHeaders(),
+      }),
     );
   }
 
   async clearHistory(chatId: string): Promise<void> {
     await firstValueFrom(
-      this.http.post(`${this.baseUrl}/dialogs/${chatId}/clear-history`, {}),
+      this.http.post(`${this.baseUrl}/dialogs/${chatId}/clear-history`, {}, {
+        headers: this.getHeaders(),
+      }),
     );
   }
 
   async blockUser(chatId: string): Promise<void> {
     await firstValueFrom(
-      this.http.post(`${this.baseUrl}/dialogs/${chatId}/block`, {}),
+      this.http.post(`${this.baseUrl}/dialogs/${chatId}/block`, {}, {
+        headers: this.getHeaders(),
+      }),
     );
   }
 
@@ -108,13 +155,20 @@ export class TelegramService {
       params.offsetId = offsetId.toString();
     }
     return firstValueFrom(
-      this.http.get<{ messages: Message[]; readOutboxMaxId: number }>(`${this.baseUrl}/messages/${chatId}`, { params }),
+      this.http.get<{ messages: Message[]; readOutboxMaxId: number }>(
+        `${this.baseUrl}/messages/${chatId}`,
+        { headers: this.getHeaders(), params },
+      ),
     );
   }
 
   async sendMessage(chatId: string, text: string): Promise<Message> {
     return firstValueFrom(
-      this.http.post<Message>(`${this.baseUrl}/messages/${chatId}`, { text }),
+      this.http.post<Message>(
+        `${this.baseUrl}/messages/${chatId}`,
+        { text },
+        { headers: this.getHeaders() },
+      ),
     );
   }
 
@@ -125,17 +179,24 @@ export class TelegramService {
       formData.append('caption', caption);
     }
     return firstValueFrom(
-      this.http.post<Message>(`${this.baseUrl}/messages/${chatId}/file`, formData),
+      this.http.post<Message>(
+        `${this.baseUrl}/messages/${chatId}/file`,
+        formData,
+        { headers: this.getHeaders() },
+      ),
     );
   }
 
   async markAsRead(chatId: string): Promise<void> {
     await firstValueFrom(
-      this.http.post(`${this.baseUrl}/messages/${chatId}/read`, {}),
+      this.http.post(`${this.baseUrl}/messages/${chatId}/read`, {}, {
+        headers: this.getHeaders(),
+      }),
     );
   }
 
   getMediaUrl(chatId: string, messageId: number): string {
-    return `${this.baseUrl}/media/${chatId}/${messageId}`;
+    const sessionId = this.getSessionId();
+    return `${this.baseUrl}/media/${chatId}/${messageId}?sessionId=${sessionId}`;
   }
 }

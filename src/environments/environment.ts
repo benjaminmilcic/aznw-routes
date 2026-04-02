@@ -4,7 +4,7 @@
 
 // const ip = '10.39.128.38';
 const ip = 'localhost';
-const localIp = '172.16.201.127'; //je nach aktueller IP anpassen
+const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
