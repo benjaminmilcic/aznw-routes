@@ -4,9 +4,6 @@ const ip = 'benjaminmilcic.site';
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
-const telegramApiId = process.env['TELEGRAM_API_ID'] || '0';
-const telegramApiHash = process.env['TELEGRAM_API_HASH'] || '';
-
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -83,8 +80,6 @@ export const environment = {
     apiKey: maptilerKey,
   },
   telegram: {
-    apiId: telegramApiId,
-    apiHash: telegramApiHash,
     apiUrl: `https://${ip}:3000/telegram`,
     webSocketsUrl: `https://${ip}:3000/telegramws`,
   },

@@ -72,8 +72,6 @@ jobs:
               apiKey: '${{ secrets.MAPTILER_API_KEY }}', 
             },
             telegram: {
-              apiId: '${{ secrets.TELEGRAM_API_ID }}',
-              apiHash: '${{ secrets.TELEGRAM_API_HASH }}',
               apiUrl: `https://${ip}:3000/telegram`,
               webSocketsUrl: `https://${ip}:3000/telegramws`,
             },

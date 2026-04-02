@@ -4,14 +4,12 @@
 
 // const ip = '10.39.128.38';
 const ip = 'localhost';
-const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
+const localIp = '172.16.201.127'; //je nach aktueller IP anpassen
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
-const telegramApiId = process.env['TELEGRAM_API_ID'] || '0';
-const telegramApiHash = process.env['TELEGRAM_API_HASH'] || '';
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -79,8 +77,6 @@ export const environment = {
     apiKey: maptilerKey,
   },
   telegram: {
-    apiId: telegramApiId,
-    apiHash: telegramApiHash,
     apiUrl: `http://${ip}:3000/telegram`,
     webSocketsUrl: `http://${localIp}:3000/telegramws`,
   },
