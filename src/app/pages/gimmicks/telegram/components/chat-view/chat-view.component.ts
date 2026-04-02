@@ -177,7 +177,8 @@ export class ChatViewComponent implements OnDestroy {
   }
 
   handleKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    if (event.key === 'Enter' && !event.shiftKey && !isMobile) {
       event.preventDefault();
       this.sendMessage();
     }
