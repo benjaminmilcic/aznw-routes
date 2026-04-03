@@ -85,9 +85,9 @@
   .bubble {
     max-width: 85%;
 
-    img, video {
-      max-height: 200px;
-    }
+    // img, video {
+    //   max-height: 200px;
+    // }
   }
 
   .sticker-img {
@@ -100,9 +100,9 @@
     overflow: hidden;
   }
 
-  .audio-player audio {
-    min-width: 0;
-    width: 100%;
-    max-width: calc(85vw - 44px);
-  }
+  // .audio-player audio {
+  //   min-width: 0;
+  //   width: 100%;
+  //   max-width: calc(85vw - 44px);
+  // }
 }
