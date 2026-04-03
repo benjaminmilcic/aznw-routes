@@ -645,7 +645,8 @@
         "confirm": "Confirm",
         "errorSendCode": "Error sending the code",
         "wrongCode": "Wrong code",
-        "wrongPassword": "Wrong password"
+        "wrongPassword": "Wrong password",
+        "privacyInfo": "No data is stored on the server. You will be automatically logged out after 2 hours of inactivity."
       },
       "chatList": {
         "searchPlaceholder": "Search chat...",

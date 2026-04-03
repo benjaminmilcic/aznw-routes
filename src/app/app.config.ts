@@ -26,6 +26,7 @@ import { provideEffects } from '@ngrx/effects';
 import { RecipeEffects } from './pages/gimmicks/recipes/store/effects/recipe.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { MoviesInterceptorDiAdapter } from './pages/gimmicks/movies/movies-di-adapter.interceptor';
+import { TelegramAuthInterceptor } from './pages/gimmicks/telegram/services/telegram-auth.interceptor';
 
 export function HttpLoaderFactory(httpHandler: HttpBackend) {
   const http = new HttpClient(httpHandler);
@@ -61,6 +62,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MoviesInterceptorDiAdapter,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TelegramAuthInterceptor,
       multi: true,
     },
     // {

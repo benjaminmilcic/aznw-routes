@@ -645,7 +645,8 @@
         "confirm": "Potvrdi",
         "errorSendCode": "Pogreška pri slanju koda",
         "wrongCode": "Pogrešan kod",
-        "wrongPassword": "Pogrešna lozinka"
+        "wrongPassword": "Pogrešna lozinka",
+        "privacyInfo": "Nikakvi podaci se ne pohranjuju na serveru. Nakon 2 sata neaktivnosti bit ćete automatski odjavljeni."
       },
       "chatList": {
         "searchPlaceholder": "Pretraži chat...",
