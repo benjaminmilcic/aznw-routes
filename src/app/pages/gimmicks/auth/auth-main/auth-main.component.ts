@@ -15,20 +15,20 @@ import { IonContent, IonPopover } from '@ionic/angular/standalone';
 import { HttpErrorService } from '../../../http-error/http-error.service';
 
 @Component({
-    selector: 'app-main',
-    imports: [
-        CommonModule,
-        IonCheckbox,
-        FormsModule,
-        TranslateModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        IonContent,
-        IonPopover,
-    ],
-    templateUrl: './auth-main.component.html',
-    styleUrl: './auth-main.component.css'
+  selector: 'app-main',
+  imports: [
+    CommonModule,
+    IonCheckbox,
+    FormsModule,
+    TranslateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    IonContent,
+    IonPopover,
+  ],
+  templateUrl: './auth-main.component.html',
+  styleUrl: './auth-main.component.css',
 })
 export class AuthMainComponent implements OnInit {
   jokes: Joke[];
@@ -37,17 +37,19 @@ export class AuthMainComponent implements OnInit {
   german = true;
   croatian = true;
 
-  private apiKey = '02a129c7ef07d2d6862e13fdcdc32853';
+  private elevenLabsApiKey: string;
   private voiceId = 'pNInz6obpgDQGcFmaJgB'; // Change to your preferred voice
-  private apiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${this.voiceId}`;
+  private elevenLabsApiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${this.voiceId}`;
   isLoading = false;
   audio = new Audio();
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private httpErrorService: HttpErrorService
-  ) {}
+    private httpErrorService: HttpErrorService,
+  ) {
+    this.elevenLabsApiKey = environment.auth.elevenLabsKey;
+  }
   async ngOnInit() {
     //old firebase solution, when authentication works via firebase
     // this.jokes = await lastValueFrom(
@@ -65,13 +67,13 @@ export class AuthMainComponent implements OnInit {
     if (authUserData) {
       const headers = new HttpHeaders().set(
         'Authorization',
-        `Bearer ${authUserData._token}`
+        `Bearer ${authUserData._token}`,
       );
       try {
         let data = await lastValueFrom(
           this.http.get<JokesFromApi>(environment.auth.getJokesFile, {
             headers,
-          })
+          }),
         );
         let parsedData: JokesFromApi = JSON.parse(JSON.stringify(data));
         parsedData.vicevi.forEach((joke) => {
@@ -113,7 +115,7 @@ export class AuthMainComponent implements OnInit {
   generateSpeech(text: string): Observable<Blob> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'xi-api-key': this.apiKey,
+      'xi-api-key': this.elevenLabsApiKey,
     });
 
     const body = {
@@ -125,7 +127,10 @@ export class AuthMainComponent implements OnInit {
       },
     };
 
-    return this.http.post(this.apiUrl, body, { headers, responseType: 'blob' });
+    return this.http.post(this.elevenLabsApiUrl, body, {
+      headers,
+      responseType: 'blob',
+    });
   }
 
   async onPlay(text: string) {
@@ -144,10 +149,10 @@ export class AuthMainComponent implements OnInit {
       (error) => {
         this.httpErrorService.showHttpError(
           error,
-          'AuthMainComponent (Error generating speech)'
+          'AuthMainComponent (Error generating speech)',
         );
         this.isLoading = false;
-      }
+      },
     );
   }
 }

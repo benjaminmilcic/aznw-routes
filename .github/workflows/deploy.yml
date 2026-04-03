@@ -39,6 +39,8 @@ jobs:
               getJokesFile: `https://${ip}:3000/auth/jokes`,
               login: `https://${ip}:3000/auth/login`,
               signup: `https://${ip}:3000/auth/signup`,
+              elevenLabsKey: '${{ secrets.ELEVENLABS_API_KEY }}',
+
             },
             moorhuhn: {
               moorhuhnApi: `https://${ip}:3000/moorhuhn`,

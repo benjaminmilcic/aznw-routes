@@ -4,6 +4,8 @@ const ip = 'benjaminmilcic.site';
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
+const elevenLabsKey = process.env['ELEVENLABS_API_KEY'] || '';
+
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -47,6 +49,7 @@ export const environment = {
     getJokesFile: `https://${ip}:3000/auth/jokes`,
     login: `https://${ip}:3000/auth/login`,
     signup: `https://${ip}:3000/auth/signup`,
+    elevenLabsKey: elevenLabsKey,
   },
   moorhuhn: {
     moorhuhnApi: `https://${ip}:3000/moorhuhn`,

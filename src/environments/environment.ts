@@ -10,6 +10,7 @@ const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
+const elevenLabsKey = process.env['ELEVENLABS_API_KEY'] || '';
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -44,6 +45,7 @@ export const environment = {
     getJokesFile: `http://${ip}:3000/auth/jokes`,
     login: `http://${ip}:3000/auth/login`,
     signup: `http://${ip}:3000/auth/signup`,
+    elevenLabsKey: elevenLabsKey,
   },
   moorhuhn: {
     moorhuhnApi: `http://${ip}:3000/moorhuhn`,
