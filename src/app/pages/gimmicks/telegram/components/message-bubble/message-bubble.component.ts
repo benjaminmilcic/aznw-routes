@@ -22,7 +22,7 @@ export class MessageBubbleComponent {
   readonly message = input.required<Message>();
   readonly chatId = input.required<string>();
   readonly mediaBaseUrl = input<string>('');
-  readonly sessionId = input<string>('');
+  readonly mediaToken = input<string>('');
   readonly readOutboxMaxId = input<number>(0);
   readonly mediaLoaded = output<void>();
 
@@ -63,8 +63,8 @@ export class MessageBubbleComponent {
     }
 
     const path = fileName ? `${base}/${encodeURIComponent(fileName)}` : base;
-    const sessionId = this.sessionId();
-    return sessionId ? `${path}?sessionId=${sessionId}` : path;
+    const token = this.mediaToken();
+    return token ? `${path}?token=${token}` : path;
   }
 
   private mimeToExtension(mime: string): string {

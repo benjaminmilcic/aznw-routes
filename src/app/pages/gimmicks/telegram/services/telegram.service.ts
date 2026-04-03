@@ -12,6 +12,8 @@ export class TelegramService {
 
   readonly authenticated = signal(false);
   readonly currentUser = signal<TelegramUser | null>(null);
+  readonly mediaToken = signal<string>('');
+  private readonly mediaTokenExpiresAt = signal(0);
   readonly displayName = computed(() => {
     const user = this.currentUser();
     if (!user) return '';
@@ -111,6 +113,8 @@ export class TelegramService {
   clearSession(): void {
     this.authenticated.set(false);
     this.currentUser.set(null);
+    this.mediaToken.set('');
+    this.mediaTokenExpiresAt.set(0);
     this.clearSessionId();
   }
 
@@ -201,8 +205,29 @@ export class TelegramService {
     );
   }
 
+  async getMediaToken(): Promise<string> {
+    const now = Date.now();
+    const token = this.mediaToken();
+    if (token && now < this.mediaTokenExpiresAt() - 60_000) {
+      return token;
+    }
+
+    const result = await firstValueFrom(
+      this.http.post<{ token: string; expiresAt: number }>(
+        `${this.baseUrl}/media/token`,
+        {},
+        { headers: this.getHeaders() },
+      ),
+    );
+    this.mediaToken.set(result.token);
+    this.mediaTokenExpiresAt.set(result.expiresAt);
+    return result.token;
+  }
+
   getMediaUrl(chatId: string, messageId: number): string {
-    const sessionId = this.getSessionId();
-    return `${this.baseUrl}/media/${chatId}/${messageId}?sessionId=${sessionId}`;
+    const token = this.mediaToken();
+    return token
+      ? `${this.baseUrl}/media/${chatId}/${messageId}?token=${token}`
+      : `${this.baseUrl}/media/${chatId}/${messageId}`;
   }
 }

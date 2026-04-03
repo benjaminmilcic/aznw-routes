@@ -1,4 +1,4 @@
-import { Component, input, output, signal, effect, ElementRef, viewChild, OnDestroy } from '@angular/core';
+import { Component, input, output, signal, effect, ElementRef, viewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ import { environment } from '../../../../../../environments/environment';
   templateUrl: './chat-view.component.html',
   styleUrl: './chat-view.component.scss',
 })
-export class ChatViewComponent implements OnDestroy {
+export class ChatViewComponent implements OnInit, OnDestroy {
   readonly chat = input<Dialog | null>(null);
   readonly back = output<void>();
 
@@ -38,6 +38,9 @@ export class ChatViewComponent implements OnDestroy {
   readonly readOutboxMaxId = signal(0);
   readonly loading = signal(false);
   readonly sending = signal(false);
+  readonly mediaToken = signal('');
+  readonly loadingOlder = signal(false);
+  readonly hasMore = signal(true);
 
   readonly messagesContainer = viewChild<ElementRef>('messagesContainer');
 
@@ -45,6 +48,8 @@ export class ChatViewComponent implements OnDestroy {
   avatarFailed = false;
   private mediaBaseUrl = `${environment.telegram.apiUrl}/media`;
   private stickToBottom = false;
+  private oldestMessageId: number | null = null;
+  private mediaTokenRefreshHandle: ReturnType<typeof setInterval> | null = null;
 
   private readonly avatarColors = [
     'linear-gradient(135deg, #ff516a, #ff885e)',
@@ -66,9 +71,13 @@ export class ChatViewComponent implements OnDestroy {
       const currentChat = this.chat();
       this.avatarFailed = false;
       if (currentChat) {
+        this.hasMore.set(true);
+        this.oldestMessageId = null;
         this.loadMessages(currentChat.id);
       } else {
         this.messages.set([]);
+        this.hasMore.set(false);
+        this.oldestMessageId = null;
       }
     });
 
@@ -96,13 +105,37 @@ export class ChatViewComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnInit(): void {
+    this.refreshMediaToken();
+    this.mediaTokenRefreshHandle = setInterval(() => {
+      this.refreshMediaToken();
+    }, 50 * 60 * 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.mediaTokenRefreshHandle) {
+      clearInterval(this.mediaTokenRefreshHandle);
+      this.mediaTokenRefreshHandle = null;
+    }
+  }
+
+  private async refreshMediaToken(): Promise<void> {
+    try {
+      const token = await this.telegramService.getMediaToken();
+      this.mediaToken.set(token);
+    } catch {
+      // ignore token refresh errors; media loads will fail gracefully
+    }
+  }
 
   async loadMessages(chatId: string): Promise<void> {
     this.loading.set(true);
     try {
       const result = await this.telegramService.getMessages(chatId, 50);
-      this.messages.set(result.messages.reverse());
+      const ordered = result.messages.reverse();
+      this.messages.set(ordered);
+      this.oldestMessageId = ordered[0]?.id ?? null;
+      this.hasMore.set(result.messages.length === 50);
       this.readOutboxMaxId.set(result.readOutboxMaxId);
       setTimeout(() => this.scrollToBottom(), 100);
       this.telegramService.markAsRead(chatId).catch(() => {});
@@ -165,9 +198,55 @@ export class ChatViewComponent implements OnDestroy {
     }
   }
 
+  async loadOlderMessages(): Promise<void> {
+    const chat = this.chat();
+    if (!chat || this.loadingOlder() || !this.hasMore()) return;
+    if (!this.oldestMessageId) return;
+
+    this.loadingOlder.set(true);
+    const container = this.messagesContainer();
+    const prevScrollHeight = container?.nativeElement.scrollHeight ?? 0;
+
+    try {
+      const result = await this.telegramService.getMessages(chat.id, 50, this.oldestMessageId);
+      const older = result.messages.reverse();
+      if (older.length === 0) {
+        this.hasMore.set(false);
+        return;
+      }
+      const existingIds = new Set(this.messages().map((m) => m.id));
+      const deduped = older.filter((m) => !existingIds.has(m.id));
+      if (deduped.length === 0) {
+        this.hasMore.set(false);
+        return;
+      }
+      if (older.length < 50) {
+        this.hasMore.set(false);
+      }
+      this.messages.update((msgs) => [...deduped, ...msgs]);
+      this.oldestMessageId = this.messages()[0]?.id ?? this.oldestMessageId;
+
+      setTimeout(() => {
+        const containerNow = this.messagesContainer();
+        if (containerNow) {
+          const newScrollHeight = containerNow.nativeElement.scrollHeight;
+          containerNow.nativeElement.scrollTop += newScrollHeight - prevScrollHeight;
+        }
+      }, 0);
+    } catch (err) {
+      console.error('Failed to load older messages', err);
+    } finally {
+      this.loadingOlder.set(false);
+    }
+  }
+
   onScroll(event: Event): void {
     const el = event.target as HTMLElement;
     this.stickToBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+
+    if (el.scrollTop < 50) {
+      this.loadOlderMessages();
+    }
   }
 
   onMediaLoaded(): void {
@@ -188,9 +267,6 @@ export class ChatViewComponent implements OnDestroy {
     return this.mediaBaseUrl;
   }
 
-  getSessionId(): string {
-    return this.telegramService.getSessionId() ?? '';
-  }
 
   getInitials(title: string): string {
     return title

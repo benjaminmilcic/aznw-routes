@@ -49,7 +49,7 @@
             [message]="msg"
             [chatId]="chat()!.id"
             [mediaBaseUrl]="getMediaBaseUrl()"
-            [sessionId]="getSessionId()"
+            [mediaToken]="mediaToken()"
             [readOutboxMaxId]="readOutboxMaxId()"
             (mediaLoaded)="onMediaLoaded()">
           </app-message-bubble>
