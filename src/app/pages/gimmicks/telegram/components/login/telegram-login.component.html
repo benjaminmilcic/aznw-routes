@@ -1,20 +1,38 @@
-<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<div
+  class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100"
+>
   <mat-card class="w-full max-w-md mx-4">
     <mat-card-header>
-      <mat-card-title class="flex items-center gap-2 text-2xl">
-        <mat-icon class="text-blue-500">telegram</mat-icon>
-        {{ 'gimmicks.telegram.title' | translate }}
+      <mat-card-title class="text-2xl">
+        <div class="flex item-center gap-2">
+          <div>
+            <mat-icon class="text-blue-500 translate-y-[4px]"
+              >telegram</mat-icon
+            >
+          </div>
+          <div>{{ "gimmicks.telegram.title" | translate }}</div>
+        </div>
       </mat-card-title>
-      <mat-card-subtitle class="text-center">{{ 'gimmicks.telegram.login.subtitle' | translate }}</mat-card-subtitle>
+      <mat-card-subtitle class="text-center">{{
+        "gimmicks.telegram.login.subtitle" | translate
+      }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="mt-6">
       <!-- Step 1: Credentials -->
-      @if (step() === 'credentials') {
+      @if (step() === "credentials") {
         <form (ngSubmit)="sendCode()" class="flex flex-col gap-4">
           <mat-form-field appearance="outline">
-            <mat-label>{{ 'gimmicks.telegram.login.phoneNumber' | translate }}</mat-label>
-            <input matInput [(ngModel)]="phoneNumber" name="phoneNumber" required placeholder="+49123456789">
+            <mat-label>{{
+              "gimmicks.telegram.login.phoneNumber" | translate
+            }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="phoneNumber"
+              name="phoneNumber"
+              required
+              placeholder="+49123456789"
+            />
             <mat-icon matPrefix>phone</mat-icon>
           </mat-form-field>
 
@@ -22,20 +40,31 @@
             <div class="text-red-500 text-sm">{{ error() }}</div>
           }
 
-          <button mat-raised-button color="primary" type="submit" [disabled]="loading() || !phoneNumber">
-            @if (loading()) {
-              <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner>
-            }
-            {{ 'gimmicks.telegram.login.sendCode' | translate }}
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loading() || !phoneNumber"
+          >
+            <div class="flex item-center gap-2">
+              @if (loading()) {
+                <div>
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+              }
+              <div>
+                {{ "gimmicks.telegram.login.sendCode" | translate }}
+              </div>
+            </div>
           </button>
         </form>
       }
 
       <!-- Step 2: Verification Code -->
-      @if (step() === 'code') {
+      @if (step() === "code") {
         <div class="flex flex-col gap-4">
           <p class="text-gray-600 text-center">
-            {{ 'gimmicks.telegram.login.codeInfo' | translate }}
+            {{ "gimmicks.telegram.login.codeInfo" | translate }}
           </p>
 
           <div class="flex gap-3 justify-center my-2">
@@ -49,7 +78,8 @@
                 [disabled]="loading()"
                 (input)="onOtpInput($index, $event)"
                 (keydown)="onOtpKeydown($index, $event)"
-                (paste)="onOtpPaste($event)">
+                (paste)="onOtpPaste($event)"
+              />
             }
           </div>
 
@@ -64,21 +94,30 @@
           }
 
           <button mat-button type="button" (click)="step.set('credentials')">
-            {{ 'gimmicks.telegram.login.back' | translate }}
+            {{ "gimmicks.telegram.login.back" | translate }}
           </button>
         </div>
       }
 
       <!-- Step 3: 2FA Password -->
-      @if (step() === '2fa') {
+      @if (step() === "2fa") {
         <form (ngSubmit)="signIn2FA()" class="flex flex-col gap-4">
           <p class="text-gray-600">
-            {{ 'gimmicks.telegram.login.twoFaInfo' | translate }}
+            {{ "gimmicks.telegram.login.twoFaInfo" | translate }}
           </p>
 
           <mat-form-field appearance="outline">
-            <mat-label>{{ 'gimmicks.telegram.login.twoFaPassword' | translate }}</mat-label>
-            <input matInput [(ngModel)]="password" name="password" required type="password" autofocus>
+            <mat-label>{{
+              "gimmicks.telegram.login.twoFaPassword" | translate
+            }}</mat-label>
+            <input
+              matInput
+              [(ngModel)]="password"
+              name="password"
+              required
+              type="password"
+              autofocus
+            />
             <mat-icon matPrefix>security</mat-icon>
           </mat-form-field>
 
@@ -86,11 +125,22 @@
             <div class="text-red-500 text-sm">{{ error() }}</div>
           }
 
-          <button mat-raised-button color="primary" type="submit" [disabled]="loading() || !password">
-            @if (loading()) {
-              <mat-spinner diameter="20" class="inline-block mr-2"></mat-spinner>
-            }
-            {{ 'gimmicks.telegram.login.confirm' | translate }}
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loading() || !password"
+          >
+            <div class="flex item-center gap-2">
+              @if (loading()) {
+                <div>
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+              }
+              <div>
+                {{ "gimmicks.telegram.login.confirm" | translate }}
+              </div>
+            </div>
           </button>
         </form>
       }
@@ -98,8 +148,12 @@
 
     <mat-card-footer class="px-4 pb-4">
       <div class="flex items-start gap-2 text-xs text-gray-400 mt-2">
-        <mat-icon class="text-gray-400 shrink-0" style="font-size: 16px; width: 16px; height: 16px;">info_outline</mat-icon>
-        <span>{{ 'gimmicks.telegram.login.privacyInfo' | translate }}</span>
+        <mat-icon
+          class="text-gray-400 shrink-0"
+          style="font-size: 16px; width: 16px; height: 16px"
+          >info_outline</mat-icon
+        >
+        <span>{{ "gimmicks.telegram.login.privacyInfo" | translate }}</span>
       </div>
     </mat-card-footer>
   </mat-card>
