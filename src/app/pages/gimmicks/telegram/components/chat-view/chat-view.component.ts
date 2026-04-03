@@ -188,6 +188,10 @@ export class ChatViewComponent implements OnDestroy {
     return this.mediaBaseUrl;
   }
 
+  getSessionId(): string {
+    return this.telegramService.getSessionId() ?? '';
+  }
+
   getInitials(title: string): string {
     return title
       .split(' ')

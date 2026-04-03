@@ -26,7 +26,7 @@
     </div>
 
     <!-- Chat View -->
-    <div class="chat-area flex-1" [class.mobile-hidden]="!selectedChat()">
+    <div class="chat-area flex-1 min-w-0" [class.mobile-hidden]="!selectedChat()">
       <app-chat-view [chat]="selectedChat()" (back)="onBackToList()"></app-chat-view>
     </div>
   </div>

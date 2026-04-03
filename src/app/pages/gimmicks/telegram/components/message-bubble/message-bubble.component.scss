@@ -95,7 +95,14 @@
     max-height: 150px;
   }
 
+  .audio-player {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .audio-player audio {
     min-width: 0;
+    width: 100%;
+    max-width: calc(85vw - 44px);
   }
 }

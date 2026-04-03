@@ -49,6 +49,7 @@
             [message]="msg"
             [chatId]="chat()!.id"
             [mediaBaseUrl]="getMediaBaseUrl()"
+            [sessionId]="getSessionId()"
             [readOutboxMaxId]="readOutboxMaxId()"
             (mediaLoaded)="onMediaLoaded()">
           </app-message-bubble>
@@ -70,7 +71,7 @@
         <mat-icon>attach_file</mat-icon>
       </button>
 
-      <mat-form-field appearance="outline" class="flex-1 message-input">
+      <mat-form-field appearance="outline" class="flex-1 min-w-0 message-input">
         <textarea
           matInput
           [(ngModel)]="messageText"
