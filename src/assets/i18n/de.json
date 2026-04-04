@@ -646,7 +646,7 @@
         "errorSendCode": "Fehler beim Senden des Codes",
         "wrongCode": "Falscher Code",
         "wrongPassword": "Falsches Passwort",
-        "privacyInfo": "Es werden keine Daten auf dem Server gespeichert. Nach 2 Stunden Inaktivität wirst du automatisch abgemeldet."
+        "privacyInfo": "Es werden keine Daten auf meinem Server gespeichert. Nach 2 Stunden Inaktivität wirst du automatisch abgemeldet."
       },
       "chatList": {
         "searchPlaceholder": "Chat suchen...",

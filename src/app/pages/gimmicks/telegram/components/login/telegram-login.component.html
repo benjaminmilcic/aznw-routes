@@ -1,24 +1,20 @@
-<div
-  class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100"
+<section
+  class="flex justify-center items-center min-h-full pt-[70px] bg-blue-900 box-border"
 >
-  <mat-card class="w-full max-w-md mx-4">
-    <mat-card-header>
-      <mat-card-title class="text-2xl">
-        <div class="flex item-center gap-2">
-          <div>
-            <mat-icon class="text-blue-500 translate-y-[4px]"
-              >telegram</mat-icon
-            >
-          </div>
-          <div>{{ "gimmicks.telegram.title" | translate }}</div>
-        </div>
-      </mat-card-title>
-      <mat-card-subtitle class="text-center">{{
-        "gimmicks.telegram.login.subtitle" | translate
-      }}</mat-card-subtitle>
-    </mat-card-header>
+  <div
+    class="relative w-full max-w-md mx-4 bg-gradient-to-br from-red-900/60 to-red-700/60 backdrop-blur-sm border border-white/20 shadow-xl rounded-2xl text-white p-4"
+  >
+    <div class="flex item-center gap-2 text-2xl justify-center mb-4">
+      <div>
+        <mat-icon class="text-blue-500 translate-y-[4px]">telegram</mat-icon>
+      </div>
+      <div>{{ "gimmicks.telegram.title" | translate }}</div>
+    </div>
+    <div class="text-center">
+      {{ "gimmicks.telegram.login.subtitle" | translate }}
+    </div>
 
-    <mat-card-content class="mt-6">
+    <div class="mt-6">
       <!-- Step 1: Credentials -->
       @if (step() === "credentials") {
         <form (ngSubmit)="sendCode()" class="flex flex-col gap-4">
@@ -63,7 +59,7 @@
       <!-- Step 2: Verification Code -->
       @if (step() === "code") {
         <div class="flex flex-col gap-4">
-          <p class="text-gray-600 text-center">
+          <p class="text-gray-400 text-center">
             {{ "gimmicks.telegram.login.codeInfo" | translate }}
           </p>
 
@@ -144,17 +140,15 @@
           </button>
         </form>
       }
-    </mat-card-content>
+    </div>
 
-    <mat-card-footer class="px-4 pb-4">
-      <div class="flex items-start gap-2 text-xs text-gray-400 mt-2">
-        <mat-icon
-          class="text-gray-400 shrink-0"
-          style="font-size: 16px; width: 16px; height: 16px"
-          >info_outline</mat-icon
-        >
-        <span>{{ "gimmicks.telegram.login.privacyInfo" | translate }}</span>
-      </div>
-    </mat-card-footer>
-  </mat-card>
-</div>
+    <div class="flex items-start gap-2 text-xs text-gray-400 mt-6">
+      <mat-icon
+        class="text-gray-400 shrink-0"
+        style="font-size: 16px; width: 16px; height: 16px"
+        >info_outline</mat-icon
+      >
+      <span>{{ "gimmicks.telegram.login.privacyInfo" | translate }}</span>
+    </div>
+  </div>
+</section>

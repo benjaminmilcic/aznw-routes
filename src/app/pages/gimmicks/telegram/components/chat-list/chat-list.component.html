@@ -4,6 +4,7 @@
     <mat-form-field appearance="outline" class="w-full search-field">
       <mat-icon matPrefix>search</mat-icon>
       <input matInput [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" [placeholder]="'gimmicks.telegram.chatList.searchPlaceholder' | translate">
+      <mat-icon matSuffix (click)="searchQuery.set('')">close</mat-icon>
     </mat-form-field>
   </div>
 

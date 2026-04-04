@@ -646,7 +646,7 @@
         "errorSendCode": "Pogreška pri slanju koda",
         "wrongCode": "Pogrešan kod",
         "wrongPassword": "Pogrešna lozinka",
-        "privacyInfo": "Nikakvi podaci se ne pohranjuju na serveru. Nakon 2 sata neaktivnosti bit ćete automatski odjavljeni."
+        "privacyInfo": "Na mom serveru se ne pohranjuju nikakvi podaci. Automatski ćete biti odjavljeni nakon 2 sata neaktivnosti."
       },
       "chatList": {
         "searchPlaceholder": "Pretraži chat...",
