@@ -1,80 +1,62 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { GimmicksComponent } from './pages/gimmicks/gimmicks.component';
-import { MapComponent } from './pages/gimmicks/map/map.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { CalendarComponent } from './pages/gimmicks/calendar/calendar.component';
-import { OverviewComponent } from './pages/gimmicks/overview/overview.component';
-import { GuestbookComponent } from './pages/gimmicks/guestbook/guestbook.component';
-import { PrintScheduleComponent } from './pages/gimmicks/calendar/print-schedule/print-schedule.component';
-import { ChartsComponent } from './pages/gimmicks/charts/charts.component';
-import { AuthLoginComponent } from './pages/gimmicks/auth/auth-login/auth-login.component';
-import { AuthMainComponent } from './pages/gimmicks/auth/auth-main/auth-main.component';
-import { AuthComponent } from './pages/gimmicks/auth/auth.component';
-import { AuthMainGuard } from './pages/gimmicks/auth/auth-main.guard';
 import { AuthLoginGuard } from './pages/gimmicks/auth/auth-login.guard';
-import { TiktaktoeComponent } from './pages/gimmicks/games/tiktaktoe/tiktaktoe.component';
-import { ConnectFourComponent } from './pages/gimmicks/games/connect-four/connect-four.component';
-import { GamesComponent } from './pages/gimmicks/games/games.component';
-import { MemoQuizComponent } from './pages/gimmicks/games/memo-quiz/memo-quiz.component';
-import { JigsawComponent } from './pages/gimmicks/games/jigsaw/jigsaw.component';
-import { KnowledgeQuizComponent } from './pages/gimmicks/games/knowledge-quiz/knowledge-quiz.component';
-import { MoorhuhnComponent } from './pages/gimmicks/games/moorhuhn/moorhuhn.component';
-import { YahtzeeComponent } from './pages/gimmicks/games/yahtzee/yahtzee.component';
-import { WeatherComponent } from './pages/gimmicks/weather/weather.component';
-import { GoogleRedirectComponent } from './pages/gimmicks/auth/google-redirect.component';
-import { MinesweeperComponent } from './pages/gimmicks/games/minesweeper/minesweeper.component';
-import { RecipesComponent } from './pages/gimmicks/recipes/recipes.component';
-import { RecipesListComponent } from './pages/gimmicks/recipes/recipes-list/recipes-list.component';
-import { RecipeItemComponent } from './pages/gimmicks/recipes/recipe-item/recipe-item.component';
-import { AddRecipeComponent } from './pages/gimmicks/recipes/add-recipe/add-recipe.component';
-import { RecipePrintComponent } from './pages/gimmicks/recipes/recipe-print/recipe-print.component';
-import { MoviesComponent } from './pages/gimmicks/movies/movies.component';
-import { MoviesSearchComponent } from './pages/gimmicks/movies/movies-search/movies-search.component';
-import { MoviesPopularComponent } from './pages/gimmicks/movies/movies-popular/movies-popular.component';
-import { MovieDetailComponent } from './pages/gimmicks/movies/movie-detail/movie-detail.component';
-import { ActorDetailComponent } from './pages/gimmicks/movies/actor-detail/actor-detail.component';
-import { FlagQuizComponent } from './pages/gimmicks/games/flag-quiz/flag-quiz.component';
-import { CountriesComponent } from './pages/gimmicks/countries/countries.component';
-import { CountriesWorldmapComponent } from './pages/gimmicks/countries/countries-worldmap/countries-worldmap.component';
-import { CountriesDetailComponent } from './pages/gimmicks/countries/countries-detail/countries-detail.component';
-import { TelegramComponent } from './pages/gimmicks/telegram/telegram.component';
-import { TelegramLoginComponent } from './pages/gimmicks/telegram/components/login/telegram-login.component';
+import { AuthMainGuard } from './pages/gimmicks/auth/auth-main.guard';
 import { TelgramAuthGuard } from './pages/gimmicks/telegram/guards/telegram-auth.guard';
-import { TelegramChatLayoutComponent } from './pages/gimmicks/telegram/components/telegram-chat-layout/telegram-chat-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    loadComponent: () =>
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'gimmicks',
-    component: GimmicksComponent,
+    loadComponent: () =>
+      import('./pages/gimmicks/gimmicks.component').then(
+        (m) => m.GimmicksComponent
+      ),
     children: [
       {
         path: '',
-        component: OverviewComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/overview/overview.component').then(
+            (m) => m.OverviewComponent
+          ),
       },
       {
         path: 'map',
-        component: MapComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/map/map.component').then(
+            (m) => m.MapComponent
+          ),
       },
       {
         path: 'calendar',
-        component: CalendarComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/calendar/calendar.component').then(
+            (m) => m.CalendarComponent
+          ),
       },
       {
         path: 'guestbook',
-        component: GuestbookComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/guestbook/guestbook.component').then(
+            (m) => m.GuestbookComponent
+          ),
       },
       {
         path: 'charts',
-        component: ChartsComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/charts/charts.component').then(
+            (m) => m.ChartsComponent
+          ),
       },
       {
         path: 'auth',
-        component: AuthComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/auth/auth.component').then(
+            (m) => m.AuthComponent
+          ),
         children: [
           {
             path: '',
@@ -84,22 +66,34 @@ export const routes: Routes = [
           {
             path: 'login',
             canActivate: [AuthLoginGuard],
-            component: AuthLoginComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/auth/auth-login/auth-login.component'
+              ).then((m) => m.AuthLoginComponent),
           },
           {
             path: 'main',
             canActivate: [AuthMainGuard],
-            component: AuthMainComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/auth/auth-main/auth-main.component'
+              ).then((m) => m.AuthMainComponent),
           },
           {
             path: 'google-redirect',
-            component: GoogleRedirectComponent,
+            loadComponent: () =>
+              import('./pages/gimmicks/auth/google-redirect.component').then(
+                (m) => m.GoogleRedirectComponent
+              ),
           },
         ],
       },
       {
         path: 'games',
-        component: GamesComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/games/games.component').then(
+            (m) => m.GamesComponent
+          ),
         children: [
           {
             path: '',
@@ -108,49 +102,82 @@ export const routes: Routes = [
           },
           {
             path: 'tiktaktoe',
-            component: TiktaktoeComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/tiktaktoe/tiktaktoe.component'
+              ).then((m) => m.TiktaktoeComponent),
           },
           {
             path: 'connect-four',
-            component: ConnectFourComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/connect-four/connect-four.component'
+              ).then((m) => m.ConnectFourComponent),
           },
           {
             path: 'memo-quiz',
-            component: MemoQuizComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/memo-quiz/memo-quiz.component'
+              ).then((m) => m.MemoQuizComponent),
           },
           {
             path: 'jigsaw',
-            component: JigsawComponent,
+            loadComponent: () =>
+              import('./pages/gimmicks/games/jigsaw/jigsaw.component').then(
+                (m) => m.JigsawComponent
+              ),
           },
           {
             path: 'knowledge-quiz',
-            component: KnowledgeQuizComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/knowledge-quiz/knowledge-quiz.component'
+              ).then((m) => m.KnowledgeQuizComponent),
           },
           {
             path: 'moorhuhn',
-            component: MoorhuhnComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/moorhuhn/moorhuhn.component'
+              ).then((m) => m.MoorhuhnComponent),
           },
           {
             path: 'yahtzee',
-            component: YahtzeeComponent,
+            loadComponent: () =>
+              import('./pages/gimmicks/games/yahtzee/yahtzee.component').then(
+                (m) => m.YahtzeeComponent
+              ),
           },
           {
             path: 'minesweeper',
-            component: MinesweeperComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/minesweeper/minesweeper.component'
+              ).then((m) => m.MinesweeperComponent),
           },
           {
             path: 'flag-quiz',
-            component: FlagQuizComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/games/flag-quiz/flag-quiz.component'
+              ).then((m) => m.FlagQuizComponent),
           },
         ],
       },
       {
         path: 'weather',
-        component: WeatherComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/weather/weather.component').then(
+            (m) => m.WeatherComponent
+          ),
       },
       {
         path: 'recipes',
-        component: RecipesComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/recipes/recipes.component').then(
+            (m) => m.RecipesComponent
+          ),
         children: [
           {
             path: '',
@@ -159,25 +186,40 @@ export const routes: Routes = [
           },
           {
             path: 'list',
-            component: RecipesListComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/recipes/recipes-list/recipes-list.component'
+              ).then((m) => m.RecipesListComponent),
           },
           {
             path: 'recipe/:id',
-            component: RecipeItemComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/recipes/recipe-item/recipe-item.component'
+              ).then((m) => m.RecipeItemComponent),
           },
           {
             path: 'add',
-            component: AddRecipeComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/recipes/add-recipe/add-recipe.component'
+              ).then((m) => m.AddRecipeComponent),
           },
           {
             path: 'update/:id',
-            component: AddRecipeComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/recipes/add-recipe/add-recipe.component'
+              ).then((m) => m.AddRecipeComponent),
           },
         ],
       },
       {
         path: 'movies',
-        component: MoviesComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/movies/movies.component').then(
+            (m) => m.MoviesComponent
+          ),
         children: [
           {
             path: '',
@@ -186,47 +228,77 @@ export const routes: Routes = [
           },
           {
             path: 'search',
-            component: MoviesSearchComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/movies-search/movies-search.component'
+              ).then((m) => m.MoviesSearchComponent),
           },
           {
             path: 'popular',
-            component: MoviesPopularComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/movies-popular/movies-popular.component'
+              ).then((m) => m.MoviesPopularComponent),
           },
           {
             path: 'top-rated',
-            component: MoviesPopularComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/movies-popular/movies-popular.component'
+              ).then((m) => m.MoviesPopularComponent),
           },
           {
             path: 'now-playing',
-            component: MoviesPopularComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/movies-popular/movies-popular.component'
+              ).then((m) => m.MoviesPopularComponent),
           },
           {
             path: 'movie/:id',
-            component: MovieDetailComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/movie-detail/movie-detail.component'
+              ).then((m) => m.MovieDetailComponent),
           },
           {
             path: 'actor/:id',
-            component: ActorDetailComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/movies/actor-detail/actor-detail.component'
+              ).then((m) => m.ActorDetailComponent),
           },
         ],
       },
       {
         path: 'countries',
-        component: CountriesComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/countries/countries.component').then(
+            (m) => m.CountriesComponent
+          ),
         children: [
           {
             path: '',
-            component: CountriesWorldmapComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/countries/countries-worldmap/countries-worldmap.component'
+              ).then((m) => m.CountriesWorldmapComponent),
           },
           {
             path: 'country/:code',
-            component: CountriesDetailComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/countries/countries-detail/countries-detail.component'
+              ).then((m) => m.CountriesDetailComponent),
           },
         ],
       },
       {
         path: 'telegram',
-        component: TelegramComponent,
+        loadComponent: () =>
+          import('./pages/gimmicks/telegram/telegram.component').then(
+            (m) => m.TelegramComponent
+          ),
         children: [
           {
             path: '',
@@ -235,12 +307,18 @@ export const routes: Routes = [
           },
           {
             path: 'login',
-            component: TelegramLoginComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/telegram/components/login/telegram-login.component'
+              ).then((m) => m.TelegramLoginComponent),
           },
           {
             path: 'chat',
             canActivate: [TelgramAuthGuard],
-            component: TelegramChatLayoutComponent,
+            loadComponent: () =>
+              import(
+                './pages/gimmicks/telegram/components/telegram-chat-layout/telegram-chat-layout.component'
+              ).then((m) => m.TelegramChatLayoutComponent),
           },
         ],
       },
@@ -249,12 +327,24 @@ export const routes: Routes = [
   {
     path: 'print/:printDate',
     outlet: 'print',
-    component: PrintScheduleComponent,
+    loadComponent: () =>
+      import(
+        './pages/gimmicks/calendar/print-schedule/print-schedule.component'
+      ).then((m) => m.PrintScheduleComponent),
   },
   {
     path: 'print-recipe/:id',
     outlet: 'print',
-    component: RecipePrintComponent,
+    loadComponent: () =>
+      import(
+        './pages/gimmicks/recipes/recipe-print/recipe-print.component'
+      ).then((m) => m.RecipePrintComponent),
   },
-  { path: '**', component: PageNotFoundComponent },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      ),
+  },
 ];

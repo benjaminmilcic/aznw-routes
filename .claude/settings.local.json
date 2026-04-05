@@ -40,7 +40,9 @@
       "Bash(python -c:*)",
       "Bash(powershell -Command:*)",
       "Bash(node -e:*)",
-      "Bash(ipconfig)"
+      "Bash(ipconfig)",
+      "Bash(ls -la \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
+      "Bash(du:*)"
     ],
     "deny": [],
     "ask": []

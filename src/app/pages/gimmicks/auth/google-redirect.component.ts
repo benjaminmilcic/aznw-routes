@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Component({
     selector: 'app-google-redirect',
     template: `<p>Logging in with Google...</p>`,
-    standalone: false
+    imports: [],
 })
 export class GoogleRedirectComponent implements OnInit {
   constructor(
