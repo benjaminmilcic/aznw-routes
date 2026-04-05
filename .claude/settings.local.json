@@ -42,7 +42,9 @@
       "Bash(node -e:*)",
       "Bash(ipconfig)",
       "Bash(ls -la \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
-      "Bash(du:*)"
+      "Bash(du:*)",
+      "Bash(ls \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
+      "Bash(xargs -I{} basename {})"
     ],
     "deny": [],
     "ask": []
