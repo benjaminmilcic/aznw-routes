@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, Subscription } from 'rxjs';
+import { filter, Subscription, take } from 'rxjs';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.service';
 import { AuthService } from './pages/gimmicks/auth/auth.service';
@@ -82,9 +82,15 @@ export class AppComponent implements OnInit, OnDestroy {
       this.analyticsService.initTracking();
     }
 
-    // Ladeanimation ausblenden, sobald die App bereit ist
-    this.appLoaded = true;
-    this.hideLoader();
+    // Ladeanimation erst ausblenden, wenn die erste Route fertig geladen ist
+    // (inkl. Lazy-Chunk des HomeComponent)
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      take(1)
+    ).subscribe(() => {
+      this.appLoaded = true;
+      this.hideLoader();
+    });
 
     // Handle fragment scrolling on navigation (including browser back/forward)
     this.routerSub = this.router.events
