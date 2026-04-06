@@ -44,7 +44,8 @@
       "Bash(ls -la \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
       "Bash(du:*)",
       "Bash(ls \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
-      "Bash(xargs -I{} basename {})"
+      "Bash(xargs -I{} basename {})",
+      "Bash(npm list:*)"
     ],
     "deny": [],
     "ask": []
