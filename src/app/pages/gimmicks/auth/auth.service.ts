@@ -110,8 +110,21 @@ export class AuthService {
 
   setUserFromToken(token: string) {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      this.handleAuthentication(payload.email, payload.sub,token,3600);
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        throw new Error('Invalid token format');
+      }
+      const payload = JSON.parse(atob(parts[1]));
+      if (!payload.email || !payload.sub || !payload.exp) {
+        throw new Error('Missing required token claims');
+      }
+      // Signature validation is not possible client-side (secret stays on server).
+      // The backend AuthGuard verifies the signature on every request.
+      const expiresIn = payload.exp - Math.floor(Date.now() / 1000);
+      if (expiresIn <= 0) {
+        throw new Error('Token already expired');
+      }
+      this.handleAuthentication(payload.email, payload.sub, token, expiresIn);
     } catch (err) {
       console.error('Invalid token payload');
       this.authUser.next(null);

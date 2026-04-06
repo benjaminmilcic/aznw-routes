@@ -11,6 +11,8 @@ const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
 const elevenLabsKey = process.env['ELEVENLABS_API_KEY'] || '';
+const tmdbKey = process.env['TMDB_API_KEY'] || '';
+const googleMapsKey = process.env['GOOGLE_MAPS_API_KEY'] || '';
 
 export const environment = {
   stripePublishableKey: stripeKey,
@@ -81,6 +83,12 @@ export const environment = {
   telegram: {
     apiUrl: `http://${ip}:3000/telegram`,
     webSocketsUrl: `http://${localIp}:3000/telegramws`,
+  },
+  tmdb: {
+    apiKey: tmdbKey,
+  },
+  googleMaps: {
+    apiKey: googleMapsKey,
   },
   production: false,
   version: new Date().getTime(),

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, inject, DOCUMENT } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, Subscription, take } from 'rxjs';
@@ -29,6 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
   onResize(event) {
     this.chartsHelperService.detectChanges.next();
   }
+  private document = inject(DOCUMENT);
+
   constructor(
     private translate: TranslateService,
     private chartsHelperService: ChartsHelperService,
@@ -38,6 +40,11 @@ export class AppComponent implements OnInit, OnDestroy {
     private analyticsService: AnalyticsService,
     private router: Router,
   ) {
+    const script = this.document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async`;
+    script.async = true;
+    script.defer = true;
+    this.document.head.appendChild(script);
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;
     let translateLanguage = 'de';

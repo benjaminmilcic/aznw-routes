@@ -1,8 +1,8 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../environments/environment';
 
-const TMDB_API_KEY = '3014281c899ed9a200109f0a5f9bfb0f';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 export const moviesInterceptor: HttpInterceptorFn = (req, next) => {
@@ -31,7 +31,7 @@ export const moviesInterceptor: HttpInterceptorFn = (req, next) => {
   // Clone the request and add API key and language parameters
   const modifiedReq = req.clone({
     setParams: {
-      api_key: TMDB_API_KEY,
+      api_key: environment.tmdb.apiKey,
       language,
       include_adult: 'false',
     },

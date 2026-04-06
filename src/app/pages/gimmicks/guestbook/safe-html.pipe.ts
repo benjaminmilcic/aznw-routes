@@ -1,4 +1,4 @@
-import { Pipe } from "@angular/core";
+import { Pipe, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Pipe({
@@ -8,7 +8,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class SafeHtmlPipe {
   constructor(private sanitizer: DomSanitizer) {}
 
-  transform(html) {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
+  transform(html: string): string {
+    return this.sanitizer.sanitize(SecurityContext.HTML, html) || '';
   }
 }
