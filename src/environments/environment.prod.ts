@@ -7,6 +7,7 @@ const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
 const elevenLabsKey = process.env['ELEVENLABS_API_KEY'] || '';
 const tmdbKey = process.env['TMDB_API_KEY'] || '';
 const googleMapsKey = process.env['GOOGLE_MAPS_API_KEY'] || '';
+const tinymceKey = process.env['TINYMCE_API_KEY'] || '';
 
 
 export const environment = {
@@ -93,6 +94,9 @@ export const environment = {
   },
   googleMaps: {
     apiKey: googleMapsKey,
+  },
+  tinymce: {
+    apiKey: tinymceKey,
   },
   production: true,
   version: new Date().getTime(),

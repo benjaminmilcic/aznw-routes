@@ -44,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './guestbook.component.css',
 })
 export class GuestbookComponent implements OnInit, AfterViewInit {
+  readonly tinymceApiKey = environment.tinymce.apiKey;
   showcreatePostDialog = false;
   postName: string;
   postContent: string;

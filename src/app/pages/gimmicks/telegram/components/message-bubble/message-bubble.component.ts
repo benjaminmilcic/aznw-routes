@@ -4,8 +4,9 @@ import {
   input,
   OnDestroy,
   output,
+  SecurityContext,
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,18 +36,27 @@ export class MessageBubbleComponent {
 
   constructor(private readonly sanitizer: DomSanitizer) {}
 
-  linkifyText(text: string): SafeHtml {
+  linkifyText(text: string): string {
     const escaped = text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
     const linked = escaped.replace(MessageBubbleComponent.URL_REGEX, (url) => {
-      const href = url.startsWith('www.') ? 'https://' + url : url;
-      return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="message-link">${url}</a>`;
+      const rawHref = url.startsWith('www.') ? 'https://' + url : url;
+      try {
+        const parsed = new URL(rawHref);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+          return url;
+        }
+        const safeHref = parsed.href.replace(/"/g, '%22');
+        return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="message-link">${url}</a>`;
+      } catch {
+        return url;
+      }
     });
 
-    return this.sanitizer.bypassSecurityTrustHtml(linked);
+    return this.sanitizer.sanitize(SecurityContext.HTML, linked) ?? '';
   }
 
   getMediaUrl(): string {
