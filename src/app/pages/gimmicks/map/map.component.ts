@@ -4,6 +4,7 @@ import {
   Component,
   HostListener,
   Injector,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -25,10 +26,10 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FilterButtonComponent } from './filter-button/filter-button.component';
 import {
   createCustomElement,
@@ -66,7 +67,7 @@ import { CustomPaginatorIntl } from '../movies/custom-paginator-intl';
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   style: { width: string; height: string } = { width: '100%', height: '50vh' };
 
   @ViewChild(GoogleMap) googleMap: GoogleMap;
@@ -152,14 +153,16 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  selectedCity = new FormControl('');
-  cityOptions: string[];
-  selectedCityOptions: Observable<string[]>;
+  private langChangeSub?: Subscription;
+  private runAfterLanguageReload = false;
+  lastZoomAction: 'city' | 'federalState' | 'germany' = 'federalState';
+  selectedCity: string = '';
 
   constructor(
     private cdr: ChangeDetectorRef,
     injector: Injector,
     public mapService: MapService,
+    private translate: TranslateService,
   ) {
     if (this.mapService.firstLoad) {
       const FilterButtonElement = createCustomElement(FilterButtonComponent, {
@@ -175,6 +178,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
+    this.langChangeSub = this.translate.onLangChange.subscribe(() => {
+      this.runAfterLanguageReload = true;
+    });
+
     this.setMapDimension();
     await this.getData();
 
@@ -183,18 +190,14 @@ export class MapComponent implements OnInit, AfterViewInit {
       .then((json) => {
         this.federalStatesGeoJson = json;
       });
-
-    this.cityOptions = this.cities.map((city) => {
-      return city.name;
-    });
-    this.selectedCityOptions = this.selectedCity.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value || '')),
-    );
   }
 
   async ngAfterViewInit() {
     this.cdr.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 
   async onMapInitialized(map: google.maps.Map) {
@@ -223,6 +226,24 @@ export class MapComponent implements OnInit, AfterViewInit {
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
     ]);
     this.cdr.detectChanges();
+    if (this.runAfterLanguageReload) {
+      this.runAfterLanguageReload = false;
+      switch (this.lastZoomAction) {
+        case 'city':
+          this.selectCity(this.selectedCity);
+          setTimeout(() => {
+            this.mapService.setSearchCity$.next(this.selectedCity);
+          }, 3000);
+          break;
+        case 'germany':
+          this.selectFederalStates();
+          this.zoomToGermany();
+          break;
+        default:
+          this.selectFederalStates();
+          break;
+      }
+    }
   }
 
   addCustomMapControls() {
@@ -232,6 +253,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.selectCity(city.detail),
     );
     searchFieldEl.addEventListener('cleared', () => {
+      this.lastZoomAction = 'germany';
       this.showCityInfo = false;
       this.zoomToGermany();
       this.changeMarkersAndTable(this.federalStatesToShow);
@@ -440,6 +462,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   selectFederalStates() {
+    this.lastZoomAction = 'federalState';
     this.allFederalStates = [
       this.badenWuerttemberg,
       this.bavaria,
@@ -601,6 +624,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async resetAll() {
+    this.lastZoomAction = 'federalState';
     this.minPopulation = 50000;
     this.maxPopulation = 3800000;
     this.showCityInfo = false;
@@ -616,8 +640,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async clickFederalState(federalStateName: string) {
-    console.log(federalStateName);
-
     // Filter zurücksetzen
     this.badenWuerttemberg = false;
     this.bavaria = false;
@@ -690,15 +712,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.selectFederalStates();
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.cityOptions
-      .filter((option) => option.toLowerCase().includes(filterValue))
-      .slice(0, 20);
-  }
-
   async selectCity(cityName: string, filterTable = true) {
+    this.lastZoomAction = 'city';
+    this.selectedCity = cityName;
     let geocoder = new google.maps.Geocoder();
     let bounds = new google.maps.LatLngBounds();
     await geocoder.geocode(

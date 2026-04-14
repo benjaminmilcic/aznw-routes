@@ -1,4 +1,12 @@
-import { Component, HostListener, OnInit, OnDestroy, inject, DOCUMENT, NgZone } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  inject,
+  DOCUMENT,
+  NgZone,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, Subscription, take } from 'rxjs';
@@ -13,18 +21,20 @@ import { MapService } from './pages/gimmicks/map/map.service';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    ScrollToTopComponent,
-    NavbarComponent,
-  ],
+  imports: [RouterOutlet, ScrollToTopComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
   appLoaded = false;
   private routerSub?: Subscription;
+  private langChangeSub?: Subscription;
   private previousRoute = '';
+  private mapsScript?: HTMLScriptElement;
+  private readonly googleMapsScriptId = 'google-maps-script';
+  private readonly googleMapsCallbackName = 'initGoogleMaps';
+  private currentMapsLanguage?: string;
+  private googleMapsLoadVersion = 0;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -43,13 +53,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private mapService: MapService,
     private ngZone: NgZone,
   ) {
-    (window as any)['initGoogleMaps'] = () =>
-      this.ngZone.run(() => (this.mapService.mapsReady = true));
-    const script = this.document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async&callback=initGoogleMaps`;
-    script.async = true;
-    script.defer = true;
-    this.document.head.appendChild(script);
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;
     let translateLanguage = 'de';
@@ -78,9 +81,15 @@ export class AppComponent implements OnInit, OnDestroy {
         break;
     }
     translate.use(translateLanguage);
+    this.loadGoogleMapsScript(translateLanguage);
   }
 
   ngOnInit(): void {
+    this.langChangeSub = this.translate.onLangChange.subscribe(({ lang }) => {
+      if (lang !== this.currentMapsLanguage) {
+        this.reloadGoogleMapsScript(lang);
+      }
+    });
     this.title.setTitle('Benjamin Milčić - Full Stack Web Developer');
     this.meta.updateTag({
       name: 'description',
@@ -96,13 +105,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Ladeanimation erst ausblenden, wenn die erste Route fertig geladen ist
     // (inkl. Lazy-Chunk des HomeComponent)
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      take(1)
-    ).subscribe(() => {
-      this.appLoaded = true;
-      this.hideLoader();
-    });
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        take(1),
+      )
+      .subscribe(() => {
+        this.appLoaded = true;
+        this.hideLoader();
+      });
 
     // Handle fragment scrolling on navigation (including browser back/forward)
     this.routerSub = this.router.events
@@ -127,10 +138,11 @@ export class AppComponent implements OnInit, OnDestroy {
             const element = document.getElementById(fragment);
             if (element) {
               const navbarOffset = 70;
-              const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+              const elementPosition =
+                element.getBoundingClientRect().top + window.scrollY;
               window.scrollTo({
                 top: elementPosition - navbarOffset,
-                behavior: 'smooth'
+                behavior: 'smooth',
               });
             }
           }, 100);
@@ -148,6 +160,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routerSub?.unsubscribe();
+    this.langChangeSub?.unsubscribe();
   }
 
   private hideLoader(): void {
@@ -159,5 +172,37 @@ export class AppComponent implements OnInit, OnDestroy {
         loader.remove();
       }, 500);
     }
+  }
+
+  private loadGoogleMapsScript(language: string): void {
+    const loadVersion = ++this.googleMapsLoadVersion;
+
+    this.currentMapsLanguage = language;
+    this.mapService.mapsReady = false;
+
+    (window as any)[this.googleMapsCallbackName] = () =>
+      this.ngZone.run(() => {
+        if (loadVersion === this.googleMapsLoadVersion) {
+          this.mapService.mapsReady = true;
+        }
+      });
+
+    const script = this.document.createElement('script');
+    script.id = this.googleMapsScriptId;
+    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async&callback=${this.googleMapsCallbackName}&language=${language}`;
+    script.async = true;
+    script.defer = true;
+
+    this.mapsScript = script;
+    this.document.head.appendChild(script);
+  }
+
+  private reloadGoogleMapsScript(language: string): void {
+    this.mapService.mapsReady = false;
+    this.mapsScript?.remove();
+    this.document.getElementById(this.googleMapsScriptId)?.remove();
+    delete (window as any).google;
+
+    this.loadGoogleMapsScript(language);
   }
 }
