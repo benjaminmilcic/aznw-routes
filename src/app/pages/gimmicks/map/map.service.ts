@@ -5,4 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export class MapService {
   firstLoad = true;
+  mapsReady = false;
 }

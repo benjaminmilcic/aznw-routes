@@ -10,10 +10,12 @@
     [ngStyle]="style"
   >
     <google-map
+      *ngIf="mapService.mapsReady"
       #map
       height="100%"
       width="100%"
       [options]="mapOptions"
+      (mapInitialized)="onMapInitialized($event)"
     ></google-map>
     <div
       class="xl:hidden flex absolute rounded-full -bottom-4 cursor-row-resize bg-gray-500 right-[calc(50%-8px)] w-8 h-8 place-items-center justify-center bg-opacity-30 z-50"

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy, inject, DOCUMENT } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, inject, DOCUMENT, NgZone } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, Subscription, take } from 'rxjs';
@@ -9,6 +9,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { AnalyticsService } from './services/analytics.service';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MapService } from './pages/gimmicks/map/map.service';
 
 @Component({
   selector: 'app-root',
@@ -39,11 +40,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private title: Title,
     private analyticsService: AnalyticsService,
     private router: Router,
+    private mapService: MapService,
+    private ngZone: NgZone,
   ) {
     const script = this.document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async`;
     script.async = true;
     script.defer = true;
+    script.onload = () => this.ngZone.run(() => (this.mapService.mapsReady = true));
     this.document.head.appendChild(script);
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;

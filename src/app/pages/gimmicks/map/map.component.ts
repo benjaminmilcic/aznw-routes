@@ -67,7 +67,7 @@ import { CustomPaginatorIntl } from '../movies/custom-paginator-intl';
   styleUrl: './map.component.css',
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  style: { width: string; height: string };
+  style: { width: string; height: string } = { width: '100%', height: '50vh' };
 
   @ViewChild(GoogleMap) googleMap: GoogleMap;
   map: google.maps.Map;
@@ -159,7 +159,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private cdr: ChangeDetectorRef,
     injector: Injector,
-    private mapService: MapService,
+    public mapService: MapService,
   ) {
     if (this.mapService.firstLoad) {
       const FilterButtonElement = createCustomElement(FilterButtonComponent, {
@@ -175,29 +175,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.icon = {
-      url: '/assets/red2.png',
-      scaledSize: new google.maps.Size(6, 6),
-    };
-    this.mapOptions = {
-      fullscreenControlOptions: {
-        position: google.maps.ControlPosition.BOTTOM_RIGHT,
-      },
-      styles: [
-        {
-          featureType: 'poi',
-          elementType: 'labels',
-          stylers: [{ visibility: 'off' }],
-        },
-      ],
-      streetViewControl: false,
-    };
     this.setMapDimension();
     await this.getData();
-    this.zoomToGermany();
-    this.changeMarkersAndTable([
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-    ]);
 
     await fetch('/assets/json/bundeslaender.geo.json')
       .then((response) => response.json())
@@ -215,9 +194,34 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    this.map = this.googleMap.googleMap;
+    this.cdr.detectChanges();
+  }
+
+  async onMapInitialized(map: google.maps.Map) {
+    this.map = map;
+    this.icon = {
+      url: '/assets/red2.png',
+      scaledSize: new google.maps.Size(6, 6),
+    };
+    this.mapOptions = {
+      fullscreenControlOptions: {
+        position: google.maps.ControlPosition.BOTTOM_RIGHT,
+      },
+      styles: [
+        {
+          featureType: 'poi',
+          elementType: 'labels',
+          stylers: [{ visibility: 'off' }],
+        },
+      ],
+      streetViewControl: false,
+    };
     this.addCustomMapControls();
     this.mapService.firstLoad = false;
+    await this.zoomToGermany();
+    this.changeMarkersAndTable([
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    ]);
     this.cdr.detectChanges();
   }
 
