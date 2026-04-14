@@ -72,19 +72,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild(GoogleMap) googleMap: GoogleMap;
   map: google.maps.Map;
 
-  mapOptions: google.maps.MapOptions = {
-    fullscreenControlOptions: {
-      position: google.maps.ControlPosition.BOTTOM_RIGHT,
-    },
-    styles: [
-      {
-        featureType: 'poi',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }],
-      },
-    ],
-    streetViewControl: false,
-  };
+  mapOptions: google.maps.MapOptions = {};
 
   showFilter: boolean = false;
 
@@ -113,10 +101,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   federalStatesToShow: number[] = [];
   allFederalStates: boolean[] = [];
 
-  icon: google.maps.Icon = {
-    url: '/assets/red2.png',
-    scaledSize: new google.maps.Size(6, 6),
-  };
+  icon: google.maps.Icon;
 
   cities: City[] = [];
   citiesFiltered: City[] = [];
@@ -144,8 +129,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('mapDimension')) {
       dimension = JSON.parse(localStorage.getItem('mapDimension'));
     } else {
-      dimension.width = window.innerWidth;
-      dimension.height = window.innerHeight - 49;
+      dimension = { width: window.innerWidth, height: window.innerHeight - 49 };
     }
 
     if (event.target.innerWidth < 1280) {
@@ -191,6 +175,23 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
+    this.icon = {
+      url: '/assets/red2.png',
+      scaledSize: new google.maps.Size(6, 6),
+    };
+    this.mapOptions = {
+      fullscreenControlOptions: {
+        position: google.maps.ControlPosition.BOTTOM_RIGHT,
+      },
+      styles: [
+        {
+          featureType: 'poi',
+          elementType: 'labels',
+          stylers: [{ visibility: 'off' }],
+        },
+      ],
+      streetViewControl: false,
+    };
     this.setMapDimension();
     await this.getData();
     this.zoomToGermany();
