@@ -34,12 +34,20 @@
             <mat-icon class="text-white">filter_alt</mat-icon>
             Filter
           </div>
-          <button
-            class="bg-white/20 hover:bg-white/30 rounded-lg p-2 transition-all duration-300"
-            (click)="showFilter = false"
-          >
-            <i class="fa-solid fa-xmark text-white"></i>
-          </button>
+          <div class="flex gap-2 items-center">
+            <div
+              (click)="resetFilter()"
+              [matTooltip]="'gimmicks.map.resetFilter' | translate"
+            >
+              <i class="fa-solid fa-rotate-right text-white cursor-pointer"></i>
+            </div>
+            <button
+              class="bg-white/20 hover:bg-white/30 rounded-lg p-2 transition-all duration-300"
+              (click)="showFilter = false"
+            >
+              <i class="fa-solid fa-xmark text-white"></i>
+            </button>
+          </div>
         </div>
         <hr />
       </div>
@@ -337,7 +345,9 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "gimmicks.map.name" | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "gimmicks.map.name" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
       <ng-container matColumnDef="population">

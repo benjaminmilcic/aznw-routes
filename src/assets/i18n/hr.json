@@ -150,7 +150,8 @@
       "federalState": "Savezna država",
       "cityInfo": "Informacije o gradu",
       "noFunctions": "Karta je premala za funkcije. Povucite kartu malo veću!",
-      "name": "Ime"
+      "name": "Ime",
+      "resetFilter": "Poništi filter"
     },
     "calendar": {
       "months": {

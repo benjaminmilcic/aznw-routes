@@ -150,7 +150,8 @@
       "federalState": "Bundesland",
       "cityInfo": "Stadtinfo",
       "noFunctions": "Karte ist zu klein für Funktionen. Ziehen Sie die Karte etwas größer!",
-      "name": "Name"
+      "name": "Name",
+      "resetFilter":"Filter zurücksetzen"
     },
     "calendar": {
       "months": {

@@ -158,7 +158,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         JSON.stringify({
           width: event.target.innerWidth,
           height: dimension.height,
-        })
+        }),
       );
     } else {
       this.style = {
@@ -175,7 +175,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private cdr: ChangeDetectorRef,
     injector: Injector,
-    private mapService: MapService
+    private mapService: MapService,
   ) {
     if (this.mapService.firstLoad) {
       const FilterButtonElement = createCustomElement(FilterButtonComponent, {
@@ -209,7 +209,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
     this.selectedCityOptions = this.selectedCity.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || ''))
+      map((value) => this._filter(value || '')),
     );
   }
 
@@ -224,7 +224,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const searchFieldEl: NgElement & WithProperties<SearchFieldComponent> =
       document.createElement('search-field-element') as any;
     searchFieldEl.addEventListener('selected', (city: any) =>
-      this.selectCity(city.detail)
+      this.selectCity(city.detail),
     );
     this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(searchFieldEl);
 
@@ -232,10 +232,10 @@ export class MapComponent implements OnInit, AfterViewInit {
       document.createElement('filter-button-element') as any;
     filterButtonEl.addEventListener(
       'toggle',
-      () => (this.showFilter = !this.showFilter)
+      () => (this.showFilter = !this.showFilter),
     );
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(
-      filterButtonEl
+      filterButtonEl,
     );
   }
 
@@ -335,7 +335,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       JSON.stringify({
         width: event.rectangle.width,
         height: event.rectangle.height,
-      })
+      }),
     );
   }
 
@@ -394,7 +394,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const pat: LatLng[] = [];
     polygons.forEach((polygon) => {
       polygon.forEach((arr: any) =>
-        pat.push(new google.maps.LatLng(+arr.lat, +arr.lng))
+        pat.push(new google.maps.LatLng(+arr.lat, +arr.lng)),
       );
 
       pat.forEach((a) => {
@@ -404,6 +404,28 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.map?.panToBounds(bounds);
     this.map?.fitBounds(bounds);
+  }
+
+  resetFilter() {
+    console.log('Hello');
+    
+    this.badenWuerttemberg = false;
+    this.bavaria = false;
+    this.berlin = false;
+    this.brandenburg = false;
+    this.bremen = false;
+    this.hamburg = false;
+    this.hesse = false;
+    this.mecklenburgWesternPomerania = false;
+    this.lowerSaxony = false;
+    this.northrhineWestphalia = false;
+    this.rhinelandPalatinate = false;
+    this.saarland = false;
+    this.saxony = false;
+    this.saxonyAnhalt = false;
+    this.schleswigHolstein = false;
+    this.thuringia = false;
+    this.selectFederalStates();
   }
 
   selectFederalStates() {
@@ -500,7 +522,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       },
       (results, status) => {
         bounds = results[0].geometry.viewport;
-      }
+      },
     );
 
     this.map?.panToBounds(bounds);
@@ -530,7 +552,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       } else if (this.federalStatesToShow.length === 0) {
         return (
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(
-            city.federalStateIndex
+            city.federalStateIndex,
           ) &&
           city.population > this.minPopulation &&
           city.population < this.maxPopulation
@@ -576,7 +598,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       },
       (results, status) => {
         bounds = results[0].geometry.viewport;
-      }
+      },
     );
 
     const selectedCity = this.cities.filter((city) => {
