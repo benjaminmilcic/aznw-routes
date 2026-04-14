@@ -27,11 +27,21 @@ import { RecipeEffects } from './pages/gimmicks/recipes/store/effects/recipe.eff
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { MoviesInterceptorDiAdapter } from './pages/gimmicks/movies/movies-di-adapter.interceptor';
 import { TelegramAuthInterceptor } from './pages/gimmicks/telegram/services/telegram-auth.interceptor';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
+
+class RetryTranslateLoader extends TranslateHttpLoader {
+  override getTranslation(lang: string): Observable<object> {
+    return super.getTranslation(lang).pipe(
+      retry({ count: 3, delay: 1000 })
+    );
+  }
+}
 
 export function HttpLoaderFactory(httpHandler: HttpBackend) {
   const http = new HttpClient(httpHandler);
   const version = environment.version;
-  return new TranslateHttpLoader(http, './assets/i18n/', `.json?v=${version}`);
+  return new RetryTranslateLoader(http, '/assets/i18n/', `.json?v=${version}`);
 }
 
 export const appConfig: ApplicationConfig = {
