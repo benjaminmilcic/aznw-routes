@@ -375,6 +375,7 @@ export class MapComponent implements OnInit, AfterViewInit {
               strokeOpacity: 0.8,
               strokeWeight: 2,
               fillOpacity: 0,
+              clickable: false,
             });
             polygons.push(polygon);
             this.federalStatePolygons.push(polygonField);
@@ -395,6 +396,7 @@ export class MapComponent implements OnInit, AfterViewInit {
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillOpacity: 0,
+            clickable: false,
           });
           polygons.push(polygon);
           this.federalStatePolygons.push(polygonField);

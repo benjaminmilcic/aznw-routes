@@ -242,7 +242,7 @@
       class="funny-bg absolute top-[20px] right-[20px] shadow-lg rounded-xl p-4 z-10"
     >
       <div
-        class="flex justify-between place-items-center bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 -m-4 py-2 px-4 rounded-t-xl"
+        class="flex justify-between place-items-center bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 -m-4 py-2 px-4 rounded-t-xl gap-2"
       >
         <div class="cursor-move text-white/80 w-5" cdkDragHandle>
           <i class="fa-solid fa-arrows-up-down-left-right"></i>
@@ -272,7 +272,10 @@
         <span class="font-bold"
           >{{ "gimmicks.map.federalState" | translate }}:
         </span>
-        <span>{{ "gimmicks.map." + cityInfo.federalState | translate }}</span>
+        <span
+          class="cursor-pointer hover:text-blue-600 hover:underline"
+          (click)="clickFederalState(cityInfo.federalState)"
+        >{{ "gimmicks.map." + cityInfo.federalState | translate }}</span>
       </div>
       <button
         [matTooltip]="'https://de.wikipedia.org' + cityInfo.link"
