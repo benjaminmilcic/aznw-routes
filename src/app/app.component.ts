@@ -43,11 +43,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private mapService: MapService,
     private ngZone: NgZone,
   ) {
+    (window as any)['initGoogleMaps'] = () =>
+      this.ngZone.run(() => (this.mapService.mapsReady = true));
     const script = this.document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async`;
+    script.src = `https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&key=${environment.googleMaps.apiKey}&loading=async&callback=initGoogleMaps`;
     script.async = true;
     script.defer = true;
-    script.onload = () => this.ngZone.run(() => (this.mapService.mapsReady = true));
     this.document.head.appendChild(script);
     translate.setDefaultLang('de');
     const language = navigator.language || (navigator as any).userLanguage;

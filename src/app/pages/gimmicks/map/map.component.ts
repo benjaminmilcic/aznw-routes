@@ -418,8 +418,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   resetFilter() {
-    console.log('Hello');
-    
     this.badenWuerttemberg = false;
     this.bavaria = false;
     this.berlin = false;
@@ -559,7 +557,11 @@ export class MapComponent implements OnInit, AfterViewInit {
         let onlyCityFederalStateIndex = this.cities.filter((city2) => {
           return city2.name === onlyCity;
         })[0].federalStateIndex;
-        return [onlyCityFederalStateIndex].includes(city.federalStateIndex);
+        return (
+          [onlyCityFederalStateIndex].includes(city.federalStateIndex) &&
+          city.population > this.minPopulation &&
+          city.population < this.maxPopulation
+        );
       } else if (this.federalStatesToShow.length === 0) {
         return (
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(
@@ -578,18 +580,112 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
     this.dataSource = new MatTableDataSource<City>(this.citiesFiltered);
     if (onlyCity != '') {
-      const onlyCityIndex = this.dataSource.data
-        .map((city) => {
-          return city.name;
-        })
+      const sortedData = this.dataSource.sortData(
+        this.dataSource.data,
+        this.sort,
+      );
+      const onlyCityIndex = sortedData
+        .map((city) => city.name)
         .indexOf(onlyCity);
-      const pageNumber = Math.floor(onlyCityIndex / this.paginator.pageSize);
-      this.paginator.pageIndex = pageNumber;
+      this.paginator.pageIndex =
+        onlyCityIndex >= 0
+          ? Math.floor(onlyCityIndex / this.paginator.pageSize)
+          : 0;
     } else {
       this.paginator.firstPage();
     }
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  async resetAll() {
+    this.minPopulation = 50000;
+    this.maxPopulation = 3800000;
+    this.showCityInfo = false;
+    this.mapService.setSearchCity$.next('');
+    this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    this.resetFilter();
+    this.cdr.detectChanges();
+  }
+
+  clickCity(cityName: string) {
+    this.selectCity(cityName, false);
+    this.mapService.setSearchCity$.next(cityName);
+  }
+
+  async clickFederalState(federalStateName: string) {
+    console.log(federalStateName);
+
+    // Filter zurücksetzen
+    this.badenWuerttemberg = false;
+    this.bavaria = false;
+    this.berlin = false;
+    this.brandenburg = false;
+    this.bremen = false;
+    this.hamburg = false;
+    this.hesse = false;
+    this.mecklenburgWesternPomerania = false;
+    this.lowerSaxony = false;
+    this.northrhineWestphalia = false;
+    this.rhinelandPalatinate = false;
+    this.saarland = false;
+    this.saxony = false;
+    this.saxonyAnhalt = false;
+    this.schleswigHolstein = false;
+    this.thuringia = false;
+
+    // Entsprechendes Bundesland aktivieren
+    switch (federalStateName) {
+      case 'Baden-Württemberg':
+        this.badenWuerttemberg = true;
+        break;
+      case 'Bayern':
+        this.bavaria = true;
+        break;
+      case 'Berlin':
+        this.berlin = true;
+        break;
+      case 'Brandenburg':
+        this.brandenburg = true;
+        break;
+      case 'Bremen':
+        this.bremen = true;
+        break;
+      case 'Hamburg':
+        this.hamburg = true;
+        break;
+      case 'Hessen':
+        this.hesse = true;
+        break;
+      case 'Mecklenburg-Vorpommern':
+        this.mecklenburgWesternPomerania = true;
+        break;
+      case 'Niedersachsen':
+        this.lowerSaxony = true;
+        break;
+      case 'Nordrhein-Westfalen':
+        this.northrhineWestphalia = true;
+        break;
+      case 'Rheinland-Pfalz':
+        this.rhinelandPalatinate = true;
+        break;
+      case 'Saarland':
+        this.saarland = true;
+        break;
+      case 'Sachsen':
+        this.saxony = true;
+        break;
+      case 'Sachsen-Anhalt':
+        this.saxonyAnhalt = true;
+        break;
+      case 'Schleswig-Holstein':
+        this.schleswigHolstein = true;
+        break;
+      case 'Thüringen':
+        this.thuringia = true;
+        break;
+    }
+    this.selectFederalStates();
   }
 
   private _filter(value: string): string[] {
@@ -600,7 +696,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       .slice(0, 20);
   }
 
-  async selectCity(cityName: string) {
+  async selectCity(cityName: string, filterTable = true) {
     let geocoder = new google.maps.Geocoder();
     let bounds = new google.maps.LatLngBounds();
     await geocoder.geocode(
@@ -629,7 +725,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.map?.panToBounds(bounds);
     this.map?.fitBounds(bounds);
-    this.filterTableData(cityName);
+    if (filterTable) {
+      this.filterTableData(cityName);
+    }
   }
 
   // createButton() {

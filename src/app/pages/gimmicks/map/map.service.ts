@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -6,4 +7,5 @@ import { Injectable } from '@angular/core';
 export class MapService {
   firstLoad = true;
   mapsReady = false;
+  setSearchCity$ = new Subject<string>();
 }

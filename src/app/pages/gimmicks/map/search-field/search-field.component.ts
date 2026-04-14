@@ -1,11 +1,12 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import { City } from '../map.models';
+import { MapService } from '../map.service';
 
 @Component({
     selector: 'app-search-field',
@@ -21,13 +22,17 @@ import { City } from '../map.models';
     templateUrl: './search-field.component.html',
     styleUrl: './search-field.component.css'
 })
-export class SearchFieldComponent implements OnInit {
+export class SearchFieldComponent implements OnInit, OnDestroy {
   selectedCity = new FormControl('');
   selectedCityOptions: Observable<string[]>;
   cityOptions: string[];
   cities: City[] = [];
   @Output() selected = new EventEmitter<string>();
   @Output() cleared = new EventEmitter<void>();
+
+  private sub: Subscription;
+
+  constructor(private mapService: MapService) {}
 
   async ngOnInit() {
     await fetch('/assets/json/cities.json')
@@ -42,6 +47,13 @@ export class SearchFieldComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value || ''))
     );
+    this.sub = this.mapService.setSearchCity$.subscribe((cityName) => {
+      this.selectedCity.setValue(cityName);
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub?.unsubscribe();
   }
 
   clear() {
