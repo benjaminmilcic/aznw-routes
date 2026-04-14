@@ -27,6 +27,7 @@ export class SearchFieldComponent implements OnInit {
   cityOptions: string[];
   cities: City[] = [];
   @Output() selected = new EventEmitter<string>();
+  @Output() cleared = new EventEmitter<void>();
 
   async ngOnInit() {
     await fetch('/assets/json/cities.json')
@@ -41,6 +42,11 @@ export class SearchFieldComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value || ''))
     );
+  }
+
+  clear() {
+    this.selectedCity.setValue('');
+    this.cleared.emit();
   }
 
   private _filter(value: string): string[] {

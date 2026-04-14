@@ -226,6 +226,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     searchFieldEl.addEventListener('selected', (city: any) =>
       this.selectCity(city.detail),
     );
+    searchFieldEl.addEventListener('cleared', () => {
+      this.showCityInfo = false;
+      this.zoomToGermany();
+      this.changeMarkersAndTable(this.federalStatesToShow);
+      this.cdr.detectChanges();
+    });
     this.map.controls[google.maps.ControlPosition.LEFT_TOP].push(searchFieldEl);
 
     const filterButtonEl: NgElement & WithProperties<FilterButtonComponent> =
@@ -513,7 +519,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     window.open('https://de.wikipedia.org' + link, '_blank');
   }
 
-  private async zoomToGermany() {
+  async zoomToGermany() {
     let geocoder = new google.maps.Geocoder();
     let bounds;
     await geocoder.geocode(
@@ -604,6 +610,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     const selectedCity = this.cities.filter((city) => {
       return city.name === cityName;
     })[0];
+
+    if (!selectedCity) return;
 
     this.cityInfo = {
       name: selectedCity.name,

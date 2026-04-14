@@ -5,17 +5,32 @@
             [placeholder]="'gimmicks.map.search' | translate"
             [formControl]="selectedCity"
             [matAutocomplete]="auto"
-            class="w-40 h-9 border-none px-2 rounded"
+            class="w-40 h-9 border-none pl-2 rounded box-border"
+            [class.pr-8]="!selectedCity.value"
+            [class.pr-12]="selectedCity.value"
           />
-          <i
-            class="fa-solid fa-magnifying-glass pr-2 opacity-50 absolute right-2 top-3"
-          ></i>
-          <mat-autocomplete #auto="matAutocomplete">
+          @if (selectedCity.value) {
+            <button
+              type="button"
+              class="absolute right-[30px] top-[11px] bg-transparent border-none p-0 opacity-50 hover:opacity-100 cursor-pointer"
+              (click)="clear()"
+            >
+              <i class="fa-solid fa-xmark text-[16px]"></i>
+            </button>
+          }
+          <button
+            type="button"
+            class="absolute right-2 top-[13px] bg-transparent border-none p-0 pr-1 opacity-50 cursor-pointer"
+            [class.hover:opacity-100]="selectedCity.value"
+            (click)="selectedCity.value && selected.emit(selectedCity.value)"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected.emit($event.option.value)">
             @for (city of selectedCityOptions | async; track city) {
             <mat-option
               *ngIf="this.selectedCity.value.length > 2"
               [value]="city"
-              (click)="selected.emit(city)"
               >{{ city }}</mat-option
             >
             }
