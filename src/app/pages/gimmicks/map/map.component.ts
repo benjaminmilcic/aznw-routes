@@ -158,6 +158,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   lastZoomAction: 'city' | 'federalState' | 'germany' = 'federalState';
   selectedCity: string = '';
 
+  private saveMapTypeIdSub?: Subscription;
+  mapTypeId:string;
+
   constructor(
     private cdr: ChangeDetectorRef,
     injector: Injector,
@@ -182,6 +185,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.runAfterLanguageReload = true;
     });
 
+    this.saveMapTypeIdSub = this.mapService.saveMapTypeId$.subscribe(() => {
+      this.mapTypeId = this.map.getMapTypeId();
+    });
+
     this.setMapDimension();
     await this.getData();
 
@@ -198,6 +205,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSub?.unsubscribe();
+    this.saveMapTypeIdSub?.unsubscribe();
   }
 
   async onMapInitialized(map: google.maps.Map) {
@@ -228,6 +236,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.detectChanges();
     if (this.runAfterLanguageReload) {
       this.runAfterLanguageReload = false;
+      this.map.setMapTypeId(this.mapTypeId);
       switch (this.lastZoomAction) {
         case 'city':
           this.selectCity(this.selectedCity);

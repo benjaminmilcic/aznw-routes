@@ -87,6 +87,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.langChangeSub = this.translate.onLangChange.subscribe(({ lang }) => {
       if (lang !== this.currentMapsLanguage) {
+        this.mapService.saveMapTypeId$.next();
         this.reloadGoogleMapsScript(lang);
       }
     });
