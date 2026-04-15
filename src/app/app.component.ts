@@ -175,6 +175,17 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  private suppressGoogleMapsReloadWarnings(): void {
+    if ((window as any).__googleMapsWarningSuppressed) return;
+    const originalWarn = console.warn.bind(console);
+    console.warn = (...args: unknown[]) => {
+      const msg = typeof args[0] === 'string' ? args[0] : '';
+      if (msg.includes('already defined') && msg.includes('gmp-')) return;
+      originalWarn(...args);
+    };
+    (window as any).__googleMapsWarningSuppressed = true;
+  }
+
   private loadGoogleMapsScript(language: string): void {
     const loadVersion = ++this.googleMapsLoadVersion;
 
@@ -199,6 +210,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private reloadGoogleMapsScript(language: string): void {
+    this.suppressGoogleMapsReloadWarnings();
     this.mapService.mapsReady = false;
     this.mapsScript?.remove();
     this.document.getElementById(this.googleMapsScriptId)?.remove();
