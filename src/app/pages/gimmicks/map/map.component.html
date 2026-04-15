@@ -278,7 +278,7 @@
         >{{ "gimmicks.map." + cityInfo.federalState | translate }}</span>
       </div>
       <button
-        [matTooltip]="'https://de.wikipedia.org' + cityInfo.link"
+        [matTooltip]="cityInfo.link"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm mt-1 cursor-pointer"
         (click)="openWikipedia(cityInfo.link)"
       >
@@ -365,7 +365,7 @@
         <td mat-cell *matCellDef="let element"
             class="cursor-pointer hover:text-blue-600 hover:underline"
             (click)="clickCity(element.name)">
-          {{ element.name }}
+          {{ getLocalizedName(element) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="population">
@@ -388,9 +388,9 @@
         <th mat-header-cell *matHeaderCellDef>Link</th>
         <td mat-cell *matCellDef="let element">
           <button
-            [matTooltip]="'https://de.wikipedia.org' + element.link"
+            [matTooltip]="getWikiUrl(element)"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm mt-1 cursor-pointer"
-            (click)="openWikipedia(element.link)"
+            (click)="openWikipedia(getWikiUrl(element))"
           >
             Wiki
           </button>

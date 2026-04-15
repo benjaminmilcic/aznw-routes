@@ -45,7 +45,8 @@
       "Bash(du:*)",
       "Bash(ls \"C:\\\\eigene Projekte\\\\aznw-routes\\\\dist\\\\aznw-routes\"/*.js)",
       "Bash(xargs -I{} basename {})",
-      "Bash(npm list:*)"
+      "Bash(npm list:*)",
+      "Bash(node enrich-cities.js)"
     ],
     "deny": [],
     "ask": []

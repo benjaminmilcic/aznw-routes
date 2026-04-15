@@ -355,10 +355,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       marker.addListener('click', (event) => {
         this.showCityInfo = true;
         this.cityInfo = {
-          name: city.name,
+          name: this.getLocalizedName(city),
           population: city.population,
           federalState: city.federalStateName,
-          link: city.link,
+          link: this.getWikiUrl(city),
         };
         this.cdr.detectChanges();
       });
@@ -552,8 +552,31 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.changeMarkersAndTable(this.federalStatesToShow);
   }
 
-  openWikipedia(link: string) {
-    window.open('https://de.wikipedia.org' + link, '_blank');
+  getLocalizedName(city: City): string {
+    const lang = this.translate.currentLang;
+    if (lang === 'en' && city.nameEn) return city.nameEn;
+    if (lang === 'hr' && city.nameHr) return city.nameHr;
+    return city.name;
+  }
+
+  getWikiUrl(city: City): string {
+    const lang = this.translate.currentLang;
+    if (lang === 'en') {
+      if (city.enTakeDe) return 'https://de.wikipedia.org' + city.link;
+      if (city.linkEn)   return 'https://en.wikipedia.org' + city.linkEn;
+      return                    'https://en.wikipedia.org' + city.link;
+    }
+    if (lang === 'hr') {
+      if (city.hrTakeDe) return 'https://de.wikipedia.org' + city.link;
+      if (city.hrTakeEn) return 'https://en.wikipedia.org' + (city.linkEn ?? city.link);
+      if (city.linkHr)   return 'https://hr.wikipedia.org' + city.linkHr;
+      return                    'https://hr.wikipedia.org' + city.link;
+    }
+    return 'https://de.wikipedia.org' + city.link;
+  }
+
+  openWikipedia(url: string) {
+    window.open(url, '_blank');
   }
 
   async zoomToGermany() {
@@ -742,10 +765,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!selectedCity) return;
 
     this.cityInfo = {
-      name: selectedCity.name,
+      name: this.getLocalizedName(selectedCity),
       population: selectedCity.population,
       federalState: selectedCity.federalStateName,
-      link: selectedCity.link,
+      link: this.getWikiUrl(selectedCity),
     };
 
     this.showCityInfo = true;
