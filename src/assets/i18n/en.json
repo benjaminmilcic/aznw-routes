@@ -1,9 +1,10 @@
 {
   "header": {
     "developer": "Developer",
-    "findOutMore": "Find Out More",
-    "passionateDeveloper": "Passionate developer with a focus on modern web technologies.",
-    "transform": "I transform ideas into elegant, functional solutions."
+    "findOutMore": "More About Me",
+    "passionateDeveloper": "Passionate developer with over 10 years of experience and a focus on modern web technologies.",
+    "transform": "I transform ideas into elegant, functional solutions.",
+    "available": "Available"
   },
   "about": {
     "aboutMe": "About me",

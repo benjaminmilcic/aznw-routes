@@ -20,7 +20,6 @@ import { SearchDialogComponent } from './search/search-dialog.component';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
-  isScrolled: boolean = false;
   activeFragment: string = 'header';
   private observer?: IntersectionObserver;
   private fragmentSub?: Subscription;
@@ -41,11 +40,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileMenuOpen: boolean = false;
   mobileGimmicksExpanded: boolean = false;
   @ViewChild('mobileMenuContent') mobileMenuContent!: ElementRef<HTMLElement>;
-
-  @HostListener('window:scroll')
-  checkScroll(): void {
-    this.isScrolled = window.scrollY > 20;
-  }
 
   // Close mobile menu / search on escape key
   @HostListener('document:keydown.escape')
