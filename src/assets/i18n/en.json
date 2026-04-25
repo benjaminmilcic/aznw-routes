@@ -23,7 +23,13 @@
     "projects": "Projects",
     "passion": "Passion",
     "specialized": "Specialized in modern web technologies",
-    "mainCompetencies": "Core competencies"
+    "mainCompetencies": "Core competencies",
+    "h3": "From Wireframe to a Production-Ready <em>App</em>",
+    "sectionH": "Specialized in <em>modern web and app development</em><br/>with a focus on performance.",
+    "spec": "Specialized in modern web and app development with a focus on performance.",
+    "p1": "Over ten years of experience in software development have taught me one thing: <strong>code is only half the battle</strong>. It's about understanding problems, questioning requirements, and delivering solutions that are still maintainable two years from now.",
+    "p2": "Currently I work on frontends with <strong>Angular and Ionic</strong> as well as backends with <strong>NestJS</strong> — from internal dashboards to production mobile apps with thousands of users.",
+    "p3": "Clean code, clear component structure, tested with Cypress. If you're interested in what's between the lines: check out the projects or get in touch directly."
   },
   "skills": {
     "headline": "Programming languages & Tools",

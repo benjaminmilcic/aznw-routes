@@ -1,97 +1,90 @@
-<section id="about">
-  <div class="box">
-    <div class="profile">
-      <div
-        class="p-4 w-fit cv-button-wrapper border border-white cursor-pointer"
-        (click)="openCV()"
-      >
-        <div class="flex gap-2 items-center">
-          <mat-icon fontIcon="article" class="text-white"></mat-icon>
-          <div class="text-white underline">
-            {{ "about.downloadCV" | translate }}
+<section id="about" class="about">
+  <div class="about-inner">
+    <div class="section-tag">
+      <span class="num">01</span>
+      <span>{{ "about.aboutMe" | translate }}</span>
+    </div>
+
+    <h2 class="section-h" [innerHTML]="'about.sectionH' | translate"></h2>
+
+    <div class="about-card">
+      <div class="profile-side">
+        <button
+          class="cv-ribbon"
+          type="button"
+          [matTooltip]="'about.downloadCV' | translate"
+          (click)="openCV()"
+        >
+          <i class="fa-solid fa-file-arrow-down"></i>
+          {{ "about.curriculumVitae" | translate }}
+        </button>
+
+        <div class="profile-photo-wrap">
+          <img
+            src="assets/5x7_changed.jpg"
+            class="profile-photo"
+            alt="Benjamin Milčić"
+          />
+        </div>
+
+        <h2>Benjamin Milčić</h2>
+        <div class="signature">~ benjamin</div>
+
+        <div class="profile-badges">
+          <div class="profile-badge">
+            <div class="num">10+</div>
+            <div class="lbl">{{ "about.yearsExperiance" | translate }}</div>
+          </div>
+          <div class="profile-badge">
+            <div class="num">20+</div>
+            <div class="lbl">{{ "about.projects" | translate }}</div>
+          </div>
+          <div class="profile-badge">
+            <div class="num">100%</div>
+            <div class="lbl">{{ "about.passion" | translate }}</div>
           </div>
         </div>
       </div>
-      <img
-        src="assets/5x7_changed.jpg"
-        class="profile-image"
-        alt="Benjamin Milčić"
-      />
-      <h2 class="mt-10 text-white">{{ "about.aboutMe" | translate }}</h2>
-      <div class="profile-badges">
-        <div class="flex flex-col items-center">
-          <div class="text-[#3b82f6] text-[2rem] font-extrabold">10+</div>
-          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
-            {{ "about.yearsExperiance" | translate }}
-          </div>
+
+      <div class="about-body">
+        <div class="about-eyebrow">Full Stack {{ "header.developer" | translate }}</div>
+        <h3 [innerHTML]="'about.h3' | translate"></h3>
+        <div class="about-spec">{{ "about.spec" | translate }}</div>
+
+        <div class="about-text">
+          <p [innerHTML]="'about.p1' | translate"></p>
+          <p [innerHTML]="'about.p2' | translate"></p>
+          <p>{{ "about.p3" | translate }}</p>
         </div>
-        <div class="flex flex-col items-center">
-          <div class="text-[#3b82f6] text-[2rem] font-extrabold">20+</div>
-          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
-            {{ "about.projects" | translate }}
-          </div>
-        </div>
-        <div class="flex flex-col items-center">
-          <div class="text-[#3b82f6] text-[2rem] font-extrabold">100%</div>
-          <div class="text-[#cbd5e1] text-[0.875rem] font-medium">
-            {{ "about.passion" | translate }}
+
+        <div class="competencies">
+          <h4 class="competencies-h">
+            {{ "about.mainCompetencies" | translate }}
+          </h4>
+          <div class="comp-row">
+            <div class="comp-chip">
+              <img class="ic" src="assets/svg/angular.svg" alt="Angular" />
+              Angular
+            </div>
+            <div class="comp-chip">
+              <img class="ic" src="assets/svg/ionic.svg" alt="Ionic" />
+              Ionic
+            </div>
+            <div class="comp-chip">
+              <img class="ic" src="assets/svg/nestjs.svg" alt="NestJS" />
+              NestJS
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="content">
-      <div class="font-extrabold text-2xl sm:text-3xl">
-        Full Stack {{ "header.developer" | translate }}
-      </div>
-      <div class="text-[#3b82f6] text-[17px] sm:text-[18px] font-semibold mt-1">
-        {{ "about.specialized" | translate }}
-      </div>
-      <div
-        class="text-[#475569] text-[15px] sm:text-[1.1rem] mt-8 leading-5 sm:leading-7"
-      >
-        {{ "about.text1" | translate }}<br /><br />
-        {{ "about.text2" | translate }}<br /><br />
 
-        {{ "about.text3" | translate }}<br /><br />
-        {{ "about.text5" | translate }}<br /><br />
-        {{ "about.text6" | translate }}<br /><br />
-        {{ "about.text7" | translate }}<br /><br />
-      </div>
-      <div class="font-bold sm:text-xl mt-4 mb-4 sm:mb-6">
-        {{ "about.mainCompetencies" | translate }}
-      </div>
-      <div class="flex gap-4 sm:gap-8 flex-wrap mb-6">
-        <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
-        >
-          <img
-            src="assets/angular_logo.png"
-            class="w-[24px] sm:w-[36px] h-auto"
-          />
-          <div class="font-medium text-[14px] sm:text-[16px]">Angular</div>
-        </div>
-        <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
-        >
-          <img src="assets/svg/ionic.svg" class="w-[24px] sm:w-[36px] h-auto" />
-          <div class="font-medium text-[14px] sm:text-[16px]">Ionic</div>
-        </div>
-        <div
-          class="flex gap-2 items-center bg-gradient-to-br from-sky-200/30 to-sky-400/30 py-2 sm:py-4 px-4 sm:px-8 rounded-xl min-w-[150px] shadow-lg border border-sky-400 hover:translate-y-[-4px] hover:shadow-xl"
-        >
-          <img
-            src="assets/svg/nestjs.svg"
-            class="w-[24px] sm:w-[36px] h-auto"
-          />
-          <div class="font-medium text-[14px] sm:text-[16px]">NestJS</div>
-        </div>
-      </div>
+    <div class="next-link">
+      <a [routerLink]="['/']" fragment="skills" class="btn-pill">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        {{ "about.mySkills" | translate }}
+        <i class="fa-solid fa-arrow-right fa-xs"></i>
+      </a>
     </div>
   </div>
-  <a class="button mt-16" [routerLink]="['/']" fragment="skills">
-    <div class="flex gap-2 items-center">
-      <mat-icon fontIcon="work"></mat-icon>
-      {{ "about.mySkills" | translate }}
-    </div>
-  </a>
 </section>

@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { Component } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,11 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
-  imports: [TranslateModule, CommonModule, RouterModule, MatIconModule],
+  imports: [TranslateModule, RouterModule, MatTooltipModule],
 })
 export class AboutComponent {
-  cvActivated: boolean = false;
-
   constructor(public translateService: TranslateService) {}
 
   openCV() {
@@ -25,7 +22,6 @@ export class AboutComponent {
       case 'hr':
         link = '/assets/benjamin_milcic_cv_en.pdf';
         break;
-
       default:
         link = '/assets/benjamin_milcic_cv_hr.pdf';
         break;
