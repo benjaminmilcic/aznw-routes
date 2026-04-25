@@ -72,8 +72,11 @@
     }
   },
   "footer": {
-    "visitMe": "Posjetite me na",
-    "croatia": "Hrvatska"
+    "visitMe": "Posjeti me i na …",
+    "croatia": "Hrvatska",
+    "sourceCode": "Izvorni kod ove stranice",
+    "builtWith": "Napravljeno s",
+    "hostedOn": "Hostirano na"
   },
   "sidebar": {
     "home": "Početna",

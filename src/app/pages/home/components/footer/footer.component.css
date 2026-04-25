@@ -1,19 +1,159 @@
-footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  color: #e2e8f0;
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-weight: 500;
+:host {
+  display: block;
 }
 
-@media screen and (max-width: 600px) {
-  footer {
-    font-size: 0.875rem;
-    padding: 1.5rem 1rem;
+.footer {
+  padding: 80px 24px 32px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ============ HEADING ============ */
+.visit {
+  font-family: 'Fraunces', 'Times New Roman', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: #fbbf24;
+  margin: 0 0 32px;
+}
+
+/* ============ SOCIAL ICONS ============ */
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin-bottom: 36px;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.footer-icon {
+  font-size: 42px !important;
+  transition: color 0.25s;
+}
+
+.footer-social:hover {
+  color: white;
+  transform: translateY(-4px);
+}
+
+.footer-social:hover .footer-icon {
+  color: #fbbf24 !important;
+}
+
+.footer-social span {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============ SOURCE PILL ============ */
+.source-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.source-pill:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* ============ DIVIDER ============ */
+hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 56px auto 36px;
+  max-width: 300px;
+  width: 100%;
+}
+
+/* ============ COPYRIGHT & ADDRESS ============ */
+.copyright {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.address {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* ============ META DIVIDER ============ */
+/* ============ FOOTER META ============ */
+.meta-wrapper {
+  align-self: stretch;
+  margin: 32px -24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 24px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: #64748b;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-meta .sep {
+  color: #334155;
+}
+
+.meta-link {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.meta-link:hover {
+  color: #fbbf24;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 600px) {
+  .footer {
+    padding: 60px 24px 24px;
+  }
+
+  .visit {
+    font-size: 28px;
+  }
+
+  .footer-socials {
+    gap: 24px;
   }
 }

@@ -1,43 +1,34 @@
-<footer id="footer">
-    <p class="mb-4">{{ "footer.visitMe" | translate }}</p>
-    <div style="display: flex; justify-content: center">
-      <div style="margin-right: 10px">
-        <a href="https://github.com/benjaminmilcic" target="_blank">
-          <i
-            class="fa-brands fa-github text-[48px] rounded-[50%] text-color4 hover:text-color5"
-          ></i
-        ></a>
-        <p>GitHub</p>
-      </div>
-      <div style="margin-left: 10px">
-        <a
-          href="https://stackoverflow.com/users/20271366/benjamin"
-          target="_blank"
-        >
-          <i
-            class="fa-brands fa-stack-overflow text-[48px] rounded-[50%] text-color4 hover:text-color5"
-          ></i
-        ></a>
+<footer id="footer" class="footer">
+  <h3 class="visit">{{ "footer.visitMe" | translate }}</h3>
 
-        <p>StackOverflow</p>
-      </div>
-    </div>
+  <div class="footer-socials">
+    <a href="https://github.com/benjaminmilcic" target="_blank" class="footer-social">
+      <i class="fa-brands fa-github footer-icon"></i>
+      <span>GitHub</span>
+    </a>
+    <a href="https://stackoverflow.com/users/20271366/benjamin" target="_blank" class="footer-social">
+      <i class="fa-brands fa-stack-overflow footer-icon"></i>
+      <span>StackOverflow</span>
+    </a>
+  </div>
 
+  <a href="https://github.com/benjaminmilcic/aznw-routes" target="_blank" class="source-pill">
+    <i class="fa-brands fa-github"></i>
+    {{ "footer.sourceCode" | translate }}
+  </a>
 
-    <div
-      class="flex w-fit items-center gap-2 bg-black/30 px-4 py-2 rounded-full border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:bg-black/40"
-    >
-      <i class="fa-brands fa-github text-gray-300"></i>
-      <a
-        class="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
-        href="https://github.com/benjaminmilcic/aznw-routes"
-        target="_blank"
-        >{{ "gimmicks.overview.sourceCode" | translate }}</a
-      >
-    </div>
+  <hr />
 
-    <div class="text-color1 my-2">Copyright &copy; Benjamin Milčić 2026</div>
-    <div class="text-color1">
-      Odvojak Grdine 2, 51511 Malinska, {{ "footer.croatia" | translate }}
-    </div>
+  <div class="copyright">© Benjamin Milčić · 2026</div>
+  <div class="address">Odvojak Grdine 2, 51511 Malinska, {{ "footer.croatia" | translate }}</div>
+
+  <div class="meta-wrapper">
+  <div class="footer-meta">
+    <span>{{ "footer.builtWith" | translate }} <a href="https://angular.dev" target="_blank" class="meta-link">Angular</a></span>
+    <span class="sep">·</span>
+    <span>{{ "footer.hostedOn" | translate }} <a href="https://www.strato.de" target="_blank" class="meta-link">Strato</a></span>
+    <span class="sep">·</span>
+    <span>v3.0</span>
+  </div>
+  </div>
 </footer>

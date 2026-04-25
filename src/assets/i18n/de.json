@@ -72,8 +72,11 @@
     }
   },
   "footer": {
-    "visitMe": "Besuchen Sie mich auf",
-    "croatia": "Kroatien"
+    "visitMe": "Besuche mich auch auf …",
+    "croatia": "Kroatien",
+    "sourceCode": "Source dieser Seite",
+    "builtWith": "Erstellt mit",
+    "hostedOn": "Gehostet auf"
   },
   "sidebar": {
     "home": "Start",

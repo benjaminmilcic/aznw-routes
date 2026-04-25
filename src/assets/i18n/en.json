@@ -72,8 +72,11 @@
     }
   },
   "footer": {
-    "visitMe": "Visit me on",
-    "croatia": "Croatia"
+    "visitMe": "Also visit me on …",
+    "croatia": "Croatia",
+    "sourceCode": "Source of this page",
+    "builtWith": "Built with",
+    "hostedOn": "Hosted on"
   },
   "sidebar": {
     "home": "Home",
