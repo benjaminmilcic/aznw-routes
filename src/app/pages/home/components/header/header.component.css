@@ -179,6 +179,15 @@
   flex-shrink: 0;
 }
 
+.enamel-kicker .not-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #dc2626; /* kräftiges Rot */
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
+  flex-shrink: 0;
+}
+
 /* ============ HEADLINE ============ */
 h1 {
   font-family: "Fraunces", "Times New Roman", serif;

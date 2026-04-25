@@ -11,8 +11,18 @@
       <span class="screw br"></span>
 
       <div class="enamel-kicker">
-        <span class="live"></span>
-        <span>{{ "header.available" | translate }} · Q2 2026</span>
+        @if (available()) {
+          <span class="live"></span>
+          <span class="translate-y-[1px]"
+            >{{ "header.available" | translate }} · Q{{ quarter() }}
+            {{ year() }}</span
+          >
+        } @else {
+          <span class="not-live"></span>
+          <span class="translate-y-[1px]">{{
+            "header.notAvailable" | translate
+          }}</span>
+        }
       </div>
 
       <h1>Benjamin <em>Milčić</em></h1>
@@ -62,23 +72,17 @@
 
   <div class="marquee">
     <div class="marquee-track">
-      <span>Angular</span><span class="dot">●</span> <span>NestJS</span
-      ><span class="dot">●</span> <span>Ionic</span><span class="dot">●</span>
-      <span>TypeScript</span><span class="dot">●</span> <span>Node.js</span
-      ><span class="dot">●</span> <span>Cypress</span><span class="dot">●</span>
-      <span>Docker</span><span class="dot">●</span> <span>MySQL</span
-      ><span class="dot">●</span> <span>Tailwind</span
-      ><span class="dot">●</span> <span>Firebase</span
-      ><span class="dot">●</span> <span>RxJS</span><span class="dot">●</span>
-      <span>NgRx</span><span class="dot">●</span> <span>Angular</span
-      ><span class="dot">●</span> <span>NestJS</span><span class="dot">●</span>
-      <span>Ionic</span><span class="dot">●</span> <span>TypeScript</span
-      ><span class="dot">●</span> <span>Node.js</span><span class="dot">●</span>
-      <span>Cypress</span><span class="dot">●</span> <span>Docker</span
-      ><span class="dot">●</span> <span>MySQL</span><span class="dot">●</span>
-      <span>Tailwind</span><span class="dot">●</span> <span>Firebase</span
-      ><span class="dot">●</span> <span>RxJS</span><span class="dot">●</span>
-      <span>NgRx</span><span class="dot">●</span>
+      @for (item of [1, 2, 3, 4, 5]; track $index) {
+        <span>Angular</span><span class="dot">●</span> <span>NestJS</span
+        ><span class="dot">●</span> <span>Ionic</span><span class="dot">●</span>
+        <span>TypeScript</span><span class="dot">●</span> <span>Node.js</span
+        ><span class="dot">●</span> <span>Cypress</span
+        ><span class="dot">●</span> <span>Docker</span
+        ><span class="dot">●</span> <span>MySQL</span><span class="dot">●</span>
+        <span>Tailwind</span><span class="dot">●</span> <span>Firebase</span
+        ><span class="dot">●</span> <span>RxJS</span><span class="dot">●</span>
+        <span>NgRx</span><span class="dot">●</span>
+      }
     </div>
   </div>
 </ng-container>

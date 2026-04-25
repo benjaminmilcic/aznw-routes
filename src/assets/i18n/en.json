@@ -4,7 +4,8 @@
     "findOutMore": "More About Me",
     "passionateDeveloper": "Passionate developer with over 10 years of experience and a focus on modern web technologies.",
     "transform": "I transform ideas into elegant, functional solutions.",
-    "available": "Available"
+    "available": "Available",
+    "notAvailable": "Not available"
   },
   "about": {
     "aboutMe": "About me",
