@@ -94,15 +94,19 @@ export class ContactComponent implements OnInit, OnDestroy {
       );
   }
 
-  openEmail() {
-    window.location.href = 'mailto:benjamin.milcic@gmail.com';
-  }
+  copiedKey: 'phone' | 'email' | null = null;
+  private copiedTimer?: ReturnType<typeof setTimeout>;
 
-  callNumber() {
-    window.location.href = 'tel:+4917641942532';
+  copyToClipboard(text: string, key: 'phone' | 'email') {
+    navigator.clipboard.writeText(text).then(() => {
+      clearTimeout(this.copiedTimer);
+      this.copiedKey = key;
+      this.copiedTimer = setTimeout(() => (this.copiedKey = null), 2000);
+    });
   }
 
   ngOnDestroy(): void {
     this.translateSendButtonSub.unsubscribe();
+    clearTimeout(this.copiedTimer);
   }
 }
