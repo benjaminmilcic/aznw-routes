@@ -33,7 +33,9 @@
   },
   "skills": {
     "headline": "Programming languages & Tools",
-    "workplace": "My workplace in my home-office"
+    "workplace": "My workplace in my home-office",
+    "sectionH": "Tools I use <em>every day</em>",
+    "viewPortfolio": "View Portfolio"
   },
   "portfolio": {
     "contact": "Contact",

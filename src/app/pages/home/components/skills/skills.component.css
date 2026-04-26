@@ -1,27 +1,89 @@
+/* ── Section ─────────────────────────────────────────── */
 section {
-  display: flex;
-  flex-direction: column;
-  padding: 3rem 0rem 10rem;
-  position: relative;
-}
-
-section:before {
-  content: " ";
   display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+  padding: 120px 24px 140px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
 }
 
-.content {
+section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(99,102,241,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(59,130,246,0.14) 0%, transparent 50%),
+    radial-gradient(circle at 65% 10%, rgba(168,85,247,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 30% 75%, rgba(16,185,129,0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* ── Inner wrapper ───────────────────────────────────── */
+.skills-inner {
+  max-width: 1280px;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
+/* ── Section tag ─────────────────────────────────────── */
+.section-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 18px;
+}
+.section-tag::before {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: rgba(255,255,255,0.25);
+}
+.section-tag .num {
+  background: #fbbf24;
+  color: #1e293b;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* ── Section headline ────────────────────────────────── */
+.section-h {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 auto 80px;
+  max-width: 780px;
+  color: #f8fafc;
+  text-align: center;
+}
+
+/* stylelint-disable selector-combinator-space-after */
+:host ::ng-deep .section-h em { font-style: italic; color: #fbbf24; }
+
+/* ── Large version ───────────────────────────────────── */
+.skills-large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0 60px;
+  margin-bottom: 40px;
+}
+
+.skills-small {
+  display: none;
+}
+
+/* ── Orbit container (photo + circles) ──────────────── */
 .main {
   position: relative;
   border-radius: 50%;
@@ -31,203 +93,148 @@ section:before {
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  flex-shrink: 0;
 }
 
+/* ── Pulse animation on center ───────────────────────── */
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  border: 2px solid rgba(251,191,36,0.25);
+  animation: pulse-expand 3s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-expand {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+}
+
+/* ── Orbit keyframes ─────────────────────────────────── */
 @keyframes skill-animation2 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(0deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(0deg) translateX(250px); }
 }
-
 .in-view.skill-animation2 {
   animation-name: skill-animation2;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation3 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(28deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(28deg) translateX(250px); }
 }
-
 .in-view.skill-animation3 {
   animation-name: skill-animation3;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation4 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(55deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(55deg) translateX(250px); }
 }
-
 .in-view.skill-animation4 {
   animation-name: skill-animation4;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation5 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(83deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(83deg) translateX(250px); }
 }
-
 .in-view.skill-animation5 {
   animation-name: skill-animation5;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation6 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(111deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(111deg) translateX(250px); }
 }
-
 .in-view.skill-animation6 {
   animation-name: skill-animation6;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation7 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(138deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(138deg) translateX(250px); }
 }
-
 .in-view.skill-animation7 {
   animation-name: skill-animation7;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation8 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(166deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(166deg) translateX(250px); }
 }
-
 .in-view.skill-animation8 {
   animation-name: skill-animation8;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation9 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(194deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(194deg) translateX(250px); }
 }
-
 .in-view.skill-animation9 {
   animation-name: skill-animation9;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation10 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(222deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(222deg) translateX(250px); }
 }
-
 .in-view.skill-animation10 {
   animation-name: skill-animation10;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation11 {
-  0% {
-    transform: rotate(270deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(249deg) translateX(250px);
-  }
+  0% { transform: rotate(270deg) translateX(250px); }
+  100% { transform: rotate(249deg) translateX(250px); }
 }
-
 .in-view.skill-animation11 {
   animation-name: skill-animation11;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation12 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(-82deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(-82deg) translateX(250px); }
 }
-
 .in-view.skill-animation12 {
   animation-name: skill-animation12;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation13 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(-55deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(-55deg) translateX(250px); }
 }
-
 .in-view.skill-animation13 {
   animation-name: skill-animation13;
   animation-duration: 2s;
 }
 
 @keyframes skill-animation14 {
-  0% {
-    transform: rotate(-90deg) translateX(250px);
-  }
-
-  100% {
-    transform: rotate(-28deg) translateX(250px);
-  }
+  0% { transform: rotate(-90deg) translateX(250px); }
+  100% { transform: rotate(-28deg) translateX(250px); }
 }
-
 .in-view.skill-animation14 {
   animation-name: skill-animation14;
   animation-duration: 2s;
 }
 
+/* ── Circle nodes ────────────────────────────────────── */
 .circle {
   position: absolute;
   left: calc(50% - 55px);
@@ -241,8 +248,8 @@ section:before {
 }
 
 .circle-image {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.2);
   border-radius: 50%;
   display: flex;
   padding: 16px;
@@ -250,219 +257,132 @@ section:before {
   height: 35px;
   align-items: center;
   justify-content: center;
+  transition: all 0.25s;
 }
 
 .circle-image:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
   transform: scale(1.1);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.circle:nth-child(2) {
-  transform: translateX(250px);
+.circle:nth-child(2)  { transform: translateX(250px); }
+.circle:nth-child(3)  { transform: rotate(28deg) translateX(250px); }
+.circle:nth-child(4)  { transform: rotate(55deg) translateX(250px); }
+.circle:nth-child(5)  { transform: rotate(83deg) translateX(250px); }
+.circle:nth-child(6)  { transform: rotate(111deg) translateX(250px); }
+.circle:nth-child(7)  { transform: rotate(138deg) translateX(250px); }
+.circle:nth-child(8)  { transform: rotate(166deg) translateX(250px); }
+.circle:nth-child(9)  { transform: rotate(194deg) translateX(250px); }
+.circle:nth-child(10) { transform: rotate(222deg) translateX(250px); }
+.circle:nth-child(11) { transform: rotate(249deg) translateX(250px); }
+.circle:nth-child(12) { transform: rotate(278deg) translateX(250px); }
+.circle:nth-child(13) { transform: rotate(305deg) translateX(250px); }
+.circle:nth-child(14) { transform: rotate(332deg) translateX(250px); }
+
+/* ── Small version ───────────────────────────────────── */
+.skills-small {
+  max-width: 680px;
+  margin: 0 auto;
 }
 
-.circle:nth-child(3) {
-  transform: rotate(28deg) translateX(250px);
+.photo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
 }
-
-.circle:nth-child(4) {
-  transform: rotate(55deg) translateX(250px);
-}
-
-.circle:nth-child(5) {
-  transform: rotate(83deg) translateX(250px);
-}
-
-.circle:nth-child(6) {
-  transform: rotate(111deg) translateX(250px);
-}
-.circle:nth-child(7) {
-  transform: rotate(138deg) translateX(250px);
-}
-.circle:nth-child(8) {
-  transform: rotate(166deg) translateX(250px);
-}
-.circle:nth-child(9) {
-  transform: rotate(194deg) translateX(250px);
-}
-.circle:nth-child(10) {
-  transform: rotate(222deg) translateX(250px);
-}
-.circle:nth-child(11) {
-  transform: rotate(249deg) translateX(250px);
-}
-.circle:nth-child(12) {
-  transform: rotate(278deg) translateX(250px);
-}
-.circle:nth-child(13) {
-  transform: rotate(305deg) translateX(250px);
-}
-.circle:nth-child(14) {
-  transform: rotate(332deg) translateX(250px);
-}
-
-h2 {
-  text-align: center;
-  font-size: 3rem;
-  color: rgb(236, 184, 7);
-  font-weight: 900;
-}
-
-.header-wrapper1 {
+.workplace-photo {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  max-width: 400px;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
 
-.header-wrapper2 {
-  width: 900px;
-  margin: 0rem 7.5rem;
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
 }
 
-h3 {
-  font-size: 2rem;
-}
-
-.l-and-t-wrapper {
-  display: flex;
-  justify-content: center;
-  padding-right: 40px;
-}
-
-.languages-and-tools {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  max-width: 900px;
-}
-
-.item-wrapper {
+.skill-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
-  padding: 10px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 8px;
+  padding: 16px 8px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
 }
-
-.item-wrapper:hover {
-  background: rgba(255, 255, 255, 0.15);
+.skill-card:hover {
+  background: rgba(255,255,255,0.1);
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  border-color: rgba(251,191,36,0.35);
+}
+.skill-card img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+.skill-card span {
+  color: rgba(255,255,255,0.85);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.item-wrapper img {
-  width: 48px;
-  height: 48px;
+/* ── CTA ─────────────────────────────────────────────── */
+.skills-cta {
+  text-align: center;
+  margin-top: 100px;
 }
-
-.item-wrapper p {
-  color: white;
-  font-weight: 900;
-  font-size: 0.75rem;
-}
-
-.workflow-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.workflow {
-  max-width: 900px;
-  width: 100%;
-  list-style: none;
-}
-
-.workflow li {
-  margin-left: 3rem;
-  color: white;
-  font-size: 1.25rem;
-  line-height: 2rem;
-}
-
-.workflow li span {
-  margin-right: 1rem;
-}
-
-a.next-section-button {
+.btn-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: #ffffff;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
   text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 28px rgba(59,130,246,0.4);
+  transition: all 0.25s;
 }
-
-a.next-section-button:hover {
+.btn-pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 18px 32px rgba(59,130,246,0.45);
 }
 
-a.next-section-button:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .skills-large { display: none; }
+  .skills-small { display: block; }
 }
 
-@media screen and (max-width: 768px) {
-  h2 {
-    font-size: 2rem;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  .workflow li {
-    font-size: 1rem;
-  }
-}
-
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   section {
-    padding: 3rem 0rem 3rem;
+    padding: 80px 20px 100px;
   }
-
-  a.next-section-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.75rem;
+  .skill-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
   }
-}
-
-@media screen and (max-width: 567px) {
-  .item-wrapper {
-    width: 60px;
-  }
-
-  .item-wrapper img {
+  .skill-card img {
     width: 36px;
     height: 36px;
   }
-}
-
-@media screen and (max-width: 400px) {
-  .workflow li {
-    margin-left: 1rem;
+  .skills-cta {
+    margin-top: 70px;
   }
-}
-
-@media screen and (max-width: 320px) {
-  .workflow li {
-    margin-left: 0rem;
+  .btn-pill {
+    padding: 14px 24px;
+    font-size: 14px;
   }
 }

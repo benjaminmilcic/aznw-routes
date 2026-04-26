@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-skills',
@@ -13,12 +11,29 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     TranslateModule,
     RouterModule,
     MatTooltipModule,
-    CommonModule,
-    MatIconModule,
   ],
 })
-export class SkillsComponent {
-  constructor(public translateService: TranslateService) {}
+export class SkillsComponent implements AfterViewInit, OnDestroy {
+  private observer?: IntersectionObserver;
+
+  constructor(private el: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    });
+    this.el.nativeElement
+      .querySelectorAll('.animation')
+      .forEach((element: Element) => this.observer!.observe(element));
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
 
   openLink(url: string) {
     window.open(url, '_blank');

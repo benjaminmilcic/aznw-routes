@@ -33,7 +33,9 @@
   },
   "skills": {
     "headline": "Programski jezici i alati",
-    "workplace": "Moje radno mjesto u domu"
+    "workplace": "Moje radno mjesto u domu",
+    "sectionH": "Alati koje <em>svakodnevno</em> koristim",
+    "viewPortfolio": "Pogledaj portfolio"
   },
   "portfolio": {
     "contact": "Kontakt",
