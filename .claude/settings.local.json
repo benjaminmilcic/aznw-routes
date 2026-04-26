@@ -56,7 +56,8 @@
       "Read(//proc/**)",
       "Read(//mnt/c/Users/User/.claude/projects/C--eigene-Projekte-aznw-routes/6ae558d4-cf72-4d4d-8acd-0799f5e34a20/**)",
       "Bash(tar -xzf \"/mnt/c/Users/User/.claude/projects/C--eigene-Projekte-aznw-routes/6ae558d4-cf72-4d4d-8acd-0799f5e34a20/tool-results/webfetch-1777115122363-atq7mh.bin\" -C /tmp/design_extract)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(python3 *)"
     ],
     "deny": [],
     "ask": []

@@ -1,120 +1,66 @@
-<section id="portfolio">
+<section id="portfolio" class="portfolio">
+
+  <!-- ── Dialogs ─────────────────────────────────────── -->
   <dialog #vocabularyTrainerDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Vocabulary Trainer</h2>
-      <button
-        class="close-btn"
-        (click)="closeDialog(vocabularyTrainerDialog)"
-        aria-label="Close dialog"
-      >
+      <button class="close-btn" (click)="closeDialog(vocabularyTrainerDialog)" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="project-section">
-        <h3 class="section-title">
-          {{ "portfolio.vocabularyTrainer.text1" | translate }}
-        </h3>
+        <h3 class="section-title">{{ "portfolio.vocabularyTrainer.text1" | translate }}</h3>
         <div class="image-container">
-          <img
-            class="project-image web-app"
-            src="/assets/learnlanguageapp.webp"
-            alt="A Web App to learn Croatian Language"
-          />
+          <img class="project-image web-app" src="/assets/learnlanguageapp.webp" alt="A Web App to learn Croatian Language" />
         </div>
         <div class="mt-12 mb-20">
           <div class="links-container">
-            <a
-              href="https://vocabularyinputapp.web.app"
-              target="_blank"
-              class="project-link primary"
-            >
-              <mat-icon>launch</mat-icon>
-              <span>Live Demo</span>
+            <a href="https://vocabularyinputapp.web.app" target="_blank" class="project-link primary">
+              <mat-icon>launch</mat-icon><span>Live Demo</span>
             </a>
-            <a
-              href="https://github.com/benjaminmilcic/LearnLanguageApp"
-              target="_blank"
-              class="project-link secondary"
-            >
-              <mat-icon>code</mat-icon>
-              <span>{{
-                "portfolio.vocabularyTrainer.sourceCode" | translate
-              }}</span>
+            <a href="https://github.com/benjaminmilcic/LearnLanguageApp" target="_blank" class="project-link secondary">
+              <mat-icon>code</mat-icon><span>{{ "portfolio.vocabularyTrainer.sourceCode" | translate }}</span>
             </a>
           </div>
         </div>
       </div>
-
       <div class="project-section">
-        <h3 class="section-title">
-          {{ "portfolio.vocabularyTrainer.text2" | translate }}
-        </h3>
+        <h3 class="section-title">{{ "portfolio.vocabularyTrainer.text2" | translate }}</h3>
         <div class="image-container">
-          <img
-            class="project-image mobile-app"
-            src="/assets/androidApp.webp"
-            alt="Android App to learn Croatian Language"
-          />
+          <img class="project-image mobile-app" src="/assets/androidApp.webp" alt="Android App to learn Croatian Language" />
         </div>
-
         <div class="-mb-6">
-          <a
-            href="https://play.google.com/store/apps/details?id=io.ionic.learnlanguageapp"
-            target="_blank"
-            class="store-badge"
-          >
-            <img
-              src="/assets/google-play-badge.png"
-              alt="Get it on Google Play"
-              class="badge-image"
-            />
+          <a href="https://play.google.com/store/apps/details?id=io.ionic.learnlanguageapp" target="_blank" class="store-badge">
+            <img src="/assets/google-play-badge.png" alt="Get it on Google Play" class="badge-image" />
           </a>
         </div>
-
         <div class="links-container">
-          <a
-            href="https://github.com/benjaminmilcic/learn-language-android-app"
-            target="_blank"
-            class="project-link secondary"
-          >
-            <mat-icon>code</mat-icon>
-            <span>{{
-              "portfolio.vocabularyTrainer.sourceCode" | translate
-            }}</span>
+          <a href="https://github.com/benjaminmilcic/learn-language-android-app" target="_blank" class="project-link secondary">
+            <mat-icon>code</mat-icon><span>{{ "portfolio.vocabularyTrainer.sourceCode" | translate }}</span>
           </a>
         </div>
       </div>
     </div>
   </dialog>
+
   <dialog #catchCupDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">CatchCups</h2>
-      <button
-        class="close-btn"
-        (click)="closeDialog(catchCupDialog)"
-        aria-label="Close dialog"
-      >
+      <button class="close-btn" (click)="closeDialog(catchCupDialog)" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="website-link">
-        <a
-          href="https://catchcups.com"
-          target="_blank"
-          class="project-link primary featured"
-        >
-          <mat-icon>launch</mat-icon>
-          <span>https://catchcups.com</span>
+        <a href="https://catchcups.com" target="_blank" class="project-link primary featured">
+          <mat-icon>launch</mat-icon><span>https://catchcups.com</span>
         </a>
       </div>
       <div class="project-description">
         <p>
           {{ "portfolio.catchCups.text1" | translate }}
-          <a href="https://codext.de/" target="_blank" class="inline-link"
-            >Codext GmbH</a
-          >,
+          <a href="https://codext.de/" target="_blank" class="inline-link">Codext GmbH</a>,
           {{ "portfolio.catchCups.text2" | translate }}
         </p>
       </div>
@@ -125,441 +71,261 @@
         <img src="/assets/catchcups4.webp" alt="CatchCups" />
       </div>
       <div class="mt-5 flex justify-center">
-        <a
-          href="https://play.google.com/store/apps/details?id=de.codext.catchcup"
-          target="_blank"
-          ><img
-            width="144px"
-            src="/assets/google-play-badge.png"
-            alt="CastchCup App"
-        /></a>
+        <a href="https://play.google.com/store/apps/details?id=de.codext.catchcup" target="_blank">
+          <img width="144px" src="/assets/google-play-badge.png" alt="CatchCup App" />
+        </a>
       </div>
     </div>
   </dialog>
+
   <dialog #webaroDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Webaro</h2>
-      <button
-        class="close-btn"
-        (click)="closeDialog(webaroDialog)"
-        aria-label="Close dialog"
-      >
+      <button class="close-btn" (click)="closeDialog(webaroDialog)" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="website-link">
-        <a
-          href="https://webaro.dev"
-          target="_blank"
-          class="project-link primary featured"
-        >
-          <mat-icon>launch</mat-icon>
-          <span>https://webaro.dev</span>
+        <a href="https://webaro.dev" target="_blank" class="project-link primary featured">
+          <mat-icon>launch</mat-icon><span>https://webaro.dev</span>
         </a>
       </div>
       <div class="project-description">
         <p>
           {{ "portfolio.webaro.text1" | translate }}
-          <a href="https://webaro.de" target="_blank" class="inline-link"
-            >Weber Agrar Robotik GmbH</a
-          >{{ "portfolio.webaro.text2" | translate }}
-          <a href="https://codext.de" target="_blank" class="inline-link"
-            >Codext GmbH</a
-          >.
+          <a href="https://webaro.de" target="_blank" class="inline-link">Weber Agrar Robotik GmbH</a>
+          {{ "portfolio.webaro.text2" | translate }}
+          <a href="https://codext.de" target="_blank" class="inline-link">Codext GmbH</a>.
         </p>
       </div>
       <div class="image-gallery vertical">
-        <img
-          src="/assets/webaro.webp"
-          alt="Weber Agrar Robotik GmbH Dashboard"
-          class="project-image large"
-        />
-        <img
-          src="/assets/webaro1.webp"
-          alt="Weber Agrar Robotik GmbH Interface"
-          class="project-image large"
-        />
-        <img
-          src="/assets/webaro2.webp"
-          alt="Weber Agrar Robotik GmbH Analytics"
-          class="project-image large"
-        />
+        <img src="/assets/webaro.webp" alt="Weber Agrar Robotik GmbH Dashboard" class="project-image large" />
+        <img src="/assets/webaro1.webp" alt="Weber Agrar Robotik GmbH Interface" class="project-image large" />
+        <img src="/assets/webaro2.webp" alt="Weber Agrar Robotik GmbH Analytics" class="project-image large" />
       </div>
     </div>
   </dialog>
+
   <dialog #solakonDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Solakon</h2>
-      <button
-        class="close-btn"
-        (click)="closeDialog(solakonDialog)"
-        aria-label="Close dialog"
-      >
+      <button class="close-btn" (click)="closeDialog(solakonDialog)" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-
     <div class="dialog-content">
       <div class="project-section">
         <div class="website-link">
-          <a
-            href="https://www.solakon.de"
-            target="_blank"
-            class="project-link primary featured"
-          >
-            <mat-icon>launch</mat-icon>
-            <span>https://www.solakon.de</span>
+          <a href="https://www.solakon.de" target="_blank" class="project-link primary featured">
+            <mat-icon>launch</mat-icon><span>https://www.solakon.de</span>
           </a>
         </div>
-
         <div class="project-description">
           <p>
             {{ "portfolio.solakon.text1" | translate }}
-            <a href="https://codext.de/" target="_blank" class="inline-link"
-              >Codext GmbH</a
-            >,
+            <a href="https://codext.de/" target="_blank" class="inline-link">Codext GmbH</a>,
             {{ "portfolio.solakon.text2" | translate }}
           </p>
         </div>
-
         <div class="image-gallery">
           <img src="/assets/solakon1.webp" alt="Solakon Screenshot 1" />
           <img src="/assets/solakon2.webp" alt="Solakon Screenshot 2" />
           <img src="/assets/solakon3.webp" alt="Solakon Screenshot 3" />
           <img src="/assets/solakon4.webp" alt="Solakon Screenshot 4" />
         </div>
-
         <div class="links-container centered">
-          <a
-            href="https://play.google.com/store/apps/details?id=de.solakon.app"
-            target="_blank"
-            class="store-badge"
-          >
-            <img
-              src="/assets/google-play-badge.png"
-              alt="Get it on Google Play"
-              class="badge-image"
-            />
+          <a href="https://play.google.com/store/apps/details?id=de.solakon.app" target="_blank" class="store-badge">
+            <img src="/assets/google-play-badge.png" alt="Get it on Google Play" class="badge-image" />
           </a>
         </div>
       </div>
     </div>
   </dialog>
+
   <dialog #hippoDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Hippo Data</h2>
-      <button
-        class="close-btn"
-        (click)="closeDialog(hippoDialog)"
-        aria-label="Close dialog"
-      >
+      <button class="close-btn" (click)="closeDialog(hippoDialog)" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-
     <div class="dialog-content">
       <div class="website-link">
-        <a
-          href="https://login.hippodata.de"
-          target="_blank"
-          class="project-link primary featured"
-        >
-          <span class="hidden sm:block mt-[6px]"
-            ><mat-icon>launch</mat-icon></span
-          >
-          <span>https://login.hippodata.de</span>
+        <a href="https://login.hippodata.de" target="_blank" class="project-link primary featured">
+          <mat-icon>launch</mat-icon><span>https://login.hippodata.de</span>
         </a>
       </div>
       <div class="project-section">
         <div class="project-description">
           <p>
             {{ "portfolio.hippo.text1" | translate }}
-            <a
-              href="https://public.hippodata.net"
-              target="_blank"
-              class="inline-link"
-              >Hippo Data GmbH</a
-            >{{ "portfolio.hippo.text2" | translate }}
-            <a href="https://codext.de" target="_blank" class="inline-link"
-              >Codext GmbH</a
-            >.
+            <a href="https://public.hippodata.net" target="_blank" class="inline-link">Hippo Data GmbH</a>
+            {{ "portfolio.hippo.text2" | translate }}
+            <a href="https://codext.de" target="_blank" class="inline-link">Codext GmbH</a>.
           </p>
         </div>
-
         <div class="image-gallery vertical">
-          <img
-            src="/assets/hippo2.webp"
-            alt="Hippo Data Dashboard Overview"
-            class="project-image large"
-          />
-          <img
-            src="/assets/hippo1.webp"
-            alt="Hippo Data Analytics Interface"
-            class="project-image large"
-          />
-          <img
-            src="/assets/hippo.webp"
-            alt="Hippo Data Management System"
-            class="project-image large"
-          />
+          <img src="/assets/hippo2.webp" alt="Hippo Data Dashboard Overview" class="project-image large" />
+          <img src="/assets/hippo1.webp" alt="Hippo Data Analytics Interface" class="project-image large" />
+          <img src="/assets/hippo.webp" alt="Hippo Data Management System" class="project-image large" />
         </div>
       </div>
     </div>
   </dialog>
-  <div class="content">
-    <h3>Portfolio</h3>
-    <div class="relative flex justify-center">
-      <div class="paper sm:min-w-[325px] sm:min-h-[175px] max-w-52">
-        <div class="pin">
+
+  <!-- ── Main content ────────────────────────────────── -->
+  <div class="portfolio-inner">
+
+    <div class="section-tag">
+      <span class="num">03</span>
+      <span>Portfolio</span>
+    </div>
+    <h2 class="section-h" [innerHTML]="'portfolio.sectionH' | translate"></h2>
+
+    <div class="note-wrap">
+      <div class="note">
+        <div class="note-pin">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <p class="p-8 text-sm sm:text-base">
-          <br />
-          {{ "gimmicks.overview.header1" | translate }}
-          <ng-container *ngIf="translateService.currentLang === 'de'"
-            ><a
-              [routerLink]="['/gimmicks/']"
-              fragment="header"
-              class="hover:text-blue-600"
-              >hier</a
-            ><span>&nbsp;</span></ng-container
-          >
-          <ng-container *ngIf="translateService.currentLang === 'hr'"
-            ><a
-              [routerLink]="['/gimmicks/']"
-              fragment="header"
-              class="hover:text-blue-600"
-              >ovdje</a
-            ><span>&nbsp;</span></ng-container
-          >
-
-          <button
-            [routerLink]="['/gimmicks/']"
-            fragment="header"
-            class="bg-color2 hover:bg-color4 rounded px-4 py-2 text-color1 cursor-pointer"
-          >
+        <p>
+          <b>PS:</b>&nbsp;{{ "portfolio.note1" | translate }}
+          <a [routerLink]="['/gimmicks']" fragment="header" class="gimmicks-link">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
             Gimmicks
-          </button>
-          <ng-container *ngIf="translateService.currentLang === 'en'"
-            ><span class="sm:hidden">&nbsp;</span
-            ><a
-              [routerLink]="['/gimmicks/']"
-              fragment="header"
-              class="hover:text-color5 text-color4"
-              >here</a
-            ></ng-container
-          >
-          {{ "gimmicks.overview.header2" | translate }}
+          </a>
+          {{ "portfolio.note2" | translate }}
         </p>
       </div>
     </div>
-    <div
-      class="flex gap-12 flex-wrap max-w-[1600px] justify-center mt-[50px] project-box"
-    >
-      <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer relative group"
-        [routerLink]="['/gimmicks']"
-      >
-        <div class="pin-2 group-hover:hidden">
+
+    <div class="pinboard">
+
+      <div class="pinned" [routerLink]="['/gimmicks']">
+        <div class="pin center green">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <img class="image" src="assets/gimmicks.webp" alt="Gimmicks" />
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">Gimmicks</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
-
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/svg/nestjs.svg"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">NestJS</div>
-            </div>
+        <div class="proj-thumb">
+          <img src="assets/gimmicks.webp" alt="Gimmicks" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">Gimmicks</h3>
+          <p class="proj-d">{{ "portfolio.gimmicksDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">NestJS</span>
           </div>
         </div>
       </div>
-      <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer relative group"
-        (click)="openDialog(catchCupDialog)"
-      >
-        <div class="pin-3 group-hover:hidden">
+
+      <div class="pinned" (click)="openDialog(catchCupDialog)">
+        <div class="pin right yellow">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <img class="image" src="assets/catchCups.webp" alt="CatchCups" />
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">CatchCups</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img src="assets/svg/ionic.svg" class="project-box-skill-image" />
-              <div class="project-box-skill-text">Ionic</div>
-            </div>
+        <div class="proj-thumb">
+          <img src="assets/catchCups.webp" alt="CatchCups" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">CatchCups</h3>
+          <p class="proj-d">{{ "portfolio.catchCupsDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">Ionic</span>
           </div>
         </div>
       </div>
-      <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer group relative"
-        (click)="openDialog(webaroDialog)"
-      >
-        <div class="pin-4 group-hover:hidden">
+
+      <div class="pinned" (click)="openDialog(webaroDialog)">
+        <div class="pin left blue">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <img class="image" src="assets/webaro.webp" alt="Webaro" />
-
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">Webaro</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
+        <div class="proj-thumb">
+          <img src="assets/webaro.webp" alt="Webaro" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">Webaro</h3>
+          <p class="proj-d">{{ "portfolio.webaroDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
           </div>
         </div>
       </div>
-      <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer relative group"
-        (click)="openDialog(vocabularyTrainerDialog)"
-      >
-        <div class="pin-5 group-hover:hidden">
+
+      <div class="pinned" (click)="openDialog(vocabularyTrainerDialog)">
+        <div class="pin center green">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <img
-          class="image"
-          src="assets/vocabularyTrainer.webp"
-          alt="Learn Language App"
-        />
-
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">Vocabulary Trainer</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
+        <div class="proj-thumb">
+          <img src="assets/vocabularyTrainer.webp" alt="Vocabulary Trainer" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">Vocabulary Trainer</h3>
+          <p class="proj-d">{{ "portfolio.vocabularyTrainerDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">Ionic</span>
           </div>
         </div>
       </div>
-      <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer relative group"
-        (click)="openDialog(solakonDialog)"
-      >
-        <div class="pin-6 group-hover:hidden">
+
+      <div class="pinned" (click)="openDialog(solakonDialog)">
+        <div class="pin left red">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
-        <img class="image" src="assets/solakon.webp" alt="Solakon" />
-
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">Solakon</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img src="assets/svg/ionic.svg" class="project-box-skill-image" />
-              <div class="project-box-skill-text">Ionic</div>
-            </div>
+        <div class="proj-thumb">
+          <img src="assets/solakon.webp" alt="Solakon" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">Solakon</h3>
+          <p class="proj-d">{{ "portfolio.solakonDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">Ionic</span>
           </div>
         </div>
       </div>
-      <!-- <div
-        class="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 rounded-xl shadow-xl shake hover:shadow-2xl cursor-pointer"
-        (click)="openDialog(hippoDialog)"
-      >
-        <img class="image" src="assets/hippo2.webp" alt="Hippo Data" />
 
-        <div
-          class="flex flex-col image-title justify-center items-center font-bold"
-        >
-          <div class="project-box-header">Hippo Data</div>
-
-          <div class="flex self-start project-box-skills-wrapper">
-            <div
-              class="flex items-center justify-center bg-white/20 border border-white/60 rounded-xl project-box-skill"
-            >
-              <img
-                src="assets/angular_logo.png"
-                class="project-box-skill-image"
-              />
-              <div class="project-box-skill-text">Angular</div>
-            </div>
+      <!--
+      <div class="pinned" (click)="openDialog(hippoDialog)">
+        <div class="pin left red">
+          <div class="shadow"></div>
+          <div class="metal"></div>
+          <div class="bottom-circle"></div>
+        </div>
+        <div class="proj-thumb">
+          <img src="assets/hippo2.webp" alt="Hippo Data" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">Hippo Data</h3>
+          <p class="proj-d">{{ "portfolio.hippoDataDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
           </div>
         </div>
-      </div> -->
+      </div>
+      -->
+
     </div>
-    <div class="button-wrapper">
-      <a class="contact-button" [routerLink]="['/']" fragment="contact"
-        ><div class="flex gap-2 items-center">
-          <mat-icon fontIcon="mail"></mat-icon>
-          <div>{{ "portfolio.contact" | translate }}</div>
-        </div></a
-      >
+
+    <div class="portfolio-cta">
+      <a [routerLink]="['/']" fragment="contact" class="btn-pill">
+        <i class="fa-solid fa-envelope"></i>
+        {{ "portfolio.contactCta" | translate }}
+        <i class="fa-solid fa-arrow-right fa-xs"></i>
+      </a>
     </div>
+
   </div>
 </section>

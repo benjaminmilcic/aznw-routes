@@ -37,6 +37,16 @@
   },
   "portfolio": {
     "contact": "Contact",
+    "sectionH": "Selected <em>Projects</em>",
+    "note1": "Want something to play with? Check out my",
+    "note2": "— small experiments like weather, maps, charts and mini-games. 🎲",
+    "contactCta": "Get in Touch",
+    "gimmicksDesc": "Playground: weather, maps, charts, mini-games & more.",
+    "catchCupsDesc": "Deposit app with geo-maps and reward mechanics.",
+    "webaroDesc": "Dashboard for Weber Agrar Robotics with real-time data.",
+    "vocabularyTrainerDesc": "Web and Android app for learning the Croatian language.",
+    "solakonDesc": "iOS and Android app for solar monitoring. Live on Play Store.",
+    "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
       "text1": "Web App for learning Croatian language. Made with Angular.",
       "text2": "Android App for learning Croatian language. Made with Angular and Ionic.",
