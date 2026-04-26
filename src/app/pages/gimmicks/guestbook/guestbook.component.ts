@@ -247,8 +247,11 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
     // );
 
     try {
-      this.posts = await lastValueFrom(
+      const posts = await lastValueFrom(
         this.http.get<Post[]>(environment.guestbook.getAllPostsApi)
+      );
+      this.posts = posts.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     } catch (error) {
       this.httpErrorService.showHttpError(error, 'GuestbookComponent');
