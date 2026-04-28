@@ -328,3 +328,175 @@ ion-popover.rounded-popover {
 
 
 
+
+// ===== GIMMICKS OVERVIEW: DARK WOOD CONTEXT MENU =====
+@keyframes cmenuPanel {
+  from { opacity: 0; transform: scale(.92) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+@keyframes cmenuItemIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.dark-wood-menu {
+  background: linear-gradient(180deg, #2a1810 0%, #1a0f08 100%) !important;
+  border: 1px solid rgba(180,120,60,.35) !important;
+  border-radius: 8px !important;
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.6),
+    0 4px 12px rgba(0,0,0,.5),
+    0 0 0 1px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,200,130,.08) !important;
+  min-width: 270px !important;
+  max-width: 340px !important;
+  animation: cmenuPanel .18s cubic-bezier(.4,0,.2,1);
+
+  .mat-mdc-menu-content {
+    padding: 8px 0 !important;
+  }
+}
+
+.cmenu-header {
+  padding: 10px 16px 9px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: rgba(220,170,110,.9);
+  border-bottom: 1px solid rgba(180,120,60,.18);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  i { font-size: 13px; color: rgba(212,165,110,.8); }
+}
+
+.cmenu-divider {
+  height: 1px;
+  background: rgba(180,120,60,.15);
+  margin: 4px 0;
+}
+
+.cmenu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  color: #f5e9d8;
+  cursor: default;
+  transition: background .12s ease, color .12s ease;
+  animation: cmenuItemIn .22s cubic-bezier(.4,0,.2,1) forwards;
+  opacity: 0;
+
+  &.cmenu-interactive {
+    cursor: pointer;
+    &:hover {
+      background: linear-gradient(90deg, rgba(212,145,70,.18) 0%, rgba(212,145,70,.08) 100%);
+      color: #fff8ec;
+      .cmenu-icon { color: #f5c98a; }
+    }
+    &:active { background: rgba(212,145,70,.28); }
+  }
+}
+
+.cmenu-icon {
+  width: 18px;
+  flex-shrink: 0;
+  color: rgba(212,165,110,.85);
+  font-size: 13px;
+  text-align: center;
+}
+
+.cmenu-label {
+  flex: 1;
+  line-height: 1.25;
+  font-size: 13px;
+}
+
+.cmenu-slider-row {
+  display: flex;
+  align-items: center;
+  padding: 2px 16px 2px 14px;
+  gap: 6px;
+}
+
+.cmenu-slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.cmenu-slider-alpha {
+  width: 8px;
+  flex-shrink: 0;
+  font-size: 11px;
+  line-height: 1;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.cmenu-slider-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(212,165,110,.6);
+  min-width: 24px;
+  text-align: right;
+}
+
+.cmenu-header-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  flex-shrink: 0;
+}
+
+.cmenu-header-num {
+  margin-left: auto;
+  opacity: .45;
+  font-size: 10px;
+  letter-spacing: .05em;
+}
+
+/* Switch-Farben passend zum Dark-Wood-Menü */
+.dark-wood-menu .mat-mdc-slide-toggle {
+  /* Korrekte Angular Material Variablen (--mat-slide-toggle-*, nicht --mdc-switch-*) */
+  --mat-slide-toggle-selected-handle-color: #fde68a;
+  --mat-slide-toggle-selected-hover-handle-color: #fef3c7;
+  --mat-slide-toggle-selected-focus-handle-color: #fef3c7;
+  --mat-slide-toggle-selected-pressed-handle-color: #fef3c7;
+  --mat-slide-toggle-selected-icon-color: #16a34a;
+  --mat-slide-toggle-unselected-handle-color: #c8924a;
+  --mat-slide-toggle-unselected-hover-handle-color: #f5c98a;
+  --mat-slide-toggle-unselected-focus-handle-color: #f5c98a;
+  --mat-slide-toggle-unselected-pressed-handle-color: #f5c98a;
+}
+
+/* Handle-Kreis aktiv — ::after (nicht ::before!) */
+.dark-wood-menu .mdc-switch--selected:enabled .mdc-switch__handle::after {
+  background: #fde68a !important;
+}
+
+/* Checkmark-Icon grün */
+.dark-wood-menu .mdc-switch--selected .mdc-switch__icon--on path {
+  fill: #16a34a !important;
+}
+
+/* Inaktiver Track — MDC-Opacity-Default überschreiben */
+.dark-wood-menu .mdc-switch:not(.mdc-switch--selected) .mdc-switch__track::before {
+  background: rgb(160, 100, 40) !important;
+  opacity: 0.75 !important;
+}
+
+/* Aktiver Track — Kupfer-Ton */
+.dark-wood-menu .mdc-switch.mdc-switch--selected .mdc-switch__track::after {
+  background: #b87333 !important;
+  opacity: 1 !important;
+}

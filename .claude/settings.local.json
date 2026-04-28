@@ -64,7 +64,9 @@
       "Bash(mkdir -p design_extracted)",
       "Bash(tar -xf tool-results/webfetch-1777373129984-fwkdu9.bin -C design_extracted)",
       "Bash(mkdir -p design_extracted2)",
-      "Bash(tar -xf tool-results/webfetch-1777375134282-bjnnsd.bin -C design_extracted2)"
+      "Bash(tar -xf tool-results/webfetch-1777375134282-bjnnsd.bin -C design_extracted2)",
+      "Bash(mkdir -p design_extracted3)",
+      "Bash(tar -xf tool-results/webfetch-1777379807178-r502d4.bin -C design_extracted3)"
     ],
     "deny": [],
     "ask": []

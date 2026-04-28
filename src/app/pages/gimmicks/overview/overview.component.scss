@@ -585,35 +585,36 @@ section {
   .door:hover .door-panel { transform: rotateY(38deg); }
 }
 
-// ===== CONTEXT MENU SLIDERS =====
-.red-slider {
+// ===== CONTEXT MENU SLIDERS (::ng-deep so overrides reach the overlay portal) =====
+/* stylelint-disable selector-pseudo-element-no-unknown */
+::ng-deep .red-slider {
   @include mat.slider-overrides((
-    active-track-color: red,
-    handle-color: red,
-    focus-handle-color: red
+    active-track-color: #f87171,
+    handle-color: #f87171,
+    focus-handle-color: #f87171
   ));
 }
 
-.green-slider {
+::ng-deep .green-slider {
   @include mat.slider-overrides((
-    active-track-color: green,
-    handle-color: green,
-    focus-handle-color: green
+    active-track-color: #4ade80,
+    handle-color: #4ade80,
+    focus-handle-color: #4ade80
   ));
 }
 
-.blue-slider {
+::ng-deep .blue-slider {
   @include mat.slider-overrides((
-    active-track-color: blue,
-    handle-color: blue,
-    focus-handle-color: blue
+    active-track-color: #60a5fa,
+    handle-color: #60a5fa,
+    focus-handle-color: #60a5fa
   ));
 }
 
-.opacity-slider {
+::ng-deep .opacity-slider {
   @include mat.slider-overrides((
-    active-track-color: black,
-    handle-color: black,
-    focus-handle-color: black
+    active-track-color: #d4a574,
+    handle-color: #d4a574,
+    focus-handle-color: #d4a574
   ));
 }

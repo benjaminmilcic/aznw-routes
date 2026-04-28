@@ -38,56 +38,64 @@
         [matContextMenuTriggerFor]="contextMenu"
         tabindex="0"
       >
-        <mat-menu #contextMenu class="px-2 !min-w-[320px]">
+        <mat-menu #contextMenu class="dark-wood-menu">
           <div (click)="$event.stopPropagation()">
-            <div class="text-xl my-1">{{ "gimmicks.overview.settings" | translate }}</div>
-            <div class="border-t mt-1 mb-3"></div>
-            <mat-slide-toggle labelPosition="before" [(ngModel)]="settings[settingIndex].showDescription" class="ml-3 py-2">
-              <div class="text-base font-normal">{{ "gimmicks.overview.showDescription" | translate }}</div>
-            </mat-slide-toggle>
-            <mat-slide-toggle labelPosition="before" [(ngModel)]="settings[settingIndex].playAudio" class="ml-3 py-2">
-              <div class="text-base font-normal">{{ "gimmicks.overview.playAudio" | translate }}</div>
-            </mat-slide-toggle>
-            <div class="border-t"></div>
-            <div class="pl-3 mt-3">{{ "gimmicks.overview.bgGradient" | translate }}</div>
-            <table class="ml-6">
-              <tr>
-                <td class="text-[#FB001A]">{{ "gimmicks.overview.red" | translate }}:</td>
-                <td>
-                  <mat-slider min="0" max="255" class="red-slider">
-                    <input matSliderThumb [(ngModel)]="settings[settingIndex].red" />
-                  </mat-slider>
-                </td>
-                <td class="text-[#FB001A]">{{ settings[settingIndex].red }}</td>
-              </tr>
-              <tr>
-                <td class="text-[#107E15]">{{ "gimmicks.overview.green" | translate }}:</td>
-                <td>
-                  <mat-slider min="0" max="255" class="green-slider">
-                    <input matSliderThumb [(ngModel)]="settings[settingIndex].green" />
-                  </mat-slider>
-                </td>
-                <td class="text-[#107E15]">{{ settings[settingIndex].green }}</td>
-              </tr>
-              <tr>
-                <td class="text-[#2303F8]">{{ "gimmicks.overview.blue" | translate }}:</td>
-                <td>
-                  <mat-slider min="0" max="255" class="blue-slider">
-                    <input matSliderThumb [(ngModel)]="settings[settingIndex].blue" />
-                  </mat-slider>
-                </td>
-                <td class="text-[#2303F8]">{{ settings[settingIndex].blue }}</td>
-              </tr>
-              <tr>
-                <td>{{ "gimmicks.overview.opacity" | translate }}:</td>
-                <td>
-                  <mat-slider min="0" max="255" class="opacity-slider">
-                    <input matSliderThumb [(ngModel)]="settings[settingIndex].opacity" />
-                  </mat-slider>
-                </td>
-                <td>{{ settings[settingIndex].opacity }}</td>
-              </tr>
-            </table>
+            <!-- Header -->
+            <div class="cmenu-header">
+              <i class="fa-solid fa-sliders"></i>
+              <span class="cmenu-header-dot" [style.color]="'rgb(' + setting.red + ',' + setting.green + ',' + setting.blue + ')'"></span>
+              {{ setting.header | translate }}
+              <span class="cmenu-header-num">· {{ settingIndex < 9 ? '0' : '' }}{{ settingIndex + 1 }}</span>
+            </div>
+
+            <!-- Toggles -->
+            <div class="cmenu-item" style="animation-delay:35ms">
+              <i class="fa-solid fa-eye cmenu-icon"></i>
+              <span class="cmenu-label">{{ "gimmicks.overview.showDescription" | translate }}</span>
+              <mat-slide-toggle [(ngModel)]="settings[settingIndex].showDescription" aria-label="showDescription"></mat-slide-toggle>
+            </div>
+            <div class="cmenu-item" style="animation-delay:70ms">
+              <i class="fa-solid fa-volume-high cmenu-icon"></i>
+              <span class="cmenu-label">{{ "gimmicks.overview.playAudio" | translate }}</span>
+              <mat-slide-toggle [(ngModel)]="settings[settingIndex].playAudio" aria-label="playAudio"></mat-slide-toggle>
+            </div>
+
+            <div class="cmenu-divider"></div>
+
+            <!-- Color section -->
+            <div class="cmenu-item" style="animation-delay:105ms">
+              <i class="fa-solid fa-palette cmenu-icon"></i>
+              <span class="cmenu-label">{{ "gimmicks.overview.bgGradient" | translate }}</span>
+            </div>
+
+            <div class="cmenu-slider-row" style="animation-delay:140ms">
+              <span class="cmenu-slider-dot" style="background:#f87171;color:#f87171"></span>
+              <mat-slider min="0" max="255" class="red-slider" style="flex:1">
+                <input matSliderThumb [(ngModel)]="settings[settingIndex].red" />
+              </mat-slider>
+              <span class="cmenu-slider-val">{{ settings[settingIndex].red }}</span>
+            </div>
+            <div class="cmenu-slider-row" style="animation-delay:160ms">
+              <span class="cmenu-slider-dot" style="background:#4ade80;color:#4ade80"></span>
+              <mat-slider min="0" max="255" class="green-slider" style="flex:1">
+                <input matSliderThumb [(ngModel)]="settings[settingIndex].green" />
+              </mat-slider>
+              <span class="cmenu-slider-val">{{ settings[settingIndex].green }}</span>
+            </div>
+            <div class="cmenu-slider-row" style="animation-delay:180ms">
+              <span class="cmenu-slider-dot" style="background:#60a5fa;color:#60a5fa"></span>
+              <mat-slider min="0" max="255" class="blue-slider" style="flex:1">
+                <input matSliderThumb [(ngModel)]="settings[settingIndex].blue" />
+              </mat-slider>
+              <span class="cmenu-slider-val">{{ settings[settingIndex].blue }}</span>
+            </div>
+            <div class="cmenu-slider-row" style="animation-delay:200ms;padding-bottom:8px">
+              <span class="cmenu-slider-alpha">α</span>
+              <mat-slider min="0" max="255" class="opacity-slider" style="flex:1">
+                <input matSliderThumb [(ngModel)]="settings[settingIndex].opacity" />
+              </mat-slider>
+              <span class="cmenu-slider-val">{{ settings[settingIndex].opacity }}</span>
+            </div>
           </div>
         </mat-menu>
 
