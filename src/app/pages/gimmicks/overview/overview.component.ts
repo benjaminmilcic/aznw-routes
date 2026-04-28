@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
@@ -15,15 +9,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GimmicksOverviewSetting } from './overview.types';
 import { gimmicksOverViewSettings } from './overview.constants';
-import { IonPopover, IonContent } from "@ionic/angular/standalone";
 import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-overview',
   imports: [
-    IonContent,
-    IonPopover,
     RouterModule,
     TranslateModule,
     CommonModule,
@@ -37,10 +28,10 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss',
 })
-export class OverviewComponent implements AfterViewInit {
+export class OverviewComponent {
   isTouchDevice: boolean;
   settings: GimmicksOverviewSetting[] = gimmicksOverViewSettings;
-  @ViewChild('doors') doors!: ElementRef<HTMLDivElement>;
+  infoOpen = false;
 
   constructor(
     public translateService: TranslateService,
@@ -49,24 +40,32 @@ export class OverviewComponent implements AfterViewInit {
     this.isTouchDevice = this.detectPureTouchDevice();
   }
 
-  ngAfterViewInit(): void {
-    this.settings.forEach((element, elementIndex) => {
-      this.changeColor(elementIndex);
-    });
+  toggleInfo(event: Event) {
+    event.stopPropagation();
+    this.infoOpen = !this.infoOpen;
   }
 
-  toHexColor(
-    red: number,
-    green: number,
-    blue: number,
-    opacity: number
-  ): string {
-    const clamp = (val: number) => Math.max(0, Math.min(255, val)); // Werte 0–255 absichern
-    const r = clamp(red).toString(16).padStart(2, '0');
-    const g = clamp(green).toString(16).padStart(2, '0');
-    const b = clamp(blue).toString(16).padStart(2, '0');
-    const o = clamp(opacity).toString(16).padStart(2, '0');
-    return `#${r}${g}${b}${o}`;
+  @HostListener('document:click')
+  closeInfo() {
+    this.infoOpen = false;
+  }
+
+  @HostListener('document:keydown.escape')
+  closeInfoOnEscape() {
+    this.infoOpen = false;
+  }
+
+  getPanelBackground(red: number, green: number, blue: number, opacity: number): string {
+    const alpha = (opacity / 255).toFixed(2);
+    const r2 = Math.round(red * 0.5);
+    const g2 = Math.round(green * 0.5);
+    const b2 = Math.round(blue * 0.5);
+    return `linear-gradient(165deg, rgba(${red},${green},${blue},${alpha}) 0%, rgba(${r2},${g2},${b2},0.85) 50%, #1e3a8a 100%)`;
+  }
+
+  getDoorNum(goToPage: string, index: number): string {
+    const key = goToPage.split('/').pop() ?? '';
+    return `/${key} · ${String(index + 1).padStart(2, '0')}`;
   }
 
   goToPage(link: any) {
@@ -79,25 +78,10 @@ export class OverviewComponent implements AfterViewInit {
     }
   }
 
-  changeColor(index: number) {
-    let element = this.settings[index];
-    element.hex = this.toHexColor(
-      element.red,
-      element.green,
-      element.blue,
-      element.opacity
-    );
-    (
-      this.doors.nativeElement.children[index].children[1] as HTMLElement
-    ).style.background = `linear-gradient(to bottom, ${element.hex}, #2563eb)`;
-  }
-
   private detectPureTouchDevice(): boolean {
     const hasTouch = navigator.maxTouchPoints > 0;
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
     const noMouse = !window.matchMedia('(any-hover: hover)').matches;
-
-    // Nur Touchgeräte, die keine Maus oder Präzisionseingabe haben
     return hasTouch && coarsePointer && noMouse;
   }
 

@@ -1,135 +1,88 @@
-<section class="bg-blue-900 min-h-full pt-[70px] box-border">
-  <div
-    class="relative flex gap-4 justify-between items-center text-xl px-4 sm:px-8 py-4 backdrop-blur-sm bg-black/20 border-b border-blue-700/30"
-  >
-    <div class="mt-[5px]">
-      <mat-icon
-        id="click-trigger2"
-        fontIcon="info"
-        class="cursor-pointer text-gray-300 hover:text-white transition-all duration-300 bg-black/30 rounded-full p-2 hover:bg-black/40 border border-blue-700/30 hover:border-blue-600/50"
-      ></mat-icon>
-      <ion-popover trigger="click-trigger2" triggerAction="click" class="rounded-popover">
-        <ng-template>
-          <ion-content class="ion-padding"
-            ><div
-              class="p-4 backdrop-blur-sm bg-blue-950/90 border border-blue-700/40 text-gray-200 rounded-xl"
-            >
-              {{ "gimmicks.overview.contextMenu" | translate }}
-            </div>
-          </ion-content>
-        </ng-template>
-      </ion-popover>
+<section>
+  <div class="page-inner">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="info-wrap">
+        <button class="info-icon" type="button" title="Info" (click)="toggleInfo($event)" [attr.aria-expanded]="infoOpen">
+          <i class="fa-solid fa-info"></i>
+        </button>
+        <div class="info-pop" [class.open]="infoOpen" role="dialog">
+          <div class="info-pop-kicker">{{ "gimmicks.overview.infoKicker" | translate }}</div>
+          {{ "gimmicks.overview.infoText" | translate }}
+        </div>
+      </div>
+      <a href="https://github.com/benjaminmilcic/aznw-routes" class="source-pill" target="_blank" rel="noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>{{ "footer.sourceCode" | translate }}</span>
+      </a>
+      <div style="width:42px"></div>
     </div>
-    <div
-      class="flex items-center gap-2 bg-black/30 px-4 py-2 rounded-full border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:bg-black/40"
-    >
-      <i class="fa-brands fa-github text-gray-300"></i>
-      <a
-        class="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
-        href="https://github.com/benjaminmilcic/aznw-routes"
-        target="_blank"
-        >{{ "gimmicks.overview.sourceCode" | translate }}</a
-      >
+
+    <!-- Headline -->
+    <div class="gimmicks-head">
+      <div class="section-tag">
+        <span class="num">/gimmicks</span>
+        <span>{{ "gimmicks.overview.playground" | translate }}</span>
+      </div>
+      <h1 class="gimmicks-h">{{ "gimmicks.overview.headlinePre" | translate }} <em>{{ "gimmicks.overview.headlineEm" | translate }}</em></h1>
+      <p class="gimmicks-sub">{{ "gimmicks.overview.subtitle" | translate }}</p>
     </div>
-    <div></div>
-  </div>
-  <div class="flex justify-center relative">
-    <div
-      #doors
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-start my-4 gap-8"
-    >
+
+    <!-- Doors Grid -->
+    <div class="doors-grid">
       <div
         *ngFor="let setting of settings; let settingIndex = index"
-        class="flipbox rounded-lg cursor-pointer wood-frame h-fit bg-[#ffffff40] door"
+        class="door"
         (click)="goToPage([setting.goToPage])"
         (mouseenter)="playAudio(settingIndex)"
         [matContextMenuTriggerFor]="contextMenu"
+        tabindex="0"
       >
         <mat-menu #contextMenu class="px-2 !min-w-[320px]">
           <div (click)="$event.stopPropagation()">
-            <div class="text-xl my-1">
-              {{ "gimmicks.overview.settings" | translate }}
-            </div>
+            <div class="text-xl my-1">{{ "gimmicks.overview.settings" | translate }}</div>
             <div class="border-t mt-1 mb-3"></div>
-            <mat-slide-toggle
-              labelPosition="before"
-              [(ngModel)]="settings[settingIndex].showDescription"
-              class="ml-3 py-2"
-              ><div class="text-base font-normal">
-                {{ "gimmicks.overview.showDescription" | translate }}
-              </div></mat-slide-toggle
-            >
-            <mat-slide-toggle
-              labelPosition="before"
-              [(ngModel)]="settings[settingIndex].playAudio"
-              class="ml-3 py-2"
-              ><div class="text-base font-normal">
-                {{ "gimmicks.overview.playAudio" | translate }}
-              </div></mat-slide-toggle
-            >
+            <mat-slide-toggle labelPosition="before" [(ngModel)]="settings[settingIndex].showDescription" class="ml-3 py-2">
+              <div class="text-base font-normal">{{ "gimmicks.overview.showDescription" | translate }}</div>
+            </mat-slide-toggle>
+            <mat-slide-toggle labelPosition="before" [(ngModel)]="settings[settingIndex].playAudio" class="ml-3 py-2">
+              <div class="text-base font-normal">{{ "gimmicks.overview.playAudio" | translate }}</div>
+            </mat-slide-toggle>
             <div class="border-t"></div>
-            <div class="pl-3 mt-3">
-              {{ "gimmicks.overview.bgGradient" | translate }}
-            </div>
+            <div class="pl-3 mt-3">{{ "gimmicks.overview.bgGradient" | translate }}</div>
             <table class="ml-6">
               <tr>
-                <td class="text-[#FB001A]">
-                  {{ "gimmicks.overview.red" | translate }}:
-                </td>
+                <td class="text-[#FB001A]">{{ "gimmicks.overview.red" | translate }}:</td>
                 <td>
                   <mat-slider min="0" max="255" class="red-slider">
-                    <input
-                      matSliderThumb
-                      [(ngModel)]="settings[settingIndex].red"
-                      (ngModelChange)="changeColor(settingIndex)"
-                    />
+                    <input matSliderThumb [(ngModel)]="settings[settingIndex].red" />
                   </mat-slider>
                 </td>
                 <td class="text-[#FB001A]">{{ settings[settingIndex].red }}</td>
               </tr>
               <tr>
-                <td class="text-[#107E15]">
-                  {{ "gimmicks.overview.green" | translate }}:
-                </td>
+                <td class="text-[#107E15]">{{ "gimmicks.overview.green" | translate }}:</td>
                 <td>
                   <mat-slider min="0" max="255" class="green-slider">
-                    <input
-                      matSliderThumb
-                      [(ngModel)]="settings[settingIndex].green"
-                      (ngModelChange)="changeColor(settingIndex)"
-                    />
+                    <input matSliderThumb [(ngModel)]="settings[settingIndex].green" />
                   </mat-slider>
                 </td>
-                <td class="text-[#107E15]">
-                  {{ settings[settingIndex].green }}
-                </td>
+                <td class="text-[#107E15]">{{ settings[settingIndex].green }}</td>
               </tr>
               <tr>
-                <td class="text-[#2303F8]">
-                  {{ "gimmicks.overview.blue" | translate }}:
-                </td>
+                <td class="text-[#2303F8]">{{ "gimmicks.overview.blue" | translate }}:</td>
                 <td>
                   <mat-slider min="0" max="255" class="blue-slider">
-                    <input
-                      matSliderThumb
-                      [(ngModel)]="settings[settingIndex].blue"
-                      (ngModelChange)="changeColor(settingIndex)"
-                    />
+                    <input matSliderThumb [(ngModel)]="settings[settingIndex].blue" />
                   </mat-slider>
                 </td>
-                <td class="text-[#2303F8]">
-                  {{ settings[settingIndex].blue }}
-                </td>
+                <td class="text-[#2303F8]">{{ settings[settingIndex].blue }}</td>
               </tr>
               <tr>
                 <td>{{ "gimmicks.overview.opacity" | translate }}:</td>
                 <td>
                   <mat-slider min="0" max="255" class="opacity-slider">
-                    <input
-                      matSliderThumb
-                      [(ngModel)]="settings[settingIndex].opacity"
-                      (ngModelChange)="changeColor(settingIndex)"
-                    />
+                    <input matSliderThumb [(ngModel)]="settings[settingIndex].opacity" />
                   </mat-slider>
                 </td>
                 <td>{{ settings[settingIndex].opacity }}</td>
@@ -137,44 +90,20 @@
             </table>
           </div>
         </mat-menu>
-        <div
-          class="text-white h-[400px] p-8 w-60 shadow-lg flipbox-active relative"
-        >
-          <div class="absolute top-[calc(50%-30px)] right-[10px] z-50">
-            <div class="relative">
-              <!-- Türrosette mit Schlüsselloch -->
-              <div class="door-rosette">
-                <!-- Schlüsselloch -->
-                <div class="keyhole">
-                  <div class="keyhole-top"></div>
-                  <div class="keyhole-bottom"></div>
-                </div>
-              </div>
-              <!-- Türklinke -->
-              <div class="doorknob-container">
-                <div class="doorknob"></div>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col justify-between h-full">
+
+        <div class="door-frame"></div>
+        <div class="door-shadow"></div>
+        <div class="door-panel" [style.background]="getPanelBackground(setting.red, setting.green, setting.blue, setting.opacity)">
+          <div class="door-content">
             <div>
-              <div class="flex justify-between items-center mb-6">
-                <div class="text-xl font-bold">
-                  {{ setting.header | translate }}
-                </div>
-                <div
-                  class="bg-white/20 flex justify-center items-center rounded-lg shadow-lg w-16 h-14"
-                >
+              <div class="door-top">
+                <h3 class="door-title">{{ setting.header | translate }}</h3>
+                <div class="door-icon">
                   @if (setting.icon) {
-                    <i
-                      class="fa-solid text-4xl"
-                      [ngClass]="setting.iconClasses"
-                    ></i>
+                    <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
                   } @else {
                     @if (setting.emoji) {
-                      <span class="text-[34px] translate-y-[-3px]">{{
-                        setting.emoji
-                      }}</span>
+                      <span style="transform:translateY(-2px)">{{ setting.emoji }}</span>
                     } @else {
                       <img class="w-8 h-8" [src]="setting.imageSrc" />
                     }
@@ -182,19 +111,43 @@
                 </div>
               </div>
               @if (settings[settingIndex].showDescription) {
-                <div class="mb-2 text-gray-200 font-medium">
-                  {{ "gimmicks.overview.elements" | translate }}:
+                <div class="door-elements">
+                  <div class="lbl">{{ "gimmicks.overview.elements" | translate }}</div>
+                  <div *ngFor="let el of setting.elements | slice:0:5" class="door-element">{{ el | translate }}</div>
                 </div>
-                <ul class="mb-8 text-sm text-gray-200 font-medium mr-[50px]">
-                  <li *ngFor="let element of setting.elements">
-                    {{ element | translate }}
-                  </li>
-                </ul>
               }
+            </div>
+            <div class="door-bottom">
+              <span class="door-cta">{{ "gimmicks.overview.doorCta" | translate }} <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="door-num">{{ getDoorNum(setting.goToPage, settingIndex) }}</span>
+            </div>
+          </div>
+          <div class="door-hardware">
+            <div class="door-rosette">
+              <div class="keyhole">
+                <div class="keyhole-top"></div>
+                <div class="keyhole-bottom"></div>
+              </div>
+            </div>
+            <div class="doorknob-container">
+              <div class="doorknob"></div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Footer tip -->
+    <div class="creak-tip">
+      <i class="fa-solid fa-hand-pointer"></i>
+      {{ "gimmicks.overview.footerTip" | translate }}
+      <i class="fa-solid fa-arrow-right"></i>
+    </div>
+
+    <div class="back-link-wrap">
+      <a routerLink="/" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> {{ "gimmicks.overview.backLink" | translate }}
+      </a>
     </div>
   </div>
 </section>

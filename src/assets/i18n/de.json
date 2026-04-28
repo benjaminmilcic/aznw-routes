@@ -129,7 +129,7 @@
       "header1": "Bisher habe ich Unternehmensanwendungen erstellt, auf die nur mit Login und Passwort zugegriffen werden kann. Deshalb finden Sie",
       "header2": "die mein Können unter Beweis stellen.",
       "header3": " Gimmicks, ",
-      "elements": "Elemente",
+      "elements": "Enthält",
       "searchTypeahead": "Suche mit Typeahead",
       "table": "Tabelle mit Sortierung, Filterung und Pagination",
       "resizable": "In der Größe veränderbares Element (auf kleinen Bildschirmen)",
@@ -151,7 +151,16 @@
       "blue": "Blau",
       "opacity": "Deckkraft",
       "contextMenu": "Zu Demonstrationszwecken gibt es über den Türen ein Kontext-Menü",
-      "settings": "Einstellungen"
+      "settings": "Einstellungen",
+      "playground": "Spielwiese",
+      "headlinePre": "Hinter jeder Tür ein",
+      "headlineEm": "kleines Experiment.",
+      "subtitle": "Eine Sammlung kleiner Apps, an denen ich abends gebastelt habe, um neue Frameworks und APIs auszuprobieren. Klick auf eine Tür und schau rein.",
+      "infoKicker": "Hinweis",
+      "infoText": "Zu Demonstrationszwecken gibt es über den Türen ein Kontext-Menü — Rechtsklick auf eine Tür öffnet zusätzliche Optionen.",
+      "doorCta": "Reinschauen",
+      "footerTip": "Tipp: hovern → die Tür öffnet sich, klicken → rein damit",
+      "backLink": "Zurück zur Homepage"
     },
     "map": {
       "search": "Stadtsuche...",
@@ -180,7 +189,7 @@
       "cityInfo": "Stadtinfo",
       "noFunctions": "Karte ist zu klein für Funktionen. Ziehen Sie die Karte etwas größer!",
       "name": "Name",
-      "resetFilter":"Filter zurücksetzen"
+      "resetFilter": "Filter zurücksetzen"
     },
     "calendar": {
       "months": {

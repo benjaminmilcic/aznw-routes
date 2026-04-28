@@ -57,7 +57,14 @@
       "Read(//mnt/c/Users/User/.claude/projects/C--eigene-Projekte-aznw-routes/6ae558d4-cf72-4d4d-8acd-0799f5e34a20/**)",
       "Bash(tar -xzf \"/mnt/c/Users/User/.claude/projects/C--eigene-Projekte-aznw-routes/6ae558d4-cf72-4d4d-8acd-0799f5e34a20/tool-results/webfetch-1777115122363-atq7mh.bin\" -C /tmp/design_extract)",
       "Read(//tmp/**)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\User\\\\.claude\\\\projects\\\\C--eigene-Projekte-aznw-routes\\\\af6cf91a-f509-4542-8eed-e19ece2d75d2\\\\design_extracted\")",
+      "Bash(tar -xf \"C:\\\\Users\\\\User\\\\.claude\\\\projects\\\\C--eigene-Projekte-aznw-routes\\\\af6cf91a-f509-4542-8eed-e19ece2d75d2\\\\tool-results\\\\webfetch-1777373129984-fwkdu9.bin\" -C \"C:\\\\Users\\\\User\\\\.claude\\\\projects\\\\C--eigene-Projekte-aznw-routes\\\\af6cf91a-f509-4542-8eed-e19ece2d75d2\\\\design_extracted\")",
+      "Read(//c/Users/User/.claude/projects/C--eigene-Projekte-aznw-routes/af6cf91a-f509-4542-8eed-e19ece2d75d2/**)",
+      "Bash(mkdir -p design_extracted)",
+      "Bash(tar -xf tool-results/webfetch-1777373129984-fwkdu9.bin -C design_extracted)",
+      "Bash(mkdir -p design_extracted2)",
+      "Bash(tar -xf tool-results/webfetch-1777375134282-bjnnsd.bin -C design_extracted2)"
     ],
     "deny": [],
     "ask": []
