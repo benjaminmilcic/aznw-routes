@@ -121,7 +121,7 @@
               @if (settings[settingIndex].showDescription) {
                 <div class="door-elements">
                   <div class="lbl">{{ "gimmicks.overview.elements" | translate }}</div>
-                  <div *ngFor="let el of setting.elements | slice:0:5" class="door-element">{{ el | translate }}</div>
+                  <div *ngFor="let el of setting.elements" class="door-element">{{ el | translate }}</div>
                 </div>
               }
             </div>
