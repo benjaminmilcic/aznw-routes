@@ -102,21 +102,21 @@
         <div class="door-frame"></div>
         <div class="door-shadow"></div>
         <div class="door-panel" [style.background]="getPanelBackground(setting.red, setting.green, setting.blue, setting.opacity)">
+          <div class="door-icon">
+            @if (setting.icon) {
+              <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
+            } @else {
+              @if (setting.emoji) {
+                <span style="transform:translateY(-2px)">{{ setting.emoji }}</span>
+              } @else {
+                <img class="w-8 h-8" [src]="setting.imageSrc" />
+              }
+            }
+          </div>
           <div class="door-content">
             <div>
               <div class="door-top">
                 <h3 class="door-title">{{ setting.header | translate }}</h3>
-                <div class="door-icon">
-                  @if (setting.icon) {
-                    <i class="fa-solid text-4xl" [ngClass]="setting.iconClasses"></i>
-                  } @else {
-                    @if (setting.emoji) {
-                      <span style="transform:translateY(-2px)">{{ setting.emoji }}</span>
-                    } @else {
-                      <img class="w-8 h-8" [src]="setting.imageSrc" />
-                    }
-                  }
-                </div>
               </div>
               @if (settings[settingIndex].showDescription) {
                 <div class="door-elements">
