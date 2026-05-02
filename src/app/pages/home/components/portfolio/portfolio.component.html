@@ -1,44 +1,78 @@
 <section id="portfolio" class="portfolio">
-
   <!-- ── Dialogs ─────────────────────────────────────── -->
   <dialog #vocabularyTrainerDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Vocabulary Trainer</h2>
-      <button class="close-btn" (click)="closeDialog(vocabularyTrainerDialog)" aria-label="Close dialog">
+      <button
+        class="close-btn"
+        (click)="closeDialog(vocabularyTrainerDialog)"
+        aria-label="Close dialog"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="project-section">
-        <h3 class="section-title">{{ "portfolio.vocabularyTrainer.text1" | translate }}</h3>
+        <h3 class="section-title">
+          {{ "portfolio.vocabularyTrainer.text2" | translate }}
+        </h3>
         <div class="image-container">
-          <img class="project-image web-app" src="/assets/learnlanguageapp.webp" alt="A Web App to learn Croatian Language" />
+          <img
+            class="project-image mobile-app"
+            src="/assets/learnCroatianAndroid.webp"
+            alt="Android App to learn Croatian Language"
+          />
         </div>
-        <div class="mt-12 mb-20">
-          <div class="links-container">
-            <a href="https://vocabularyinputapp.web.app" target="_blank" class="project-link primary">
-              <mat-icon>launch</mat-icon><span>Live Demo</span>
-            </a>
-            <a href="https://github.com/benjaminmilcic/LearnLanguageApp" target="_blank" class="project-link secondary">
-              <mat-icon>code</mat-icon><span>{{ "portfolio.vocabularyTrainer.sourceCode" | translate }}</span>
-            </a>
-          </div>
+        <div class="links-container">
+          <a
+            href="assets/apk/learn-croatian.apk"
+            class="project-link primary"
+          >
+            <mat-icon>download</mat-icon><span>Download APK</span>
+          </a>
+          <a
+            href="https://github.com/benjaminmilcic/learn-croatian"
+            target="_blank"
+            class="project-link secondary"
+          >
+            <mat-icon>code</mat-icon
+            ><span>{{
+              "portfolio.vocabularyTrainer.sourceCode" | translate
+            }}</span>
+          </a>
         </div>
       </div>
       <div class="project-section">
-        <h3 class="section-title">{{ "portfolio.vocabularyTrainer.text2" | translate }}</h3>
+        <h3 class="section-title">
+          {{ "portfolio.vocabularyTrainer.text1" | translate }}
+        </h3>
         <div class="image-container">
-          <img class="project-image mobile-app" src="/assets/androidApp.webp" alt="Android App to learn Croatian Language" />
+          <img
+            class="project-image web-app"
+            src="/assets/learnCroatian.webp"
+            alt="A Web App to learn Croatian Language"
+          />
         </div>
-        <div class="-mb-6">
-          <a href="https://play.google.com/store/apps/details?id=io.ionic.learnlanguageapp" target="_blank" class="store-badge">
-            <img src="/assets/google-play-badge.png" alt="Get it on Google Play" class="badge-image" />
-          </a>
-        </div>
-        <div class="links-container">
-          <a href="https://github.com/benjaminmilcic/learn-language-android-app" target="_blank" class="project-link secondary">
-            <mat-icon>code</mat-icon><span>{{ "portfolio.vocabularyTrainer.sourceCode" | translate }}</span>
-          </a>
+        <div class="mt-12 mb-20">
+          <div class="links-container">
+            <a
+              href="https://learn-croatian-86b00.web.app/"
+              target="_blank"
+              class="project-link primary"
+            >
+              <mat-icon>launch</mat-icon><span>Live Demo</span>
+            </a>
+            <a
+              href="https://github.com/benjaminmilcic/learn-croatian"
+              target="_blank"
+              class="project-link secondary"
+            >
+              <mat-icon>code</mat-icon
+              ><span>{{
+                "portfolio.vocabularyTrainer.sourceCode" | translate
+              }}</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -47,20 +81,30 @@
   <dialog #catchCupDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">CatchCups</h2>
-      <button class="close-btn" (click)="closeDialog(catchCupDialog)" aria-label="Close dialog">
+      <button
+        class="close-btn"
+        (click)="closeDialog(catchCupDialog)"
+        aria-label="Close dialog"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="website-link">
-        <a href="https://catchcups.com" target="_blank" class="project-link primary featured">
+        <a
+          href="https://catchcups.com"
+          target="_blank"
+          class="project-link primary featured"
+        >
           <mat-icon>launch</mat-icon><span>https://catchcups.com</span>
         </a>
       </div>
       <div class="project-description">
         <p>
           {{ "portfolio.catchCups.text1" | translate }}
-          <a href="https://codext.de/" target="_blank" class="inline-link">Codext GmbH</a>,
+          <a href="https://codext.de/" target="_blank" class="inline-link"
+            >Codext GmbH</a
+          >,
           {{ "portfolio.catchCups.text2" | translate }}
         </p>
       </div>
@@ -71,8 +115,15 @@
         <img src="/assets/catchcups4.webp" alt="CatchCups" />
       </div>
       <div class="mt-5 flex justify-center">
-        <a href="https://play.google.com/store/apps/details?id=de.codext.catchcup" target="_blank">
-          <img width="144px" src="/assets/google-play-badge.png" alt="CatchCup App" />
+        <a
+          href="https://play.google.com/store/apps/details?id=de.codext.catchcup"
+          target="_blank"
+        >
+          <img
+            width="144px"
+            src="/assets/google-play-badge.png"
+            alt="CatchCup App"
+          />
         </a>
       </div>
     </div>
@@ -81,28 +132,52 @@
   <dialog #webaroDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Webaro</h2>
-      <button class="close-btn" (click)="closeDialog(webaroDialog)" aria-label="Close dialog">
+      <button
+        class="close-btn"
+        (click)="closeDialog(webaroDialog)"
+        aria-label="Close dialog"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="website-link">
-        <a href="https://webaro.dev" target="_blank" class="project-link primary featured">
+        <a
+          href="https://webaro.dev"
+          target="_blank"
+          class="project-link primary featured"
+        >
           <mat-icon>launch</mat-icon><span>https://webaro.dev</span>
         </a>
       </div>
       <div class="project-description">
         <p>
           {{ "portfolio.webaro.text1" | translate }}
-          <a href="https://webaro.de" target="_blank" class="inline-link">Weber Agrar Robotik GmbH</a>
+          <a href="https://webaro.de" target="_blank" class="inline-link"
+            >Weber Agrar Robotik GmbH</a
+          >
           {{ "portfolio.webaro.text2" | translate }}
-          <a href="https://codext.de" target="_blank" class="inline-link">Codext GmbH</a>.
+          <a href="https://codext.de" target="_blank" class="inline-link"
+            >Codext GmbH</a
+          >.
         </p>
       </div>
       <div class="image-gallery vertical">
-        <img src="/assets/webaro.webp" alt="Weber Agrar Robotik GmbH Dashboard" class="project-image large" />
-        <img src="/assets/webaro1.webp" alt="Weber Agrar Robotik GmbH Interface" class="project-image large" />
-        <img src="/assets/webaro2.webp" alt="Weber Agrar Robotik GmbH Analytics" class="project-image large" />
+        <img
+          src="/assets/webaro.webp"
+          alt="Weber Agrar Robotik GmbH Dashboard"
+          class="project-image large"
+        />
+        <img
+          src="/assets/webaro1.webp"
+          alt="Weber Agrar Robotik GmbH Interface"
+          class="project-image large"
+        />
+        <img
+          src="/assets/webaro2.webp"
+          alt="Weber Agrar Robotik GmbH Analytics"
+          class="project-image large"
+        />
       </div>
     </div>
   </dialog>
@@ -110,21 +185,31 @@
   <dialog #solakonDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Solakon</h2>
-      <button class="close-btn" (click)="closeDialog(solakonDialog)" aria-label="Close dialog">
+      <button
+        class="close-btn"
+        (click)="closeDialog(solakonDialog)"
+        aria-label="Close dialog"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="project-section">
         <div class="website-link">
-          <a href="https://www.solakon.de" target="_blank" class="project-link primary featured">
+          <a
+            href="https://www.solakon.de"
+            target="_blank"
+            class="project-link primary featured"
+          >
             <mat-icon>launch</mat-icon><span>https://www.solakon.de</span>
           </a>
         </div>
         <div class="project-description">
           <p>
             {{ "portfolio.solakon.text1" | translate }}
-            <a href="https://codext.de/" target="_blank" class="inline-link">Codext GmbH</a>,
+            <a href="https://codext.de/" target="_blank" class="inline-link"
+              >Codext GmbH</a
+            >,
             {{ "portfolio.solakon.text2" | translate }}
           </p>
         </div>
@@ -135,8 +220,16 @@
           <img src="/assets/solakon4.webp" alt="Solakon Screenshot 4" />
         </div>
         <div class="links-container centered">
-          <a href="https://play.google.com/store/apps/details?id=de.solakon.app" target="_blank" class="store-badge">
-            <img src="/assets/google-play-badge.png" alt="Get it on Google Play" class="badge-image" />
+          <a
+            href="https://play.google.com/store/apps/details?id=de.solakon.app"
+            target="_blank"
+            class="store-badge"
+          >
+            <img
+              src="/assets/google-play-badge.png"
+              alt="Get it on Google Play"
+              class="badge-image"
+            />
           </a>
         </div>
       </div>
@@ -146,13 +239,21 @@
   <dialog #hippoDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">Hippo Data</h2>
-      <button class="close-btn" (click)="closeDialog(hippoDialog)" aria-label="Close dialog">
+      <button
+        class="close-btn"
+        (click)="closeDialog(hippoDialog)"
+        aria-label="Close dialog"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="dialog-content">
       <div class="website-link">
-        <a href="https://login.hippodata.de" target="_blank" class="project-link primary featured">
+        <a
+          href="https://login.hippodata.de"
+          target="_blank"
+          class="project-link primary featured"
+        >
           <mat-icon>launch</mat-icon><span>https://login.hippodata.de</span>
         </a>
       </div>
@@ -160,15 +261,34 @@
         <div class="project-description">
           <p>
             {{ "portfolio.hippo.text1" | translate }}
-            <a href="https://public.hippodata.net" target="_blank" class="inline-link">Hippo Data GmbH</a>
+            <a
+              href="https://public.hippodata.net"
+              target="_blank"
+              class="inline-link"
+              >Hippo Data GmbH</a
+            >
             {{ "portfolio.hippo.text2" | translate }}
-            <a href="https://codext.de" target="_blank" class="inline-link">Codext GmbH</a>.
+            <a href="https://codext.de" target="_blank" class="inline-link"
+              >Codext GmbH</a
+            >.
           </p>
         </div>
         <div class="image-gallery vertical">
-          <img src="/assets/hippo2.webp" alt="Hippo Data Dashboard Overview" class="project-image large" />
-          <img src="/assets/hippo1.webp" alt="Hippo Data Analytics Interface" class="project-image large" />
-          <img src="/assets/hippo.webp" alt="Hippo Data Management System" class="project-image large" />
+          <img
+            src="/assets/hippo2.webp"
+            alt="Hippo Data Dashboard Overview"
+            class="project-image large"
+          />
+          <img
+            src="/assets/hippo1.webp"
+            alt="Hippo Data Analytics Interface"
+            class="project-image large"
+          />
+          <img
+            src="/assets/hippo.webp"
+            alt="Hippo Data Management System"
+            class="project-image large"
+          />
         </div>
       </div>
     </div>
@@ -176,7 +296,6 @@
 
   <!-- ── Main content ────────────────────────────────── -->
   <div class="portfolio-inner">
-
     <div class="section-tag">
       <span class="num">03</span>
       <span>Portfolio</span>
@@ -192,7 +311,11 @@
         </div>
         <p>
           <b>PS:</b>&nbsp;{{ "portfolio.note1" | translate }}
-          <a [routerLink]="['/gimmicks']" fragment="header" class="gimmicks-link">
+          <a
+            [routerLink]="['/gimmicks']"
+            fragment="header"
+            class="gimmicks-link"
+          >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             Gimmicks
           </a>
@@ -202,7 +325,6 @@
     </div>
 
     <div class="pinboard">
-
       <div class="pinned" [routerLink]="['/gimmicks']">
         <div class="pin center green">
           <div class="shadow"></div>
@@ -259,24 +381,26 @@
         </div>
       </div>
 
-      <!-- <div class="pinned" (click)="openDialog(vocabularyTrainerDialog)">
+      <div class="pinned" (click)="openDialog(vocabularyTrainerDialog)">
         <div class="pin center green">
           <div class="shadow"></div>
           <div class="metal"></div>
           <div class="bottom-circle"></div>
         </div>
         <div class="proj-thumb">
-          <img src="assets/vocabularyTrainer.webp" alt="Vocabulary Trainer" />
+          <img src="assets/learnCroatian.webp" alt="Vocabulary Trainer" />
         </div>
         <div class="proj-info">
           <h3 class="proj-h">Vocabulary Trainer</h3>
-          <p class="proj-d">{{ "portfolio.vocabularyTrainerDesc" | translate }}</p>
+          <p class="proj-d">
+            {{ "portfolio.vocabularyTrainerDesc" | translate }}
+          </p>
           <div class="proj-stack">
             <span class="tag">Angular</span>
             <span class="tag">Ionic</span>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div class="pinned" (click)="openDialog(solakonDialog)">
         <div class="pin left red">
@@ -316,7 +440,6 @@
         </div>
       </div>
       -->
-
     </div>
 
     <div class="portfolio-cta">
@@ -326,6 +449,5 @@
         <i class="fa-solid fa-arrow-right fa-xs"></i>
       </a>
     </div>
-
   </div>
 </section>
