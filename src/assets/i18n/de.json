@@ -51,8 +51,8 @@
     "solakonDesc": "iOS- und Android-App für Solar-Monitoring. Live im Play Store.",
     "hippoDataDesc": "B2B-Plattform für Datenanalyse und Reporting.",
     "vocabularyTrainer": {
-      "text1": "Web-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular und Ionic.",
-      "text2": "Android-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular und Ionic.",
+      "text1": "Web-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular, Ionic und Firebase.",
+      "text2": "Android-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular, Ionic und Firebase.",
       "sourceCode": "Quellcode"
     },
     "catchCups": {

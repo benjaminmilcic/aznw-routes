@@ -51,8 +51,8 @@
     "solakonDesc": "iOS i Android aplikacija za solar-monitoring. Dostupno na Play Storeu.",
     "hippoDataDesc": "B2B platforma za analizu podataka i izvješćivanje.",
     "vocabularyTrainer": {
-      "text1": "Web aplikacija za učenje hrvatskog jezika. Izrađena s Angularom i Ionicom.",
-      "text2": "Android aplikacija za učenje hrvatskog jezika. Izrađena s Angularom i Ionicom.",
+      "text1": "Web aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
+      "text2": "Android aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
       "sourceCode": "Izvorni kod"
     },
     "catchCups": {
