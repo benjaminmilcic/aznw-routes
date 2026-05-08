@@ -85,9 +85,21 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent): void {
+    const pageSizeChanged = event.pageSize !== this.pageSize;
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.updatePaginatedResults();
+    if (!pageSizeChanged) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  get displayStart(): number {
+    return this.pageIndex * this.pageSize + 1;
+  }
+
+  get displayEnd(): number {
+    return Math.min((this.pageIndex + 1) * this.pageSize, this.results().length);
   }
 
   updatePaginatedResults(): void {
