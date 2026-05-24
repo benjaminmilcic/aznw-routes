@@ -2,7 +2,7 @@
   <!-- ── Dialogs ─────────────────────────────────────── -->
   <dialog #vocabularyTrainerDialog>
     <div class="dialog-header">
-      <h2 class="dialog-title">Vocabulary Trainer</h2>
+      <h2 class="dialog-title">{{ "portfolio.vocabularyTrainerTitle" | translate }}</h2>
       <button
         class="close-btn"
         (click)="closeDialog(vocabularyTrainerDialog)"
@@ -25,7 +25,7 @@
         </div>
         <div class="links-container">
           <a
-            href="assets/apk/learn-croatian.apk"
+            href="https://raw.githubusercontent.com/benjaminmilcic/learn-croatian/master/apk/learn-croatian.apk"
             class="project-link primary"
           >
             <mat-icon>download</mat-icon><span>Download APK</span>
@@ -391,13 +391,14 @@
           <img src="assets/learnCroatian.webp" alt="Vocabulary Trainer" />
         </div>
         <div class="proj-info">
-          <h3 class="proj-h">Vocabulary Trainer</h3>
+          <h3 class="proj-h">{{ "portfolio.vocabularyTrainerTitle" | translate }}</h3>
           <p class="proj-d">
             {{ "portfolio.vocabularyTrainerDesc" | translate }}
           </p>
           <div class="proj-stack">
             <span class="tag">Angular</span>
             <span class="tag">Ionic</span>
+            <span class="tag">Firebase</span>
           </div>
         </div>
       </div>

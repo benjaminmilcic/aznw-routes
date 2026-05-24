@@ -488,8 +488,12 @@ h1 em {
 }
 
 @keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 768px) {
@@ -507,6 +511,11 @@ h1 em {
   }
 }
 @media (max-width: 600px) {
+  .hero {
+    min-height: calc(100vh - 20px);
+    margin-top: 20px;
+  }
+
   .screw {
     width: 16px;
     height: 16px;

@@ -1,6 +1,4 @@
-<div
-  class="flex flex-col flex-1 items-center w-full px-2 box-border pb-16 md:pb-0"
->
+<div class="flex flex-col flex-1 items-center w-full px-2 box-border pb-16 md:pb-0">
   <mat-form-field
     class="w-full sm:w-[600px]"
     appearance="outline"
@@ -14,9 +12,16 @@
     <mat-icon matPrefix class="text-white">search</mat-icon>
   </mat-form-field>
   <div class="flex flex-1 flex-col items-center mt-4 w-full">
-    <div class="flex flex-wrap justify-center flex-1 max-w-[1200px]">
+    <div class="grid grid-cols-[repeat(auto-fill,172px)] md:grid-cols-[repeat(auto-fill,232px)] justify-center flex-1 w-full max-w-[1200px]">
+      @if (results().length > 0 && !loading()) {
+        <div class="col-span-full text-right text-xs text-white/50 pr-4 mb-1">
+          {{ displayStart }} – {{ displayEnd }} von {{ results().length }}
+        </div>
+      }
       @if (loading()) {
-        <mat-spinner></mat-spinner>
+        <div class="col-span-full flex justify-center">
+          <mat-spinner></mat-spinner>
+        </div>
       } @else if (results().length > 0) {
         @for (item of paginatedResults(); track item.id) {
           <div class="p-4">
@@ -24,14 +29,14 @@
           </div>
         }
       } @else if (searchControl.value && searchControl.value.length > 2) {
-        <div>
+        <div class="col-span-full flex justify-center">
           <div class="flex gap-4 items-center md:text-2xl text-white">
             <mat-icon>search_off</mat-icon>
             <p>{{ "gimmicks.movies.noResults" | translate }}</p>
           </div>
         </div>
       } @else {
-        <div>
+        <div class="col-span-full flex justify-center">
           <div class="flex gap-4 items-center md:text-2xl text-white">
             <mat-icon>search</mat-icon>
             <p>{{ "gimmicks.movies.startTyping" | translate }}</p>
