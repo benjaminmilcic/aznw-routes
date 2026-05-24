@@ -20,10 +20,10 @@ export class AboutComponent {
         link = '/assets/benjamin_milcic_cv_de.pdf';
         break;
       case 'hr':
-        link = '/assets/benjamin_milcic_cv_en.pdf';
+        link = '/assets/benjamin_milcic_cv_hr.pdf';
         break;
       default:
-        link = '/assets/benjamin_milcic_cv_hr.pdf';
+        link = '/assets/benjamin_milcic_cv_en.pdf';
         break;
     }
     window.open(link, '_blank');
