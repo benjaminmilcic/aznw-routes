@@ -1,0 +1,7 @@
+name = "aznw-image-gen"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Workers-AI-Binding (kostenloses Tageskontingent).
+[ai]
+binding = "AI"

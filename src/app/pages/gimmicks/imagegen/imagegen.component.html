@@ -1,0 +1,173 @@
+<section class="ig-section">
+  <div class="ig-inner">
+    <!-- Header -->
+    <div class="ig-head">
+      <h1 class="ig-title">
+        {{ "gimmicks.imagegen.headlinePre" | translate }}
+        <em>{{ "gimmicks.imagegen.headlineEm" | translate }}</em>
+      </h1>
+      <p class="ig-sub">{{ "gimmicks.imagegen.subtitle" | translate }}</p>
+    </div>
+
+    <div class="ig-grid">
+      <!-- Controls -->
+      <div class="ig-panel">
+        <label class="ig-label" for="ig-prompt">
+          {{ "gimmicks.imagegen.promptLabel" | translate }}
+        </label>
+        <textarea
+          id="ig-prompt"
+          class="ig-textarea"
+          rows="4"
+          [ngModel]="prompt()"
+          (ngModelChange)="prompt.set($event)"
+          (keydown.control.enter)="generate()"
+          [placeholder]="'gimmicks.imagegen.promptPlaceholder' | translate"
+        ></textarea>
+
+        <button class="ig-surprise" type="button" (click)="surprise()">
+          <i class="fa-solid fa-shuffle"></i>
+          {{ "gimmicks.imagegen.surprise" | translate }}
+        </button>
+
+        <!-- Model -->
+        <div class="ig-field">
+          <div class="ig-field-label">{{ "gimmicks.imagegen.modelLabel" | translate }}</div>
+          <div class="ig-chips">
+            <button
+              *ngFor="let m of models"
+              type="button"
+              class="ig-chip"
+              [class.active]="model() === m.key"
+              (click)="selectModel(m.key)"
+            >
+              {{ m.labelKey | translate }}
+            </button>
+          </div>
+          <p class="ig-hint">
+            {{ (model() === 'flux' ? "gimmicks.imagegen.fluxHint" : "gimmicks.imagegen.sdxlHint") | translate }}
+          </p>
+        </div>
+
+        <!-- Aspect ratio (nur SDXL) -->
+        <div class="ig-field" *ngIf="model() === 'sdxl'">
+          <div class="ig-field-label">{{ "gimmicks.imagegen.ratioLabel" | translate }}</div>
+          <div class="ig-chips">
+            <button
+              *ngFor="let r of ratios"
+              type="button"
+              class="ig-chip"
+              [class.active]="ratioKey() === r.key"
+              (click)="selectRatio(r.key)"
+            >
+              {{ r.labelKey | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Seed (nur SDXL) -->
+        <div class="ig-field" *ngIf="model() === 'sdxl'">
+          <div class="ig-field-label">{{ "gimmicks.imagegen.seedLabel" | translate }}</div>
+          <div class="ig-seed-row">
+            <span class="ig-seed-value">#{{ seed() }}</span>
+            <button type="button" class="ig-seed-btn" (click)="rerollSeed()" [disabled]="lockSeed()">
+              <i class="fa-solid fa-dice"></i>
+            </button>
+            <button
+              type="button"
+              class="ig-seed-btn"
+              [class.active]="lockSeed()"
+              (click)="toggleLockSeed()"
+              [title]="'gimmicks.imagegen.seedLock' | translate"
+            >
+              <i class="fa-solid" [ngClass]="lockSeed() ? 'fa-lock' : 'fa-lock-open'"></i>
+            </button>
+          </div>
+          <p class="ig-hint">{{ "gimmicks.imagegen.seedHint" | translate }}</p>
+        </div>
+
+        <button
+          class="ig-generate"
+          type="button"
+          (click)="generate()"
+          [disabled]="loading() || !prompt().trim()"
+        >
+          <i class="fa-solid" [ngClass]="loading() ? 'fa-spinner fa-spin' : 'fa-bolt'"></i>
+          {{ (loading() ? "gimmicks.imagegen.generating" : "gimmicks.imagegen.generate") | translate }}
+        </button>
+      </div>
+
+      <!-- Result -->
+      <div class="ig-result" [style.max-width]="canvasMaxWidth()">
+        <div
+          class="ig-canvas"
+          [style.aspect-ratio]="selectedRatio().width + ' / ' + selectedRatio().height"
+        >
+          <!-- Empty state -->
+          <div *ngIf="!currentImageUrl() && !loading()" class="ig-empty">
+            <i class="fa-solid fa-image"></i>
+            <span>{{ "gimmicks.imagegen.emptyState" | translate }}</span>
+          </div>
+
+          <!-- Image -->
+          <img
+            *ngIf="currentImageUrl() && !error()"
+            [src]="currentImageUrl()"
+            [class.loaded]="!loading()"
+            (load)="onImageLoad()"
+            (error)="onImageError()"
+            alt="AI generated image"
+          />
+
+          <!-- Loading overlay -->
+          <div *ngIf="loading()" class="ig-loading">
+            <div class="ig-spinner"></div>
+            <span>{{ (retrying() ? "gimmicks.imagegen.queue" : "gimmicks.imagegen.painting") | translate }}</span>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="error()" class="ig-error">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>{{ "gimmicks.imagegen.error" | translate }}</span>
+            <button type="button" (click)="generate()">
+              {{ "gimmicks.imagegen.retry" | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Result actions -->
+        <div class="ig-actions" *ngIf="current() && !loading() && !error()">
+          <button type="button" (click)="download()">
+            <i class="fa-solid fa-download"></i>
+            {{ "gimmicks.imagegen.download" | translate }}
+          </button>
+          <button type="button" (click)="generate()" *ngIf="showVariation()">
+            <i class="fa-solid fa-rotate"></i>
+            {{ "gimmicks.imagegen.variation" | translate }}
+          </button>
+          <a [href]="current()?.url" target="_blank" rel="noreferrer">
+            <i class="fa-solid fa-up-right-from-square"></i>
+            {{ "gimmicks.imagegen.openTab" | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="ig-history" *ngIf="history().length">
+      <div class="ig-history-label">{{ "gimmicks.imagegen.historyLabel" | translate }}</div>
+      <div class="ig-history-row">
+        <button
+          *ngFor="let item of history()"
+          type="button"
+          class="ig-thumb"
+          (click)="restore(item)"
+          [title]="item.prompt"
+        >
+          <img [src]="item.url" alt="" loading="lazy" />
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>

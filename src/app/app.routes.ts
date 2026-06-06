@@ -271,6 +271,13 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'imagegen',
+        loadComponent: () =>
+          import('./pages/gimmicks/imagegen/imagegen.component').then(
+            (m) => m.ImagegenComponent
+          ),
+      },
+      {
         path: 'countries',
         loadComponent: () =>
           import('./pages/gimmicks/countries/countries.component').then(

@@ -154,6 +154,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     icon: 'fa-solid fa-film',
     category: 'search.category.gimmicks',
   },
+  {
+    labelKey: 'gimmicks.menu.imagegen',
+    keywords: ['ai', 'ki', 'image', 'bild', 'slika', 'generator', 'cloudflare', 'text to image', 'stable diffusion', 'sdxl', 'flux', 'kunst', 'art'],
+    description:
+      'KI Bildgenerator AI Image Generator AI generator slika Text zu Bild text to image tekst u sliku künstliche Intelligenz artificial intelligence umjetna inteligencija Cloudflare Workers AI Stable Diffusion SDXL Flux Bilder erstellen create images stvaranje slika Kunst art umjetnost Prompt generieren generate generiraj',
+    route: '/gimmicks/imagegen',
+    icon: 'fa-solid fa-wand-magic-sparkles',
+    category: 'search.category.gimmicks',
+  },
 
   // Games
   {

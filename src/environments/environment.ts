@@ -94,6 +94,9 @@ export const environment = {
   tinymce: {
     apiKey: tinymceKey,
   },
+  imagegen: {
+    workerUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/',
+  },
   production: false,
   version: new Date().getTime(),
 };

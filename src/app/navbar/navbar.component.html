@@ -231,6 +231,17 @@
 
             <a
               class="mega-item"
+              [routerLink]="['/gimmicks/imagegen']"
+              (click)="gimmicksExpanded = false"
+            >
+              <div class="mega-icon blue">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </div>
+              <span>{{ "gimmicks.menu.imagegen" | translate }}</span>
+            </a>
+
+            <a
+              class="mega-item"
               [routerLink]="['/gimmicks/telegram']"
               (click)="gimmicksExpanded = false"
             >
@@ -492,6 +503,14 @@
             <span class="translate-y-[-2px]">🎬</span>
           </div>
           <span>{{ "gimmicks.menu.movies" | translate }}</span>
+        </a>
+        <a
+          class="mobile-sublink"
+          [routerLink]="['/gimmicks/imagegen']"
+          (click)="closeMobileMenu()"
+        >
+          <div class="sublink-icon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <span>{{ "gimmicks.menu.imagegen" | translate }}</span>
         </a>
         <a
           class="mobile-sublink"

@@ -66,7 +66,9 @@
       "Bash(mkdir -p design_extracted2)",
       "Bash(tar -xf tool-results/webfetch-1777375134282-bjnnsd.bin -C design_extracted2)",
       "Bash(mkdir -p design_extracted3)",
-      "Bash(tar -xf tool-results/webfetch-1777379807178-r502d4.bin -C design_extracted3)"
+      "Bash(tar -xf tool-results/webfetch-1777379807178-r502d4.bin -C design_extracted3)",
+      "WebFetch(domain:enter.pollinations.ai)",
+      "Bash(node --check cloudflare/image-worker/src/index.js)"
     ],
     "deny": [],
     "ask": []
