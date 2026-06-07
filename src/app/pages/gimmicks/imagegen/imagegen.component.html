@@ -1,23 +1,34 @@
-<section class="ig-section">
-  <div class="ig-inner">
+<section>
+  <div class="relative mx-auto max-w-[1100px]">
     <!-- Header -->
-    <div class="ig-head">
-      <h1 class="ig-title">
+    <div class="mb-[38px] text-center text-blue-50">
+      <h1
+        class="m-0 mb-3 font-['Fraunces',serif] text-[clamp(1.8rem,4vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.02em]"
+      >
         {{ "gimmicks.imagegen.headlinePre" | translate }}
-        <em>{{ "gimmicks.imagegen.headlineEm" | translate }}</em>
+        <em
+          class="bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-300 bg-clip-text italic text-transparent"
+          >{{ "gimmicks.imagegen.headlineEm" | translate }}</em
+        >
       </h1>
-      <p class="ig-sub">{{ "gimmicks.imagegen.subtitle" | translate }}</p>
+      <p class="mx-auto max-w-[620px] text-[0.98rem] leading-normal text-blue-100">
+        {{ "gimmicks.imagegen.subtitle" | translate }}
+      </p>
     </div>
 
-    <div class="ig-grid">
+    <div
+      class="grid grid-cols-1 items-start gap-[22px] min-[861px]:grid-cols-[minmax(0,380px)_minmax(0,1fr)]"
+    >
       <!-- Controls -->
-      <div class="ig-panel">
-        <label class="ig-label" for="ig-prompt">
+      <div
+        class="rounded-[18px] border border-blue-400/25 bg-black/30 p-[22px] backdrop-blur-[10px]"
+      >
+        <label class="mb-2 block text-[0.82rem] font-semibold text-blue-100" for="ig-prompt">
           {{ "gimmicks.imagegen.promptLabel" | translate }}
         </label>
         <textarea
           id="ig-prompt"
-          class="ig-textarea"
+          class="w-full resize-y rounded-xl border border-blue-300/[0.28] bg-black/[0.28] px-3.5 py-3 text-[0.95rem] leading-[1.45] text-slate-100 outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-blue-200/45 focus:border-blue-400/70 focus:shadow-[0_0_0_3px_rgba(59,130,246,0.2)]"
           rows="4"
           [ngModel]="prompt()"
           (ngModelChange)="prompt.set($event)"
@@ -25,39 +36,55 @@
           [placeholder]="'gimmicks.imagegen.promptPlaceholder' | translate"
         ></textarea>
 
-        <button class="ig-surprise" type="button" (click)="surprise()">
+        <button
+          class="mt-2.5 inline-flex cursor-pointer items-center gap-2 border-none bg-transparent px-0.5 py-1 text-[0.82rem] text-blue-200 transition-colors duration-200 hover:text-blue-300"
+          type="button"
+          (click)="surprise()"
+        >
           <i class="fa-solid fa-shuffle"></i>
           {{ "gimmicks.imagegen.surprise" | translate }}
         </button>
 
         <!-- Model -->
-        <div class="ig-field">
-          <div class="ig-field-label">{{ "gimmicks.imagegen.modelLabel" | translate }}</div>
-          <div class="ig-chips">
+        <div class="mt-5">
+          <div class="mb-2.5 text-[0.78rem] uppercase tracking-[0.08em] text-blue-300">
+            {{ "gimmicks.imagegen.modelLabel" | translate }}
+          </div>
+          <div class="flex flex-wrap gap-2">
             <button
               *ngFor="let m of models"
               type="button"
-              class="ig-chip"
-              [class.active]="model() === m.key"
+              class="min-w-[72px] flex-[1_1_auto] cursor-pointer rounded-[10px] border px-3 py-[9px] text-[0.85rem] font-medium transition-all duration-200"
+              [ngClass]="
+                model() === m.key
+                  ? 'border-transparent bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)]'
+                  : 'border-blue-300/[0.22] bg-white/5 text-blue-100 hover:border-blue-400/50 hover:text-white'
+              "
               (click)="selectModel(m.key)"
             >
               {{ m.labelKey | translate }}
             </button>
           </div>
-          <p class="ig-hint">
+          <p class="mt-2 text-[0.74rem] leading-[1.4] text-blue-200/60">
             {{ (model() === 'flux' ? "gimmicks.imagegen.fluxHint" : "gimmicks.imagegen.sdxlHint") | translate }}
           </p>
         </div>
 
         <!-- Aspect ratio (nur SDXL) -->
-        <div class="ig-field" *ngIf="model() === 'sdxl'">
-          <div class="ig-field-label">{{ "gimmicks.imagegen.ratioLabel" | translate }}</div>
-          <div class="ig-chips">
+        <div class="mt-5" *ngIf="model() === 'sdxl'">
+          <div class="mb-2.5 text-[0.78rem] uppercase tracking-[0.08em] text-blue-300">
+            {{ "gimmicks.imagegen.ratioLabel" | translate }}
+          </div>
+          <div class="flex flex-wrap gap-2">
             <button
               *ngFor="let r of ratios"
               type="button"
-              class="ig-chip"
-              [class.active]="ratioKey() === r.key"
+              class="min-w-[72px] flex-[1_1_auto] cursor-pointer rounded-[10px] border px-3 py-[9px] text-[0.85rem] font-medium transition-all duration-200"
+              [ngClass]="
+                ratioKey() === r.key
+                  ? 'border-transparent bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)]'
+                  : 'border-blue-300/[0.22] bg-white/5 text-blue-100 hover:border-blue-400/50 hover:text-white'
+              "
               (click)="selectRatio(r.key)"
             >
               {{ r.labelKey | translate }}
@@ -66,28 +93,44 @@
         </div>
 
         <!-- Seed (nur SDXL) -->
-        <div class="ig-field" *ngIf="model() === 'sdxl'">
-          <div class="ig-field-label">{{ "gimmicks.imagegen.seedLabel" | translate }}</div>
-          <div class="ig-seed-row">
-            <span class="ig-seed-value">#{{ seed() }}</span>
-            <button type="button" class="ig-seed-btn" (click)="rerollSeed()" [disabled]="lockSeed()">
+        <div class="mt-5" *ngIf="model() === 'sdxl'">
+          <div class="mb-2.5 text-[0.78rem] uppercase tracking-[0.08em] text-blue-300">
+            {{ "gimmicks.imagegen.seedLabel" | translate }}
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span
+              class="flex-1 rounded-[10px] border border-blue-300/[0.22] bg-black/[0.28] px-3 py-[9px] font-mono text-[0.95rem] text-slate-100"
+              >#{{ seed() }}</span
+            >
+            <button
+              type="button"
+              class="h-[42px] w-[42px] cursor-pointer rounded-[10px] border border-blue-300/[0.22] bg-white/5 text-blue-100 transition-all duration-200 enabled:hover:border-blue-400/50 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+              (click)="rerollSeed()"
+              [disabled]="lockSeed()"
+            >
               <i class="fa-solid fa-dice"></i>
             </button>
             <button
               type="button"
-              class="ig-seed-btn"
-              [class.active]="lockSeed()"
+              class="h-[42px] w-[42px] cursor-pointer rounded-[10px] border transition-all duration-200"
+              [ngClass]="
+                lockSeed()
+                  ? 'border-transparent bg-gradient-to-br from-blue-500 to-indigo-500 text-white'
+                  : 'border-blue-300/[0.22] bg-white/5 text-blue-100 hover:border-blue-400/50 hover:text-white'
+              "
               (click)="toggleLockSeed()"
               [title]="'gimmicks.imagegen.seedLock' | translate"
             >
               <i class="fa-solid" [ngClass]="lockSeed() ? 'fa-lock' : 'fa-lock-open'"></i>
             </button>
           </div>
-          <p class="ig-hint">{{ "gimmicks.imagegen.seedHint" | translate }}</p>
+          <p class="mt-2 text-[0.74rem] leading-[1.4] text-blue-200/60">
+            {{ "gimmicks.imagegen.seedHint" | translate }}
+          </p>
         </div>
 
         <button
-          class="ig-generate"
+          class="mt-6 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl border-none bg-gradient-to-br from-blue-500 to-indigo-500 p-3.5 text-base font-bold text-white shadow-[0_8px_24px_rgba(59,130,246,0.35)] transition-[transform,box-shadow,opacity] duration-200 enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0_12px_30px_rgba(59,130,246,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
           type="button"
           (click)="generate()"
           [disabled]="loading() || !prompt().trim()"
@@ -98,54 +141,84 @@
       </div>
 
       <!-- Result -->
-      <div class="ig-result" [style.max-width]="canvasMaxWidth()">
+      <div [style.max-width]="canvasMaxWidth()">
         <div
-          class="ig-canvas"
+          class="relative flex w-full items-center justify-center overflow-hidden rounded-[18px] border border-blue-400/25 bg-black/[0.32]"
           [style.aspect-ratio]="selectedRatio().width + ' / ' + selectedRatio().height"
         >
           <!-- Empty state -->
-          <div *ngIf="!currentImageUrl() && !loading()" class="ig-empty">
-            <i class="fa-solid fa-image"></i>
+          <div
+            *ngIf="!currentImageUrl() && !loading()"
+            class="flex flex-col items-center gap-3 text-[0.9rem] text-blue-200/45"
+          >
+            <i class="fa-solid fa-image text-[2.6rem]"></i>
             <span>{{ "gimmicks.imagegen.emptyState" | translate }}</span>
           </div>
 
           <!-- Image -->
           <img
             *ngIf="currentImageUrl() && !error()"
+            class="h-full w-full object-cover opacity-0 transition-opacity duration-500"
             [src]="currentImageUrl()"
-            [class.loaded]="!loading()"
+            [class.opacity-100]="!loading()"
             (load)="onImageLoad()"
             (error)="onImageError()"
             alt="AI generated image"
           />
 
           <!-- Loading overlay -->
-          <div *ngIf="loading()" class="ig-loading">
-            <div class="ig-spinner"></div>
+          <div
+            *ngIf="loading()"
+            class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[rgba(58,37,21,0.6)] text-[0.9rem] text-blue-100 backdrop-blur-[2px]"
+          >
+            <div
+              class="h-[46px] w-[46px] animate-spin rounded-full border-[3px] border-blue-300/20 border-t-indigo-500"
+            ></div>
             <span>{{ (retrying() ? "gimmicks.imagegen.queue" : "gimmicks.imagegen.painting") | translate }}</span>
           </div>
 
           <!-- Error -->
-          <div *ngIf="error()" class="ig-error">
-            <i class="fa-solid fa-triangle-exclamation"></i>
+          <div
+            *ngIf="error()"
+            class="flex flex-col items-center gap-3 p-5 text-center text-[0.9rem] text-red-300"
+          >
+            <i class="fa-solid fa-triangle-exclamation text-[2.2rem]"></i>
             <span>{{ "gimmicks.imagegen.error" | translate }}</span>
-            <button type="button" (click)="generate()">
+            <button
+              type="button"
+              class="mt-1 cursor-pointer rounded-[10px] border border-red-400/40 bg-red-400/[0.12] px-[18px] py-2 text-red-200 transition-colors duration-200 hover:bg-red-400/[0.22]"
+              (click)="generate()"
+            >
               {{ "gimmicks.imagegen.retry" | translate }}
             </button>
           </div>
         </div>
 
         <!-- Result actions -->
-        <div class="ig-actions" *ngIf="current() && !loading() && !error()">
-          <button type="button" (click)="download()">
+        <div class="mt-3.5 flex flex-wrap gap-2.5" *ngIf="current() && !loading() && !error()">
+          <button
+            type="button"
+            class="inline-flex flex-[1_1_auto] cursor-pointer items-center justify-center gap-2 rounded-[11px] border border-blue-300/[0.22] bg-white/[0.06] px-3.5 py-[11px] text-[0.88rem] font-semibold text-blue-100 no-underline transition-all duration-200 hover:border-blue-400/60 hover:bg-blue-500/[0.16] hover:text-white"
+            (click)="download()"
+          >
             <i class="fa-solid fa-download"></i>
             {{ "gimmicks.imagegen.download" | translate }}
           </button>
-          <button type="button" (click)="generate()" *ngIf="showVariation()">
+          <button
+            type="button"
+            class="inline-flex flex-[1_1_auto] cursor-pointer items-center justify-center gap-2 rounded-[11px] border border-blue-300/[0.22] bg-white/[0.06] px-3.5 py-[11px] text-[0.88rem] font-semibold text-blue-100 no-underline transition-all duration-200 hover:border-blue-400/60 hover:bg-blue-500/[0.16] hover:text-white"
+            (click)="generate()"
+            *ngIf="showVariation()"
+          >
             <i class="fa-solid fa-rotate"></i>
             {{ "gimmicks.imagegen.variation" | translate }}
           </button>
-          <a [href]="current()?.url" target="_blank" rel="noreferrer">
+          <a
+            class="inline-flex flex-[1_1_auto] cursor-pointer items-center justify-center gap-2 rounded-[11px] border border-blue-300/[0.22] bg-white/[0.06] px-3.5 py-[11px] text-[0.88rem] font-semibold text-blue-100 no-underline transition-all duration-200 hover:border-blue-400/60 hover:bg-blue-500/[0.16] hover:text-white"
+            [href]="current()?.url"
+            target="_blank"
+            rel="noreferrer"
+          >
             <i class="fa-solid fa-up-right-from-square"></i>
             {{ "gimmicks.imagegen.openTab" | translate }}
           </a>
@@ -154,17 +227,19 @@
     </div>
 
     <!-- History -->
-    <div class="ig-history" *ngIf="history().length">
-      <div class="ig-history-label">{{ "gimmicks.imagegen.historyLabel" | translate }}</div>
-      <div class="ig-history-row">
+    <div class="mt-[34px]" *ngIf="history().length">
+      <div class="mb-3 text-[0.78rem] uppercase tracking-[0.08em] text-blue-300">
+        {{ "gimmicks.imagegen.historyLabel" | translate }}
+      </div>
+      <div class="flex gap-3 overflow-x-auto pb-1.5">
         <button
           *ngFor="let item of history()"
           type="button"
-          class="ig-thumb"
+          class="h-[92px] w-[92px] flex-[0_0_auto] cursor-pointer overflow-hidden rounded-xl border border-blue-300/[0.22] bg-black/30 p-0 transition-[transform,border-color] duration-200 hover:-translate-y-[3px] hover:border-blue-400/70"
           (click)="restore(item)"
           [title]="item.prompt"
         >
-          <img [src]="item.url" alt="" loading="lazy" />
+          <img class="h-full w-full object-cover" [src]="item.url" alt="" loading="lazy" />
         </button>
       </div>
     </div>
