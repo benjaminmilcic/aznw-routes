@@ -9,83 +9,34 @@ import { CountriesCountry, CountriesWeatherData, CountriesWikipediaSummary, Coun
 })
 export class CountriesService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://restcountries.com/v3.1';
+  // Static snapshot of the former restcountries.com v3.1 data set.
+  // The live v3.1 API was shut down (now redirects to a deprecation notice);
+  // v5 requires an API key and is rate limited. Country data is effectively
+  // static, so we ship it as a local asset instead.
+  private readonly dataUrl = 'assets/data/countries-v3.1.json';
   readonly loading = signal(true);
   private readonly countriesCache$ = new ReplaySubject<CountriesCountry[]>(1);
   private cacheLoaded = false;
-  private readonly fieldsBasic =
-    'name,cca2,cca3,capital,region,subregion,population,area,flags,latlng';
-  private readonly fieldsExtra =
-    'cca2,currencies,languages,timezones,continents,borders,maps,coatOfArms,landlocked,independent';
-  private readonly fieldsMore =
-    'cca2,unMember,startOfWeek,car,gini,fifa,idd,tld,translations';
 
   constructor() {
     this.loadAllCountries();
   }
 
   private loadAllCountries(): void {
-    const basic$ = this.http
-      .get<
-        Partial<CountriesCountry>[]
-      >(`${this.apiUrl}/all?fields=${this.fieldsBasic}`)
+    this.http
+      .get<CountriesCountry[]>(this.dataUrl)
       .pipe(
         catchError((err) => {
-          console.error('Failed to load basic country data:', err);
-          return of([]);
+          console.error('Failed to load country data:', err);
+          return of([] as CountriesCountry[]);
         }),
-      );
-    const extra$ = this.http
-      .get<
-        Partial<CountriesCountry>[]
-      >(`${this.apiUrl}/all?fields=${this.fieldsExtra}`)
-      .pipe(
-        catchError((err) => {
-          console.error('Failed to load extra country data:', err);
-          return of([]);
-        }),
-      );
-    const more$ = this.http
-      .get<
-        Partial<CountriesCountry>[]
-      >(`${this.apiUrl}/all?fields=${this.fieldsMore}`)
-      .pipe(
-        catchError((err) => {
-          console.error('Failed to load more country data:', err);
-          return of([]);
-        }),
-      );
-
-    forkJoin([basic$, extra$, more$]).subscribe({
-      next: ([basicData, extraData, moreData]) => {
-        console.log('Country data loaded:', basicData.length, 'countries');
-
-        // Create lookup maps by cca2
-        const extraMap = new Map(extraData.map((c) => [c.cca2, c] as const));
-        const moreMap = new Map(moreData.map((c) => [c.cca2, c] as const));
-
-        // Merge all data - basic data takes priority for shared fields
-        const countries = basicData.map((basic) => {
-          const extra = extraMap.get(basic.cca2!) || {};
-          const more = moreMap.get(basic.cca2!) || {};
-
-          // Merge with basic taking priority - only add fields that don't exist in basic
-          return {
-            ...more,
-            ...extra,
-            ...basic, // basic comes last to preserve latlng, name, etc.
-          };
-        }) as CountriesCountry[];
-
+      )
+      .subscribe((countries) => {
+        console.log('Country data loaded:', countries.length, 'countries');
         this.countriesCache$.next(countries);
         this.cacheLoaded = true;
         this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Failed to load country data:', err);
-        this.loading.set(false);
-      },
-    });
+      });
   }
 
   getAllCountries(): Observable<CountriesCountry[]> {

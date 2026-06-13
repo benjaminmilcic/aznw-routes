@@ -61,13 +61,17 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.isLoading.set(true);
-    const data = await lastValueFrom(
-      this.httpClient.get<FlaqQuizCountry[]>(
-        'https://restcountries.com/v3.1/region/europe?fields=name,flags'
+    // Static snapshot of the former restcountries.com v3.1 data (the live
+    // v3.1 API was shut down). We load all countries once and filter to Europe.
+    const allCountries = await lastValueFrom(
+      this.httpClient.get<(FlaqQuizCountry & { region?: string })[]>(
+        'assets/data/countries-v3.1.json'
       )
     );
-    const filteredData = data.filter(
-      (country) => !this.EXCLUDED_COUNTRIES.includes(country.name.common)
+    const filteredData = allCountries.filter(
+      (country) =>
+        country.region === 'Europe' &&
+        !this.EXCLUDED_COUNTRIES.includes(country.name.common)
     );
     this.data.set(filteredData);
 
