@@ -130,7 +130,6 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     imageSrc: '',
     emoji: '🌍',
     elements: [
-      'REST Countries API',
       'World Bank API',
       'Wikipedia API',
       'Leaflet',
