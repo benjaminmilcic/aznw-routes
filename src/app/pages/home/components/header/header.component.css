@@ -331,6 +331,47 @@ h1 em {
     0 2px 5px rgba(0, 0, 0, 0.35);
   display: grid;
   place-items: center;
+  /* one-time "screw it in" intro, staggered per corner below */
+  /* starts after the enamel plate has faded in (~1s) and turns in slowly */
+  animation: screw-in 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* the screw turns into place one after another */
+.screw.tl {
+  animation-delay: 1.2s;
+}
+.screw.tr {
+  animation-delay: 2.3s;
+}
+.screw.bl {
+  animation-delay: 3.4s;
+}
+.screw.br {
+  animation-delay: 4.5s;
+}
+
+@keyframes screw-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.7) rotate(-300deg);
+    box-shadow:
+      inset -1px -1px 2px rgba(255, 255, 255, 0.35),
+      inset 2px 2px 4px rgba(0, 0, 0, 0.55),
+      0 10px 18px rgba(0, 0, 0, 0.5);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screw {
+    animation: none;
+  }
 }
 
 .screw::before,
