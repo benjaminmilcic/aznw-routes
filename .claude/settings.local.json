@@ -71,7 +71,9 @@
       "Bash(node --check cloudflare/image-worker/src/index.js)",
       "WebFetch(domain:gitlab.com)",
       "Bash(npx tsc *)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(npx wrangler *)",
+      "Bash(echo \"---WRANGLER EXIT: $?---\")"
     ],
     "deny": [],
     "ask": []

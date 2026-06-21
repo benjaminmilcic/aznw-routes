@@ -22,7 +22,7 @@
 
     <!-- Results -->
     <div class="search-results">
-      @if (query && flatResults.length === 0) {
+      @if (query && !loading && flatResults.length === 0) {
       <div class="search-empty">
         <i class="fa-solid fa-face-meh"></i>
         <span>{{ 'search.noResults' | translate }}</span>

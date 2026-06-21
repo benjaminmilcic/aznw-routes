@@ -7,17 +7,25 @@ import {
   ElementRef,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import Fuse from 'fuse.js';
-import { SEARCHABLE_ROUTES, SearchableRoute } from './search-routes';
+import {
+  SemanticSearchService,
+  IndexedRoute,
+  RankedRoute,
+} from './semantic-search.service';
 
-interface SearchResult extends SearchableRoute {
+interface SearchResult {
+  route: string;
+  fragment?: string;
+  icon: string;
+  category: string;
   translatedLabel: string;
-  matchScore: number;
+  score: number;
 }
 
 interface GroupedResults {
@@ -32,7 +40,7 @@ interface GroupedResults {
   templateUrl: './search-dialog.component.html',
   styleUrls: ['./search-dialog.component.css'],
 })
-export class SearchDialogComponent implements OnChanges {
+export class SearchDialogComponent implements OnChanges, OnDestroy {
   @Input() open = false;
   @Output() openChange = new EventEmitter<boolean>();
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
@@ -42,13 +50,19 @@ export class SearchDialogComponent implements OnChanges {
   flatResults: SearchResult[] = [];
   activeIndex = -1;
   navigatingWithKeys = false;
+  loading = false;
 
-  private fuse!: Fuse<SearchableRoute & { translatedLabel: string }>;
+  private indexReady = false;
   private keyNavTimeout: ReturnType<typeof setTimeout> | null = null;
+  private debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+  private abortController: AbortController | null = null;
+
+  private readonly debounceMs = 200;
 
   constructor(
     private router: Router,
     private translate: TranslateService,
+    private semantic: SemanticSearchService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -57,42 +71,93 @@ export class SearchDialogComponent implements OnChanges {
       this.groupedResults = [];
       this.flatResults = [];
       this.activeIndex = -1;
-      this.buildFuseIndex();
+      this.loading = false;
+      this.ensureIndex();
       setTimeout(() => this.searchInput?.nativeElement.focus(), 50);
     }
   }
 
+  ngOnDestroy(): void {
+    this.cancelPending();
+    if (this.keyNavTimeout) clearTimeout(this.keyNavTimeout);
+  }
+
   onSearch(): void {
     const q = this.query.trim();
+    this.cancelPending();
+
     if (!q) {
       this.groupedResults = [];
       this.flatResults = [];
       this.activeIndex = -1;
+      this.loading = false;
       return;
     }
 
-    const fuseResults = this.fuse.search(q, { limit: 15 });
+    // Sofort lokale (lexikalische) Treffer zeigen, damit Tippen reaktiv wirkt …
+    const local = this.semantic.lexical(q).map((r) => this.toResult(r));
+    if (local.length) this.applyResults(local);
+    this.loading = true;
 
-    const matches: SearchResult[] = fuseResults.map((result) => ({
-      ...result.item,
-      matchScore: result.score ?? 1,
-    }));
+    // … und kurz darauf die hybride (lexikalisch + semantische) Suche nachladen.
+    this.debounceTimeout = setTimeout(() => this.runHybrid(q), this.debounceMs);
+  }
 
-    // Group by category
+  private runHybrid(q: string): void {
+    this.abortController = new AbortController();
+    this.semantic
+      .search(q, { signal: this.abortController.signal })
+      .then((ranked) => {
+        if (this.query.trim() !== q) return; // veraltete Anfrage verwerfen
+        this.loading = false;
+        this.applyResults(ranked.map((r) => this.toResult(r)));
+      })
+      .catch((err) => {
+        if (this.query.trim() !== q || err?.name === 'AbortError') return;
+        this.loading = false;
+        // Bei Fehler die bereits gezeigten lexikalischen Treffer behalten.
+        if (!this.flatResults.length) {
+          this.applyResults(this.semantic.lexical(q).map((r) => this.toResult(r)));
+        }
+      });
+  }
+
+  private toResult(route: RankedRoute): SearchResult {
+    return {
+      route: route.route,
+      fragment: route.fragment,
+      icon: route.icon,
+      category: route.category,
+      translatedLabel: this.getLabel(route),
+      score: route.score,
+    };
+  }
+
+  private applyResults(matches: SearchResult[]): void {
     const grouped = new Map<string, SearchResult[]>();
     for (const match of matches) {
       const group = grouped.get(match.category) || [];
       group.push(match);
       grouped.set(match.category, group);
     }
-
     this.groupedResults = Array.from(grouped.entries()).map(([category, items]) => ({
       category,
       items,
     }));
-    // flatResults must match the visual display order (grouped), not the Fuse relevance order
+    // flatResults muss der Anzeige-Reihenfolge (gruppiert) entsprechen.
     this.flatResults = this.groupedResults.flatMap((g) => g.items);
     this.activeIndex = this.flatResults.length > 0 ? 0 : -1;
+  }
+
+  private cancelPending(): void {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = null;
+    }
+    if (this.abortController) {
+      this.abortController.abort();
+      this.abortController = null;
+    }
   }
 
   onKeydown(event: KeyboardEvent): void {
@@ -154,28 +219,20 @@ export class SearchDialogComponent implements OnChanges {
     }
   }
 
-  private getLabel(route: SearchableRoute): string {
-    return route.label || this.translate.instant(route.labelKey);
+  private getLabel(route: IndexedRoute): string {
+    return route.label || (route.labelKey ? this.translate.instant(route.labelKey) : '');
   }
 
-  private buildFuseIndex(): void {
-    const data = SEARCHABLE_ROUTES.map((route) => ({
-      ...route,
-      translatedLabel: this.getLabel(route),
-      descriptionTokens: route.description.split(/\s+/),
-    }));
-
-    this.fuse = new Fuse(data, {
-      keys: [
-        { name: 'translatedLabel', weight: 3 },
-        { name: 'keywords', weight: 2 },
-        { name: 'descriptionTokens', weight: 1 },
-        { name: 'category', weight: 0.5 },
-      ],
-      threshold: 0.3,
-      includeScore: true,
-      minMatchCharLength: 2,
-    });
+  private ensureIndex(): void {
+    if (this.indexReady) return;
+    this.semantic
+      .loadIndex()
+      .then(() => {
+        this.indexReady = true;
+        // Falls der Nutzer schon getippt hat, bevor der Index da war.
+        if (this.query.trim()) this.onSearch();
+      })
+      .catch((err) => console.warn('Such-Index konnte nicht geladen werden:', err));
   }
 
   private lockKeyNav(): void {

@@ -24,7 +24,7 @@ function corsHeaders(request) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Vary': 'Origin',
   };
@@ -53,6 +53,62 @@ function clamp(value, min, max, fallback) {
   return Math.min(max, Math.max(min, n));
 }
 
+/**
+ * Embedding-Endpoint (/embed) für die semantische Volltextsuche.
+ *
+ * Aufruf:
+ *   GET  /embed?q=wie%20wird%20das%20wetter
+ *   POST /embed   { "q": "wie wird das wetter" }
+ *
+ * Liefert { vector: number[] } – ein mehrsprachiges Embedding (bge-m3, 1024 Dim.),
+ * das im Frontend per Cosine-Ähnlichkeit gegen den vorab berechneten Routen-Index
+ * verglichen wird. Gleiches Modell wie beim Index-Bau -> Vektoren sind vergleichbar.
+ */
+async function handleEmbed(request, env, cors) {
+  let query = '';
+  if (request.method === 'POST') {
+    try {
+      const body = await request.json();
+      query = String(body?.q ?? body?.text ?? '');
+    } catch {
+      query = '';
+    }
+  } else {
+    const url = new URL(request.url);
+    query = url.searchParams.get('q') || url.searchParams.get('text') || '';
+  }
+
+  // Großzügiges Limit: kurze Nutzer-Queries, aber auch lange Routen-Blobs beim Index-Bau.
+  query = query.trim().slice(0, 8000);
+  if (!query) {
+    return new Response(JSON.stringify({ error: 'q required' }), {
+      status: 400,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const result = await env.AI.run('@cf/baai/bge-m3', { text: [query] });
+    // Workers AI liefert { shape: [n, dim], data: [[...]] }.
+    const vector = result?.data?.[0];
+    if (!Array.isArray(vector)) {
+      throw new Error('unexpected embedding response');
+    }
+    return new Response(JSON.stringify({ vector }), {
+      headers: {
+        ...cors,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=86400',
+      },
+    });
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ error: 'embedding failed', detail: String(err) }),
+      { status: 502, headers: { ...cors, 'Content-Type': 'application/json' } }
+    );
+  }
+}
+
 export default {
   async fetch(request, env) {
     const cors = corsHeaders(request);
@@ -60,14 +116,25 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: cors });
     }
-    if (request.method !== 'GET') {
-      return new Response('Method not allowed', { status: 405, headers: cors });
-    }
     if (!isAllowedCaller(request)) {
       return new Response('Forbidden', { status: 403, headers: cors });
     }
 
     const url = new URL(request.url);
+
+    // Semantische Suche: Query-Embedding (GET oder POST).
+    if (url.pathname === '/embed') {
+      if (request.method !== 'GET' && request.method !== 'POST') {
+        return new Response('Method not allowed', { status: 405, headers: cors });
+      }
+      return handleEmbed(request, env, cors);
+    }
+
+    // Ab hier: Bildgenerierung (nur GET).
+    if (request.method !== 'GET') {
+      return new Response('Method not allowed', { status: 405, headers: cors });
+    }
+
     const prompt = (url.searchParams.get('prompt') || '').trim().slice(0, 800);
     if (!prompt) {
       return new Response(JSON.stringify({ error: 'prompt required' }), {

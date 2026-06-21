@@ -47,6 +47,22 @@ wrangler dev
 | `flux`  | `@cf/black-forest-labs/flux-1-schnell`         | 1024×1024, sehr schnell    |
 | `sdxl`  | `@cf/stabilityai/stable-diffusion-xl-base-1.0` | Format & Seed steuerbar    |
 
+## Endpoint `/embed` — semantische Suche
+
+Derselbe Worker liefert unter `/embed` Text-Embeddings (Modell
+`@cf/baai/bge-m3`, mehrsprachig) für die semantische Volltextsuche der App.
+
+```bash
+# Query-Embedding (Frontend nutzt POST):
+curl -X POST https://.../embed -H 'Content-Type: application/json' -d '{"q":"wie wird das wetter"}'
+# Antwort: { "vector": [ ... 1024 Zahlen ... ] }
+```
+
+Der Routen-Index wird mit demselben Modell vorab gebaut:
+`npm run build:search` (Projekt-Root) → `src/assets/search-index.json`.
+Nach Änderungen an Worker oder i18n-Texten: erst `wrangler deploy`, dann
+`npm run build:search` erneut ausführen.
+
 ## Erlaubte Aufrufer
 
 In `src/index.js` unter `ALLOWED_ORIGINS` sind die erlaubten Domains hinterlegt

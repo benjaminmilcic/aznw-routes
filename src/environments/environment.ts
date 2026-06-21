@@ -97,6 +97,9 @@ export const environment = {
   imagegen: {
     workerUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/',
   },
+  search: {
+    embedUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/embed',
+  },
   production: false,
   version: new Date().getTime(),
 };

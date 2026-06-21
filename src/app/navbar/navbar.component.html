@@ -258,13 +258,14 @@
     <!-- navigation actions -->
     <div class="flex items-center gap-3">
       <!-- Search Toggle -->
-      <!-- <button
+      <button
         class="search-toggle"
         (click)="toggleSearch()"
         [class.active]="searchOpen"
+        [attr.aria-label]="'search.placeholder' | translate"
       >
         <i class="fa-solid fa-magnifying-glass"></i>
-      </button> -->
+      </button>
       <!-- Language switcher -->
       <app-language-switcher></app-language-switcher>
       <!-- Mobile Menu Toggle -->
