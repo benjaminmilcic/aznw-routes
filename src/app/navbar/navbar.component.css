@@ -596,3 +596,29 @@
   background: rgba(59, 130, 246, 0.2);
   color: #60a5fa;
 }
+
+/* Active gimmick highlight – desktop mega menu.
+   Uses the icon's own themed color via currentColor for the ring/glow. */
+.mega-item.gimmick-active {
+  color: var(--nav-text);
+}
+.mega-item.gimmick-active span {
+  font-weight: 700;
+}
+.mega-item.gimmick-active .mega-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px currentColor, 0 8px 22px -6px currentColor;
+}
+.mega-item.gimmick-active:hover .mega-icon {
+  transform: scale(1.1) rotate(-15deg);
+}
+
+/* Active gimmick highlight – mobile submenu. */
+.mobile-sublink.gimmick-active {
+  background: rgba(96, 165, 250, 0.12);
+  border-color: var(--nav-accent);
+  color: var(--nav-text);
+}
+.mobile-sublink.gimmick-active .sublink-icon {
+  box-shadow: 0 0 0 2px currentColor;
+}

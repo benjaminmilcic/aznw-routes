@@ -104,7 +104,7 @@
           <div class="mega-menu-grid">
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks']"
+              [routerLink]="['/gimmicks']" routerLinkActive="gimmick-active" [routerLinkActiveOptions]="{ exact: true }"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon warmwood">
@@ -115,7 +115,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/weather']"
+              [routerLink]="['/gimmicks/weather']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon amber">
@@ -126,7 +126,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/map']"
+              [routerLink]="['/gimmicks/map']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon yellow">
@@ -137,7 +137,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/calendar']"
+              [routerLink]="['/gimmicks/calendar']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon red">
@@ -148,7 +148,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/guestbook']"
+              [routerLink]="['/gimmicks/guestbook']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon green">
@@ -159,7 +159,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/charts']"
+              [routerLink]="['/gimmicks/charts']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon purple">
@@ -170,7 +170,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/countries']"
+              [routerLink]="['/gimmicks/countries']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon teal">
@@ -181,7 +181,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/auth/main']"
+              [routerLink]="['/gimmicks/auth/main']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon orange">
@@ -192,7 +192,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/games']"
+              [routerLink]="['/gimmicks/games']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon pink">
@@ -209,7 +209,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/recipes']"
+              [routerLink]="['/gimmicks/recipes']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon coral">
@@ -220,7 +220,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/movies']"
+              [routerLink]="['/gimmicks/movies']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon gold">
@@ -231,7 +231,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/imagegen']"
+              [routerLink]="['/gimmicks/imagegen']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
               <div class="mega-icon blue">
@@ -242,7 +242,7 @@
 
             <a
               class="mega-item"
-              [routerLink]="['/gimmicks/telegram']"
+              [routerLink]="['/gimmicks/telegram']" routerLinkActive="gimmick-active"
               (click)="gimmicksExpanded = false"
             >
              <div class="mega-icon light-blue">
@@ -398,7 +398,7 @@
       <div class="mobile-submenu" [class.expanded]="mobileGimmicksExpanded">
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks']"
+          [routerLink]="['/gimmicks']" routerLinkActive="gimmick-active" [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon warmwood"><i class="fa-solid fa-eye"></i></div>
@@ -406,7 +406,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/weather']"
+          [routerLink]="['/gimmicks/weather']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon amber">
@@ -416,7 +416,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/map']"
+          [routerLink]="['/gimmicks/map']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon yellow"><i class="fa-solid fa-map"></i></div>
@@ -424,7 +424,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/calendar']"
+          [routerLink]="['/gimmicks/calendar']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon red">
@@ -434,7 +434,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/guestbook']"
+          [routerLink]="['/gimmicks/guestbook']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon green"><i class="fa-solid fa-book"></i></div>
@@ -442,7 +442,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/charts']"
+          [routerLink]="['/gimmicks/charts']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon purple">
@@ -452,7 +452,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/countries']"
+          [routerLink]="['/gimmicks/countries']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon teal">
@@ -462,7 +462,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/auth/main']"
+          [routerLink]="['/gimmicks/auth/main']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon orange">
@@ -472,7 +472,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/games']"
+          [routerLink]="['/gimmicks/games']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon pink">
@@ -487,7 +487,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/recipes']"
+          [routerLink]="['/gimmicks/recipes']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon coral">
@@ -497,7 +497,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/movies']"
+          [routerLink]="['/gimmicks/movies']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon gold">
@@ -507,7 +507,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/imagegen']"
+          [routerLink]="['/gimmicks/imagegen']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
@@ -515,7 +515,7 @@
         </a>
         <a
           class="mobile-sublink"
-          [routerLink]="['/gimmicks/telegram']"
+          [routerLink]="['/gimmicks/telegram']" routerLinkActive="gimmick-active"
           (click)="closeMobileMenu()"
         >
           <div class="sublink-icon light-blue"><i class="fab fa-telegram"></i></div>
