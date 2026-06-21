@@ -154,10 +154,19 @@ export class SemanticSearchService {
       .filter((t) => t.length >= 2 && !STOPWORDS.has(t));
   }
 
-  /** Kleinschreibung + Diakritika entfernen ("Milčić" -> "milcic", "über" -> "uber"). */
+  /**
+   * Kleinschreibung + Diakritika entfernen ("Milčić" -> "milcic").
+   * Deutsche Umlaute werden zur ae/oe/ue/ss-Schreibweise expandiert, damit
+   * "täglich" und "taeglich" identisch falten ("taeglich") und beide gefunden
+   * werden. Die Expansion passiert vor dem Strippen, sonst würde ä -> a werden.
+   */
   private fold(s: string): string {
     return s
       .toLowerCase()
+      .replace(/ä/g, 'ae')
+      .replace(/ö/g, 'oe')
+      .replace(/ü/g, 'ue')
+      .replace(/ß/g, 'ss')
       .normalize('NFD')
       .replace(/[̀-ͯ]/g, '');
   }
