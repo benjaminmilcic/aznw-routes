@@ -8,11 +8,7 @@
 
     <!-- ── Large version (≥1024px) ───────────────────── -->
     <div class="skills-large">
-      <div
-        class="main"
-        [matTooltip]="'skills.workplace' | translate"
-        matTooltipClass="my-tooltip-class"
-      >
+      <div class="main">
         <div class="pulse-ring"></div>
 
         <div
@@ -240,6 +236,15 @@
             NgRx
           </p>
         </div>
+
+        <!-- Center hover-zone: only this covers the photo disc, so the tooltip
+             fires over the image but not over the orbiting skill icons.
+             Kept LAST so the .circle :nth-child positioning stays intact. -->
+        <div
+          class="main-center"
+          [matTooltip]="'skills.workplace' | translate"
+          matTooltipClass="my-tooltip-class"
+        ></div>
       </div>
     </div>
 

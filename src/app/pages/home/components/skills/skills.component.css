@@ -97,6 +97,14 @@ section::before {
   flex-shrink: 0;
 }
 
+/* ── Center hover-zone (tooltip trigger) ─────────────── */
+.main-center {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 1;
+}
+
 /* ── Pulse animation on center ───────────────────────── */
 .pulse-ring {
   position: absolute;

@@ -73,7 +73,8 @@
       "Bash(npx tsc *)",
       "Bash(echo \"EXIT: $?\")",
       "Bash(npx wrangler *)",
-      "Bash(echo \"---WRANGLER EXIT: $?---\")"
+      "Bash(echo \"---WRANGLER EXIT: $?---\")",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []
