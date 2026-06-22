@@ -48,12 +48,17 @@
     "webaroDesc": "Dashboard za Weber Agrar Robotik s podacima u stvarnom vremenu.",
     "vocabularyTrainerDesc": "Web i Android aplikacija za učenje hrvatskog jezika.",
     "vocabularyTrainerTitle": "Trener vokabulara",
+    "gamesCollectionDesc": "Kolekcija poznatih igara za više igrača",
+    "gamesCollectionTitle": "Kolekcija igara",
     "solakonDesc": "iOS i Android aplikacija za solar-monitoring. Dostupno na Play Storeu.",
     "hippoDataDesc": "B2B platforma za analizu podataka i izvješćivanje.",
     "vocabularyTrainer": {
       "text1": "Web aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
       "text2": "Android aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
       "sourceCode": "Izvorni kod"
+    },
+    "gameCollection": {
+      "text1": "Kolekcija poznatih igara za više igrača. Razvijeno pomoću Angulara i Firebasea."
     },
     "catchCups": {
       "text1": "U ime tvrtke",

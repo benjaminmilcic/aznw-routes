@@ -48,12 +48,17 @@
     "webaroDesc": "Dashboard for Weber Agrar Robotics with real-time data.",
     "vocabularyTrainerDesc": "Web and Android app for learning the Croatian language.",
     "vocabularyTrainerTitle": "Vocabulary Trainer",
+    "gamesCollectionDesc": "Collection of well-known multiplayer games",
+    "gamesCollectionTitle": "Game collection",
     "solakonDesc": "iOS and Android app for solar monitoring. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
       "text1": "Web App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "text2": "Android App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "sourceCode": "Source code"
+    },
+    "gameCollection": {
+      "text1": "A collection of well-known multiplayer games. Developed with Angular and Firebase."
     },
     "catchCups": {
       "text1": "On behalf of the company",

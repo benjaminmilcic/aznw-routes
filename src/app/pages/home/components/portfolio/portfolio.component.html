@@ -78,6 +78,54 @@
     </div>
   </dialog>
 
+  <dialog #gameCollectionDialog>
+    <div class="dialog-header">
+      <h2 class="dialog-title">{{ "portfolio.gamesCollectionTitle" | translate }}</h2>
+      <button
+        class="close-btn"
+        (click)="closeDialog(gameCollectionDialog)"
+        aria-label="Close dialog"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="dialog-content">
+      <div class="project-section">
+        <h3 class="section-title">
+          {{ "portfolio.gameCollection.text1" | translate }}
+        </h3>
+        <div class="image-container">
+          <img
+            class="project-image web-app"
+            src="assets/games-collection.webp"
+            alt="Game Collection"
+          />
+        </div>
+        <div class="mt-12 mb-20">
+          <div class="links-container">
+            <a
+              href="https://whiteboard-32486.web.app/"
+              target="_blank"
+              class="project-link primary"
+            >
+              <mat-icon>launch</mat-icon><span>Live Demo</span>
+            </a>
+            <a
+              href="https://github.com/benjaminmilcic/whiteboard"
+              target="_blank"
+              class="project-link secondary"
+            >
+              <mat-icon>code</mat-icon
+              ><span>{{
+                "portfolio.vocabularyTrainer.sourceCode" | translate
+              }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <dialog #catchCupDialog>
     <div class="dialog-header">
       <h2 class="dialog-title">CatchCups</h2>
@@ -418,6 +466,25 @@
           <div class="proj-stack">
             <span class="tag">Angular</span>
             <span class="tag">Ionic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pinned" (click)="openDialog(gameCollectionDialog)">
+        <div class="pin left yellow">
+          <div class="shadow"></div>
+          <div class="metal"></div>
+          <div class="bottom-circle"></div>
+        </div>
+        <div class="proj-thumb">
+          <img src="assets/games-collection.webp" alt="Game Collection" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">{{ "portfolio.gamesCollectionTitle" | translate }}</h3>
+          <p class="proj-d">{{ "portfolio.gamesCollectionDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">Firebase</span>
           </div>
         </div>
       </div>
