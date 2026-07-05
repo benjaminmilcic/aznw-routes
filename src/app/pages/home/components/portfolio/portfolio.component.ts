@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,8 +13,16 @@ import { MatIconModule } from '@angular/material/icon';
 export class PortfolioComponent {
   constructor(
     public homeService: HomeService,
+    public translate: TranslateService,
     private router: Router
   ) {}
+
+  get gameCollectionImage(): string {
+    const lang = this.translate.currentLang;
+    const supported = ['de', 'en', 'hr'];
+    const suffix = supported.includes(lang) ? lang : 'en';
+    return `assets/game-collection-${suffix}.webp`;
+  }
 
   closeDialog(dialog: HTMLDialogElement) {
     dialog.close();

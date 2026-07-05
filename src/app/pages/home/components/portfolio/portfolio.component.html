@@ -97,14 +97,14 @@
         <div class="image-container">
           <img
             class="project-image web-app"
-            src="assets/games-collection.webp"
+            [src]="gameCollectionImage"
             alt="Game Collection"
           />
         </div>
         <div class="mt-12 mb-20">
           <div class="links-container">
             <a
-              href="https://whiteboard-32486.web.app/"
+              [href]="`https://whiteboard-32486.web.app/?lang=${translate.currentLang}`"
               target="_blank"
               class="project-link primary"
             >
@@ -477,7 +477,7 @@
           <div class="bottom-circle"></div>
         </div>
         <div class="proj-thumb">
-          <img src="assets/games-collection.webp" alt="Game Collection" />
+          <img [src]="gameCollectionImage" alt="Game Collection" />
         </div>
         <div class="proj-info">
           <h3 class="proj-h">{{ "portfolio.gamesCollectionTitle" | translate }}</h3>
