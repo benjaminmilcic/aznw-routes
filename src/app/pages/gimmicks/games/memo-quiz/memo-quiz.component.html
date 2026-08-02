@@ -1,20 +1,5 @@
-<div class="flex flex-col gap-12 justify-center items-center h-full relative">
-  <div class="grid grid-cols-4 gap-4">
-    <div
-      *ngFor="let card of cards; let cardIndex = index"
-      class="w-16 h-16 sm:h-24 sm:w-24 2xl:w-32 2xl:h-32 card"
-      [ngClass]="{
-        flipped: cards[cardIndex].flipped || cards[cardIndex].locked
-      }"
-      (click)="onCardClick(cardIndex)"
-    >
-      <div class="card-front w-16 h-16 sm:h-24 sm:w-24 2xl:w-32 2xl:h-32">
-        <img class="w-16 h-16 sm:h-24 sm:w-24 2xl:w-32 2xl:h-32" src="assets/gamecard-bg.jpg"/>
-      </div>
-      <div class="card-back w-16 h-16 sm:h-24 sm:w-24 2xl:w-32 2xl:h-32">
-        <img [src]="card.src" class="w-16 h-16 sm:h-24 sm:w-24 2xl:w-32 2xl:h-32" />
-      </div>
-    </div>
-  </div>
-  <button mat-raised-button color="yellow" (click)="init()">{{ "gimmicks.games.reset" | translate }}</button>
-</div>
+@if (game()) {
+<app-memo-quiz-board />
+} @else {
+<app-memo-quiz-home />
+}

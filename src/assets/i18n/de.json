@@ -376,7 +376,132 @@
     },
     "games": {
       "connectFour": "4 Gewinnt",
+      "connectFourGame": {
+        "subtitle": "Bring vier eigene Steine in eine Reihe – waagrecht, senkrecht oder schräg.",
+        "mode": "Spielart",
+        "modeComputer": "Computer",        "modeOnline": "Online",
+        "computer": "Computer",
+        "level": "Spielstärke",
+        "nameLabel": "Wie heißt du?",
+        "namePlaceholder": "Dein Name",        "chooseAvatar": "Wähle dein Zeichen",        "startGame": "Spiel starten",
+        "newGame": "Neues Spiel starten",
+        "creating": "Moment …",
+        "joinPrompt": "Einem Spiel beitreten",
+        "codeLabel": "Spiel-Code (4 Zahlen)",
+        "codePlaceholder": "z. B. 4827",
+        "connecting": "Verbinde …",
+        "join": "Mitspielen",
+        "back": "Zurück",
+        "endGame": "Spiel beenden",
+        "waitingPlayer": "wartet …",
+        "yourTurn": "Du bist dran!",
+        "othersTurn": "{{name}} ist dran …",
+        "thinking": "Computer überlegt …",
+        "player": "Mitspieler",
+        "codeTitle": "Spiel-Code",
+        "codeShare": "Gib diesen Code auf dem anderen Gerät ein – dann geht es los!",
+        "cancel": "Abbrechen",
+        "won": "{{name}} hat gewonnen!",
+        "tie": "Unentschieden!",
+        "playAgain": "Nochmal spielen",
+        "home": "Zurück zum Start",
+        "errors": {
+          "notFound": "Kein Spiel mit diesem Code gefunden.",
+          "full": "Dieses Spiel ist schon voll (2 Spieler).",
+          "timeout": "Zeitüberschreitung: Die Datenbank antwortet nicht.",
+          "permission": "Keine Verbindung zur Datenbank. Bitte später noch einmal versuchen.",
+          "notConfigured": "Der Online-Modus ist gerade nicht verfügbar."
+        }
+      },
       "memoQuiz": "Memo-Quiz",
+
+      "memoQuizGame": {
+
+        "subtitle": "Finde die Paare – gegen den Computer oder gegen einen echten Mitspieler.",
+
+        "mode": "Spielart",
+
+        "modeComputer": "Computer",
+
+        "modeOnline": "Online",
+
+        "computer": "Computer",
+
+        "level": "Spielstärke",
+
+        "cardCount": "Karten",
+
+        "cards12": "12",
+
+        "cards20": "20",
+
+        "cards24": "24",
+
+        "nameLabel": "Wie heißt du?",
+
+        "namePlaceholder": "Dein Name",
+
+        "chooseAnimal": "Wähle dein Tier",
+
+        "startGame": "Spiel starten",
+
+        "newGame": "Neues Spiel starten",
+
+        "creating": "Moment …",
+
+        "joinPrompt": "Einem Spiel beitreten",
+
+        "codeLabel": "Spiel-Code (4 Zahlen)",
+
+        "codePlaceholder": "z. B. 4827",
+
+        "connecting": "Verbinde …",
+
+        "join": "Mitspielen",
+
+        "back": "Zurück",
+
+        "endGame": "Spiel beenden",
+
+        "waitingPlayer": "wartet …",
+
+        "yourTurn": "Du bist dran!",
+
+        "othersTurn": "{{name}} ist dran …",
+
+        "thinking": "Computer überlegt …",
+
+        "player": "Mitspieler",
+
+        "codeTitle": "Spiel-Code",
+
+        "codeShare": "Gib diesen Code auf dem anderen Gerät ein – dann geht es los!",
+
+        "cancel": "Abbrechen",
+
+        "won": "{{name}} hat gewonnen!",
+
+        "tie": "Unentschieden!",
+
+        "playAgain": "Nochmal spielen",
+
+        "home": "Zurück zum Start",
+
+        "errors": {
+
+          "notFound": "Kein Spiel mit diesem Code gefunden.",
+
+          "full": "Dieses Spiel ist schon voll (2 Spieler).",
+
+          "timeout": "Zeitüberschreitung: Die Datenbank antwortet nicht.",
+
+          "permission": "Keine Verbindung zur Datenbank. Bitte später noch einmal versuchen.",
+
+          "notConfigured": "Der Online-Modus ist gerade nicht verfügbar."
+
+        }
+
+      },
       "jigsaw": "Puzzel",
       "opponent": "Gegner",
       "human": "Mensch",

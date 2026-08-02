@@ -176,6 +176,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     elements: [
       'NestJS API',
       'Websocket',
+      'Firebase'
       // 'Responsive design',
       // 'gimmicks.differentLanguages',
     ],

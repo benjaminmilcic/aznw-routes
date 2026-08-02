@@ -1,0 +1,143 @@
+<div class="home">
+  <div class="home-card">
+    <p class="subtitle">{{ "gimmicks.games.memoQuizGame.subtitle" | translate }}</p>
+
+    @if (svc.error(); as err) {
+    <p class="error">{{ err | translate }}</p>
+    }
+
+    <!-- Spielart -->
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.mode" | translate }}</span>
+      <ion-segment
+        [ngModel]="mode()"
+        (ngModelChange)="onMode($event)"
+        mode="ios"
+        class="memo-segment"
+      >
+        <ion-segment-button value="computer">
+          <ion-label>{{ "gimmicks.games.memoQuizGame.modeComputer" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="online">
+          <ion-label>{{ "gimmicks.games.memoQuizGame.modeOnline" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- Name -->
+    <label class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.nameLabel" | translate }}</span>
+      <input
+        class="text-input"
+        type="text"
+        maxlength="12"
+        [placeholder]="'gimmicks.games.memoQuizGame.namePlaceholder' | translate"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </label>
+
+    <!-- Tier -->
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.chooseAnimal" | translate }}</span>
+      <div class="avatar-grid">
+        @for (m of motifs; track m.id) {
+        <button
+          type="button"
+          class="avatar"
+          [class.avatar--active]="avatar() === m.id"
+          (click)="avatar.set(m.id)"
+          [attr.aria-label]="m.name"
+        >
+          <app-memo-motif [motifId]="m.id" />
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (!showJoin()) {
+    <!-- Kartenanzahl -->
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.cardCount" | translate }}</span>
+      <ion-segment [ngModel]="pairs()" (ngModelChange)="pairs.set($event)" mode="ios" class="memo-segment">
+        @for (o of pairOptions; track o.pairs) {
+        <ion-segment-button [value]="o.pairs">
+          <ion-label>{{ o.labelKey | translate }}</ion-label>
+        </ion-segment-button>
+        }
+      </ion-segment>
+    </div>
+    }
+
+    @if (mode() === 'computer') {
+    <!-- Spielstärke des Computers -->
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.level" | translate }}</span>
+      <ion-segment [ngModel]="level()" (ngModelChange)="level.set($event)" mode="ios" class="memo-segment">
+        <ion-segment-button value="easy">
+          <ion-label>{{ "gimmicks.games.easy" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medium">
+          <ion-label>{{ "gimmicks.games.medium" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hard">
+          <ion-label>{{ "gimmicks.games.difficult" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+      {{ "gimmicks.games.memoQuizGame.startGame" | translate }}
+    </button>
+    } @else {
+    <!-- Online mit Spiel-Code -->
+    @if (!showJoin()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || svc.busy()"
+      (click)="create()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.memoQuizGame.creating"
+          : "gimmicks.games.memoQuizGame.newGame"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(true)">
+      {{ "gimmicks.games.memoQuizGame.joinPrompt" | translate }}
+    </button>
+    } @else {
+    <label class="field">
+      <span class="field-label">{{ "gimmicks.games.memoQuizGame.codeLabel" | translate }}</span>
+      <input
+        class="text-input code-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="4"
+        [placeholder]="'gimmicks.games.memoQuizGame.codePlaceholder' | translate"
+        [ngModel]="joinCode()"
+        (ngModelChange)="onCode($event)"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || joinCode().length !== 4 || svc.busy()"
+      (click)="join()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.memoQuizGame.connecting"
+          : "gimmicks.games.memoQuizGame.join"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(false)">
+      {{ "gimmicks.games.memoQuizGame.back" | translate }}
+    </button>
+    } }
+  </div>
+</div>

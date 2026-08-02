@@ -1,0 +1,133 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <!-- Kopfzeile: beide Spieler + wer dran ist -->
+  <header class="bar">
+    <div class="players">
+      <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
+        <span class="disc disc--{{ svc.me()?.color }}">{{ svc.me()?.emoji }}</span>
+        <span class="player-name" [speakOnClick]="displayName(svc.me())">{{
+          displayName(svc.me())
+        }}</span>
+      </div>
+
+      <span class="vs">⚔️</span>
+
+      @if (svc.opponent(); as opp) {
+      <div class="player" [class.player--active]="g.currentTurn === opp.id">
+        <span class="disc disc--{{ opp.color }}">{{ opp.emoji }}</span>
+        <span class="player-name" [speakOnClick]="displayName(opp)">{{
+          displayName(opp)
+        }}</span>
+      </div>
+      } @else {
+      <div class="player player--empty">
+        <span class="player-name">{{
+          "gimmicks.games.connectFourGame.waitingPlayer" | translate
+        }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="turn" [class.turn--mine]="g.currentTurn === svc.me()?.id">
+      @if (svc.thinking()) {
+      {{ "gimmicks.games.connectFourGame.thinking" | translate }}
+      } @else if (g.currentTurn === svc.me()?.id) {
+      {{ "gimmicks.games.connectFourGame.yourTurn" | translate }}
+      } @else {
+      {{
+        "gimmicks.games.connectFourGame.othersTurn"
+          | translate
+            : {
+                name:
+                  currentName() ||
+                  ("gimmicks.games.connectFourGame.player" | translate)
+              }
+      }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.connectFourGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <!-- Spielfeld: 7 anklickbare Spalten -->
+  <main class="field-wrap">
+    <div class="board" [class.board--locked]="!svc.canPlay()">
+      @for (c of cols; track c) {
+      <button
+        type="button"
+        class="column"
+        [disabled]="!canDrop(c)"
+        (click)="drop(c)"
+        [attr.aria-label]="'Spalte ' + (c + 1)"
+      >
+        @for (r of rows; track r) {
+        <span class="hole">
+          @if (colorAt(r, c); as col) {
+          <span
+            class="disc disc--{{ col }}"
+            [class.disc--win]="isWin(r, c)"
+            [class.disc--last]="isLastMove(r, c)"
+            >{{ emojiAt(r, c) }}</span
+          >
+          }
+        </span>
+        }
+      </button>
+      }
+    </div>
+  </main>
+
+  <!-- Warten auf Mitspieler (nur online) -->
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.connectFourGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.connectFourGame.codeShare" | translate }}</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.connectFourGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Spielende -->
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <!-- Der Dialog lässt sich zur Seite schieben, um das Endergebnis zu sehen. -->
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) { @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      } @case ('tie') {
+      <div class="result-emoji anim-tie">🤝</div>
+      } }
+
+      <h2 class="result-title">
+        @if (outcome() === 'tie') {
+        {{ "gimmicks.games.connectFourGame.tie" | translate }}
+        } @else {
+        {{ "gimmicks.games.connectFourGame.won" | translate : { name: winnerName() } }}
+        }
+      </h2>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.connectFourGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.connectFourGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

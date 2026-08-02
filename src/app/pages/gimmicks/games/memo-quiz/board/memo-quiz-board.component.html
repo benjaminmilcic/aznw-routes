@@ -1,0 +1,149 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <!-- Kopfzeile: beide Spieler mit Punktestand + wer dran ist -->
+  <header class="bar">
+    <div class="players">
+      <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
+        <span class="player-ava"><app-memo-motif [motifId]="svc.me()?.avatar ?? ''" /></span>
+        <span class="player-name" [speakOnClick]="displayName(svc.me())">{{
+          displayName(svc.me())
+        }}</span>
+        <span class="player-score">{{ svc.me()?.score ?? 0 }}</span>
+      </div>
+
+      <span class="vs">:</span>
+
+      @if (svc.opponent(); as opp) {
+      <div class="player" [class.player--active]="g.currentTurn === opp.id">
+        <span class="player-ava"><app-memo-motif [motifId]="opp.avatar" /></span>
+        <span class="player-name" [speakOnClick]="displayName(opp)">{{ displayName(opp) }}</span>
+        <span class="player-score">{{ opp.score }}</span>
+      </div>
+      } @else {
+      <div class="player player--empty">
+        <span class="player-name">{{
+          "gimmicks.games.memoQuizGame.waitingPlayer" | translate
+        }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="turn" [class.turn--mine]="g.currentTurn === svc.me()?.id">
+      @if (svc.thinking()) {
+      {{ "gimmicks.games.memoQuizGame.thinking" | translate }}
+      } @else if (g.currentTurn === svc.me()?.id) {
+      {{ "gimmicks.games.memoQuizGame.yourTurn" | translate }}
+      } @else {
+      {{
+        "gimmicks.games.memoQuizGame.othersTurn"
+          | translate
+            : {
+                name:
+                  currentName() || ("gimmicks.games.memoQuizGame.player" | translate)
+              }
+      }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.memoQuizGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <!-- Spielfeld -->
+  <main class="field-wrap">
+    <div class="board" [style.--cols]="cols()" [style.--ratio]="ratio()">
+      @for (card of g.board; track $index) {
+      <app-memo-card
+        [motifId]="card.motifId"
+        [faceUp]="faceUp($index)"
+        [matched]="matched($index)"
+        [mine]="mine($index)"
+        [clickable]="clickable($index)"
+        (flip)="onFlip($index)"
+      />
+      }
+    </div>
+  </main>
+
+  <!-- Warten auf Mitspieler (nur online) -->
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.memoQuizGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.memoQuizGame.codeShare" | translate }}</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.memoQuizGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Spielende -->
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <!-- Der Dialog lässt sich zur Seite schieben, um das Spielfeld zu sehen. -->
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+      [class.panel--tie]="outcome() === 'tie'"
+    >
+      @switch (outcome()) { @case ('win') {
+      <div class="result-stage">
+        <div class="result-emoji anim-win">🏆</div>
+        <span class="spark spark-1">✨</span>
+        <span class="spark spark-2">⭐</span>
+        <span class="spark spark-3">✨</span>
+      </div>
+      } @case ('lose') {
+      <div class="result-stage">
+        <div class="result-emoji anim-lose">😢</div>
+        <span class="tear tear-1">💧</span>
+        <span class="tear tear-2">💧</span>
+      </div>
+      } @case ('tie') {
+      <div class="result-stage">
+        <div class="result-emoji anim-tie">🤝</div>
+      </div>
+      } }
+
+      <h2 class="result-title">
+        @if (outcome() === 'tie') {
+        {{ "gimmicks.games.memoQuizGame.tie" | translate }}
+        } @else {
+        {{ "gimmicks.games.memoQuizGame.won" | translate : { name: winnerName() } }}
+        }
+      </h2>
+
+      <div class="final-scores">
+        <div class="final-player">
+          <span class="player-ava"><app-memo-motif [motifId]="svc.me()?.avatar ?? ''" /></span>
+          <span
+            >{{ displayName(svc.me()) }}: <b>{{ svc.me()?.score }}</b></span
+          >
+        </div>
+        @if (svc.opponent(); as opp) {
+        <div class="final-player">
+          <span class="player-ava"><app-memo-motif [motifId]="opp.avatar" /></span>
+          <span
+            >{{ displayName(opp) }}: <b>{{ opp.score }}</b></span
+          >
+        </div>
+        }
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.memoQuizGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.memoQuizGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

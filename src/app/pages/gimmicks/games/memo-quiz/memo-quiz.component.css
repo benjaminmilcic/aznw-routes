@@ -1,28 +1,10 @@
-.card {
-perspective: 1000px;
-cursor: pointer;
-transition: transform 1s;
-transform-style: preserve-3d;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
-}
-
-.card.flipped {
-transform: rotateY( 180deg );
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
-}
-
-.card-front, .card-back {
-position: absolute;
-backface-visibility: hidden;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.card-back {
-transform: rotateY(180deg);
-}
-
-.mat-yellow {
-  background-color: #fde047 !important;
+/* Der Hintergrund kommt vom umgebenden Spiele-Layout (games.component) –
+   diese Komponente bleibt bewusst transparent. "relative" ist nötig, damit
+   das absolut positionierte section:before-Overlay nicht über den Buttons
+   und Eingabefeldern liegt. */
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
+  min-height: 0;
 }

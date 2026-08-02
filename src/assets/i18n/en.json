@@ -376,7 +376,132 @@
     },
     "games": {
       "connectFour": "Connect 4",
+      "connectFourGame": {
+        "subtitle": "Line up four of your own discs – across, up or diagonally.",
+        "mode": "Game mode",
+        "modeComputer": "Computer",        "modeOnline": "Online",
+        "computer": "Computer",
+        "level": "Difficulty",
+        "nameLabel": "What's your name?",
+        "namePlaceholder": "Your name",        "chooseAvatar": "Choose your token",        "startGame": "Start game",
+        "newGame": "Start a new game",
+        "creating": "One moment …",
+        "joinPrompt": "Join a game",
+        "codeLabel": "Game code (4 digits)",
+        "codePlaceholder": "e.g. 4827",
+        "connecting": "Connecting …",
+        "join": "Join in",
+        "back": "Back",
+        "endGame": "End game",
+        "waitingPlayer": "waiting …",
+        "yourTurn": "Your turn!",
+        "othersTurn": "{{name}}'s turn …",
+        "thinking": "Computer is thinking …",
+        "player": "Player",
+        "codeTitle": "Game code",
+        "codeShare": "Enter this code on the other device – then it begins!",
+        "cancel": "Cancel",
+        "won": "{{name}} won!",
+        "tie": "It's a tie!",
+        "playAgain": "Play again",
+        "home": "Back to start",
+        "errors": {
+          "notFound": "No game found with this code.",
+          "full": "This game is already full (2 players).",
+          "timeout": "Timeout: the database is not responding.",
+          "permission": "No connection to the database. Please try again later.",
+          "notConfigured": "The online mode is currently unavailable."
+        }
+      },
       "memoQuiz": "Memo quiz",
+
+      "memoQuizGame": {
+
+        "subtitle": "Find the pairs – against the computer or a real opponent.",
+
+        "mode": "Game mode",
+
+        "modeComputer": "Computer",
+
+        "modeOnline": "Online",
+
+        "computer": "Computer",
+
+        "level": "Difficulty",
+
+        "cardCount": "Cards",
+
+        "cards12": "12",
+
+        "cards20": "20",
+
+        "cards24": "24",
+
+        "nameLabel": "What's your name?",
+
+        "namePlaceholder": "Your name",
+
+        "chooseAnimal": "Choose your animal",
+
+        "startGame": "Start game",
+
+        "newGame": "Start a new game",
+
+        "creating": "One moment …",
+
+        "joinPrompt": "Join a game",
+
+        "codeLabel": "Game code (4 digits)",
+
+        "codePlaceholder": "e.g. 4827",
+
+        "connecting": "Connecting …",
+
+        "join": "Join in",
+
+        "back": "Back",
+
+        "endGame": "End game",
+
+        "waitingPlayer": "waiting …",
+
+        "yourTurn": "Your turn!",
+
+        "othersTurn": "{{name}}'s turn …",
+
+        "thinking": "Computer is thinking …",
+
+        "player": "Player",
+
+        "codeTitle": "Game code",
+
+        "codeShare": "Enter this code on the other device – then it begins!",
+
+        "cancel": "Cancel",
+
+        "won": "{{name}} won!",
+
+        "tie": "It's a tie!",
+
+        "playAgain": "Play again",
+
+        "home": "Back to start",
+
+        "errors": {
+
+          "notFound": "No game found with this code.",
+
+          "full": "This game is already full (2 players).",
+
+          "timeout": "Timeout: the database is not responding.",
+
+          "permission": "No connection to the database. Please try again later.",
+
+          "notConfigured": "The online mode is currently unavailable."
+
+        }
+
+      },
       "jigsaw": "Jigsaw",
       "opponent": "Opponent",
       "human": "Human",

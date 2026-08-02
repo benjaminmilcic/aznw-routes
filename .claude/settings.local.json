@@ -74,7 +74,14 @@
       "Bash(echo \"EXIT: $?\")",
       "Bash(npx wrangler *)",
       "Bash(echo \"---WRANGLER EXIT: $?---\")",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(git checkout *)",
+      "PowerShell($p = \\(Get-NetTCPConnection -LocalPort 4300 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess; if \\($p\\) { Stop-Process -Id $p -Force; \"stopped $p\" } else { \"nothing listening\" })",
+      "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/data/card-motifs.ts\" memo-quiz/data/card-motifs.ts)",
+      "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/motif/motif.css\" memo-quiz/motif/motif.component.css)",
+      "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/motif/motif.html\" memo-quiz/motif/motif.component.html)",
+      "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/card/card.html\" memo-quiz/card/memo-card.component.html)",
+      "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/card/card.css\" memo-quiz/card/memo-card.component.css)"
     ],
     "deny": [],
     "ask": []

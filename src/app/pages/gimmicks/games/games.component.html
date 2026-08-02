@@ -17,6 +17,27 @@
       </button>
     </div>
     <mat-menu #selectGame="matMenu" class="!bg-yellow-300 !px-4">
+      <button mat-menu-item (click)="changeGame('gimmicks.games.connectFour')" [routerLink]="['/gimmicks/games/connect-four']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/connect-four.png" />
+          <div>{{ "gimmicks.games.connectFour" | translate }}</div>
+        </div>
+      </button>
+      <button mat-menu-item (click)="changeGame('Minesweeper')" [routerLink]="['/gimmicks/games/minesweeper']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/minesweeper.png" />
+          <div>Minesweeper</div>
+        </div>
+      </button>
+      <button mat-menu-item (click)="changeGame('gimmicks.games.memoQuiz')" [routerLink]="['/gimmicks/games/memo-quiz']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/memory-game.png" />
+          <div>{{ "gimmicks.games.memoQuiz" | translate }}</div>
+        </div>
+      </button>
       <button
         mat-menu-item
         (click)="changeGame('Moorhuhn')"
@@ -41,17 +62,6 @@
       </button>
       <button
         mat-menu-item
-        (click)="changeGame('gimmicks.games.memoQuiz')"
-        [routerLink]="['/gimmicks/games/memo-quiz']"
-        routerLinkActive="router-link-active"
-      >
-        <div class="flex gap-2 items-center">
-          <img class="w-[20px] h-auto" src="/assets/memory-game.png" />
-          <div>{{ "gimmicks.games.memoQuiz" | translate }}</div>
-        </div>
-      </button>
-      <button
-        mat-menu-item
         (click)="changeGame('gimmicks.games.knowledgeQuiz')"
         [routerLink]="['/gimmicks/games/knowledge-quiz']"
         routerLinkActive="router-link-active"
@@ -61,7 +71,7 @@
           <div>{{ "gimmicks.games.knowledgeQuiz" | translate }}</div>
         </div>
       </button>
-      <button
+      <!-- <button
         mat-menu-item
         (click)="changeGame('TikTakToe')"
         [routerLink]="['/gimmicks/games/tiktaktoe']"
@@ -71,29 +81,7 @@
           <img class="w-[20px] h-auto" src="/assets/tic-tac-toe.png" />
           <div>TikTakToe</div>
         </div>
-      </button>
-      <button
-        mat-menu-item
-        (click)="changeGame('gimmicks.games.connectFour')"
-        [routerLink]="['/gimmicks/games/connect-four']"
-        routerLinkActive="router-link-active"
-      >
-        <div class="flex gap-2 items-center">
-          <img class="w-[20px] h-auto" src="/assets/connect-four.png" />
-          <div>{{ "gimmicks.games.connectFour" | translate }}</div>
-        </div>
-      </button>
-      <button
-        mat-menu-item
-        (click)="changeGame('Minesweeper')"
-        [routerLink]="['/gimmicks/games/minesweeper']"
-        routerLinkActive="router-link-active"
-      >
-        <div class="flex gap-2 items-center">
-          <img class="w-[20px] h-auto" src="/assets/minesweeper.png" />
-          <div>Minesweeper</div>
-        </div>
-      </button>
+      </button> -->
       <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.flagQuiz.title')"
