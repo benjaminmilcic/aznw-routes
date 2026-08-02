@@ -1,0 +1,104 @@
+:host {
+  display: block;
+  /* Bewusst klein gehalten, damit unten viel Platz für den Zettel bleibt. */
+  --die: 2.2rem;
+}
+
+.tray {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+/* Die Perspektive muss am direkten Elternteil des Würfels sitzen – sonst
+   flacht der Button den 3D-Raum ab und alle Seiten liegen übereinander. */
+.slot {
+  width: var(--die);
+  height: var(--die);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: default;
+  perspective: 700px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slot--clickable {
+  cursor: pointer;
+}
+
+.slot--clickable:active .cube {
+  scale: 0.92;
+}
+
+.cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  padding: 12%;
+  box-sizing: border-box;
+  border-radius: 18%;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #e0e6f5;
+  backface-visibility: hidden;
+}
+
+/* Ein Würfel: alle sechs Seiten um die halbe Kantenlänge nach außen. */
+.face--1 {
+  transform: translateZ(calc(var(--die) / 2));
+}
+.face--2 {
+  transform: rotateY(180deg) translateZ(calc(var(--die) / 2));
+}
+.face--3 {
+  transform: rotateY(-90deg) translateZ(calc(var(--die) / 2));
+}
+.face--4 {
+  transform: rotateX(90deg) translateZ(calc(var(--die) / 2));
+}
+.face--5 {
+  transform: rotateX(-90deg) translateZ(calc(var(--die) / 2));
+}
+.face--6 {
+  transform: rotateY(90deg) translateZ(calc(var(--die) / 2));
+}
+
+/* Festgehaltene Würfel sind gelb – wie bisher. */
+.slot--held .face {
+  background: #fde047;
+  box-shadow: inset 0 0 0 2px #d97706;
+}
+
+.pip {
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f25f5c;
+  box-shadow: inset 2px 2px #d90429;
+  visibility: hidden;
+}
+
+.pip--on {
+  visibility: visible;
+}
+
+@media (min-width: 640px) {
+  :host {
+    --die: 2.6rem;
+  }
+
+  .tray {
+    gap: 0.6rem;
+  }
+}

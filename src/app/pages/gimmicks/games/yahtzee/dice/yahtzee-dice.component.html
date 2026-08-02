@@ -1,0 +1,23 @@
+<div class="tray">
+  @for (value of values(); track $index) {
+  <button
+    type="button"
+    class="slot"
+    [class.slot--held]="held()[$index]"
+    [class.slot--clickable]="clickable()"
+    [disabled]="!clickable()"
+    (click)="onClick($index)"
+    [attr.aria-label]="'Würfel ' + value + (held()[$index] ? ', festgehalten' : '')"
+  >
+    <div class="cube" [style.transform]="transformFor($index)">
+      @for (face of faces; track face) {
+      <div class="face face--{{ face }}">
+        @for (on of pipsFor(face); track $index) {
+        <span class="pip" [class.pip--on]="on"></span>
+        }
+      </div>
+      }
+    </div>
+  </button>
+  }
+</div>

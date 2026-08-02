@@ -60,9 +60,6 @@ export const environment = {
   error: {
     errorMessageApi: `https://${ip}:3000/error2email`,
   },
-  yahtzeeGame: {
-    webSocketsUrl: `https://${ip}:3000/yahtzee-game`,
-  },
   geoLocation: {
     reverseGeoCodeApi: `https://${ip}:3000/geolocation/reverse-geocode`,
     geoCodeApi: `https://${ip}:3000/geolocation/geocode`,

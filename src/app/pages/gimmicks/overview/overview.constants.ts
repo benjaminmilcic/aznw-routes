@@ -175,7 +175,7 @@ export const gimmicksOverViewSettings: GimmicksOverviewSetting[] = [
     emoji: '',
     elements: [
       'NestJS API',
-      'Websocket',
+      // 'Websocket',
       'Firebase'
       // 'Responsive design',
       // 'gimmicks.differentLanguages',

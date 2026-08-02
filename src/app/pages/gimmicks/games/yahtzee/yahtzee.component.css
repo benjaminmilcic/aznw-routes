@@ -1,3 +1,10 @@
-.mat-red{
-    @apply bg-red-300;
+/* Der Hintergrund kommt vom umgebenden Spiele-Layout (games.component) –
+   diese Komponente bleibt bewusst transparent. "relative" ist nötig, damit
+   das absolut positionierte section:before-Overlay nicht über den Buttons
+   und Eingabefeldern liegt. */
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
+  min-height: 0;
 }

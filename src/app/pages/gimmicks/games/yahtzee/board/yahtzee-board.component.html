@@ -1,0 +1,261 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <!-- Kopfzeile: wer ist dran + Spiel beenden -->
+  <header class="bar">
+    <div class="turn" [class.turn--mine]="svc.isMyTurn()">
+      @if (svc.thinking()) {
+      {{ "gimmicks.games.yahtzeeGame.thinking" | translate : { name: currentName() } }}
+      } @else if (svc.mode() === 'local') {
+      {{ "gimmicks.games.yahtzeeGame.turnOf" | translate : { name: currentName() } }}
+      } @else if (svc.isMyTurn()) {
+      {{ "gimmicks.games.yahtzeeGame.yourTurn" | translate }}
+      } @else {
+      {{ "gimmicks.games.yahtzeeGame.othersTurn" | translate : { name: currentName() } }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.yahtzeeGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <!-- Würfel + Wurf-Knopf -->
+  <section class="dice-area">
+    <app-yahtzee-dice
+      [values]="dice()"
+      [held]="held()"
+      [rollCount]="g.rollCount"
+      [clickable]="canHold()"
+      (toggle)="hold($event)"
+    />
+
+    @if (svc.isMyTurn()) {
+    <button type="button" class="roll-btn" [disabled]="!canRoll()" (click)="roll()">
+      🎲
+      {{
+        (rolledThisTurn() ? "gimmicks.games.yahtzeeGame.rollAgain" : "gimmicks.games.yahtzeeGame.roll")
+          | translate
+      }}
+      <span class="rolls">({{ rollsLeft() }})</span>
+    </button>
+    <p class="hint">
+      @if (!rolledThisTurn()) {
+      {{ "gimmicks.games.yahtzeeGame.startHint" | translate }}
+      } @else if (rollsLeft() > 0) {
+      {{ "gimmicks.games.yahtzeeGame.holdHint" | translate }}
+      } @else {
+      {{ "gimmicks.games.yahtzeeGame.chooseHint" | translate }}
+      }
+    </p>
+    } @else {
+    <p class="hint hint--wait">
+      ⏳ {{ "gimmicks.games.yahtzeeGame.waitHint" | translate : { name: currentName() } }}
+    </p>
+    }
+  </section>
+
+  <!-- Punktetabelle: eine Spalte je Spieler -->
+  <section class="sheet-outer" [style.--label-w]="labelWidth() + 'px'">
+    <div class="sheet-wrap" #sheetWrap (scroll)="updateScrollHints()">
+      <table class="sheet">
+      <thead>
+        <tr>
+          <th class="lbl"></th>
+          @for (p of players(); track p.id) {
+          <th class="col" [class.col--turn]="isCurrent(p.id)" [attr.data-player]="p.id">
+            <span class="ava">{{ p.emoji }}</span>
+            <span class="pname" [speakOnClick]="displayName(p)">{{ displayName(p) }}</span>
+          </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (cat of upperCats; track cat) {
+        <tr>
+          <th class="lbl">{{ "gimmicks.games.yahtzeeGame.cat." + cat | translate }}</th>
+          @for (p of players(); track p.id) {
+          <td
+            class="cell"
+            [class.cell--turn]="isCurrent(p.id)"
+            [class.cell--pick]="canPick(p.id, cat)"
+            (click)="choose(p.id, cat)"
+          >
+            @if (valueOf(p.id, cat) != null) { {{ valueOf(p.id, cat) }} } @else if
+            (showPotential(p.id, cat)) {
+            <span class="hint-value">{{ potential(cat) }}</span>
+            }
+          </td>
+          }
+        </tr>
+        }
+
+        <tr class="sum-row">
+          <th class="lbl">{{ "gimmicks.games.yahtzeeGame.sum" | translate }}</th>
+          @for (p of players(); track p.id) {
+          <td class="cell cell--sum">{{ totalsOf(p.id).upper }}</td>
+          }
+        </tr>
+        <tr class="sum-row">
+          <th class="lbl">{{ "gimmicks.games.yahtzeeGame.bonus" | translate }}</th>
+          @for (p of players(); track p.id) {
+          <td class="cell cell--sum">{{ totalsOf(p.id).bonus }}</td>
+          }
+        </tr>
+
+        @for (cat of lowerCats; track cat) {
+        <tr>
+          <th class="lbl">{{ "gimmicks.games.yahtzeeGame.cat." + cat | translate }}</th>
+          @for (p of players(); track p.id) {
+          <td
+            class="cell"
+            [class.cell--turn]="isCurrent(p.id)"
+            [class.cell--pick]="canPick(p.id, cat)"
+            (click)="choose(p.id, cat)"
+          >
+            @if (valueOf(p.id, cat) != null) { {{ valueOf(p.id, cat) }} } @else if
+            (showPotential(p.id, cat)) {
+            <span class="hint-value">{{ potential(cat) }}</span>
+            }
+          </td>
+          }
+        </tr>
+        }
+
+        <tr class="total-row">
+          <th class="lbl">{{ "gimmicks.games.yahtzeeGame.total" | translate }}</th>
+          @for (p of players(); track p.id) {
+          <td class="cell cell--total">{{ totalsOf(p.id).total }}</td>
+          }
+        </tr>
+      </tbody>
+      </table>
+    </div>
+
+    <!-- Hinweise, dass der Zettel in diese Richtung noch weitergeht -->
+    @if (canScrollUp()) {
+    <button
+      type="button"
+      class="scroll-pill scroll-pill--up"
+      (click)="scrollSheet('up')"
+      [attr.aria-label]="'gimmicks.games.yahtzeeGame.scrollHint' | translate"
+    >
+      <span class="scroll-arrow scroll-arrow--up" aria-hidden="true">▴</span>
+    </button>
+    } @if (canScrollDown()) {
+    <button
+      type="button"
+      class="scroll-pill scroll-pill--down"
+      (click)="scrollSheet('down')"
+      [attr.aria-label]="'gimmicks.games.yahtzeeGame.scrollHint' | translate"
+    >
+      <span class="scroll-arrow" aria-hidden="true">▾</span>
+    </button>
+    } @if (canScrollLeft()) {
+    <button
+      type="button"
+      class="scroll-pill scroll-pill--left"
+      (click)="scrollSheetX(-1)"
+      [attr.aria-label]="'gimmicks.games.yahtzeeGame.scrollHint' | translate"
+    >
+      <span class="scroll-arrow scroll-arrow--left" aria-hidden="true">◂</span>
+    </button>
+    } @if (canScrollRight()) {
+    <button
+      type="button"
+      class="scroll-pill scroll-pill--right"
+      (click)="scrollSheetX(1)"
+      [attr.aria-label]="'gimmicks.games.yahtzeeGame.scrollHint' | translate"
+    >
+      <span class="scroll-arrow scroll-arrow--right" aria-hidden="true">▸</span>
+    </button>
+    }
+  </section>
+
+  <!-- Warten auf Mitspieler (nur online) -->
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.yahtzeeGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.yahtzeeGame.codeShare" | translate }}</p>
+
+      <ul class="lobby">
+        @for (p of players(); track p.id) {
+        <li class="lobby-player">
+          <span class="ava">{{ p.emoji }}</span>
+          <span>{{ displayName(p) }}</span>
+        </li>
+        }
+      </ul>
+
+      @if (svc.isHost()) {
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="players().length < 2"
+        (click)="startOnline()"
+      >
+        {{ "gimmicks.games.yahtzeeGame.startGame" | translate }}
+      </button>
+      @if (players().length < 2) {
+      <p class="panel-text">{{ "gimmicks.games.yahtzeeGame.waitingPlayer" | translate }}</p>
+      } } @else {
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="panel-text">{{ "gimmicks.games.yahtzeeGame.waitingHost" | translate }}</p>
+      }
+
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.yahtzeeGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Spielende -->
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <!-- Der Dialog lässt sich zur Seite schieben, um die Tabelle zu sehen. -->
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+      [class.panel--tie]="outcome() === 'tie'"
+    >
+      @switch (outcome()) { @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      } @case ('tie') {
+      <div class="result-emoji anim-tie">🤝</div>
+      } }
+
+      <h2 class="result-title">
+        @if (outcome() === 'tie') {
+        {{ "gimmicks.games.yahtzeeGame.tie" | translate }}
+        } @else {
+        {{ "gimmicks.games.yahtzeeGame.won" | translate : { name: winnerName() } }}
+        }
+      </h2>
+
+      <ul class="final-scores">
+        @for (p of players(); track p.id) {
+        <li class="final-player">
+          <span class="ava">{{ p.emoji }}</span>
+          <span class="final-name">{{ displayName(p) }}</span>
+          <b>{{ totalsOf(p.id).total }}</b>
+        </li>
+        }
+      </ul>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.yahtzeeGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.yahtzeeGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

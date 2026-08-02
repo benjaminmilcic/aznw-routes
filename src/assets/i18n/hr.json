@@ -378,6 +378,152 @@
     },
     "games": {
       "connectFour": "Connect 4",
+
+      "yahtzeeGame": {
+
+        "subtitle": "Pet kockica, trinaest polja – tko skupi najviše bodova?",
+
+        "mode": "Način igre",
+
+        "modeLocal": "Na ovom uređaju",
+
+        "modeOnline": "Online",
+
+        "computer": "Računalo",
+
+        "level": "Težina",
+
+        "players": "Igrači",
+
+        "addPlayer": "Igrač",
+
+        "addComputer": "Računalo",
+
+        "removePlayer": "Ukloni igrača",
+
+        "playerNr": "Igrač {{nr}}",
+
+        "nameLabel": "Kako se zoveš?",
+
+        "namePlaceholder": "Ime",
+
+        "chooseAvatar": "Odaberi svoj znak",
+
+        "startGame": "Pokreni igru",
+
+        "newGame": "Pokreni novu igru",
+
+        "creating": "Trenutak …",
+
+        "joinPrompt": "Pridruži se igri",
+
+        "codeLabel": "Kod igre (4 broja)",
+
+        "codePlaceholder": "npr. 4827",
+
+        "connecting": "Povezivanje …",
+
+        "join": "Igraj zajedno",
+
+        "back": "Natrag",
+
+        "endGame": "Završi igru",
+
+        "roll": "Baci kockice",
+
+        "rollAgain": "Baci ponovno",
+
+        "startHint": "Dodirni „Baci kockice“ i kreni!",
+
+        "holdHint": "Dodirni kockice koje želiš zadržati.",
+
+        "chooseHint": "Nema više bacanja – odaberi polje.",
+
+        "waitHint": "{{name}} je na redu …",
+
+        "thinking": "{{name}} razmišlja …",
+
+        "turnOf": "{{name}} je na redu",
+
+        "yourTurn": "Ti si na redu!",
+
+        "othersTurn": "{{name}} je na redu …",
+
+        "sum": "Zbroj",
+
+        "bonus": "Bonus (od 63)",
+
+        "total": "Ukupno",
+
+        "scrollHint": "listaj dalje",
+
+        "playerLeft": "{{name}} je napustio igru.",
+
+        "codeTitle": "Kod igre",
+
+        "codeShare": "Upiši ovaj kod na drugim uređajima.",
+
+        "waitingPlayer": "Čekamo barem još jednog igrača …",
+
+        "waitingHost": "Čekamo da domaćin pokrene igru …",
+
+        "cancel": "Odustani",
+
+        "won": "{{name}} je pobijedio!",
+
+        "tie": "Neriješeno!",
+
+        "playAgain": "Igraj ponovno",
+
+        "home": "Natrag na početak",
+
+        "cat": {
+
+          "ones": "Jedinice",
+
+          "twos": "Dvojke",
+
+          "threes": "Trojke",
+
+          "fours": "Četvorke",
+
+          "fives": "Petice",
+
+          "sixes": "Šestice",
+
+          "threeKind": "Tri iste",
+
+          "fourKind": "Četiri iste",
+
+          "fullHouse": "Full house",
+
+          "smallStraight": "Mala skala",
+
+          "largeStraight": "Velika skala",
+
+          "yatzy": "Yahtzee",
+
+          "chance": "Šansa"
+
+        },
+
+        "errors": {
+
+          "notFound": "Nije pronađena igra s ovim kodom.",
+
+          "full": "Ova igra je već puna.",
+
+          "alreadyStarted": "Ova igra je već započela.",
+
+          "timeout": "Isteklo vrijeme: baza podataka ne odgovara.",
+
+          "permission": "Nema veze s bazom podataka. Pokušaj ponovno kasnije.",
+
+          "notConfigured": "Online način trenutačno nije dostupan."
+
+        }
+
+      },
       "connectFourGame": {
         "subtitle": "Složi četiri svoje pločice u red – vodoravno, okomito ili koso.",
         "mode": "Način igre",

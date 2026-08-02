@@ -376,6 +376,152 @@
     },
     "games": {
       "connectFour": "Connect 4",
+
+      "yahtzeeGame": {
+
+        "subtitle": "Five dice, thirteen boxes – who scores the most?",
+
+        "mode": "Game mode",
+
+        "modeLocal": "On this device",
+
+        "modeOnline": "Online",
+
+        "computer": "Computer",
+
+        "level": "Difficulty",
+
+        "players": "Players",
+
+        "addPlayer": "Player",
+
+        "addComputer": "Computer",
+
+        "removePlayer": "Remove player",
+
+        "playerNr": "Player {{nr}}",
+
+        "nameLabel": "What's your name?",
+
+        "namePlaceholder": "Name",
+
+        "chooseAvatar": "Choose your token",
+
+        "startGame": "Start game",
+
+        "newGame": "Start a new game",
+
+        "creating": "One moment …",
+
+        "joinPrompt": "Join a game",
+
+        "codeLabel": "Game code (4 digits)",
+
+        "codePlaceholder": "e.g. 4827",
+
+        "connecting": "Connecting …",
+
+        "join": "Join in",
+
+        "back": "Back",
+
+        "endGame": "End game",
+
+        "roll": "Roll",
+
+        "rollAgain": "Roll again",
+
+        "startHint": "Tap “Roll” to get started!",
+
+        "holdHint": "Tap the dice you want to keep.",
+
+        "chooseHint": "No rolls left – pick a box now.",
+
+        "waitHint": "{{name}}'s turn …",
+
+        "thinking": "{{name}} is thinking …",
+
+        "turnOf": "{{name}}'s turn",
+
+        "yourTurn": "Your turn!",
+
+        "othersTurn": "{{name}}'s turn …",
+
+        "sum": "Sum",
+
+        "bonus": "Bonus (63+)",
+
+        "total": "Total",
+
+        "scrollHint": "scroll for more",
+
+        "playerLeft": "{{name}} has left the game.",
+
+        "codeTitle": "Game code",
+
+        "codeShare": "Enter this code on the other devices.",
+
+        "waitingPlayer": "Waiting for at least one other player …",
+
+        "waitingHost": "Waiting for the host to start …",
+
+        "cancel": "Cancel",
+
+        "won": "{{name}} won!",
+
+        "tie": "It's a tie!",
+
+        "playAgain": "Play again",
+
+        "home": "Back to start",
+
+        "cat": {
+
+          "ones": "Ones",
+
+          "twos": "Twos",
+
+          "threes": "Threes",
+
+          "fours": "Fours",
+
+          "fives": "Fives",
+
+          "sixes": "Sixes",
+
+          "threeKind": "Three of a kind",
+
+          "fourKind": "Four of a kind",
+
+          "fullHouse": "Full house",
+
+          "smallStraight": "Small straight",
+
+          "largeStraight": "Large straight",
+
+          "yatzy": "Yahtzee",
+
+          "chance": "Chance"
+
+        },
+
+        "errors": {
+
+          "notFound": "No game found with this code.",
+
+          "full": "This game is already full.",
+
+          "alreadyStarted": "This game has already started.",
+
+          "timeout": "Timeout: the database is not responding.",
+
+          "permission": "No connection to the database. Please try again later.",
+
+          "notConfigured": "The online mode is currently unavailable."
+
+        }
+
+      },
       "connectFourGame": {
         "subtitle": "Line up four of your own discs – across, up or diagonally.",
         "mode": "Game mode",
