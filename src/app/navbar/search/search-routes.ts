@@ -211,6 +211,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.ships',
+    keywords: ['ships', 'schiffe', 'battleship', 'schiffe versenken', 'brodovi', 'potapanje'],
+    description:
+      'Schiffe versenken Battleship Potapanje brodova Flotte fleet flota Seeschlacht naval battle pomorska bitka Raster grid mreža schießen shoot pucaj Treffer hit pogodak versenken sink potopiti gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/ships',
+    icon: 'fa-solid fa-ship',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.yahtzee',
     keywords: ['yahtzee', 'kniffel', 'würfel', 'dice', 'kockice'],
     description:

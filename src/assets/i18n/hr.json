@@ -378,6 +378,90 @@
     },
     "games": {
       "connectFour": "4 u nizu",
+      "ships": "Potapanje brodova",
+      "shipsShort": "Brodovi",
+      "shipsGame": {
+        "title": "Potapanje brodova",
+        "subtitle": "Potopi protivničku flotu – protiv računala ili online udvoje.",
+        "mode": "Način igre",
+        "modeComputer": "Računalo",
+        "modeOnline": "Online",
+        "computer": "Računalo",
+        "level": "Težina",
+        "namePlaceholder": "Tvoje ime",
+        "startGame": "Pokreni igru",
+        "newGame": "Pokreni novu igru",
+        "creating": "Trenutak …",
+        "joinPrompt": "Pridruži se igri",
+        "codeLabel": "Kod igre (4 broja)",
+        "codePlaceholder": "npr. 4827",
+        "connecting": "Povezivanje …",
+        "join": "Igraj zajedno",
+        "back": "Natrag",
+        "thinking": "Računalo razmišlja …",
+        "nameLabel": "Kako se zoveš?",
+        "chooseAvatar": "Odaberi svoju životinju",
+        "waiting": {
+          "title": "Čekam suigrača …",
+          "shareCode": "Reci ovaj kod drugoj osobi:",
+          "cancel": "Odustani"
+        },
+        "waitOpponent": {
+          "title": "Bravo!",
+          "text": "Tvoji brodovi su postavljeni. Još čekamo {{name}} …",
+          "cancel": "Prekini igru"
+        },
+        "setup": {
+          "title": "Postavi svoje brodove!",
+          "next": "Sljedeći: {{emoji}} {{name}} ({{size}} polja) – dodirni more.",
+          "allPlaced": "Svi brodovi su postavljeni! 🎉",
+          "horizontal": "↔️ Vodoravno",
+          "vertical": "↕️ Okomito",
+          "random": "🎲 Slučajno",
+          "clear": "🧹 Ponovno",
+          "ready": "✅ Spreman!",
+          "tip": "Savjet: Dodirni postavljeni brod da ga ukloniš.",
+          "cancel": "✕ Prekini igru",
+          "warnAllPlaced": "Svi su brodovi već postavljeni!",
+          "warnNoFit": "Brod ovdje ne stane!"
+        },
+        "ships": {
+          "battleship": "Bojni brod",
+          "cruiser": "Krstarica",
+          "boat": "Čamac"
+        },
+        "battle": {
+        "over": "Igra je gotova",
+          "cancel": "🚪 Prekini igru",
+          "yourTurn": "🎯 Ti si na redu! Pucaj!",
+          "opponentTurn": "⏳ {{emoji}} {{name}} je na redu …",
+          "enemySea": "🎯 More igrača {{name}}",
+          "sunk": "Potopljeno: {{n}} / {{total}} brodova",
+          "yourSea": "Tvoje more",
+          "alive": "Još cijelo: {{n}} / {{total}} brodova"
+        },
+        "result": {
+          "won": "Pobjeda!",
+          "wonText": "Bravo, {{name}}! Potopio si sve brodove. 🎉",
+          "lost": "Ovaj put si izgubio",
+          "lostText": "{{emoji}} {{name}} je bio brži. Nema veze – pokušaj ponovno!",
+          "again": "🔁 Igraj ponovno",
+          "home": "🏠 Natrag na početak"
+        },
+        "confirm": {
+          "leaveTitle": "Prekinuti?",
+          "leaveMessage": "Želiš li stvarno prekinuti igru i vratiti se na početak?",
+          "leaveYes": "Da, prekini",
+          "leaveNo": "Nastavi igrati"
+        },
+        "errors": {
+          "notFound": "Nije pronađena igra s ovim kodom.",
+          "full": "Ova igra je već puna (2 igrača).",
+          "timeout": "Isteklo vrijeme: baza podataka ne odgovara.",
+          "permission": "Nema veze s bazom podataka. Pokušaj ponovno kasnije.",
+          "notConfigured": "Online način trenutačno nije dostupan."
+        }
+      },
 
       "yahtzeeGame": {
 

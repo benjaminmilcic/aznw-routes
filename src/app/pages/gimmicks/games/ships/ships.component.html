@@ -1,0 +1,83 @@
+<div class="sea">
+  @switch (view()) {
+  <!-- Startbildschirm: gegen Computer oder online -->
+  @case ('home') {
+  <app-ships-home />
+  }
+
+  <!-- Online: auf den Mitspieler warten -->
+  @case ('waiting') {
+  <div class="panel">
+    <div class="panel-emoji">⛵</div>
+    <h2 class="panel-title">
+      {{ "gimmicks.games.shipsGame.waiting.title" | translate }}
+    </h2>
+    <p class="panel-text">
+      {{ "gimmicks.games.shipsGame.waiting.shareCode" | translate }}
+    </p>
+    <p class="code">{{ svc.game()?.code }}</p>
+    <button type="button" class="btn btn-ghost" (click)="svc.leaveGame()">
+      {{ "gimmicks.games.shipsGame.waiting.cancel" | translate }}
+    </button>
+  </div>
+  }
+
+  <!-- Flotte platzieren -->
+  @case ('setup') {
+  <app-ships-setup />
+  }
+
+  <!-- Online: eigene Flotte steht, der Mitspieler legt noch -->
+  @case ('waitOpponent') {
+  <div class="panel">
+    <div class="panel-emoji">⏳</div>
+    <h2 class="panel-title">
+      {{ "gimmicks.games.shipsGame.waitOpponent.title" | translate }}
+    </h2>
+    <p class="panel-text">
+      {{
+        "gimmicks.games.shipsGame.waitOpponent.text"
+          | translate : { name: svc.opponent()?.name }
+      }}
+    </p>
+    <button type="button" class="btn btn-ghost" (click)="svc.leaveGame()">
+      {{ "gimmicks.games.shipsGame.waitOpponent.cancel" | translate }}
+    </button>
+  </div>
+  }
+
+  <!-- Kampf (die Raster bleiben am Ende sichtbar, das Ergebnis liegt darüber) -->
+  @case ('battle') {
+  <app-ships-battle />
+  }
+  @case ('finished') {
+  <app-ships-battle />
+  }
+  }
+</div>
+
+<!-- Ergebnis über dem Spielgeschehen – verschiebbar, um den Endstand zu prüfen -->
+@if (view() === 'finished') {
+<div class="overlay">
+  <div class="overlay-inner" appDraggable>
+    <app-ships-result />
+  </div>
+</div>
+}
+
+<!-- Bestätigung vor dem Abbrechen -->
+@if (svc.confirmDialog(); as dialog) {
+<div class="overlay">
+  <div class="panel panel--confirm">
+    <div class="panel-emoji">{{ dialog.emoji }}</div>
+    <h2 class="panel-title">{{ dialog.titleKey | translate }}</h2>
+    <p class="panel-text">{{ dialog.messageKey | translate }}</p>
+    <button type="button" class="btn btn-danger" (click)="svc.confirmYes()">
+      {{ dialog.yesKey | translate }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="svc.confirmNo()">
+      {{ dialog.noKey | translate }}
+    </button>
+  </div>
+</div>
+}

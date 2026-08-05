@@ -11,6 +11,7 @@
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { getDatabase, type Database } from 'firebase/database';
+import { getFirestore, type Firestore } from 'firebase/firestore';
 import { firebaseConfig } from './firebase-config';
 
 const APP_NAME = 'aznw-games';
@@ -37,6 +38,25 @@ if (databaseConfigured) {
 
 /** Nur gültig, wenn `databaseConfigured === true` ist (vorher prüfen!). */
 export const db = database as Database;
+
+// ---- Firestore -------------------------------------------------------
+// "Schiffe versenken" liegt in Firestore (Sammlung "games") statt in der
+// Realtime Database – so wie in der Whiteboard-App. Dadurch kann eine
+// Partie sogar geräteübergreifend zwischen beiden Apps gespielt werden.
+let firestore: Firestore | null = null;
+
+if (app) {
+  try {
+    firestore = getFirestore(app);
+  } catch {
+    firestore = null;
+  }
+}
+
+export const firestoreConfigured = !!firestore;
+
+/** Nur gültig, wenn `firestoreConfigured === true` ist (vorher prüfen!). */
+export const firestoreDb = firestore as Firestore;
 
 /**
  * Anonyme Anmeldung – die Datenbank-Regeln verlangen `auth != null`.

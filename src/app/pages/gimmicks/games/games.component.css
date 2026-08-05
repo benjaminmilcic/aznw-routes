@@ -160,7 +160,21 @@ section:before {
   }
 }
 
+/* Lange Spielnamen haben eine Kurzform, die nur auf schmalen Bildschirmen
+   erscheint – sonst bräuchte der Eintrag in der zweispaltigen Liste zwei Zeilen. */
+::ng-deep .games-menu .mat-mdc-menu-item .label-short {
+  display: none;
+}
+
 @media (max-width: 480px) {
+  ::ng-deep .games-menu .mat-mdc-menu-item .label-long {
+    display: none;
+  }
+
+  ::ng-deep .games-menu .mat-mdc-menu-item .label-short {
+    display: block;
+  }
+
   ::ng-deep .games-menu .mat-mdc-menu-content {
     gap: 4px;
     padding: 7px;
@@ -234,6 +248,8 @@ section:before {
   color: #422006;
   font-weight: 700;
   letter-spacing: 0.01em;
+  /* Lange Spielnamen sollen den Knopf breiter machen, nicht zweizeilig. */
+  white-space: nowrap;
   box-shadow:
     0 8px 20px -8px rgba(0, 0, 0, 0.7),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);

@@ -95,6 +95,20 @@
           <div>{{ "gimmicks.games.flagQuiz.title" | translate }}</div>
         </div>
       </button>
+      <button
+        mat-menu-item
+        (click)="changeGame('gimmicks.games.ships')"
+        [routerLink]="['/gimmicks/games/ships']"
+        routerLinkActive="router-link-active"
+      >
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/ships.svg" />
+          <!-- Auf dem Smartphone nur "Schiffe" – der volle Name bräuchte
+               in der zweispaltigen Liste zwei Zeilen. -->
+          <div class="label-long">{{ "gimmicks.games.ships" | translate }}</div>
+          <div class="label-short">{{ "gimmicks.games.shipsShort" | translate }}</div>
+        </div>
+      </button>
       <!-- <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.jigsaw')"

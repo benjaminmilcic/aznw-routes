@@ -1,0 +1,27 @@
+<div class="board" [style.--cols]="size">
+  <!-- Buchstaben oben -->
+  <div class="row">
+    <span class="corner"></span>
+    @for (c of letters; track c) {
+    <span class="label">{{ c }}</span>
+    }
+  </div>
+
+  @for (row of rows(); track rowIdx; let rowIdx = $index) {
+  <div class="row">
+    <span class="label">{{ rowIdx + 1 }}</span>
+    @for (cell of row; track colIdx; let colIdx = $index) {
+    <button
+      type="button"
+      class="cell cell--{{ cell.state }}"
+      [class.cell--clickable]="interactive() && !locked(cell)"
+      [disabled]="!interactive() || locked(cell)"
+      [attr.aria-label]="letters[colIdx] + (rowIdx + 1)"
+      (click)="cellClick.emit({ x: colIdx, y: rowIdx })"
+    >
+      {{ content(cell) }}
+    </button>
+    }
+  </div>
+  }
+</div>

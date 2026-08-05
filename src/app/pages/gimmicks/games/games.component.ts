@@ -106,6 +106,12 @@ export class GamesComponent {
           });
         this.gameIconSrc = '/assets/svg/gb.svg';
         break;
+      case 'ships':
+        this.translate.get('gimmicks.games.ships').subscribe((res: string) => {
+          this.gameName = res;
+        });
+        this.gameIconSrc = '/assets/svg/ships.svg';
+        break;
 
       default:
         break;
@@ -143,6 +149,9 @@ export class GamesComponent {
         break;
       case 'gimmicks.games.flagQuiz.title':
         this.gameIconSrc = '/assets/svg/gb.svg';
+        break;
+      case 'gimmicks.games.ships':
+        this.gameIconSrc = '/assets/svg/ships.svg';
         break;
 
       default:

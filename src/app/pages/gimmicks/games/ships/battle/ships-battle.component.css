@@ -1,0 +1,151 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.battle {
+  width: 100%;
+  max-width: min(96vw, 90rem);
+  margin: 0 auto;
+  padding: 0 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.turn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.turn {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(8, 24, 66, 0.35);
+}
+
+.turn--mine {
+  background: #22c55e;
+  color: #fff;
+  animation: ships-wobble 0.8s ease-in-out infinite;
+}
+
+.turn--waiting {
+  background: rgba(255, 255, 255, 0.92);
+  color: #334155;
+}
+
+.end-game {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  background: #fb7185;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.end-game:active {
+  transform: scale(0.95);
+}
+
+.boards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.board-card {
+  width: 100%;
+  max-width: 24rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 30px rgba(8, 24, 66, 0.35);
+  padding: 0.5rem 0.6rem 0.6rem;
+  box-sizing: border-box;
+}
+
+.board-card--enemy {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.board-title {
+  margin: 0 0 0.1rem;
+  text-align: center;
+  color: #0c4a6e;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.board-sub {
+  margin: 0 0 0.4rem;
+  text-align: center;
+  color: #51618f;
+  font-size: 0.78rem;
+}
+
+/* Auf dem Smartphone stehen beide Raster untereinander – sonst müsste man
+   scrollen. Die Höhe begrenzt die Breite, damit beide gleichzeitig passen. */
+@media (max-width: 767px) {
+  .board-card {
+    max-width: min(92vw, 32vh);
+  }
+}
+
+/* Ab Tablet stehen die Raster nebeneinander und dürfen mitwachsen.
+   Begrenzt durch:
+     46vw                  – beide passen nebeneinander
+     calc(100vh - 18rem)   – Navigation, Spielauswahl, Zug-Anzeige und
+                             Kartenbeschriftung abgezogen, damit man nicht
+                             scrollen muss (das Raster ist quadratisch)
+     42rem                 – auf sehr großen Bildschirmen nicht ins Uferlose */
+@media (min-width: 768px) {
+  .board-card {
+    max-width: min(46vw, calc(100vh - 18rem), 42rem);
+    padding: 0.7rem 0.9rem 0.9rem;
+  }
+
+  .board-title {
+    font-size: 1.1rem;
+  }
+
+  .board-sub {
+    font-size: 0.9rem;
+  }
+
+  .turn {
+    font-size: 1.05rem;
+    padding: 0.45rem 1.25rem;
+  }
+
+  .boards {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+}
+
+@keyframes ships-wobble {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turn--mine {
+    animation: none;
+  }
+}

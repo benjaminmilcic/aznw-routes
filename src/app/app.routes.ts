@@ -163,6 +163,13 @@ export const routes: Routes = [
                 (m) => m.FlagQuizComponent,
               ),
           },
+          {
+            path: 'ships',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/ships/ships.component').then(
+                (m) => m.ShipsComponent,
+              ),
+          },
         ],
       },
       {

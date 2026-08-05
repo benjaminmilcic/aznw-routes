@@ -1,0 +1,148 @@
+<div class="home">
+  <div class="home-card">
+    <h2 class="title">⚓ {{ "gimmicks.games.shipsGame.title" | translate }}</h2>
+    <p class="subtitle">{{ "gimmicks.games.shipsGame.subtitle" | translate }}</p>
+
+    @if (svc.error(); as err) {
+    <p class="error">{{ err | translate }}</p>
+    }
+
+    <!-- Spielart -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.shipsGame.mode" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="mode()"
+        (ngModelChange)="onMode($event)"
+        mode="ios"
+        class="ships-segment"
+      >
+        <ion-segment-button value="computer">
+          <ion-label>{{
+            "gimmicks.games.shipsGame.modeComputer" | translate
+          }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="online">
+          <ion-label>{{
+            "gimmicks.games.shipsGame.modeOnline" | translate
+          }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- Name -->
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.shipsGame.nameLabel" | translate
+      }}</span>
+      <input
+        class="text-input"
+        type="text"
+        maxlength="12"
+        [placeholder]="'gimmicks.games.shipsGame.namePlaceholder' | translate"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </label>
+
+    <!-- Tier -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.shipsGame.chooseAvatar" | translate
+      }}</span>
+      <div class="avatar-grid">
+        @for (a of avatars; track a) {
+        <button
+          type="button"
+          class="avatar"
+          [class.avatar--active]="emoji() === a"
+          (click)="emoji.set(a)"
+        >
+          {{ a }}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (mode() === 'computer') {
+    <!-- ---------------- Gegen den Computer ---------------- -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.shipsGame.level" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="level()"
+        (ngModelChange)="level.set($event)"
+        mode="ios"
+        class="ships-segment"
+      >
+        <ion-segment-button value="easy">
+          <ion-label>{{ "gimmicks.games.easy" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medium">
+          <ion-label>{{ "gimmicks.games.medium" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hard">
+          <ion-label>{{ "gimmicks.games.difficult" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+      {{ "gimmicks.games.shipsGame.startGame" | translate }}
+    </button>
+    } @else {
+    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    @if (!showJoin()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || svc.busy()"
+      (click)="create()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.shipsGame.creating"
+          : "gimmicks.games.shipsGame.newGame"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(true)">
+      {{ "gimmicks.games.shipsGame.joinPrompt" | translate }}
+    </button>
+    } @else {
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.shipsGame.codeLabel" | translate
+      }}</span>
+      <input
+        class="text-input code-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="4"
+        [placeholder]="'gimmicks.games.shipsGame.codePlaceholder' | translate"
+        [ngModel]="joinCode()"
+        (ngModelChange)="onCode($event)"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || joinCode().length !== 4 || svc.busy()"
+      (click)="join()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.shipsGame.connecting"
+          : "gimmicks.games.shipsGame.join"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(false)">
+      {{ "gimmicks.games.shipsGame.back" | translate }}
+    </button>
+    } }
+  </div>
+</div>

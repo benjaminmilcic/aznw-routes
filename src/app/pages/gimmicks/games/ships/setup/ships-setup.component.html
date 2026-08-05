@@ -1,0 +1,58 @@
+<div class="setup">
+  <h2 class="title">
+    {{ svc.me()?.emoji }} {{ "gimmicks.games.shipsGame.setup.title" | translate }}
+  </h2>
+
+  @if (nextSpec(); as next) {
+  <p class="hint">
+    {{
+      "gimmicks.games.shipsGame.setup.next"
+        | translate
+          : {
+              emoji: next.emoji,
+              name: shipNameKey(next) | translate,
+              size: next.size
+            }
+    }}
+  </p>
+  } @else {
+  <p class="hint hint--done">
+    {{ "gimmicks.games.shipsGame.setup.allPlaced" | translate }}
+  </p>
+  }
+
+  <div class="board-card">
+    <app-ships-board [rows]="rows()" [interactive]="true" (cellClick)="onCell($event)" />
+  </div>
+
+  @if (flash(); as msg) {
+  <p class="flash">{{ msg | translate }}</p>
+  }
+
+  <div class="controls">
+    <button type="button" class="btn btn-light" (click)="toggleOrient()">
+      {{
+        (orient() === "h"
+          ? "gimmicks.games.shipsGame.setup.horizontal"
+          : "gimmicks.games.shipsGame.setup.vertical"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-light" (click)="randomize()">
+      {{ "gimmicks.games.shipsGame.setup.random" | translate }}
+    </button>
+    <button type="button" class="btn btn-light" (click)="clear()">
+      {{ "gimmicks.games.shipsGame.setup.clear" | translate }}
+    </button>
+  </div>
+
+  <button type="button" class="btn btn-primary" [disabled]="!allPlaced()" (click)="ready()">
+    {{ "gimmicks.games.shipsGame.setup.ready" | translate }}
+  </button>
+
+  <p class="tip">{{ "gimmicks.games.shipsGame.setup.tip" | translate }}</p>
+
+  <button type="button" class="btn btn-quit" (click)="leave()">
+    {{ "gimmicks.games.shipsGame.setup.cancel" | translate }}
+  </button>
+</div>

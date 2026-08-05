@@ -84,7 +84,9 @@
       "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/card/card.css\" memo-quiz/card/memo-card.component.css)",
       "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/097e07b8-3b58-426b-934f-73e164213d57/scratchpad/add-yahtzee-i18n.mjs\")",
       "Bash(node scripts/print-lan-url.mjs)",
-      "PowerShell(Test-NetConnection *)"
+      "PowerShell(Test-NetConnection *)",
+      "Bash(xargs wc -l)",
+      "Bash(python \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/b00f953b-f8db-400b-aa00-03810c710cfa/scratchpad/add_ships_i18n.py\")"
     ],
     "deny": [],
     "ask": []

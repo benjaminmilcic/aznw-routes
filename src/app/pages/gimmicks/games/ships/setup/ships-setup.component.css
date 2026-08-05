@@ -1,0 +1,141 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.setup {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  padding: 0 0.5rem 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 0.2rem;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+.hint {
+  margin: 0 0 0.6rem;
+  color: #e0f2fe;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hint--done {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.board-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 30px rgba(8, 24, 66, 0.35);
+  padding: 0.6rem;
+  box-sizing: border-box;
+}
+
+.flash {
+  margin: 0.5rem 0 0;
+  color: #fecdd3;
+  font-weight: 700;
+  animation: ships-wobble 0.8s ease-in-out infinite;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 0.9rem;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-light {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0c4a6e;
+  box-shadow: 0 3px 0 rgba(3, 105, 161, 0.45);
+}
+
+.btn-primary {
+  margin-top: 0.6rem;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 5px 0 #15803d;
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tip {
+  margin: 0.6rem 0 0;
+  color: #e0f2fe;
+  font-size: 0.8rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-quit {
+  margin-top: 0.7rem;
+  width: auto;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #f0f9ff;
+  font-size: 0.85rem;
+}
+
+/* Auf dem Desktop ist reichlich Platz – das Raster darf mitwachsen. Die
+   Fensterhöhe begrenzt es: Abgezogen sind Navigation und Spielauswahl (~8rem),
+   Überschrift, Knöpfe, Tipp und Abbrechen (~19rem). So bleibt alles sichtbar,
+   ohne zu scrollen (das Raster selbst ist quadratisch). */
+@media (min-width: 768px) {
+  .setup {
+    max-width: min(90vw, calc(100vh - 27rem), 34rem);
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .hint {
+    font-size: 1rem;
+  }
+}
+
+@keyframes ships-wobble {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash {
+    animation: none;
+  }
+}

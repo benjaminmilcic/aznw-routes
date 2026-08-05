@@ -1,0 +1,71 @@
+<div class="battle">
+  <!-- Wer ist dran? (nach Spielende sagt das Ergebnis-Fenster Bescheid) -->
+  <div class="turn-row">
+    @if (svc.game()?.status !== 'battle') {
+    <span class="turn turn--waiting">
+      {{ "gimmicks.games.shipsGame.battle.over" | translate }}
+    </span>
+    } @else if (svc.thinking()) {
+    <span class="turn turn--waiting">
+      {{ "gimmicks.games.shipsGame.thinking" | translate }}
+    </span>
+    } @else if (svc.isMyTurn()) {
+    <span class="turn turn--mine">
+      {{ "gimmicks.games.shipsGame.battle.yourTurn" | translate }}
+    </span>
+    } @else {
+    <span class="turn turn--waiting">
+      {{
+        "gimmicks.games.shipsGame.battle.opponentTurn"
+          | translate
+            : {
+                emoji: svc.opponent()?.emoji,
+                name: displayName(svc.opponent())
+              }
+      }}
+    </span>
+    }
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.shipsGame.battle.cancel" | translate }}
+    </button>
+  </div>
+
+  <div class="boards">
+    <!-- Gegnerisches Meer – hier wird geschossen -->
+    <div class="board-card board-card--enemy">
+      <h3 class="board-title">
+        {{
+          "gimmicks.games.shipsGame.battle.enemySea"
+            | translate : { name: displayName(svc.opponent()) }
+        }}
+      </h3>
+      <p class="board-sub">
+        {{
+          "gimmicks.games.shipsGame.battle.sunk"
+            | translate : { n: enemySunk(), total: totalShips() }
+        }}
+      </p>
+      <app-ships-board
+        [rows]="enemyRows()"
+        [interactive]="svc.isMyTurn()"
+        (cellClick)="shoot($event)"
+      />
+    </div>
+
+    <!-- Eigenes Meer -->
+    <div class="board-card">
+      <h3 class="board-title">
+        {{ svc.me()?.emoji }}
+        {{ "gimmicks.games.shipsGame.battle.yourSea" | translate }}
+      </h3>
+      <p class="board-sub">
+        {{
+          "gimmicks.games.shipsGame.battle.alive"
+            | translate : { n: myAlive(), total: totalShips() }
+        }}
+      </p>
+      <app-ships-board [rows]="myRows()" [interactive]="false" />
+    </div>
+  </div>
+</div>

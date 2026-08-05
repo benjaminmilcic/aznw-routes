@@ -1,0 +1,43 @@
+<div class="result">
+  @if (svc.amWinner()) {
+  <div class="trophy">🏆</div>
+  <h2 class="title title--win">
+    {{ "gimmicks.games.shipsGame.result.won" | translate }}
+  </h2>
+  <p class="text">
+    {{
+      "gimmicks.games.shipsGame.result.wonText"
+        | translate : { name: displayName(svc.me()) }
+    }}
+  </p>
+  } @else {
+  <!-- Sinkendes Schiff mit Luftblasen über schwappenden Wellen -->
+  <div class="sinking">
+    <div class="ship">🚢</div>
+    <div class="bubble bubble--1">🫧</div>
+    <div class="bubble bubble--2">🫧</div>
+    <div class="bubble bubble--3">🫧</div>
+    <div class="waves">🌊🌊🌊</div>
+  </div>
+  <h2 class="title title--lose">
+    {{ "gimmicks.games.shipsGame.result.lost" | translate }}
+  </h2>
+  <p class="text">
+    {{
+      "gimmicks.games.shipsGame.result.lostText"
+        | translate
+          : {
+              emoji: svc.opponent()?.emoji,
+              name: displayName(svc.opponent())
+            }
+    }}
+  </p>
+  }
+
+  <button type="button" class="btn btn-primary" (click)="playAgain()">
+    {{ "gimmicks.games.shipsGame.result.again" | translate }}
+  </button>
+  <button type="button" class="btn btn-ghost" (click)="leave()">
+    {{ "gimmicks.games.shipsGame.result.home" | translate }}
+  </button>
+</div>

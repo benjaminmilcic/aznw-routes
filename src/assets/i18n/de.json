@@ -376,6 +376,90 @@
     },
     "games": {
       "connectFour": "4 Gewinnt",
+      "ships": "Schiffe versenken",
+      "shipsShort": "Schiffe",
+      "shipsGame": {
+        "title": "Schiffe versenken",
+        "subtitle": "Versenke die gegnerische Flotte – gegen den Computer oder online zu zweit.",
+        "mode": "Spielart",
+        "modeComputer": "Computer",
+        "modeOnline": "Online",
+        "computer": "Computer",
+        "level": "Spielstärke",
+        "namePlaceholder": "Dein Name",
+        "startGame": "Spiel starten",
+        "newGame": "Neues Spiel starten",
+        "creating": "Moment …",
+        "joinPrompt": "Einem Spiel beitreten",
+        "codeLabel": "Spiel-Code (4 Zahlen)",
+        "codePlaceholder": "z. B. 4827",
+        "connecting": "Verbinde …",
+        "join": "Mitspielen",
+        "back": "Zurück",
+        "thinking": "Computer überlegt …",
+        "nameLabel": "Wie heißt du?",
+        "chooseAvatar": "Wähle dein Tier",
+        "waiting": {
+          "title": "Warte auf Mitspieler …",
+          "shareCode": "Sag diesen Code der anderen Person:",
+          "cancel": "Abbrechen"
+        },
+        "waitOpponent": {
+          "title": "Gut gemacht!",
+          "text": "Deine Schiffe stehen. Wir warten noch auf {{name}} …",
+          "cancel": "Spiel abbrechen"
+        },
+        "setup": {
+          "title": "Platziere deine Schiffe!",
+          "next": "Als Nächstes: {{emoji}} {{name}} ({{size}} Felder) – tippe aufs Wasser.",
+          "allPlaced": "Alle Schiffe sind platziert! 🎉",
+          "horizontal": "↔️ Quer",
+          "vertical": "↕️ Hoch",
+          "random": "🎲 Zufällig",
+          "clear": "🧹 Nochmal",
+          "ready": "✅ Bereit!",
+          "tip": "Tipp: Tippe auf ein gesetztes Schiff, um es wieder wegzunehmen.",
+          "cancel": "✕ Spiel abbrechen",
+          "warnAllPlaced": "Alle Schiffe sind schon gelegt!",
+          "warnNoFit": "Da passt das Schiff nicht hin!"
+        },
+        "ships": {
+          "battleship": "Schlachtschiff",
+          "cruiser": "Kreuzer",
+          "boat": "Boot"
+        },
+        "battle": {
+        "over": "Spiel vorbei",
+          "cancel": "🚪 Spiel beenden",
+          "yourTurn": "🎯 Du bist dran! Schieße!",
+          "opponentTurn": "⏳ {{emoji}} {{name}} ist dran …",
+          "enemySea": "🎯 {{name}}s Meer",
+          "sunk": "Versenkt: {{n}} / {{total}} Schiffe",
+          "yourSea": "Dein Meer",
+          "alive": "Noch heil: {{n}} / {{total}} Schiffe"
+        },
+        "result": {
+          "won": "Gewonnen!",
+          "wonText": "Super gemacht, {{name}}! Du hast alle Schiffe versenkt. 🎉",
+          "lost": "Diesmal verloren",
+          "lostText": "{{emoji}} {{name}} war schneller. Nicht schlimm – nochmal versuchen!",
+          "again": "🔁 Nochmal spielen",
+          "home": "🏠 Zurück zum Start"
+        },
+        "confirm": {
+          "leaveTitle": "Aufhören?",
+          "leaveMessage": "Möchtest du das Spiel wirklich abbrechen und zum Start zurück?",
+          "leaveYes": "Ja, aufhören",
+          "leaveNo": "Weiterspielen"
+        },
+        "errors": {
+          "notFound": "Kein Spiel mit diesem Code gefunden.",
+          "full": "Dieses Spiel ist schon voll (2 Spieler).",
+          "timeout": "Zeitüberschreitung: Die Datenbank antwortet nicht.",
+          "permission": "Keine Verbindung zur Datenbank. Bitte später noch einmal versuchen.",
+          "notConfigured": "Der Online-Modus ist gerade nicht verfügbar."
+        }
+      },
 
       "yahtzeeGame": {
 

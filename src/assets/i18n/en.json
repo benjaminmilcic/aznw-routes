@@ -376,6 +376,90 @@
     },
     "games": {
       "connectFour": "Connect 4",
+      "ships": "Battleship",
+      "shipsShort": "Ships",
+      "shipsGame": {
+        "title": "Battleship",
+        "subtitle": "Sink the enemy fleet – against the computer or online with a friend.",
+        "mode": "Game mode",
+        "modeComputer": "Computer",
+        "modeOnline": "Online",
+        "computer": "Computer",
+        "level": "Difficulty",
+        "namePlaceholder": "Your name",
+        "startGame": "Start game",
+        "newGame": "Start a new game",
+        "creating": "One moment …",
+        "joinPrompt": "Join a game",
+        "codeLabel": "Game code (4 digits)",
+        "codePlaceholder": "e.g. 4827",
+        "connecting": "Connecting …",
+        "join": "Join in",
+        "back": "Back",
+        "thinking": "Computer is thinking …",
+        "nameLabel": "What's your name?",
+        "chooseAvatar": "Choose your animal",
+        "waiting": {
+          "title": "Waiting for a player …",
+          "shareCode": "Tell this code to the other person:",
+          "cancel": "Cancel"
+        },
+        "waitOpponent": {
+          "title": "Well done!",
+          "text": "Your ships are ready. We're still waiting for {{name}} …",
+          "cancel": "Quit game"
+        },
+        "setup": {
+          "title": "Place your ships!",
+          "next": "Next: {{emoji}} {{name}} ({{size}} cells) – tap the water.",
+          "allPlaced": "All ships are placed! 🎉",
+          "horizontal": "↔️ Across",
+          "vertical": "↕️ Up",
+          "random": "🎲 Random",
+          "clear": "🧹 Reset",
+          "ready": "✅ Ready!",
+          "tip": "Tip: Tap a placed ship to take it away again.",
+          "cancel": "✕ Quit game",
+          "warnAllPlaced": "All ships are already placed!",
+          "warnNoFit": "The ship doesn't fit there!"
+        },
+        "ships": {
+          "battleship": "Battleship",
+          "cruiser": "Cruiser",
+          "boat": "Boat"
+        },
+        "battle": {
+        "over": "Game over",
+          "cancel": "🚪 Quit game",
+          "yourTurn": "🎯 It's your turn! Fire!",
+          "opponentTurn": "⏳ {{emoji}} {{name}} is playing …",
+          "enemySea": "🎯 {{name}}'s sea",
+          "sunk": "Sunk: {{n}} / {{total}} ships",
+          "yourSea": "Your sea",
+          "alive": "Still afloat: {{n}} / {{total}} ships"
+        },
+        "result": {
+          "won": "You won!",
+          "wonText": "Great job, {{name}}! You sank all the ships. 🎉",
+          "lost": "You lost this time",
+          "lostText": "{{emoji}} {{name}} was faster. No worries – try again!",
+          "again": "🔁 Play again",
+          "home": "🏠 Back to start"
+        },
+        "confirm": {
+          "leaveTitle": "Quit?",
+          "leaveMessage": "Do you really want to quit the game and go back to the start?",
+          "leaveYes": "Yes, quit",
+          "leaveNo": "Keep playing"
+        },
+        "errors": {
+          "notFound": "No game found with this code.",
+          "full": "This game is already full (2 players).",
+          "timeout": "Timeout: the database is not responding.",
+          "permission": "No connection to the database. Please try again later.",
+          "notConfigured": "The online mode is currently unavailable."
+        }
+      },
 
       "yahtzeeGame": {
 
