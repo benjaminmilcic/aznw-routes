@@ -501,7 +501,7 @@
 
           "largeStraight": "Velika skala",
 
-          "yatzy": "Yahtzee",
+          "yatzy": "Jamb",
 
           "chance": "Šansa"
 
@@ -719,7 +719,7 @@
       "smallStraight": "Mala serija",
       "largeStraight": "Velika serija",
       "chance": "Šansa",
-      "yahtzee": "Yahtzee",
+      "yahtzee": "Jamb",
       "total2": "Ukupno",
       "waitForNewGame": "Trenutno je u tijeku igra i morate pričekati dok nova igra ne započne.",
       "currentlyPlaying": "Trenutno igraju:",

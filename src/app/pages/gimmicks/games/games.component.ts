@@ -87,7 +87,11 @@ export class GamesComponent {
         this.gameIconSrc = '/assets/tic-tac-toe.png';
         break;
       case 'yahtzee':
-        this.gameName = 'Yahtzee';
+        this.translate
+          .get('gimmicks.games.yahtzee')
+          .subscribe((res: string) => {
+            this.gameName = res;
+          });
         this.gameIconSrc = '/assets/yahtzee.png';
         break;
       case 'minesweeper':

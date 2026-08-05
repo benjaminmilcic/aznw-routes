@@ -499,7 +499,7 @@
 
           "largeStraight": "Große Straße",
 
-          "yatzy": "Yahtzee",
+          "yatzy": "Pasch",
 
           "chance": "Chance"
 
@@ -525,11 +525,14 @@
       "connectFourGame": {
         "subtitle": "Bring vier eigene Steine in eine Reihe – waagrecht, senkrecht oder schräg.",
         "mode": "Spielart",
-        "modeComputer": "Computer",        "modeOnline": "Online",
+        "modeComputer": "Computer",
+        "modeOnline": "Online",
         "computer": "Computer",
         "level": "Spielstärke",
         "nameLabel": "Wie heißt du?",
-        "namePlaceholder": "Dein Name",        "chooseAvatar": "Wähle dein Zeichen",        "startGame": "Spiel starten",
+        "namePlaceholder": "Dein Name",
+        "chooseAvatar": "Wähle dein Zeichen",
+        "startGame": "Spiel starten",
         "newGame": "Neues Spiel starten",
         "creating": "Moment …",
         "joinPrompt": "Einem Spiel beitreten",
@@ -714,7 +717,7 @@
       "smallStraight": "Kleine Straße",
       "largeStraight": "Große Straße",
       "chance": "Chance",
-      "yahtzee": "Yahtzee",
+      "yahtzee": "Pasch",
       "total2": "Gesamt",
       "waitForNewGame": "Momentan ist ein Spiel im Gange und Sie müssen warten bis ein neues Spiel startet.",
       "currentlyPlaying": "Momentan spielen:",
