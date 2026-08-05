@@ -377,7 +377,7 @@
       "testFormInfo": "Ovo je samo testni obrazac. Ovdje ne možete stvarno kupiti knjigu."
     },
     "games": {
-      "connectFour": "Connect 4",
+      "connectFour": "4 u nizu",
 
       "yahtzeeGame": {
 
@@ -527,11 +527,14 @@
       "connectFourGame": {
         "subtitle": "Složi četiri svoje pločice u red – vodoravno, okomito ili koso.",
         "mode": "Način igre",
-        "modeComputer": "Računalo",        "modeOnline": "Online",
+        "modeComputer": "Računalo",
+        "modeOnline": "Online",
         "computer": "Računalo",
         "level": "Težina",
         "nameLabel": "Kako se zoveš?",
-        "namePlaceholder": "Tvoje ime",        "chooseAvatar": "Odaberi svoj znak",        "startGame": "Pokreni igru",
+        "namePlaceholder": "Tvoje ime",
+        "chooseAvatar": "Odaberi svoj znak",
+        "startGame": "Pokreni igru",
         "newGame": "Pokreni novu igru",
         "creating": "Trenutak …",
         "joinPrompt": "Pridruži se igri",
