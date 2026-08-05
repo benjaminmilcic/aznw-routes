@@ -83,7 +83,8 @@
       "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/card/card.html\" memo-quiz/card/memo-card.component.html)",
       "Bash(cp \"D:/eigene Projekte/whiteboard/src/app/memory/components/card/card.css\" memo-quiz/card/memo-card.component.css)",
       "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/097e07b8-3b58-426b-934f-73e164213d57/scratchpad/add-yahtzee-i18n.mjs\")",
-      "Bash(node scripts/print-lan-url.mjs)"
+      "Bash(node scripts/print-lan-url.mjs)",
+      "PowerShell(Test-NetConnection *)"
     ],
     "deny": [],
     "ask": []

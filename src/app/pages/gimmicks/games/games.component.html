@@ -1,22 +1,24 @@
 <section class="flex flex-col gap-2 h-full pt-[70px] box-border bg-blue-900">
   <div class="flex justify-center flex-wrap gap-6 p-4">
-    <div class="flex gap-4 items-center">
-      <div class="text-white">{{ "gimmicks.games.selectGame" | translate }}</div>
-      <button mat-raised-button color="yellow" [matMenuTriggerFor]="selectGame">
-        <div class="flex gap-2 items-center">
-          <div>
-            <img class="w-[20px] h-auto" [src]="gameIconSrc" />
-          </div>
-          <div>
-            {{ gameName }}
-          </div>
-          <div class="mb-[4px]">
-            <i class="fa-solid fa-sort-down"></i>
-          </div>
-        </div>
+    <div class="flex gap-3 items-center">
+      <div class="games-select-label">
+        {{ "gimmicks.games.selectGame" | translate }}
+      </div>
+      <button
+        mat-raised-button
+        class="games-select-trigger"
+        [class.is-open]="gameTrigger.menuOpen"
+        [matMenuTriggerFor]="selectGame"
+        #gameTrigger="matMenuTrigger"
+      >
+        <span class="flex gap-2 items-center">
+          <img class="games-select-icon w-[20px] h-auto" [src]="gameIconSrc" />
+          <span>{{ gameName }}</span>
+          <i class="fa-solid fa-chevron-down games-select-chevron"></i>
+        </span>
       </button>
     </div>
-    <mat-menu #selectGame="matMenu" class="!bg-yellow-300 !px-4">
+    <mat-menu #selectGame="matMenu" class="games-menu">
       <button mat-menu-item (click)="changeGame('gimmicks.games.connectFour')" [routerLink]="['/gimmicks/games/connect-four']"
         routerLinkActive="router-link-active">
         <div class="flex gap-2 items-center">
@@ -46,7 +48,7 @@
       >
         <div class="flex gap-2 items-center">
           <img class="w-[20px] h-auto" src="/assets/moorhuhn-icon.png" />
-          <div class="mt-[6px]">Moorhuhn</div>
+          <div>Moorhuhn</div>
         </div>
       </button>
       <button

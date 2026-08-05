@@ -23,6 +23,324 @@ section:before {
   border-radius: 8px;
 }
 
-.mat-yellow {
-  background-color: #fde047 !important;
+/* Spiele-Auswahl: zweispaltiges Menue, damit auch bei vielen Spielen
+   die Liste nicht zu lang wird */
+::ng-deep .games-menu.mat-mdc-menu-panel {
+  /* Material-Hover/Focus-Layer aus, wir machen den Hover selbst */
+  --mat-menu-item-hover-state-layer-color: transparent;
+  --mat-menu-item-focus-state-layer-color: transparent;
+  min-width: 0;
+  max-width: calc(100vw - 24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #fef9c3 0%, #fde047 45%, #facc15 100%);
+  box-shadow:
+    0 20px 45px -15px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+::ng-deep .games-menu .mat-mdc-menu-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 10px;
+  background: transparent;
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item {
+  position: relative;
+  overflow: hidden;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid rgba(180, 83, 9, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  color: #422006;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+  animation: games-menu-pop 0.22s ease backwards;
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(1) { animation-delay: 0.02s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(2) { animation-delay: 0.05s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(3) { animation-delay: 0.08s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(4) { animation-delay: 0.11s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(5) { animation-delay: 0.14s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(6) { animation-delay: 0.17s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(7) { animation-delay: 0.2s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(8) { animation-delay: 0.23s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(9) { animation-delay: 0.26s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(10) { animation-delay: 0.29s; }
+::ng-deep .games-menu .mat-mdc-menu-item:nth-child(n + 11) { animation-delay: 0.32s; }
+
+/* Glanz-Streifen, der beim Hover einmal durchlaeuft */
+::ng-deep .games-menu .mat-mdc-menu-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.85),
+    transparent
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item:hover::after {
+  opacity: 1;
+  animation: games-menu-sheen 0.6s ease;
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item:hover,
+::ng-deep .games-menu .mat-mdc-menu-item:focus-visible {
+  border-color: #f59e0b;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -6px rgba(120, 53, 15, 0.55);
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item:active {
+  transform: translateY(0) scale(0.97);
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item img {
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item:hover img {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+/* aktuell gewaehltes Spiel */
+::ng-deep .games-menu .mat-mdc-menu-item.router-link-active {
+  border-color: rgba(253, 224, 71, 0.8);
+  background: linear-gradient(145deg, #1e3a8a, #1d4ed8);
+  color: #fde047;
+  box-shadow:
+    0 0 0 1px rgba(253, 224, 71, 0.35),
+    0 6px 14px -6px rgba(0, 0, 0, 0.6);
+}
+
+::ng-deep .games-menu .mat-mdc-menu-item.router-link-active:hover {
+  background: linear-gradient(145deg, #1d4ed8, #2563eb);
+  color: #fef9c3;
+}
+
+@keyframes games-menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes games-menu-sheen {
+  from {
+    left: -60%;
+  }
+  to {
+    left: 120%;
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .games-menu .mat-mdc-menu-content {
+    gap: 4px;
+    padding: 7px;
+  }
+
+  ::ng-deep .games-menu .mat-mdc-menu-item {
+    min-height: 34px;
+    padding: 0 7px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+  }
+
+  ::ng-deep .games-menu .mat-mdc-menu-item img {
+    width: 16px;
+  }
+
+  ::ng-deep .games-menu .mat-mdc-menu-item .flex {
+    gap: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::ng-deep .games-menu .mat-mdc-menu-item,
+  ::ng-deep .games-menu .mat-mdc-menu-item:hover::after {
+    animation: none;
+  }
+
+  ::ng-deep .games-menu .mat-mdc-menu-item:hover {
+    transform: none;
+  }
+}
+
+/* Label vor dem Auswahl-Button */
+.games-select-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(253, 224, 71, 0.45);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.65);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.games-select-label::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fde047;
+  box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.6);
+  animation: games-select-pulse 2s ease-out infinite;
+}
+
+/* Auswahl-Button */
+::ng-deep .games-select-trigger.mat-mdc-raised-button {
+  position: relative;
+  overflow: hidden;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  background: linear-gradient(145deg, #fef9c3 0%, #fde047 45%, #f59e0b 100%);
+  color: #422006;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow:
+    0 8px 20px -8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+/* Material-eigenen Hover-Layer aus, wir machen den Hover selbst */
+::ng-deep .games-select-trigger .mat-mdc-button-persistent-ripple::before {
+  background: transparent;
+}
+
+::ng-deep .games-select-trigger.mat-mdc-raised-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+::ng-deep .games-select-trigger.mat-mdc-raised-button:hover::after {
+  opacity: 1;
+  animation: games-menu-sheen 0.7s ease;
+}
+
+::ng-deep .games-select-trigger.mat-mdc-raised-button:hover,
+::ng-deep .games-select-trigger.mat-mdc-raised-button.is-open {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+  box-shadow:
+    0 14px 26px -10px rgba(0, 0, 0, 0.75),
+    0 0 0 3px rgba(253, 224, 71, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+::ng-deep .games-select-trigger.mat-mdc-raised-button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.games-select-icon {
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+}
+
+::ng-deep .games-select-trigger:hover .games-select-icon {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.games-select-chevron {
+  font-size: 0.7rem;
+  transition: transform 0.25s ease;
+}
+
+::ng-deep .games-select-trigger.is-open .games-select-chevron {
+  transform: rotate(180deg);
+}
+
+@keyframes games-select-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(253, 224, 71, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(253, 224, 71, 0);
+  }
+}
+
+@media (max-width: 480px) {
+  .games-select-label {
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  ::ng-deep .games-select-trigger.mat-mdc-raised-button {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .games-select-label::before {
+    animation: none;
+  }
+
+  ::ng-deep .games-select-trigger.mat-mdc-raised-button:hover {
+    transform: none;
+  }
+
+  ::ng-deep .games-select-trigger.mat-mdc-raised-button:hover::after {
+    animation: none;
+    opacity: 0;
+  }
 }
