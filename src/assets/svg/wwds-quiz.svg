@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Wer weiss denn sowas?">
+  <!-- Studio-Hintergrund -->
+  <rect width="64" height="64" rx="12" fill="#1e3a8a" />
+  <circle cx="32" cy="24" r="19" fill="#1d4ed8" opacity="0.55" />
+
+  <!-- Fragezeichen -->
+  <text
+    x="32"
+    y="34"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="30"
+    font-weight="bold"
+    fill="#fde047"
+  >?</text>
+
+  <!-- Die drei Antwortmoeglichkeiten -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">
+    <rect x="6" y="44" width="15" height="14" rx="4" fill="#fde047" />
+    <rect x="24.5" y="44" width="15" height="14" rx="4" fill="#facc15" />
+    <rect x="43" y="44" width="15" height="14" rx="4" fill="#f59e0b" />
+    <text x="13.5" y="54.5" fill="#1e3a8a">A</text>
+    <text x="32" y="54.5" fill="#1e3a8a">B</text>
+    <text x="50.5" y="54.5" fill="#1e3a8a">C</text>
+  </g>
+</svg>

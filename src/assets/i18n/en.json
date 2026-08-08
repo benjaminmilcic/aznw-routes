@@ -518,6 +518,20 @@
         }
       },
 
+      "wwdsQuiz": "Wer weiß denn sowas?",
+      "wwdsQuizGame": {
+        "subtitle": "15 questions from the book of the German TV show – A, B or C? (questions are in German)",
+        "loading": "Loading the questions …",
+        "loadError": "The questions are currently unavailable. Please try again later.",
+        "retry": "Try again",
+        "counter": "Question {{current}} of {{total}}",
+        "questionNumber": "Question no. {{number}} in the book",
+        "explanationTitle": "Explanation",
+        "illustrationAlt": "Illustration for the question",
+        "source": "Source: {{source}}",
+        "newRound": "New round with new questions"
+      },
+
       "uno": "UNO",
       "unoGame": {
         "subtitle": "Play your cards – the first one with an empty hand wins!",

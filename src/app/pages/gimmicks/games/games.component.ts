@@ -124,6 +124,14 @@ export class GamesComponent {
         });
         this.gameIconSrc = '/assets/svg/uno.svg';
         break;
+      case 'wwds-quiz':
+        this.translate
+          .get('gimmicks.games.wwdsQuiz')
+          .subscribe((res: string) => {
+            this.gameName = res;
+          });
+        this.gameIconSrc = '/assets/svg/wwds-quiz.svg';
+        break;
 
       default:
         break;
@@ -170,6 +178,9 @@ export class GamesComponent {
         break;
       case 'gimmicks.games.uno':
         this.gameIconSrc = '/assets/svg/uno.svg';
+        break;
+      case 'gimmicks.games.wwdsQuiz':
+        this.gameIconSrc = '/assets/svg/wwds-quiz.svg';
         break;
 
       default:

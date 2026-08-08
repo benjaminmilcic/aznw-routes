@@ -518,6 +518,20 @@
         }
       },
 
+      "wwdsQuiz": "Wer weiß denn sowas?",
+      "wwdsQuizGame": {
+        "subtitle": "15 Fragen aus dem Buch zur ARD-Show – A, B oder C?",
+        "loading": "Die Fragen werden geladen …",
+        "loadError": "Die Fragen sind gerade nicht verfügbar. Bitte später noch einmal versuchen.",
+        "retry": "Nochmal versuchen",
+        "counter": "Frage {{current}} von {{total}}",
+        "questionNumber": "Frage Nr. {{number}} im Buch",
+        "explanationTitle": "Erläuterung",
+        "illustrationAlt": "Illustration zur Frage",
+        "source": "Quelle: {{source}}",
+        "newRound": "Neue Runde mit neuen Fragen"
+      },
+
       "uno": "UNO",
       "unoGame": {
         "subtitle": "Leg deine Karten ab – wer zuerst keine mehr auf der Hand hat, gewinnt!",

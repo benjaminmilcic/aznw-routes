@@ -53,6 +53,9 @@ export const environment = {
   moorhuhn: {
     moorhuhnApi: `http://${ip}:3000/moorhuhn`,
   },
+  wwdsQuiz: {
+    randomQuestionsApi: `http://${ip}:3000/quiz/questions/random`,
+  },
   error: {
     errorMessageApi: `http://${ip}:3000/error2email`,
   },

@@ -1,0 +1,159 @@
+<div class="wwds">
+  <p class="wwds-subtitle">
+    {{ "gimmicks.games.wwdsQuizGame.subtitle" | translate }}
+  </p>
+
+  @if (loading()) {
+  <p class="wwds-state">{{ "gimmicks.games.wwdsQuizGame.loading" | translate }}</p>
+  }
+
+  @if (loadFailed()) {
+  <div class="wwds-state wwds-state-error">
+    <p>{{ "gimmicks.games.wwdsQuizGame.loadError" | translate }}</p>
+    <button type="button" class="wwds-button" (click)="loadQuestions()">
+      {{ "gimmicks.games.wwdsQuizGame.retry" | translate }}
+    </button>
+  </div>
+  }
+
+  @if (!loading() && !loadFailed()) { @if (!finished()) { @if (current(); as
+  question) {
+  <!-- ---------------- Laufende Runde ---------------- -->
+  <div class="wwds-hud">
+    <span class="wwds-counter">
+      {{
+        "gimmicks.games.wwdsQuizGame.counter"
+          | translate: { current: index() + 1, total: total() }
+      }}
+    </span>
+    <span class="wwds-score">
+      <span class="wwds-score-right">✓ {{ rightAnswers() }}</span>
+      <span class="wwds-score-wrong">✕ {{ wrongAnswers() }}</span>
+    </span>
+    <button type="button" class="wwds-quit" (click)="quit()">
+      {{ "gimmicks.games.quit" | translate }}
+    </button>
+  </div>
+
+  <div class="wwds-progress">
+    <div
+      class="wwds-progress-bar"
+      [style.width.%]="((index() + 1) * 100) / total()"
+    ></div>
+  </div>
+
+  <article class="wwds-card">
+    <p class="wwds-book-number">
+      {{
+        "gimmicks.games.wwdsQuizGame.questionNumber"
+          | translate: { number: question.questionNumber }
+      }}
+    </p>
+    <h2 class="wwds-question">{{ question.question }}</h2>
+
+    @if (question.questionImage) {
+    <img
+      class="wwds-illustration"
+      [src]="imageUrl(question.questionImage)"
+      [alt]="'gimmicks.games.wwdsQuizGame.illustrationAlt' | translate"
+    />
+    }
+
+    <div class="wwds-answers">
+      @for (option of question.answers; track option.letter) {
+      <button
+        type="button"
+        class="wwds-answer"
+        [ngClass]="answerState(option.letter)"
+        [disabled]="answered()"
+        (click)="answer(option.letter)"
+      >
+        <span class="wwds-letter">{{ option.letter }}</span>
+        <span class="wwds-answer-text">{{ option.text }}</span>
+        @if (answered() && option.letter === question.correctAnswer) {
+        <span class="wwds-mark">✓</span>
+        } @else if (answered() && option.letter === selected()) {
+        <span class="wwds-mark">✕</span>
+        }
+      </button>
+      }
+    </div>
+  </article>
+
+  @if (answered()) {
+  <section
+    class="wwds-explanation"
+    [ngClass]="isRight() ? 'is-right' : 'is-wrong'"
+  >
+    <p class="wwds-verdict">
+      {{
+        (isRight() ? "gimmicks.games.rightAnswer" : "gimmicks.games.wrongAnswer")
+          | translate
+      }}
+    </p>
+    <h3 class="wwds-explanation-title">
+      {{ "gimmicks.games.wwdsQuizGame.explanationTitle" | translate }}
+    </h3>
+    @for (paragraph of explanationParagraphs(); track $index) {
+    <p class="wwds-paragraph">{{ paragraph }}</p>
+    } @if (question.explanationImage) {
+    <img
+      class="wwds-illustration"
+      [src]="imageUrl(question.explanationImage)"
+      [alt]="'gimmicks.games.wwdsQuizGame.illustrationAlt' | translate"
+    />
+    }
+    <p class="wwds-source">
+      {{
+        "gimmicks.games.wwdsQuizGame.source"
+          | translate: { source: question.source }
+      }}
+    </p>
+    <button type="button" class="wwds-button" (click)="next()">
+      {{ "gimmicks.games.continue" | translate }}
+    </button>
+  </section>
+  } } } @else {
+  <!-- ---------------- Auswertung ---------------- -->
+  <section class="wwds-result">
+    <p class="wwds-result-intro">
+      {{ "gimmicks.games.quizIsOver" | translate }}
+    </p>
+    <h2 class="wwds-result-title">
+      {{ "gimmicks.games.evaluation" | translate }}
+    </h2>
+    <p
+      class="wwds-result-count"
+      [innerHTML]="
+        'gimmicks.games.howAnswered'
+          | translate
+            : {
+                all: answeredCount(),
+                rightAnswers: rightAnswers(),
+                wrongAnswers: wrongAnswers()
+              }
+      "
+    ></p>
+    <p class="wwds-result-text">
+      @if (answeredCount() === 0) {
+      {{ "gimmicks.games.dontFeelLikeDoingQuiz" | translate }}
+      } @else if (percentRight() === 100) {
+      {{ "gimmicks.games.evaluation100" | translate }}
+      } @else if (percentRight() > 80) {
+      {{ "gimmicks.games.evaluation80" | translate }}
+      } @else if (percentRight() > 60) {
+      {{ "gimmicks.games.evaluation60" | translate }}
+      } @else if (percentRight() > 40) {
+      {{ "gimmicks.games.evaluation40" | translate }}
+      } @else if (percentRight() > 20) {
+      {{ "gimmicks.games.evaluation20" | translate }}
+      } @else {
+      {{ "gimmicks.games.evaluation0" | translate }}
+      }
+    </p>
+    <button type="button" class="wwds-button" (click)="newRound()">
+      {{ "gimmicks.games.wwdsQuizGame.newRound" | translate }}
+    </button>
+  </section>
+  } }
+</div>

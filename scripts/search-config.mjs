@@ -145,6 +145,12 @@ export const SEARCH_ROUTES = [
     extra: 'Wissensquiz Knowledge Quiz Kviz znanja Fragen questions Allgemeinwissen',
   },
   {
+    route: '/gimmicks/games/wwds-quiz', labelKey: 'gimmicks.games.wwdsQuiz',
+    icon: 'fa-solid fa-circle-question', category: 'search.category.games',
+    prefixes: ['gimmicks.games.wwdsQuizGame'],
+    extra: 'Wer weiß denn sowas Wissensquiz Quiz Kviz znanja Fragen questions pitanja Antwort A B C Erläuterung explanation objašnjenje Buch book knjiga ARD Show Allgemeinwissen general knowledge opće znanje raten guess',
+  },
+  {
     route: '/gimmicks/games/flag-quiz', labelKey: 'gimmicks.games.flagQuiz.title',
     icon: 'fa-solid fa-flag', category: 'search.category.games',
     prefixes: ['gimmicks.games.flagQuiz'],
@@ -169,6 +175,24 @@ export const SEARCH_ROUTES = [
     route: '/gimmicks/games/minesweeper', label: 'Minesweeper',
     icon: 'fa-solid fa-bomb', category: 'search.category.games',
     extra: 'Minesweeper Minenräumer Minen mines Bomben bombs Logik',
+  },
+  {
+    route: '/gimmicks/games/ships', labelKey: 'gimmicks.games.ships',
+    icon: 'fa-solid fa-ship', category: 'search.category.games',
+    prefixes: ['gimmicks.games.shipsGame'],
+    extra: 'Schiffe versenken Battleship Potapanje brodova Flotte fleet flota Seeschlacht naval battle pomorska bitka Raster grid mreža schießen shoot pucaj Treffer hit pogodak versenken sink potopiti gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+  },
+  {
+    route: '/gimmicks/games/ludo', labelKey: 'gimmicks.games.ludo',
+    icon: 'fa-solid fa-dice-six', category: 'search.category.games',
+    prefixes: ['gimmicks.games.ludoGame'],
+    extra: 'Mensch ärgere dich nicht Ludo Čovječe ne ljuti se Brettspiel board game društvena igra Würfel dice kocka würfeln roll baci Figuren pieces figure Garage home base kućica Ziel goal cilj schlagen capture pojesti rauswerfen knock out izbaciti online zu zweit two players dva igrača Spiel-Code game code kod igre',
+  },
+  {
+    route: '/gimmicks/games/uno', labelKey: 'gimmicks.games.uno',
+    icon: 'fa-solid fa-clone', category: 'search.category.games',
+    prefixes: ['gimmicks.games.unoGame'],
+    extra: 'UNO Kartenspiel card game igra karata Karten cards karte Farbe color boja ablegen play odloži ziehen draw vuci Joker wild joker Zieh Vier draw four plus vier Aussetzen skip preskoči Richtungswechsel reverse promjena smjera gegen den Computer against the computer protiv računala online zu mehreren several players više igrača Spiel-Code game code kod igre',
   },
 
   // ── Rezepte ──────────────────────────────────────────────────────────

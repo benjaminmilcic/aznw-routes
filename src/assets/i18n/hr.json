@@ -520,6 +520,20 @@
         }
       },
 
+      "wwdsQuiz": "Wer weiß denn sowas?",
+      "wwdsQuizGame": {
+        "subtitle": "15 pitanja iz knjige njemačkog TV kviza – A, B ili C? (pitanja su na njemačkom)",
+        "loading": "Pitanja se učitavaju …",
+        "loadError": "Pitanja trenutačno nisu dostupna. Pokušaj ponovno kasnije.",
+        "retry": "Pokušaj ponovno",
+        "counter": "Pitanje {{current}} od {{total}}",
+        "questionNumber": "Pitanje br. {{number}} u knjizi",
+        "explanationTitle": "Objašnjenje",
+        "illustrationAlt": "Ilustracija za pitanje",
+        "source": "Izvor: {{source}}",
+        "newRound": "Nova runda s novim pitanjima"
+      },
+
       "uno": "UNO",
       "unoGame": {
         "subtitle": "Odlaži svoje karte – tko prvi ostane bez karata, pobjeđuje!",

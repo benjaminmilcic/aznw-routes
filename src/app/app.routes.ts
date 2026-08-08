@@ -184,6 +184,13 @@ export const routes: Routes = [
                 (m) => m.UnoComponent,
               ),
           },
+          {
+            path: 'wwds-quiz',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/wwds-quiz/wwds-quiz.component').then(
+                (m) => m.WwdsQuizComponent,
+              ),
+          },
         ],
       },
       {
