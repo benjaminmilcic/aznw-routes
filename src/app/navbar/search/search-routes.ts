@@ -220,6 +220,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.ludo',
+    keywords: ['ludo', 'mensch ärgere dich nicht', 'mensch aergere dich nicht', 'čovječe ne ljuti se', 'covjece ne ljuti se'],
+    description:
+      'Mensch ärgere dich nicht Ludo Čovječe ne ljuti se Brettspiel board game društvena igra Würfel dice kocka würfeln roll baci Figuren pieces figure Garage home base kućica Ziel goal cilj schlagen capture pojesti rauswerfen knock out izbaciti online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/ludo',
+    icon: 'fa-solid fa-dice-six',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.yahtzee',
     keywords: ['yahtzee', 'kniffel', 'würfel', 'dice', 'kockice'],
     description:

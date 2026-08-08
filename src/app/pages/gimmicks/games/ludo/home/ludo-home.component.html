@@ -1,0 +1,213 @@
+<div class="home">
+  <div class="home-card">
+    <p class="subtitle">{{ "gimmicks.games.ludoGame.subtitle" | translate }}</p>
+
+    @if (svc.error(); as err) {
+    <p class="error">{{ err | translate }}</p>
+    }
+
+    <!-- Spielart -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.mode" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="mode()"
+        (ngModelChange)="onMode($event)"
+        mode="ios"
+        class="l-segment"
+      >
+        <ion-segment-button value="local">
+          <ion-label>{{
+            "gimmicks.games.ludoGame.modeLocal" | translate
+          }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="online">
+          <ion-label>{{
+            "gimmicks.games.ludoGame.modeOnline" | translate
+          }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    @if (mode() === 'local') {
+    <!-- ---------------- Am Gerät: Mitspieler zusammenstellen ---------------- -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.players" | translate
+      }}</span>
+
+      @for (seat of seats(); track $index) {
+      <div class="seat">
+        <button
+          type="button"
+          class="seat-emoji"
+          [disabled]="seat.cpu"
+          (click)="cycleEmoji($index)"
+          [attr.aria-label]="'gimmicks.games.ludoGame.chooseAvatar' | translate"
+        >
+          {{ seat.emoji }}
+        </button>
+
+        @if (seat.cpu) {
+        <span class="seat-name seat-name--cpu">{{ seat.name }}</span>
+        } @else {
+        <input
+          class="seat-name text-input"
+          type="text"
+          maxlength="12"
+          [placeholder]="'gimmicks.games.ludoGame.namePlaceholder' | translate"
+          [ngModel]="seat.name"
+          (ngModelChange)="setSeatName($index, $event)"
+        />
+        }
+
+        <button
+          type="button"
+          class="seat-remove"
+          (click)="removeSeat($index)"
+          [attr.aria-label]="'gimmicks.games.ludoGame.removePlayer' | translate"
+        >
+          ✕
+        </button>
+      </div>
+      }
+
+      <div class="seat-actions">
+        <button
+          type="button"
+          class="btn btn-small"
+          [disabled]="seats().length >= maxPlayers"
+          (click)="addHuman()"
+        >
+          + {{ "gimmicks.games.ludoGame.addPlayer" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-small"
+          [disabled]="seats().length >= maxPlayers"
+          (click)="addComputer()"
+        >
+          + {{ "gimmicks.games.ludoGame.addComputer" | translate }}
+        </button>
+      </div>
+    </div>
+
+    @if (hasComputer()) {
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.level" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="level()"
+        (ngModelChange)="level.set($event)"
+        mode="ios"
+        class="l-segment"
+      >
+        <ion-segment-button value="easy">
+          <ion-label>{{ "gimmicks.games.easy" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medium">
+          <ion-label>{{ "gimmicks.games.medium" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hard">
+          <ion-label>{{ "gimmicks.games.difficult" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    }
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!canStartLocal()"
+      (click)="startLocal()"
+    >
+      {{ "gimmicks.games.ludoGame.startGame" | translate }}
+    </button>
+    } @else {
+    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.nameLabel" | translate
+      }}</span>
+      <input
+        class="text-input"
+        type="text"
+        maxlength="12"
+        [placeholder]="'gimmicks.games.ludoGame.namePlaceholder' | translate"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </label>
+
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.chooseAvatar" | translate
+      }}</span>
+      <div class="avatar-grid">
+        @for (a of avatars; track a) {
+        <button
+          type="button"
+          class="avatar"
+          [class.avatar--active]="emoji() === a"
+          (click)="emoji.set(a)"
+        >
+          {{ a }}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (!showJoin()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || svc.busy()"
+      (click)="create()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.ludoGame.creating"
+          : "gimmicks.games.ludoGame.newGame"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(true)">
+      {{ "gimmicks.games.ludoGame.joinPrompt" | translate }}
+    </button>
+    } @else {
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.ludoGame.codeLabel" | translate
+      }}</span>
+      <input
+        class="text-input code-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="4"
+        [placeholder]="'gimmicks.games.ludoGame.codePlaceholder' | translate"
+        [ngModel]="joinCode()"
+        (ngModelChange)="onCode($event)"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || joinCode().length !== 4 || svc.busy()"
+      (click)="join()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.ludoGame.connecting"
+          : "gimmicks.games.ludoGame.join"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(false)">
+      {{ "gimmicks.games.ludoGame.back" | translate }}
+    </button>
+    } }
+  </div>
+</div>

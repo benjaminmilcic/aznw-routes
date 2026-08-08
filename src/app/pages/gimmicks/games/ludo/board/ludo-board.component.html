@@ -1,0 +1,215 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <!-- Kopfzeile: alle Mitspieler, wer dran ist, Spiel beenden -->
+  <header class="bar">
+    <div class="players">
+      @for (p of svc.players(); track p.id) {
+      <div
+        class="player"
+        [class.player--active]="g.currentTurn === p.id"
+        [class.player--done]="svc.done(p.id)"
+        [style.--seat-color]="colorOf(p.id)"
+      >
+        <span class="avatar">{{ p.emoji }}</span>
+        <span class="player-name" [speakOnClick]="displayName(p)">{{
+          displayName(p)
+        }}</span>
+        <!-- Wer im Ziel ist, trägt seinen Platz -->
+        @if (svc.rankOf(p.id); as rank) {
+        <span class="player-rank">{{ rank }}.</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="turn" [class.turn--mine]="svc.canAct()">
+      @if (svc.thinking()) {
+      {{
+        "gimmicks.games.ludoGame.thinking" | translate : { name: currentName() }
+      }}
+      } @else if (svc.canAct()) {
+      {{
+        (svc.mustMove()
+          ? "gimmicks.games.ludoGame.pickPiece"
+          : "gimmicks.games.ludoGame.yourTurn"
+        ) | translate : { name: currentName() }
+      }}
+      } @else {
+      {{
+        "gimmicks.games.ludoGame.othersTurn"
+          | translate
+            : {
+                name:
+                  currentName() || ("gimmicks.games.ludoGame.player" | translate)
+              }
+      }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.ludoGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <!-- Spielbrett -->
+  <main class="board-wrap">
+    <div class="board">
+      @for (cell of cells; track cell.row * 11 + cell.col) {
+      <div
+        class="cell cell--{{ cell.kind }}"
+        [class.cell--start]="cell.start"
+        [style.--seat-color]="seatColor(cell.seat)"
+        [style.gridRow]="cell.row + 1"
+        [style.gridColumn]="cell.col + 1"
+      >
+        @if (cell.kind === 'center') {
+        <span class="center-mark">🏁</span>
+        } @for (t of tokensAt(cell); track t.key) {
+        <button
+          type="button"
+          class="token"
+          [class.token--movable]="t.movable"
+          [style.background]="t.color"
+          [disabled]="!t.movable"
+          (click)="onToken(t)"
+        >
+          {{ t.emoji }}
+        </button>
+        }
+      </div>
+      }
+    </div>
+  </main>
+
+  <!-- Würfel + Aktion -->
+  <footer class="control">
+    <div
+      class="dice"
+      [class.dice--rolled]="g.dice !== null"
+      [class.dice--blocked]="svc.noMove()"
+      [style.--seat-color]="colorOf(g.currentTurn)"
+      aria-hidden="true"
+    >
+      {{ g.dice !== null ? g.dice : "🎲" }}
+    </div>
+    @if (svc.canAct()) { @if (svc.canRoll()) {
+    <button type="button" class="btn btn-primary" (click)="roll()">
+      {{ "gimmicks.games.ludoGame.roll" | translate }}
+    </button>
+    } @else if (svc.noMove()) {
+    <p class="hint hint--blocked">
+      {{ "gimmicks.games.ludoGame.noMove" | translate : { n: g.dice } }}
+    </p>
+    <button type="button" class="btn btn-primary" (click)="pass()">
+      {{
+        (svc.passRerolls()
+          ? "gimmicks.games.ludoGame.rollAgain"
+          : "gimmicks.games.ludoGame.pass"
+        ) | translate
+      }}
+    </button>
+    } @else {
+    <p class="hint">{{ "gimmicks.games.ludoGame.pickHint" | translate }}</p>
+    } } @else if (myRank()) {
+    <p class="hint hint--done">
+      {{ "gimmicks.games.ludoGame.youFinished" | translate : { n: myRank() } }}
+    </p>
+    } @else {
+    <p class="hint">{{ "gimmicks.games.ludoGame.waitTurn" | translate }}</p>
+    }
+  </footer>
+
+  <!-- Online-Lobby: auf die Mitspieler warten -->
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">
+        {{ "gimmicks.games.ludoGame.codeTitle" | translate }}
+      </h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">
+        {{ "gimmicks.games.ludoGame.codeShare" | translate }}
+      </p>
+
+      <ul class="lobby">
+        @for (p of svc.players(); track p.id) {
+        <li class="lobby-player">
+          <span class="ava">{{ p.emoji }}</span>
+          <span>{{ displayName(p) }}</span>
+        </li>
+        }
+      </ul>
+
+      @if (svc.isHost()) {
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="svc.players().length < 2"
+        (click)="startOnline()"
+      >
+        {{ "gimmicks.games.ludoGame.startGame" | translate }}
+      </button>
+      @if (svc.players().length < 2) {
+      <p class="panel-text">
+        {{ "gimmicks.games.ludoGame.waitingPlayer" | translate }}
+      </p>
+      } } @else {
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="panel-text">
+        {{ "gimmicks.games.ludoGame.waitingHost" | translate }}
+      </p>
+      }
+
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.ludoGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Spielende -->
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) { @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      } }
+
+      <h2 class="result-title">
+        {{ "gimmicks.games.ludoGame.won" | translate : { name: winnerName() } }}
+      </h2>
+
+      <!-- Endstand: wer nach dem Sieger ins Ziel kam -->
+      @if (svc.ranking().length > 1) {
+      <p class="ranking-title">
+        {{ "gimmicks.games.ludoGame.ranking" | translate }}
+      </p>
+      <ol class="ranking">
+        @for (p of svc.ranking(); track p.id) {
+        <li class="ranking-row" [style.--seat-color]="colorOf(p.id)">
+          <span class="ranking-place">{{ $index + 1 }}.</span>
+          <span class="ava">{{ p.emoji }}</span>
+          <span class="ranking-name">{{ displayName(p) }}</span>
+        </li>
+        }
+      </ol>
+      }
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.ludoGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.ludoGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

@@ -1,0 +1,487 @@
+/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
+   absolut positioniertes Hintergrundbild über die Seite. Ohne eigene
+   Positionierung liegt dieses Overlay über Buttons und Figuren. */
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
+  min-height: 0;
+}
+
+.board-screen {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.5rem 0.5rem;
+  box-sizing: border-box;
+}
+
+/* ---- Kopfzeile ---------------------------------------------------------- */
+.bar {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 34rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.players {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+/* Die Farbe des Sitzplatzes steckt als --seat-color im Chip. */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem 0.2rem 0.3rem;
+  font-weight: 700;
+  color: #134e4a;
+  box-shadow: inset 0 0 0 2px var(--seat-color, transparent), 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.player--active {
+  outline: 3px solid #fde047;
+}
+
+/* Wer im Ziel ist, tritt in den Hintergrund und zeigt seinen Platz. */
+.player--done {
+  opacity: 0.7;
+}
+
+.player-rank {
+  font-weight: 900;
+  color: var(--seat-color, #134e4a);
+  background: #fef3c7;
+  border-radius: 999px;
+  padding: 0 0.35rem;
+  font-size: 0.8rem;
+}
+
+.player-name {
+  max-width: 6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.avatar {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.vs {
+  font-size: 1rem;
+}
+
+.turn {
+  font-weight: 800;
+  color: #064e3b;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.turn--mine {
+  background: #fde047;
+  color: #713f12;
+}
+
+.end-game {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
+  background: #fb7185;
+  cursor: pointer;
+}
+
+.end-game:active {
+  transform: scale(0.95);
+}
+
+/* ---- Brett -------------------------------------------------------------- */
+/* Größen-Container: darüber kennt das Brett die WIRKLICH freie Fläche
+   (100cqw/100cqh) und bleibt dadurch immer quadratisch – auch wenn unten
+   ein Hinweistext auftaucht und die Fläche kurz flacher wird. */
+.board-wrap {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Eine einzige Kantenlänge für beide Seiten – nie „max-height" zusammen mit
+   einer festen Breite, sonst staucht das Brett statt zu schrumpfen. */
+.board {
+  width: min(100cqw, 100cqh, 32rem);
+  height: auto;
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  gap: 2px;
+  padding: 2px;
+  box-sizing: border-box;
+  background: #047857;
+  border-radius: 0.9rem;
+  box-shadow: 0 10px 30px rgba(6, 78, 59, 0.4);
+}
+
+.cell {
+  position: relative;
+  border-radius: 22%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell--void {
+  background: transparent;
+}
+
+.cell--track {
+  background: #f8fafc;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.cell--start {
+  background: var(--seat-color, #f8fafc);
+}
+
+.cell--goal {
+  background: color-mix(in srgb, var(--seat-color) 55%, white);
+}
+
+.cell--home {
+  background: color-mix(in srgb, var(--seat-color) 30%, white);
+  box-shadow: inset 0 0 0 2px var(--seat-color);
+}
+
+.cell--center {
+  background: radial-gradient(circle, #fef3c7, #fbbf24);
+  border-radius: 14%;
+}
+
+.center-mark {
+  font-size: clamp(0.7rem, 3.5vw, 1.4rem);
+  line-height: 1;
+}
+
+/* ---- Figuren ------------------------------------------------------------ */
+.token {
+  position: absolute;
+  inset: 8%;
+  border: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.6rem, 3vw, 1.2rem);
+  line-height: 1;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+  cursor: default;
+  padding: 0;
+}
+
+.token--movable {
+  cursor: pointer;
+  outline: 3px solid #fde047;
+  animation: ludo-pulse 1s ease-in-out infinite;
+}
+
+@keyframes ludo-pulse {
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* ---- Würfel / Steuerung ------------------------------------------------- */
+/* Die Höhe ist fest reserviert: der Hinweistext nach dem Würfeln soll das
+   Brett nicht kurzzeitig zusammenschieben. */
+.control {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 34rem;
+  min-height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.dice {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.8rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #047857;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Der Rand zeigt die Farbe des Spielers, der gerade würfelt. */
+.dice--rolled {
+  background: #fde047;
+  color: #713f12;
+  box-shadow: 0 0 0 3px var(--seat-color, transparent), 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Nicht setzbare Augenzahl: rot, durchgestrichen, kurzes Wackeln. */
+.dice--blocked {
+  background: #fecaca;
+  color: #b91c1c;
+  text-decoration: line-through;
+  box-shadow: 0 0 0 3px #ef4444, 0 4px 10px rgba(0, 0, 0, 0.25);
+  animation: ludo-shake 0.5s ease;
+}
+
+.hint {
+  margin: 0;
+  font-weight: 700;
+  color: #ecfdf5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hint--blocked {
+  color: #fecaca;
+}
+
+.hint--done {
+  color: #fde047;
+}
+
+.btn {
+  border: 0;
+  border-radius: 1rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #34d399, #059669);
+  color: #fff;
+  box-shadow: 0 5px 0 #065f46;
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #065f46;
+}
+
+/* ---- Overlays ----------------------------------------------------------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 78, 59, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 5;
+}
+
+.panel {
+  width: 100%;
+  max-width: 22rem;
+  background: #fff;
+  border-radius: 1.4rem;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(6, 78, 59, 0.4);
+  box-sizing: border-box;
+}
+
+.panel .btn {
+  width: 100%;
+}
+
+.panel-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #047857;
+}
+
+.panel-text {
+  color: #0f766e;
+  margin: 0.5rem 0 1rem;
+}
+
+.code {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.4rem;
+  color: #059669;
+  background: #d1fae5;
+  border-radius: 1rem;
+  padding: 0.6rem;
+  margin: 0.25rem 0;
+}
+
+/* ---- Online-Lobby ------------------------------------------------------- */
+.lobby {
+  list-style: none;
+  margin: 0.5rem 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.lobby-player {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ecfdf5;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-weight: 700;
+  color: #134e4a;
+}
+
+.lobby-player .ava {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0.5rem auto 1rem;
+  border: 4px solid #a7f3d0;
+  border-top-color: #059669;
+  border-radius: 50%;
+  animation: ludo-spin 0.9s linear infinite;
+}
+
+@keyframes ludo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.result-emoji {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.anim-win {
+  animation: ludo-bounce 0.7s ease infinite alternate;
+}
+
+.anim-lose {
+  animation: ludo-shake 0.6s ease;
+}
+
+@keyframes ludo-bounce {
+  to {
+    transform: translateY(-12px) scale(1.08);
+  }
+}
+
+@keyframes ludo-shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.result-title {
+  margin: 0.6rem 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #047857;
+}
+
+/* ---- Endstand ----------------------------------------------------------- */
+.ranking-title {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+  color: #0f766e;
+  font-size: 0.9rem;
+}
+
+.ranking {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ranking-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ecfdf5;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  box-shadow: inset 0 0 0 2px var(--seat-color, transparent);
+  text-align: left;
+}
+
+.ranking-place {
+  font-weight: 900;
+  color: #047857;
+  min-width: 1.4rem;
+}
+
+.ranking-row .ava {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.ranking-name {
+  font-weight: 700;
+  color: #134e4a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-ghost {
+  width: 100%;
+  background: transparent;
+  color: #059669;
+  box-shadow: inset 0 0 0 3px #a7f3d0;
+  margin-top: 0.5rem;
+}

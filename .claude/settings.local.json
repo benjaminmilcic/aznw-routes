@@ -86,7 +86,14 @@
       "Bash(node scripts/print-lan-url.mjs)",
       "PowerShell(Test-NetConnection *)",
       "Bash(xargs wc -l)",
-      "Bash(python \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/b00f953b-f8db-400b-aa00-03810c710cfa/scratchpad/add_ships_i18n.py\")"
+      "Bash(python \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/b00f953b-f8db-400b-aa00-03810c710cfa/scratchpad/add_ships_i18n.py\")",
+      "Bash(python \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/add_ludo_i18n.py\")",
+      "Bash(xxd)",
+      "PowerShell(npx ng build --configuration development 2>&1 | Select-Object -Last 40)",
+      "PowerShell($conn = Get-NetTCPConnection -LocalPort 4275 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { foreach \\($c in $conn\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue }; \"Server auf Port 4275 gestoppt\" } else { \"kein Listener auf 4275\" })",
+      "PowerShell($conn = Get-NetTCPConnection -LocalPort 4275 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { foreach \\($c in $conn\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue }; \"Server gestoppt\" } else { \"kein Listener\" })",
+      "Bash(node node_modules/esbuild/bin/esbuild \"src/__ludo-rules-test.ts\" --bundle --platform=node --format=esm --outfile=\"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/rules-test.mjs\")",
+      "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/rules-test.mjs\")"
     ],
     "deny": [],
     "ask": []

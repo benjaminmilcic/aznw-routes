@@ -42,6 +42,9 @@ section:before {
 ::ng-deep .games-menu .mat-mdc-menu-content {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Alle Zeilen so hoch wie die höchste: bricht ein langer Spielname um,
+     wachsen alle Einträge mit und die Kacheln bleiben gleich groß. */
+  grid-auto-rows: 1fr;
   gap: 6px;
   padding: 10px;
   background: transparent;
@@ -59,7 +62,11 @@ section:before {
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
-  white-space: nowrap;
+  /* Lange Spielnamen dürfen umbrechen – der Eintrag wird dann höher. */
+  height: auto;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  white-space: normal;
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
@@ -116,7 +123,18 @@ section:before {
   transform: translateY(0) scale(0.97);
 }
 
+/* Material umschließt den Inhalt – auch dort den Umbruch erlauben. */
+::ng-deep .games-menu .mat-mdc-menu-item .mat-mdc-menu-item-text,
+::ng-deep .games-menu .mat-mdc-menu-item .mat-mdc-menu-item-text > div {
+  white-space: normal;
+  min-width: 0;
+  /* Auch ein langes Einzelwort ("Minesweeper") wird notfalls umbrochen,
+     statt am Rand der Kachel abgeschnitten zu werden. */
+  overflow-wrap: break-word;
+}
+
 ::ng-deep .games-menu .mat-mdc-menu-item img {
+  flex: 0 0 auto;
   transition: transform 0.2s ease;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
 }
@@ -160,21 +178,7 @@ section:before {
   }
 }
 
-/* Lange Spielnamen haben eine Kurzform, die nur auf schmalen Bildschirmen
-   erscheint – sonst bräuchte der Eintrag in der zweispaltigen Liste zwei Zeilen. */
-::ng-deep .games-menu .mat-mdc-menu-item .label-short {
-  display: none;
-}
-
 @media (max-width: 480px) {
-  ::ng-deep .games-menu .mat-mdc-menu-item .label-long {
-    display: none;
-  }
-
-  ::ng-deep .games-menu .mat-mdc-menu-item .label-short {
-    display: block;
-  }
-
   ::ng-deep .games-menu .mat-mdc-menu-content {
     gap: 4px;
     padding: 7px;
@@ -182,7 +186,7 @@ section:before {
 
   ::ng-deep .games-menu .mat-mdc-menu-item {
     min-height: 34px;
-    padding: 0 7px;
+    padding: 5px 7px;
     border-radius: 8px;
     font-size: 0.75rem;
   }
@@ -236,20 +240,31 @@ section:before {
   animation: games-select-pulse 2s ease-out infinite;
 }
 
+/* Damit "max-width: 100%" am Knopf greift, darf die Zeile nicht über ihren
+   Inhalt hinauswachsen. */
+.games-select-row {
+  min-width: 0;
+  max-width: 100%;
+}
+
 /* Auswahl-Button */
 ::ng-deep .games-select-trigger.mat-mdc-raised-button {
   position: relative;
   overflow: hidden;
   min-height: 44px;
-  padding: 0 18px;
+  /* Die Höhe wächst mit: lange Spielnamen (z. B. "Mensch ärgere dich nicht")
+     brechen um, statt abgeschnitten zu werden. */
+  height: auto;
+  max-width: 100%;
+  padding: 7px 18px;
   border: 1px solid rgba(255, 255, 255, 0.65);
-  border-radius: 999px;
+  border-radius: 22px;
   background: linear-gradient(145deg, #fef9c3 0%, #fde047 45%, #f59e0b 100%);
   color: #422006;
   font-weight: 700;
   letter-spacing: 0.01em;
-  /* Lange Spielnamen sollen den Knopf breiter machen, nicht zweizeilig. */
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.25;
   box-shadow:
     0 8px 20px -8px rgba(0, 0, 0, 0.7),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -301,7 +316,20 @@ section:before {
   transform: translateY(0) scale(0.97);
 }
 
+/* Icon und Pfeil bleiben einzeilig, nur der Name darf umbrechen. */
+::ng-deep .games-select-trigger .games-select-content {
+  max-width: 100%;
+  min-width: 0;
+}
+
+::ng-deep .games-select-trigger .games-select-name {
+  min-width: 0;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
 .games-select-icon {
+  flex: 0 0 auto;
   transition: transform 0.2s ease;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
 }
@@ -311,6 +339,7 @@ section:before {
 }
 
 .games-select-chevron {
+  flex: 0 0 auto;
   font-size: 0.7rem;
   transition: transform 0.25s ease;
 }
@@ -341,8 +370,9 @@ section:before {
 
   ::ng-deep .games-select-trigger.mat-mdc-raised-button {
     min-height: 38px;
-    padding: 0 14px;
+    padding: 6px 14px;
     font-size: 0.8rem;
+    border-radius: 19px;
   }
 }
 

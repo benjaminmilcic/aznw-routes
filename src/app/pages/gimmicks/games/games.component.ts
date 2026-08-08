@@ -112,6 +112,12 @@ export class GamesComponent {
         });
         this.gameIconSrc = '/assets/svg/ships.svg';
         break;
+      case 'ludo':
+        this.translate.get('gimmicks.games.ludo').subscribe((res: string) => {
+          this.gameName = res;
+        });
+        this.gameIconSrc = '/assets/svg/ludo.svg';
+        break;
 
       default:
         break;
@@ -152,6 +158,9 @@ export class GamesComponent {
         break;
       case 'gimmicks.games.ships':
         this.gameIconSrc = '/assets/svg/ships.svg';
+        break;
+      case 'gimmicks.games.ludo':
+        this.gameIconSrc = '/assets/svg/ludo.svg';
         break;
 
       default:

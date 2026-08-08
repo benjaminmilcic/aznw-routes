@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Mensch ärgere dich nicht">
+  <!-- Spielbrett -->
+  <rect width="64" height="64" rx="12" fill="#047857" />
+
+  <!-- Kreuz aus hellen Laufbahn-Feldern -->
+  <path d="M24 8h16v48H24z" fill="#f8fafc" />
+  <path d="M8 24h48v16H8z" fill="#f8fafc" />
+
+  <!-- Zielhäuser in den vier Farben -->
+  <rect x="14" y="29" width="14" height="6" rx="3" fill="#dc2626" />
+  <rect x="29" y="14" width="6" height="14" rx="3" fill="#f59e0b" />
+  <rect x="36" y="29" width="14" height="6" rx="3" fill="#2563eb" />
+  <rect x="29" y="36" width="6" height="14" rx="3" fill="#9333ea" />
+
+  <!-- Mitte -->
+  <circle cx="32" cy="32" r="5" fill="#fbbf24" />
+
+  <!-- Figuren in den Ecken -->
+  <circle cx="14" cy="14" r="5" fill="#dc2626" stroke="#fff" stroke-width="1.5" />
+  <circle cx="50" cy="14" r="5" fill="#f59e0b" stroke="#fff" stroke-width="1.5" />
+  <circle cx="50" cy="50" r="5" fill="#2563eb" stroke="#fff" stroke-width="1.5" />
+  <circle cx="14" cy="50" r="5" fill="#9333ea" stroke="#fff" stroke-width="1.5" />
+</svg>

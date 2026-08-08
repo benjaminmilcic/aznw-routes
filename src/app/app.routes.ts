@@ -170,6 +170,13 @@ export const routes: Routes = [
                 (m) => m.ShipsComponent,
               ),
           },
+          {
+            path: 'ludo',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/ludo/ludo.component').then(
+                (m) => m.LudoComponent,
+              ),
+          },
         ],
       },
       {

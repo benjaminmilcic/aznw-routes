@@ -1,6 +1,6 @@
 <section class="flex flex-col gap-2 h-full pt-[70px] box-border bg-blue-900">
   <div class="flex justify-center flex-wrap gap-6 p-4">
-    <div class="flex gap-3 items-center">
+    <div class="games-select-row flex gap-3 items-center">
       <div class="games-select-label">
         {{ "gimmicks.games.selectGame" | translate }}
       </div>
@@ -11,9 +11,9 @@
         [matMenuTriggerFor]="selectGame"
         #gameTrigger="matMenuTrigger"
       >
-        <span class="flex gap-2 items-center">
+        <span class="games-select-content flex gap-2 items-center">
           <img class="games-select-icon w-[20px] h-auto" [src]="gameIconSrc" />
-          <span>{{ gameName }}</span>
+          <span class="games-select-name">{{ gameName }}</span>
           <i class="fa-solid fa-chevron-down games-select-chevron"></i>
         </span>
       </button>
@@ -103,10 +103,18 @@
       >
         <div class="flex gap-2 items-center">
           <img class="w-[20px] h-auto" src="/assets/svg/ships.svg" />
-          <!-- Auf dem Smartphone nur "Schiffe" – der volle Name bräuchte
-               in der zweispaltigen Liste zwei Zeilen. -->
-          <div class="label-long">{{ "gimmicks.games.ships" | translate }}</div>
-          <div class="label-short">{{ "gimmicks.games.shipsShort" | translate }}</div>
+          <div>{{ "gimmicks.games.ships" | translate }}</div>
+        </div>
+      </button>
+      <button
+        mat-menu-item
+        (click)="changeGame('gimmicks.games.ludo')"
+        [routerLink]="['/gimmicks/games/ludo']"
+        routerLinkActive="router-link-active"
+      >
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/ludo.svg" />
+          <div>{{ "gimmicks.games.ludo" | translate }}</div>
         </div>
       </button>
       <!-- <button
