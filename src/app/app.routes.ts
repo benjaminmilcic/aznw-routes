@@ -177,6 +177,13 @@ export const routes: Routes = [
                 (m) => m.LudoComponent,
               ),
           },
+          {
+            path: 'uno',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/uno/uno.component').then(
+                (m) => m.UnoComponent,
+              ),
+          },
         ],
       },
       {

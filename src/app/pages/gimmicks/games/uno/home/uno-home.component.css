@@ -1,0 +1,233 @@
+/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
+   absolut positioniertes Hintergrundbild über die Seite. Ohne eigene
+   Positionierung liegt dieses Overlay über Buttons und Eingabefeldern. */
+:host {
+  display: block;
+  position: relative;
+}
+
+.home {
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.home-card {
+  width: 100%;
+  max-width: 28rem;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 30px rgba(159, 18, 57, 0.3);
+  padding: 0.9rem 1rem 1.1rem;
+  box-sizing: border-box;
+}
+
+.subtitle {
+  margin: 0 0 0.75rem;
+  text-align: center;
+  color: #be123c;
+  font-size: 0.9rem;
+}
+
+.error {
+  background: #ffe1e1;
+  color: #b3261e;
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.85rem;
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.field {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.field-label {
+  display: block;
+  font-weight: 700;
+  color: #9f1239;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.text-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #ffc9d4;
+  border-radius: 0.8rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  background: #fff1f3;
+  color: #881337;
+}
+
+.text-input:focus {
+  border-color: #e11d48;
+}
+
+.code-input {
+  letter-spacing: 0.4rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+/* ---- Spielerliste (am Gerät) -------------------------------------------- */
+.seat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.seat-emoji {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid #ffc9d4;
+  border-radius: 0.7rem;
+  background: #ffe4e9;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.seat-emoji:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.seat-name {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.seat-name--cpu {
+  font-weight: 700;
+  color: #881337;
+  padding: 0.5rem 0.7rem;
+  background: #ffe4e9;
+  border-radius: 0.8rem;
+  border: 2px solid #ffc9d4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seat-remove {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: #ffe1e1;
+  color: #b3261e;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.seat-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+}
+
+.avatar {
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 0.7rem;
+  background: #ffe4e9;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.avatar:active {
+  transform: scale(0.92);
+}
+
+.avatar--active {
+  border-color: #e11d48;
+  background: #ffd0da;
+  transform: scale(1.05);
+}
+
+/* ---- Buttons ------------------------------------------------------------- */
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 0.9rem;
+  padding: 0.7rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 0.4rem;
+}
+
+.btn-small {
+  margin-top: 0;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.85rem;
+  background: #ffe4e9;
+  color: #9f1239;
+  box-shadow: inset 0 0 0 2px #ffc9d4;
+}
+
+.btn-small:disabled {
+  opacity: 0.5;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #fb7185, #e11d48);
+  color: #fff;
+  box-shadow: 0 5px 0 #9f1239;
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #9f1239;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  box-shadow: 0 5px 0 #9f1239;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #e11d48;
+  box-shadow: inset 0 0 0 3px #ffc9d4;
+}
+
+/* Ion-Segment im hellen Karten-Look (wie bei den anderen Spielen). */
+::ng-deep ion-segment.u-segment {
+  --background: #ffe4e9;
+  border-radius: 0.8rem;
+  border: 1px solid #ffc9d4;
+  padding: 3px;
+}
+
+::ng-deep ion-segment.u-segment ion-segment-button {
+  --color: #be123c;
+  --color-checked: #9f1239;
+  --indicator-color: #fff;
+  min-height: 36px;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 0.85rem;
+}

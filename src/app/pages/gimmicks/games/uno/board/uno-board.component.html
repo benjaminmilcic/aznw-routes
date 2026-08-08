@@ -1,0 +1,262 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <!-- Kopfzeile: alle Mitspieler mit Kartenzahl, wer dran ist, Spiel beenden -->
+  <header class="bar">
+    <div class="players">
+      @for (p of svc.players(); track p.id) {
+      <div
+        class="player"
+        [class.player--active]="g.currentTurn === p.id"
+        [class.player--done]="svc.done(p.id)"
+      >
+        <span class="avatar">{{ p.emoji }}</span>
+        <span class="player-name" [speakOnClick]="displayName(p)">{{
+          displayName(p)
+        }}</span>
+        @if (svc.rankOf(p.id); as rank) {
+        <span class="player-rank">{{ rank }}.</span>
+        } @else {
+        <span class="cards-badge">🂠 {{ svc.cardCount(p.id) }}</span>
+        @if (svc.cardCount(p.id) === 1) {
+        <span class="uno-badge">UNO!</span>
+        } }
+      </div>
+      }
+    </div>
+
+    <div class="turn" [class.turn--mine]="svc.canAct()">
+      @if (svc.thinking()) {
+      {{
+        "gimmicks.games.unoGame.thinking" | translate : { name: currentName() }
+      }}
+      } @else if (svc.canAct()) {
+      {{
+        "gimmicks.games.unoGame.yourTurn" | translate : { name: currentName() }
+      }}
+      } @else {
+      {{
+        "gimmicks.games.unoGame.othersTurn"
+          | translate
+            : {
+                name:
+                  currentName() || ("gimmicks.games.unoGame.player" | translate)
+              }
+      }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.unoGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <!-- Tischmitte: Ziehstapel · Ablage · aktive Farbe · Spielrichtung -->
+  <main class="table">
+    <button
+      type="button"
+      class="pile draw-pile"
+      [disabled]="!svc.canAct()"
+      [class.pile--hint]="svc.canAct() && !svc.hasPlayable()"
+      (click)="onDraw()"
+      [attr.aria-label]="'gimmicks.games.unoGame.draw' | translate"
+    >
+      <span class="card-back">UNO</span>
+      <span class="pile-label">{{
+        "gimmicks.games.unoGame.draw" | translate
+      }}</span>
+    </button>
+
+    <div class="discard">
+      @if (svc.topCard(); as top) {
+      <div class="card card--{{ top.color }} discard-card">
+        <span class="card-corner top-left">{{ corner(top) }}</span>
+        <span class="card-center">{{ label(top) }}</span>
+        <span class="card-corner bottom-right">{{ corner(top) }}</span>
+      </div>
+      }
+      <div class="color-dot color-dot--{{ g.currentColor }}" aria-hidden="true"></div>
+      <!-- Spielrichtung: bei mehr als zwei Mitspielern hilfreich -->
+      @if (svc.players().length > 2) {
+      <div
+        class="direction"
+        [attr.aria-label]="'gimmicks.games.unoGame.direction' | translate"
+      >
+        {{ g.direction === 1 ? "⤵" : "⤴" }}
+      </div>
+      }
+    </div>
+  </main>
+
+  <!-- Karten unten: online meine, am Gerät die des Spielers am Zug.
+       Solange weitergereicht wird, bleiben sie ungerendert – überdecken
+       allein würde nicht reichen, man sähe sie am Rand des Dialogs. -->
+  <footer class="hand-wrap">
+    <div class="hand-label">
+      @if (svc.handHidden()) {
+      {{ "gimmicks.games.unoGame.handHidden" | translate }}
+      } @else if (myRank()) {
+      {{ "gimmicks.games.unoGame.youFinished" | translate : { n: myRank() } }}
+      } @else {
+      {{ "gimmicks.games.unoGame.yourCards" | translate }}
+      @if (svc.hand().length === 1) {
+      <span class="uno-badge">UNO!</span>
+      } }
+    </div>
+    <div class="hand">
+      @if (!svc.handHidden()) { @for (card of svc.hand(); track card.id) {
+      <button
+        type="button"
+        class="card card--{{ card.color }} hand-card"
+        [class.card--playable]="svc.playable(card)"
+        [class.card--locked]="svc.canAct() && !svc.playable(card)"
+        [disabled]="!svc.playable(card)"
+        (click)="onCardClick(card)"
+      >
+        <span class="card-corner top-left">{{ corner(card) }}</span>
+        <span class="card-center">{{ label(card) }}</span>
+        <span class="card-corner bottom-right">{{ corner(card) }}</span>
+      </button>
+      } }
+    </div>
+  </footer>
+
+  <!-- Joker-Farbwahl: oben angedockt und verschiebbar, damit die eigene
+       Hand beim Auswählen sichtbar bleibt. -->
+  @if (pendingWild()) {
+  <div class="overlay overlay--wild" (click)="cancelWild()">
+    <div class="panel color-panel" appDraggable (click)="$event.stopPropagation()">
+      <h2 class="panel-title">
+        {{ "gimmicks.games.unoGame.chooseColor" | translate }}
+      </h2>
+      <div class="color-grid">
+        @for (c of pickColors; track c) {
+        <button
+          type="button"
+          class="color-choice color-choice--{{ c }}"
+          [attr.aria-label]="'gimmicks.games.unoGame.color_' + c | translate"
+          (click)="chooseColor(c)"
+        ></button>
+        }
+      </div>
+      <button type="button" class="btn btn-ghost" (click)="cancelWild()">
+        {{ "gimmicks.games.unoGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Am Gerät: verdeckt weiterreichen, damit niemand fremde Karten sieht -->
+  @if (svc.handHidden()) {
+  <div class="overlay">
+    <div class="panel">
+      <div class="panel-emoji">🙈</div>
+      <h2 class="panel-title">
+        {{
+          "gimmicks.games.unoGame.passDevice"
+            | translate : { name: handOwnerName() }
+        }}
+      </h2>
+      <p class="panel-text">
+        {{ "gimmicks.games.unoGame.passDeviceHint" | translate }}
+      </p>
+      <button type="button" class="btn btn-primary" (click)="reveal()">
+        {{ "gimmicks.games.unoGame.showCards" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Online-Lobby: auf die Mitspieler warten -->
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">
+        {{ "gimmicks.games.unoGame.codeTitle" | translate }}
+      </h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">
+        {{ "gimmicks.games.unoGame.codeShare" | translate }}
+      </p>
+
+      <ul class="lobby">
+        @for (p of svc.players(); track p.id) {
+        <li class="lobby-player">
+          <span class="ava">{{ p.emoji }}</span>
+          <span>{{ displayName(p) }}</span>
+        </li>
+        }
+      </ul>
+
+      @if (svc.isHost()) {
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="svc.players().length < 2"
+        (click)="startOnline()"
+      >
+        {{ "gimmicks.games.unoGame.startGame" | translate }}
+      </button>
+      @if (svc.players().length < 2) {
+      <p class="panel-text">
+        {{ "gimmicks.games.unoGame.waitingPlayer" | translate }}
+      </p>
+      } } @else {
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="panel-text">
+        {{ "gimmicks.games.unoGame.waitingHost" | translate }}
+      </p>
+      }
+
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.unoGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Spielende -->
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) { @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      } }
+
+      <h2 class="result-title">
+        {{ "gimmicks.games.unoGame.won" | translate : { name: winnerName() } }}
+      </h2>
+
+      <!-- Endstand: wer nach dem Sieger seine Karten losgeworden ist -->
+      @if (svc.ranking().length > 1) {
+      <p class="ranking-title">
+        {{ "gimmicks.games.unoGame.ranking" | translate }}
+      </p>
+      <ol class="ranking">
+        @for (p of svc.ranking(); track p.id) {
+        <li class="ranking-row">
+          <span class="ranking-place">{{ $index + 1 }}.</span>
+          <span class="ava">{{ p.emoji }}</span>
+          <span class="ranking-name">{{ displayName(p) }}</span>
+        </li>
+        }
+      </ol>
+      }
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.unoGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.unoGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

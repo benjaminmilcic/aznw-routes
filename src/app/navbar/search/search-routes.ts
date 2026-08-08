@@ -229,6 +229,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.uno',
+    keywords: ['uno', 'karten', 'cards', 'karte', 'kartenspiel', 'karte', 'karti', 'jednom'],
+    description:
+      'UNO Kartenspiel card game igra karata Karten cards karte Farbe color boja ablegen play odloži ziehen draw vuci Joker wild joker Zieh Vier draw four plus vier Aussetzen skip preskoči Richtungswechsel reverse promjena smjera gegen den Computer against the computer protiv računala online zu mehreren several players više igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/uno',
+    icon: 'fa-solid fa-clone',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.yahtzee',
     keywords: ['yahtzee', 'kniffel', 'würfel', 'dice', 'kockice'],
     description:

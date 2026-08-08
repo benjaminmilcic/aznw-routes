@@ -93,7 +93,10 @@
       "PowerShell($conn = Get-NetTCPConnection -LocalPort 4275 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { foreach \\($c in $conn\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue }; \"Server auf Port 4275 gestoppt\" } else { \"kein Listener auf 4275\" })",
       "PowerShell($conn = Get-NetTCPConnection -LocalPort 4275 -State Listen -ErrorAction SilentlyContinue; if \\($conn\\) { foreach \\($c in $conn\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue }; \"Server gestoppt\" } else { \"kein Listener\" })",
       "Bash(node node_modules/esbuild/bin/esbuild \"src/__ludo-rules-test.ts\" --bundle --platform=node --format=esm --outfile=\"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/rules-test.mjs\")",
-      "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/rules-test.mjs\")"
+      "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/rules-test.mjs\")",
+      "Bash(python \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/add_uno_i18n.py\")",
+      "Bash(node node_modules/esbuild/bin/esbuild \"src/__uno-rules-test.ts\" --bundle --platform=node --format=esm --outfile=\"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/uno-test.mjs\")",
+      "Bash(node \"C:/Users/benja/AppData/Local/Temp/claude/D--eigene-Projekte-aznw-routes/9e7f0767-c823-48b8-a9c0-fc172ba10fa5/scratchpad/uno-test.mjs\")"
     ],
     "deny": [],
     "ask": []
