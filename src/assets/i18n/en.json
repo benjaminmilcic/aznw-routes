@@ -520,7 +520,7 @@
 
       "triviaQuiz": "Did You Know?",
       "triviaQuizGame": {
-        "subtitle": "15 curious questions – A, B or C? With an explanation of why. (questions are in German)",
+        "subtitle": "15 curious questions – A, B or C? With an explanation of why.",
         "loading": "Loading the questions …",
         "loadError": "The questions are currently unavailable. Please try again later.",
         "retry": "Try again",

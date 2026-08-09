@@ -522,7 +522,7 @@
 
       "triviaQuiz": "Jesi li znao?",
       "triviaQuizGame": {
-        "subtitle": "15 neobičnih pitanja – A, B ili C? S objašnjenjem zašto je tako. (pitanja su na njemačkom)",
+        "subtitle": "15 neobičnih pitanja – A, B ili C? S objašnjenjem zašto je tako.",
         "loading": "Pitanja se učitavaju …",
         "loadError": "Pitanja trenutačno nisu dostupna. Pokušaj ponovno kasnije.",
         "retry": "Pokušaj ponovno",

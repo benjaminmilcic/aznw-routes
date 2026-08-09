@@ -55,6 +55,7 @@ export const environment = {
   },
   triviaQuiz: {
     randomQuestionsApi: `http://${ip}:3000/trivia/questions/random`,
+    questionsByNumbersApi: `http://${ip}:3000/trivia/questions/by-numbers`,
   },
   error: {
     errorMessageApi: `http://${ip}:3000/error2email`,

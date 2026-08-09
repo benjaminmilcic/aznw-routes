@@ -1,4 +1,5 @@
 export type AnswerLetter = 'A' | 'B' | 'C';
+export type QuestionLanguage = 'de' | 'en' | 'hr';
 
 export interface TriviaAnswer {
   letter: AnswerLetter;
@@ -8,7 +9,9 @@ export interface TriviaAnswer {
 /** Eine Frage, wie sie die API unter /trivia/questions liefert. */
 export interface TriviaQuestion {
   id: number;
+  /** Ueber alle Sprachen hinweg dieselbe Frage. */
   questionNumber: number;
+  language: QuestionLanguage;
   question: string;
   answers: TriviaAnswer[];
   correctAnswer: AnswerLetter;

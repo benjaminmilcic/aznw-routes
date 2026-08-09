@@ -2,14 +2,20 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnInit,
   computed,
   inject,
   signal,
 } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GamesService } from '../games.service';
-import { AnswerLetter, TriviaQuestion } from './trivia-quiz.model';
+import {
+  AnswerLetter,
+  QuestionLanguage,
+  TriviaQuestion,
+} from './trivia-quiz.model';
 import { TriviaQuizService } from './trivia-quiz.service';
 
 /** Anzahl der Fragen pro Runde. */
@@ -30,6 +36,8 @@ const QUESTIONS_PER_ROUND = 15;
 export class TriviaQuizComponent implements OnInit {
   private readonly quizService = inject(TriviaQuizService);
   private readonly gamesService = inject(GamesService);
+  private readonly translate = inject(TranslateService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly loading = signal(true);
   protected readonly loadFailed = signal(false);
@@ -66,23 +74,64 @@ export class TriviaQuizComponent implements OnInit {
   ngOnInit(): void {
     this.gamesService.changeGameName.next('trivia-quiz');
     this.loadQuestions();
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.translateRound());
   }
 
   protected loadQuestions(): void {
     this.loading.set(true);
     this.loadFailed.set(false);
-    this.quizService.getRandomQuestions(QUESTIONS_PER_ROUND).subscribe({
-      next: (questions) => {
-        this.questions.set(questions);
-        this.resetRound();
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Quizfragen konnten nicht geladen werden', err);
-        this.loading.set(false);
-        this.loadFailed.set(true);
-      },
-    });
+    this.quizService
+      .getRandomQuestions(QUESTIONS_PER_ROUND, this.currentLanguage())
+      .subscribe({
+        next: (questions) => {
+          this.questions.set(questions);
+          this.resetRound();
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error('Quizfragen konnten nicht geladen werden', err);
+          this.loading.set(false);
+          this.loadFailed.set(true);
+        },
+      });
+  }
+
+  /** Sprache der Oberflaeche, unbekannte Werte werden zu Deutsch. */
+  private currentLanguage(): QuestionLanguage {
+    const lang = (this.translate.currentLang ?? '').toLowerCase();
+    return lang === 'en' || lang === 'hr' ? lang : 'de';
+  }
+
+  /**
+   * Laedt die Fragen der laufenden Runde in der neuen Sprache nach. Position,
+   * Punktestand und die schon gegebene Antwort bleiben erhalten, weil der
+   * richtige Buchstabe in allen Sprachen derselbe ist.
+   *
+   * Kommt nicht die vollstaendige Runde zurueck - etwa weil eine Sprache in der
+   * Datenbank noch fehlt - bleiben die alten Texte stehen. Lieber die Frage in
+   * der falschen Sprache als eine abgebrochene Runde.
+   */
+  private translateRound(): void {
+    const numbers = this.questions().map(
+      (question) => question.questionNumber
+    );
+    if (numbers.length === 0) {
+      return;
+    }
+    this.quizService
+      .getQuestionsByNumbers(numbers, this.currentLanguage())
+      .subscribe({
+        next: (questions) => {
+          if (questions.length === numbers.length) {
+            this.questions.set(questions);
+          }
+        },
+        error: (err) => {
+          console.error('Sprachwechsel der Quizfragen fehlgeschlagen', err);
+        },
+      });
   }
 
   protected answer(letter: AnswerLetter): void {
