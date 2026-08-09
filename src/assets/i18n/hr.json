@@ -528,6 +528,8 @@
         "retry": "Pokušaj ponovno",
         "counter": "Pitanje {{current}} od {{total}}",
         "explanationTitle": "Objašnjenje",
+        "listen": "Pročitaj naglas",
+        "stopListening": "Zaustavi čitanje",
         "illustrationAlt": "Ilustracija za objašnjenje",
         "newRound": "Nova runda s novim pitanjima"
       },

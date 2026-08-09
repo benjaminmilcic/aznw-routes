@@ -526,6 +526,8 @@
         "retry": "Nochmal versuchen",
         "counter": "Frage {{current}} von {{total}}",
         "explanationTitle": "Erläuterung",
+        "listen": "Vorlesen",
+        "stopListening": "Vorlesen beenden",
         "illustrationAlt": "Illustration zur Erläuterung",
         "newRound": "Neue Runde mit neuen Fragen"
       },

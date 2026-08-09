@@ -80,9 +80,35 @@
           | translate
       }}
     </p>
-    <h3 class="trivia-explanation-title">
-      {{ "gimmicks.games.triviaQuizGame.explanationTitle" | translate }}
-    </h3>
+    <div class="trivia-explanation-head">
+      <h3 class="trivia-explanation-title">
+        {{ "gimmicks.games.triviaQuizGame.explanationTitle" | translate }}
+      </h3>
+      @if (audioUrl() && !audioMissing()) {
+      <button
+        type="button"
+        class="trivia-speak"
+        [class.is-playing]="speaking()"
+        [title]="
+          (speaking()
+            ? 'gimmicks.games.triviaQuizGame.stopListening'
+            : 'gimmicks.games.triviaQuizGame.listen'
+          ) | translate
+        "
+        (click)="toggleSpeech()"
+      >
+        <span class="trivia-speak-icon" aria-hidden="true">{{
+          speaking() ? "◼" : "▶"
+        }}</span>
+        <span>{{
+          (speaking()
+            ? "gimmicks.games.triviaQuizGame.stopListening"
+            : "gimmicks.games.triviaQuizGame.listen"
+          ) | translate
+        }}</span>
+      </button>
+      }
+    </div>
     @for (paragraph of explanationParagraphs(); track $index) {
     <p class="trivia-paragraph">{{ paragraph }}</p>
     } @if (question.image) {

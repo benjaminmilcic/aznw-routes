@@ -22,6 +22,14 @@ import { TriviaQuizService } from './trivia-quiz.service';
 const QUESTIONS_PER_ROUND = 15;
 
 /**
+ * Abspielgeschwindigkeit der Erlaeuterung. Die Tondateien sind bewusst ruhig
+ * eingesprochen; hier laesst sich das Tempo nachziehen, ohne sie neu erzeugen
+ * zu muessen. Die Tonhoehe bleibt dabei erhalten, darum kuemmert sich der
+ * Browser von sich aus.
+ */
+const PLAYBACK_RATE = 1.1;
+
+/**
  * Quiz "Schon gewusst?" mit drei Antwortmoeglichkeiten und Erlaeuterung.
  * Die Fragen kommen aus der Datenbank (Tabelle trivia_questions) ueber die API,
  * die Illustrationen liegen im Frontend unter assets/quiz-illustrations/.
@@ -60,6 +68,22 @@ export class TriviaQuizComponent implements OnInit {
   protected readonly explanationParagraphs = computed(() =>
     (this.current()?.explanation ?? '').split('\n\n').filter((part) => !!part)
   );
+  /**
+   * Vorgelesene Erlaeuterung. Die Dateien liegen fertig im Frontend und werden
+   * von nest-aznw-api/db/trivia-quellen/build_trivia_audio.py erzeugt, benannt
+   * nach Sprache und Fragennummer. Deshalb genuegt hier der Pfad, es braucht
+   * weder einen API-Aufruf noch ein Feld in der Datenbank.
+   */
+  protected readonly audioUrl = computed(() => {
+    const question = this.current();
+    return question
+      ? `/assets/trivia-audio/${question.language}/${question.questionNumber}.mp3`
+      : null;
+  });
+  protected readonly speaking = signal(false);
+  /** Zu neu geschriebenen Fragen gibt es noch keine Tondatei. */
+  protected readonly audioMissing = signal(false);
+  private audio: HTMLAudioElement | null = null;
   protected readonly answeredCount = computed(
     () => this.rightAnswers() + this.wrongAnswers()
   );
@@ -77,6 +101,56 @@ export class TriviaQuizComponent implements OnInit {
     this.translate.onLangChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.translateRound());
+    // Sonst redet die Erlaeuterung weiter, nachdem die Seite verlassen wurde.
+    this.destroyRef.onDestroy(() => this.stopSpeech());
+  }
+
+  /**
+   * Startet die Erlaeuterung oder haelt sie an. Fehlt die Tondatei, verschwindet
+   * der Knopf; das passiert nur bei Fragen, fuer die noch kein Ton erzeugt wurde.
+   */
+  protected toggleSpeech(): void {
+    if (this.speaking()) {
+      this.stopSpeech();
+      return;
+    }
+    const url = this.audioUrl();
+    if (!url) {
+      return;
+    }
+    const audio = (this.audio ??= new Audio());
+    if (audio.getAttribute('src') !== url) {
+      audio.setAttribute('src', url);
+      audio.load();
+    }
+    // Nach einem Quellwechsel faellt die Geschwindigkeit auf 1 zurueck.
+    audio.playbackRate = PLAYBACK_RATE;
+    audio.onended = () => this.speaking.set(false);
+    audio.onerror = () => {
+      this.speaking.set(false);
+      this.audioMissing.set(true);
+    };
+    audio
+      .play()
+      .then(() => this.speaking.set(true))
+      .catch(() => {
+        this.speaking.set(false);
+        this.audioMissing.set(true);
+      });
+  }
+
+  private stopSpeech(): void {
+    this.speaking.set(false);
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+  }
+
+  /** Beim Wechsel von Frage oder Sprache gilt die bisherige Tondatei nicht mehr. */
+  private resetSpeech(): void {
+    this.stopSpeech();
+    this.audioMissing.set(false);
   }
 
   protected loadQuestions(): void {
@@ -126,6 +200,7 @@ export class TriviaQuizComponent implements OnInit {
         next: (questions) => {
           if (questions.length === numbers.length) {
             this.questions.set(questions);
+            this.resetSpeech();
           }
         },
         error: (err) => {
@@ -147,6 +222,7 @@ export class TriviaQuizComponent implements OnInit {
   }
 
   protected next(): void {
+    this.resetSpeech();
     if (this.index() + 1 >= this.total()) {
       this.finished.set(true);
       return;
@@ -156,6 +232,7 @@ export class TriviaQuizComponent implements OnInit {
   }
 
   protected quit(): void {
+    this.resetSpeech();
     this.finished.set(true);
   }
 
@@ -184,6 +261,7 @@ export class TriviaQuizComponent implements OnInit {
   }
 
   private resetRound(): void {
+    this.resetSpeech();
     this.index.set(0);
     this.selected.set(null);
     this.rightAnswers.set(0);
