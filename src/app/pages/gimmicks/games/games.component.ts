@@ -124,13 +124,13 @@ export class GamesComponent {
         });
         this.gameIconSrc = '/assets/svg/uno.svg';
         break;
-      case 'wwds-quiz':
+      case 'trivia-quiz':
         this.translate
-          .get('gimmicks.games.wwdsQuiz')
+          .get('gimmicks.games.triviaQuiz')
           .subscribe((res: string) => {
             this.gameName = res;
           });
-        this.gameIconSrc = '/assets/svg/wwds-quiz.svg';
+        this.gameIconSrc = '/assets/svg/trivia-quiz.svg';
         break;
 
       default:
@@ -179,8 +179,8 @@ export class GamesComponent {
       case 'gimmicks.games.uno':
         this.gameIconSrc = '/assets/svg/uno.svg';
         break;
-      case 'gimmicks.games.wwdsQuiz':
-        this.gameIconSrc = '/assets/svg/wwds-quiz.svg';
+      case 'gimmicks.games.triviaQuiz':
+        this.gameIconSrc = '/assets/svg/trivia-quiz.svg';
         break;
 
       default:

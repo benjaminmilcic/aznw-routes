@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- Kopf im Profil -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M104 288 C86 240 78 196 90 156 C104 106 148 76 198 82 C244 88 272 122 272 168 C272 200 258 224 244 236 C240 258 244 274 250 288 Z" fill="#e8d3b4"/>
+    <!-- Ohr -->
+    <path d="M226 176 c18 -6 30 6 28 22 c-2 14 -16 22 -28 16 Z" fill="#d9b184"/>
+    <!-- Auge, Nase, Mund -->
+    <circle cx="150" cy="158" r="7" fill="#23324d"/>
+    <path d="M92 176 c-12 10 -12 22 0 28" fill="none" stroke-width="4"/>
+    <path d="M104 224 c14 8 30 8 42 2" fill="none" stroke-width="4"/>
+    <!-- Kehlkopf -->
+    <circle cx="196" cy="252" r="15" fill="#d9614c"/>
+  </g>
+
+  <!-- Weg 1: durch die Luft nach draussen -->
+  <g fill="none" stroke="#2f5d99" stroke-width="4" stroke-linecap="round">
+    <path d="M76 200 C58 186 58 166 76 152"/>
+    <path d="M52 210 C26 188 26 164 52 142"/>
+  </g>
+  <g stroke="#2f5d99" stroke-width="4.5" stroke-linecap="round">
+    <path d="M196 252 C150 244 116 224 96 200"/>
+  </g>
+  <path d="M92 194 l-2 17 l15 -8 Z" fill="#2f5d99"/>
+
+  <!-- Weg 2: durch die Schaedelknochen direkt ans Innenohr -->
+  <g stroke="#f0b53f" stroke-width="7" stroke-linecap="round" stroke-dasharray="3 9">
+    <path d="M196 252 C214 226 226 210 236 196"/>
+  </g>
+  <path d="M240 190 l-14 4 l8 12 Z" fill="#f0b53f"/>
+  <!-- tiefe Frequenzen: lange Wellen -->
+  <g fill="none" stroke="#f0b53f" stroke-width="4" stroke-linecap="round">
+    <path d="M282 196 C296 176 310 216 324 196 C338 176 352 216 366 196"/>
+  </g>
+
+  <!-- Aufnahme kennt nur den Luftweg: hohe, duenne Wellen -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linejoin="round">
+    <rect x="298" y="52" width="150" height="86" rx="12" fill="#ffffff"/>
+    <circle cx="373" cy="95" r="24" fill="#c9d2de"/>
+    <circle cx="373" cy="95" r="10" fill="#3b4657"/>
+  </g>
+  <g fill="none" stroke="#2f5d99" stroke-width="3.4" stroke-linecap="round">
+    <path d="M290 262 C298 250 306 274 314 262 C322 250 330 274 338 262 C346 250 354 274 362 262 C370 250 378 274 386 262"/>
+  </g>
+  <path d="M282 240 H400" stroke="#c2c9d4" stroke-width="3" stroke-dasharray="7 6"/>
+</svg>

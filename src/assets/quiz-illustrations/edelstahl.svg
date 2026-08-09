@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#eaf2fb"/>
+
+  <!-- Sauerstoff von oben -->
+  <g stroke="#2f5d99" stroke-width="4" stroke-linecap="round">
+    <path d="M96 34 V72"/><path d="M188 34 V72"/><path d="M280 34 V72"/><path d="M372 34 V72"/>
+  </g>
+  <g fill="#2f5d99">
+    <path d="M96 82 l-9 -14 h18 Z"/><path d="M188 82 l-9 -14 h18 Z"/>
+    <path d="M280 82 l-9 -14 h18 Z"/><path d="M372 82 l-9 -14 h18 Z"/>
+  </g>
+
+  <!-- Stahlblock -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <rect x="48" y="120" width="384" height="150" rx="12" fill="#8d99ab"/>
+    <!-- Passivschicht: hauchduenn und dicht -->
+    <rect x="48" y="100" width="384" height="20" rx="8" fill="#5a9e6f"/>
+  </g>
+  <!-- Eisen- und Chromatome im Gefuege -->
+  <g fill="#6f7c90" stroke="#5b6675" stroke-width="2">
+    <circle cx="86" cy="152" r="12"/><circle cx="140" cy="176" r="12"/><circle cx="196" cy="150" r="12"/>
+    <circle cx="252" cy="178" r="12"/><circle cx="308" cy="152" r="12"/><circle cx="364" cy="176" r="12"/>
+    <circle cx="110" cy="214" r="12"/><circle cx="168" cy="236" r="12"/><circle cx="228" cy="214" r="12"/>
+    <circle cx="288" cy="238" r="12"/><circle cx="346" cy="216" r="12"/><circle cx="400" cy="238" r="12"/>
+  </g>
+  <g fill="#5a9e6f" stroke="#3f7d53" stroke-width="2">
+    <circle cx="114" cy="150" r="11"/><circle cx="224" cy="178" r="11"/><circle cx="336" cy="150" r="11"/>
+    <circle cx="140" cy="238" r="11"/><circle cx="260" cy="216" r="11"/><circle cx="372" cy="240" r="11"/>
+  </g>
+  <!-- Chrom wandert zur Oberflaeche und bildet die Schicht -->
+  <g stroke="#5a9e6f" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="7 6">
+    <path d="M114 138 V124"/><path d="M336 138 V124"/>
+  </g>
+
+  <!-- rechts: Kratzer heilt sofort zu -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linejoin="round">
+    <path d="M292 100 l14 20 l14 -20 Z" fill="#8d99ab"/>
+  </g>
+  <path d="M306 76 A26 26 0 1 1 332 102" fill="none" stroke="#5a9e6f" stroke-width="5" stroke-linecap="round"/>
+  <path d="M332 102 l-14 -6 l4 15 Z" fill="#5a9e6f"/>
+</svg>

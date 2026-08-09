@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#eaf2fb"/>
+
+  <!-- Eisscholle -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 268 l38 -22 h330 l54 22 v20 H28 Z" fill="#ffffff"/>
+    <path d="M66 246 h330" stroke="#a8c8e8" stroke-width="3"/>
+  </g>
+
+  <!-- Pinguin -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Koerper -->
+    <path d="M150 246 C112 246 104 200 110 166 C116 126 138 92 176 92 C214 92 236 126 242 166 C248 200 240 246 202 246 Z" fill="#23324d"/>
+    <!-- Bauch -->
+    <path d="M160 238 C134 236 128 198 133 168 C138 136 154 112 176 112 C198 112 214 136 219 168 C224 198 218 236 192 238 Z" fill="#fdf6e8"/>
+    <!-- Fluegel -->
+    <path d="M114 152 C96 176 96 210 112 232 C120 216 118 178 124 158 Z" fill="#1a2740"/>
+    <path d="M238 152 C256 176 256 210 240 232 C232 216 234 178 228 158 Z" fill="#1a2740"/>
+    <!-- Augen -->
+    <circle cx="160" cy="150" r="7.5" fill="#23324d"/>
+    <circle cx="192" cy="150" r="7.5" fill="#23324d"/>
+    <circle cx="162.5" cy="147.5" r="2.6" fill="#ffffff" stroke="none"/>
+    <circle cx="194.5" cy="147.5" r="2.6" fill="#ffffff" stroke="none"/>
+    <!-- Schnabel -->
+    <path d="M176 160 l16 12 l-16 10 l-16 -10 Z" fill="#f0b53f"/>
+    <!-- Fuesse -->
+    <path d="M148 246 c-12 0 -20 5 -20 11 h44 c0 -6 -8 -11 -18 -11 Z" fill="#f0b53f"/>
+    <path d="M204 246 c-10 0 -18 5 -18 11 h44 c0 -6 -8 -11 -20 -11 Z" fill="#f0b53f"/>
+  </g>
+
+  <!-- Waermetauscher-Schema im Bein -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="300" y="72" width="152" height="176" rx="16" fill="#ffffff" stroke="#23324d" stroke-width="3.6"/>
+    <!-- warme Arterie abwaerts -->
+    <path d="M340 96 V222" stroke="#d9614c" stroke-width="11"/>
+    <path d="M340 210 l-9 -14 h18 Z" fill="#d9614c" stroke="none"/>
+    <!-- kalte Vene aufwaerts -->
+    <path d="M412 222 V96" stroke="#2f5d99" stroke-width="11"/>
+    <path d="M412 108 l-9 14 h18 Z" fill="#2f5d99" stroke="none"/>
+    <!-- Waermeuebertrag -->
+    <g stroke="#f0b53f" stroke-width="5">
+      <path d="M352 122 h48"/><path d="M352 152 h48"/><path d="M352 182 h48"/>
+    </g>
+    <g fill="#f0b53f" stroke="none">
+      <path d="M398 122 l-13 -7 v14 Z"/><path d="M398 152 l-13 -7 v14 Z"/><path d="M398 182 l-13 -7 v14 Z"/>
+    </g>
+    <!-- Temperaturpunkte -->
+    <circle cx="340" cy="90" r="7" fill="#d9614c" stroke="#23324d" stroke-width="3"/>
+    <circle cx="340" cy="228" r="7" fill="#a8c8e8" stroke="#23324d" stroke-width="3"/>
+    <circle cx="412" cy="228" r="7" fill="#2f5d99" stroke="#23324d" stroke-width="3"/>
+    <circle cx="412" cy="90" r="7" fill="#d9614c" stroke="#23324d" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+  <!-- Wolke -->
+  <g fill="#3d5273">
+    <ellipse cx="140" cy="58" rx="66" ry="30"/>
+    <ellipse cx="210" cy="52" rx="48" ry="26"/>
+    <ellipse cx="92" cy="66" rx="40" ry="22"/>
+  </g>
+
+  <!-- Blitz in die Nase -->
+  <path d="M164 84 l24 34 l-18 6 l30 40 l-6 -30 l18 -4 Z" fill="#f0b53f" stroke="#fdf6e8" stroke-width="2.6" stroke-linejoin="round"/>
+
+  <!-- Flugzeug -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M132 196 C160 178 226 172 306 176 C350 178 388 186 408 196 C388 208 350 216 306 218 C226 222 160 216 132 200 Z" fill="#e6e9ee"/>
+    <path d="M258 180 l52 -46 h22 l-26 48 Z" fill="#c9d2de"/>
+    <path d="M244 212 l-30 44 h24 l40 -42 Z" fill="#c9d2de"/>
+    <path d="M392 178 l34 -34 h18 l-24 38 Z" fill="#c9d2de"/>
+    <!-- Fenster -->
+    <g fill="#2f5d99" stroke="none">
+      <circle cx="182" cy="196" r="6"/><circle cx="208" cy="194" r="6"/><circle cx="234" cy="193" r="6"/>
+      <circle cx="286" cy="194" r="6"/><circle cx="312" cy="195" r="6"/><circle cx="338" cy="197" r="6"/>
+    </g>
+    <path d="M132 196 l-16 4 l16 4 Z" fill="#c9d2de"/>
+  </g>
+
+  <!-- Strom laeuft aussen entlang der Huelle -->
+  <g fill="none" stroke="#f0b53f" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 10">
+    <path d="M146 190 C186 172 250 168 320 172 C362 175 396 184 414 194"/>
+  </g>
+  <g fill="none" stroke="#f0b53f" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 9">
+    <path d="M146 206 C186 220 250 226 320 222 C362 219 396 210 414 200"/>
+  </g>
+  <!-- Austritt am Heck -->
+  <path d="M418 196 l32 -12 M418 200 l32 6 M420 198 h34" stroke="#f0b53f" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Innenraum feldfrei -->
+  <g stroke="#5a9e6f" stroke-width="3.4" fill="none">
+    <rect x="176" y="184" width="180" height="26" rx="13" stroke-dasharray="8 7"/>
+  </g>
+  <g stroke="#5a9e6f" stroke-width="7" stroke-linecap="round" fill="none">
+    <path d="M240 274 l16 18 l30 -36"/>
+  </g>
+</svg>

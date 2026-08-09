@@ -518,17 +518,15 @@
         }
       },
 
-      "wwdsQuiz": "Wer weiß denn sowas?",
-      "wwdsQuizGame": {
-        "subtitle": "15 Fragen aus dem Buch zur ARD-Show – A, B oder C?",
+      "triviaQuiz": "Schon gewusst?",
+      "triviaQuizGame": {
+        "subtitle": "15 kuriose Fragen – A, B oder C? Mit Erklärung, warum es so ist.",
         "loading": "Die Fragen werden geladen …",
         "loadError": "Die Fragen sind gerade nicht verfügbar. Bitte später noch einmal versuchen.",
         "retry": "Nochmal versuchen",
         "counter": "Frage {{current}} von {{total}}",
-        "questionNumber": "Frage Nr. {{number}} im Buch",
         "explanationTitle": "Erläuterung",
-        "illustrationAlt": "Illustration zur Frage",
-        "source": "Quelle: {{source}}",
+        "illustrationAlt": "Illustration zur Erläuterung",
         "newRound": "Neue Runde mit neuen Fragen"
       },
 

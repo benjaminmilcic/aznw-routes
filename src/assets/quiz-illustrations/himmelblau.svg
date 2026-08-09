@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <defs>
+    <clipPath id="hb-sky"><rect x="0" y="0" width="480" height="320" rx="18"/></clipPath>
+  </defs>
+  <g clip-path="url(#hb-sky)">
+    <rect width="480" height="320" fill="#7fb2e5"/>
+    <rect width="480" height="120" fill="#5b8ec9"/>
+    <!-- Boden -->
+    <path d="M0 274 C90 262 180 272 280 268 C370 264 420 272 480 264 V320 H0 Z" fill="#5a9e6f"/>
+  </g>
+
+  <!-- Sonne -->
+  <circle cx="418" cy="56" r="30" fill="#f0b53f" stroke="#23324d" stroke-width="3.4"/>
+
+  <!-- weisser Strahl von der Sonne -->
+  <path d="M392 74 L212 168" stroke="#fdf6e8" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Luftmolekuel -->
+  <circle cx="206" cy="172" r="17" fill="#eaf2fb" stroke="#23324d" stroke-width="3.4"/>
+
+  <!-- rotes und gelbes Licht laeuft weitgehend gerade weiter -->
+  <g stroke="#d9614c" stroke-width="5" stroke-linecap="round">
+    <path d="M190 180 L92 232"/>
+  </g>
+  <path d="M84 236 l17 -3 l-6 -14 Z" fill="#d9614c"/>
+  <g stroke="#f0b53f" stroke-width="4" stroke-linecap="round">
+    <path d="M192 186 L104 250"/>
+  </g>
+
+  <!-- blaues Licht wird in alle Richtungen gestreut -->
+  <g stroke="#2f5d99" stroke-width="4.5" stroke-linecap="round">
+    <path d="M206 155 V112"/>
+    <path d="M222 162 L268 130"/>
+    <path d="M224 180 L272 196"/>
+    <path d="M206 190 V236"/>
+    <path d="M188 162 L142 132"/>
+    <path d="M190 186 L146 210"/>
+  </g>
+  <g fill="#2f5d99">
+    <path d="M206 104 l-8 14 h16 Z"/>
+    <path d="M274 126 l-16 4 l9 12 Z"/>
+    <path d="M280 199 l-15 -8 l-2 16 Z"/>
+    <path d="M206 244 l-8 -14 h16 Z"/>
+    <path d="M136 128 l16 4 l-9 12 Z"/>
+    <path d="M139 214 l15 -8 l2 16 Z"/>
+  </g>
+
+  <!-- Beobachter sieht Blau aus dem ganzen Himmel -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <circle cx="58" cy="252" r="14" fill="#e8d3b4"/>
+    <path d="M58 266 v30" stroke-width="7"/>
+    <path d="M58 276 l-16 12 M58 276 l16 12" stroke-width="5"/>
+  </g>
+</svg>

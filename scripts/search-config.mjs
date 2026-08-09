@@ -145,10 +145,10 @@ export const SEARCH_ROUTES = [
     extra: 'Wissensquiz Knowledge Quiz Kviz znanja Fragen questions Allgemeinwissen',
   },
   {
-    route: '/gimmicks/games/wwds-quiz', labelKey: 'gimmicks.games.wwdsQuiz',
+    route: '/gimmicks/games/trivia-quiz', labelKey: 'gimmicks.games.triviaQuiz',
     icon: 'fa-solid fa-circle-question', category: 'search.category.games',
-    prefixes: ['gimmicks.games.wwdsQuizGame'],
-    extra: 'Wer weiß denn sowas Wissensquiz Quiz Kviz znanja Fragen questions pitanja Antwort A B C Erläuterung explanation objašnjenje Buch book knjiga ARD Show Allgemeinwissen general knowledge opće znanje raten guess',
+    prefixes: ['gimmicks.games.triviaQuizGame'],
+    extra: 'Schon gewusst Did you know Jesi li znao Wissensquiz Quiz Kviz znanja Fragen questions pitanja Antwort A B C Erläuterung explanation objašnjenje kurios curious neobično Allgemeinwissen general knowledge opće znanje raten guess unnützes Wissen Warum why zašto',
   },
   {
     route: '/gimmicks/games/flag-quiz', labelKey: 'gimmicks.games.flagQuiz.title',

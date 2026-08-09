@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#f7ecd2"/>
+  <path d="M0 268 C90 250 180 262 280 256 C370 250 420 260 480 250 V320 H0 Z" fill="#cbb98f"/>
+
+  <!-- Elefant von vorn -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ohren: gross, mit Gefaessnetz -->
+    <path d="M162 108 C104 88 52 108 44 158 C36 208 78 240 132 226 C156 220 166 174 162 108 Z" fill="#9aa3ad"/>
+    <path d="M318 108 C376 88 428 108 436 158 C444 208 402 240 348 226 C324 220 314 174 318 108 Z" fill="#9aa3ad"/>
+    <!-- Kopf -->
+    <path d="M164 100 C164 76 196 62 240 62 C284 62 316 76 316 100 C316 158 300 196 274 208 H206 C180 196 164 158 164 100 Z" fill="#aab3bd"/>
+    <!-- Ruessel -->
+    <path d="M212 204 C208 240 218 268 240 282 C262 268 272 240 268 204 Z" fill="#9aa3ad"/>
+    <path d="M216 222 h48 M218 240 h44 M222 258 h36" stroke-width="3"/>
+    <!-- Augen -->
+    <circle cx="204" cy="118" r="7" fill="#23324d"/>
+    <circle cx="276" cy="118" r="7" fill="#23324d"/>
+    <!-- Stosszaehne -->
+    <path d="M200 200 c-8 22 -6 40 4 52 c8 -16 10 -34 8 -52 Z" fill="#f2ece3"/>
+    <path d="M280 200 c8 22 6 40 -4 52 c-8 -16 -10 -34 -8 -52 Z" fill="#f2ece3"/>
+  </g>
+
+  <!-- Gefaessnetz in den Ohren -->
+  <g stroke="#d9614c" stroke-width="2.6" fill="none" opacity=".9">
+    <path d="M150 128 C118 130 88 146 74 172"/>
+    <path d="M152 156 C122 158 96 174 86 196"/>
+    <path d="M152 186 C128 190 110 202 102 216"/>
+    <path d="M330 128 C362 130 392 146 406 172"/>
+    <path d="M328 156 C358 158 384 174 394 196"/>
+    <path d="M328 186 C352 190 370 202 378 216"/>
+  </g>
+
+  <!-- Waerme geht ueber die Ohren weg -->
+  <g stroke="#f0b53f" stroke-width="5" stroke-linecap="round">
+    <path d="M42 128 L14 108"/><path d="M34 168 L6 164"/><path d="M42 208 L16 220"/>
+    <path d="M438 128 L466 108"/><path d="M446 168 L474 164"/><path d="M438 208 L464 220"/>
+  </g>
+  <g fill="#f0b53f">
+    <path d="M14 108 l-2 16 l14 -8 Z"/><path d="M6 164 l-2 16 l12 -10 Z"/><path d="M16 220 l-14 6 l14 8 Z"/>
+    <path d="M466 108 l2 16 l-14 -8 Z"/><path d="M474 164 l2 16 l-12 -10 Z"/><path d="M464 220 l14 6 l-14 8 Z"/>
+  </g>
+</svg>

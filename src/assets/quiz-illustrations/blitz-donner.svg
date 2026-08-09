@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+
+  <!-- Gewitterwolke links -->
+  <g fill="#3d5273">
+    <ellipse cx="92" cy="56" rx="60" ry="28"/>
+    <ellipse cx="146" cy="48" rx="42" ry="22"/>
+    <ellipse cx="56" cy="66" rx="34" ry="20"/>
+  </g>
+  <!-- Blitzkanal, kilometerlang -->
+  <path d="M104 82 l22 42 l-18 6 l30 58 l-8 -42 l18 -4 Z" fill="#f0b53f" stroke="#fdf6e8" stroke-width="2.6" stroke-linejoin="round"/>
+
+  <!-- Beobachter rechts -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M300 292 h150" stroke="#5a9e6f" stroke-width="8"/>
+    <circle cx="396" cy="196" r="20" fill="#e8d3b4"/>
+    <path d="M396 216 v44" fill="none" stroke-width="8"/>
+    <path d="M396 232 l-22 16 M396 232 l22 16" fill="none" stroke-width="6"/>
+    <path d="M396 260 l-16 28 M396 260 l16 28" fill="none" stroke-width="6"/>
+  </g>
+
+  <!-- Licht: sofort da -->
+  <g stroke="#f0b53f" stroke-width="4" stroke-linecap="round">
+    <path d="M164 128 H352"/>
+  </g>
+  <path d="M364 128 l-16 -10 v20 Z" fill="#f0b53f"/>
+
+  <!-- Schall: langsam, als Wellenfront unterwegs -->
+  <g fill="none" stroke="#a8c8e8" stroke-width="4" stroke-linecap="round">
+    <path d="M172 190 C186 208 186 232 172 250"/>
+    <path d="M204 186 C220 208 220 234 204 256"/>
+    <path d="M236 182 C254 208 254 236 236 262"/>
+  </g>
+  <g stroke="#a8c8e8" stroke-width="4" stroke-linecap="round">
+    <path d="M264 222 H320"/>
+  </g>
+  <path d="M332 222 l-16 -10 v20 Z" fill="#a8c8e8"/>
+
+  <!-- drei Sekunden pro Kilometer, als drei Takte -->
+  <g fill="#a8c8e8">
+    <circle cx="188" cy="288" r="7"/><circle cx="216" cy="288" r="7"/><circle cx="244" cy="288" r="7"/>
+  </g>
+  <path d="M180 268 H252" stroke="#a8c8e8" stroke-width="3" stroke-dasharray="6 6"/>
+</svg>

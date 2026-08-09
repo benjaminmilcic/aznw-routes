@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#f7ecd2"/>
+  <path d="M0 262 C90 244 180 258 280 252 C370 246 420 256 480 246 V320 H0 Z" fill="#e0c48e"/>
+  <circle cx="52" cy="56" r="26" fill="#f0b53f"/>
+
+  <!-- Dromedar im Profil, nach rechts schauend -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hinterbeine -->
+    <path d="M132 214 V276" fill="none" stroke-width="10"/>
+    <path d="M158 216 V276" fill="none" stroke-width="10"/>
+    <!-- Rumpf -->
+    <path d="M118 196 C114 168 132 152 168 150 C204 148 236 152 254 162 C266 168 268 190 258 204 C236 216 140 216 118 196 Z" fill="#c99a5c"/>
+    <!-- Vorderbeine -->
+    <path d="M232 206 V276" fill="none" stroke-width="10"/>
+    <path d="M254 204 V276" fill="none" stroke-width="10"/>
+    <!-- Fettoecker -->
+    <path d="M158 152 C160 108 196 94 214 122 C222 136 220 146 216 154 Z" fill="#b8873f"/>
+    <!-- Hals -->
+    <path d="M252 168 C270 148 282 118 292 96 C300 78 316 74 324 84 C314 100 302 128 296 152 C292 168 278 180 262 182 Z" fill="#c99a5c"/>
+    <!-- Kopf -->
+    <path d="M320 82 C338 74 358 78 366 90 C372 100 368 112 356 116 C344 120 328 116 320 106 C314 98 314 88 320 82 Z" fill="#d9b184"/>
+    <!-- Schnauze -->
+    <path d="M360 88 C376 84 390 90 392 100 C394 110 384 116 372 114 C362 112 356 104 358 96 Z" fill="#e8d3b4"/>
+    <!-- Ohr und Auge -->
+    <path d="M330 78 c-2 -12 4 -20 12 -20 c2 10 -2 18 -6 22 Z" fill="#c99a5c"/>
+    <circle cx="344" cy="94" r="5" fill="#23324d"/>
+    <!-- Schwanz -->
+    <path d="M120 190 c-14 6 -18 22 -12 38" fill="none" stroke-width="5"/>
+  </g>
+
+  <!-- Der Hoecker enthaelt Fett -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linejoin="round">
+    <circle cx="112" cy="72" r="42" fill="#ffffff"/>
+  </g>
+  <path d="M132 106 L164 128" stroke="#23324d" stroke-width="3.4" stroke-linecap="round"/>
+  <g fill="#f0b53f" stroke="#c8891f" stroke-width="2.4">
+    <circle cx="98" cy="60" r="12"/><circle cx="126" cy="68" r="10"/>
+    <circle cx="102" cy="88" r="9"/><circle cx="126" cy="94" r="7"/>
+  </g>
+
+  <!-- Kein Wassertank -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linejoin="round">
+    <circle cx="228" cy="62" r="34" fill="#ffffff"/>
+  </g>
+  <path d="M216 94 L200 122" stroke="#23324d" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M228 42 c12 14 18 22 18 30 a18 18 0 0 1 -36 0 c0 -8 6 -16 18 -30 Z" fill="#a8c8e8" stroke="#2f5d99" stroke-width="2.6"/>
+  <g stroke="#d9614c" stroke-width="7" stroke-linecap="round">
+    <path d="M204 38 l48 48"/>
+  </g>
+</svg>

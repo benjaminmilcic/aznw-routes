@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+
+  <!-- Katzenkopf im Dunkeln -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M62 118 l6 -56 l44 30 Z" fill="#4a5568"/>
+    <path d="M206 118 l-6 -56 l-44 30 Z" fill="#4a5568"/>
+    <path d="M134 258 C88 258 58 216 58 168 C58 122 92 96 134 96 C176 96 210 122 210 168 C210 216 180 258 134 258 Z" fill="#5b6675"/>
+    <!-- leuchtende Augen -->
+    <ellipse cx="106" cy="162" rx="22" ry="26" fill="#8ee06a"/>
+    <ellipse cx="162" cy="162" rx="22" ry="26" fill="#8ee06a"/>
+    <path d="M106 140 v44" stroke="#1c2a44" stroke-width="9"/>
+    <path d="M162 140 v44" stroke="#1c2a44" stroke-width="9"/>
+    <!-- Nase, Schnurrhaare -->
+    <path d="M134 196 l9 12 h-18 Z" fill="#d9a0a8"/>
+    <path d="M120 212 L70 206 M120 220 L74 226 M148 212 L198 206 M148 220 L194 226" stroke-width="2.6"/>
+  </g>
+  <!-- Leuchten strahlt ab -->
+  <g stroke="#8ee06a" stroke-width="3.4" stroke-linecap="round" opacity=".8">
+    <path d="M84 132 L58 112"/><path d="M184 132 L210 112"/>
+    <path d="M84 192 L58 210"/><path d="M184 192 L210 210"/>
+  </g>
+
+  <!-- Querschnitt des Auges -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linejoin="round">
+    <path d="M266 160 C266 96 320 56 372 56 C424 56 456 100 456 160 C456 220 424 264 372 264 C320 264 266 224 266 160 Z" fill="#eaf2fb"/>
+    <!-- Linse -->
+    <path d="M266 160 C282 128 282 192 266 160 Z" fill="none"/>
+    <ellipse cx="282" cy="160" rx="16" ry="42" fill="#c9dcf2"/>
+    <!-- Netzhaut -->
+    <path d="M404 76 C438 108 438 212 404 244" fill="none" stroke="#d9614c" stroke-width="7"/>
+    <!-- Tapetum lucidum: spiegelnde Schicht dahinter -->
+    <path d="M416 70 C452 106 452 214 416 250" fill="none" stroke="#f0b53f" stroke-width="8" stroke-dasharray="12 7"/>
+  </g>
+
+  <!-- Licht faellt ein, wird zurueckgeworfen -->
+  <g stroke="#a8c8e8" stroke-width="4.5" stroke-linecap="round">
+    <path d="M290 132 L406 116"/>
+  </g>
+  <path d="M416 114 l-16 -7 l2 15 Z" fill="#a8c8e8"/>
+  <g stroke="#f0b53f" stroke-width="4.5" stroke-linecap="round">
+    <path d="M418 128 L300 186"/>
+  </g>
+  <path d="M290 190 l17 -5 l-4 -15 Z" fill="#f0b53f"/>
+  <!-- zweite Chance an der Netzhaut -->
+  <circle cx="408" cy="170" r="7" fill="#5a9e6f" stroke="#23324d" stroke-width="2.6"/>
+</svg>

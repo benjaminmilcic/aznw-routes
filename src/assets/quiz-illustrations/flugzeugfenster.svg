@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#eaf2fb"/>
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Kabinenwand -->
+    <rect x="40" y="40" width="120" height="240" rx="12" fill="#ffffff"/>
+    <!-- Aussenluft -->
+    <rect x="360" y="40" width="80" height="240" rx="12" fill="#c9dcf2"/>
+    <!-- drei Scheiben -->
+    <rect x="196" y="70" width="20" height="180" rx="6" fill="#dbe9f8"/>
+    <rect x="264" y="70" width="20" height="180" rx="6" fill="#dbe9f8"/>
+    <rect x="332" y="70" width="20" height="180" rx="6" fill="#a8c8e8"/>
+    <!-- Loch in der mittleren Scheibe -->
+    <circle cx="274" cy="228" r="9" fill="#fdf6e8"/>
+  </g>
+  <!-- Druck von der Kabine, durch das Loch weitergegeben -->
+  <g stroke="#5a9e6f" stroke-width="6" stroke-linecap="round">
+    <path d="M168 228 H258"/>
+    <path d="M292 228 H322"/>
+  </g>
+  <g fill="#5a9e6f">
+    <path d="M258 228 l-14 -8 v16 Z"/>
+    <path d="M330 228 l-14 -8 v16 Z"/>
+  </g>
+  <!-- Last liegt auf der aeusseren Scheibe -->
+  <g stroke="#d9614c" stroke-width="7" stroke-linecap="round">
+    <path d="M300 110 H340"/>
+    <path d="M300 150 H340"/>
+    <path d="M300 190 H340"/>
+  </g>
+  <g fill="#d9614c">
+    <path d="M348 110 l-16 -9 v18 Z"/>
+    <path d="M348 150 l-16 -9 v18 Z"/>
+    <path d="M348 190 l-16 -9 v18 Z"/>
+  </g>
+  <!-- Aussendruck drueckt dagegen -->
+  <g stroke="#2f5d99" stroke-width="7" stroke-linecap="round">
+    <path d="M424 130 H384"/>
+    <path d="M424 170 H384"/>
+  </g>
+  <g fill="#2f5d99">
+    <path d="M376 130 l16 -9 v18 Z"/>
+    <path d="M376 170 l16 -9 v18 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- Blickfeld als weiter Faecher -->
+  <g fill="#f7e2b0">
+    <path d="M240 210 L18 118 A248 248 0 0 1 462 118 Z" opacity=".75"/>
+  </g>
+  <g stroke="#f0b53f" stroke-width="3" stroke-dasharray="8 7">
+    <path d="M240 210 L18 118"/>
+    <path d="M240 210 L462 118"/>
+  </g>
+
+  <!-- Ziegenkopf von vorn -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hoerner -->
+    <path d="M196 156 C176 118 178 88 196 66 C204 92 206 124 214 148 Z" fill="#c9b192"/>
+    <path d="M284 156 C304 118 302 88 284 66 C276 92 274 124 266 148 Z" fill="#c9b192"/>
+    <!-- Kopf -->
+    <path d="M240 306 C204 306 186 266 186 216 C186 176 208 152 240 152 C272 152 294 176 294 216 C294 266 276 306 240 306 Z" fill="#e6ddd0"/>
+    <!-- Ohren -->
+    <path d="M186 190 C160 178 138 184 128 200 C146 214 170 216 188 208 Z" fill="#d3c7b6"/>
+    <path d="M294 190 C320 178 342 184 352 200 C334 214 310 216 292 208 Z" fill="#d3c7b6"/>
+    <!-- Schnauze -->
+    <path d="M240 300 C224 300 214 288 214 276 C214 264 226 258 240 258 C254 258 266 264 266 276 C266 288 256 300 240 300 Z" fill="#f2ece3"/>
+    <path d="M234 272 h-6 M246 272 h6" stroke-width="3"/>
+    <!-- Augen mit waagerechtem Rechteckschlitz -->
+    <ellipse cx="206" cy="212" rx="21" ry="17" fill="#f7cd77"/>
+    <ellipse cx="274" cy="212" rx="21" ry="17" fill="#f7cd77"/>
+    <rect x="190" y="205" width="32" height="13" rx="3" fill="#23324d"/>
+    <rect x="258" y="205" width="32" height="13" rx="3" fill="#23324d"/>
+  </g>
+
+  <!-- Vergleich: waagerechter Schlitz laesst breit Licht herein -->
+  <g stroke="#2f5d99" stroke-width="4" stroke-linecap="round">
+    <path d="M112 84 L166 198"/>
+    <path d="M368 84 L314 198"/>
+  </g>
+  <g fill="#2f5d99">
+    <path d="M166 198 l-14 -8 l-1 16 Z"/>
+    <path d="M314 198 l14 -8 l1 16 Z"/>
+  </g>
+</svg>

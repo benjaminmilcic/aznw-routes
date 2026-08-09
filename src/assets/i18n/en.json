@@ -518,17 +518,15 @@
         }
       },
 
-      "wwdsQuiz": "Wer weiß denn sowas?",
-      "wwdsQuizGame": {
-        "subtitle": "15 questions from the book of the German TV show – A, B or C? (questions are in German)",
+      "triviaQuiz": "Did You Know?",
+      "triviaQuizGame": {
+        "subtitle": "15 curious questions – A, B or C? With an explanation of why. (questions are in German)",
         "loading": "Loading the questions …",
         "loadError": "The questions are currently unavailable. Please try again later.",
         "retry": "Try again",
         "counter": "Question {{current}} of {{total}}",
-        "questionNumber": "Question no. {{number}} in the book",
         "explanationTitle": "Explanation",
-        "illustrationAlt": "Illustration for the question",
-        "source": "Source: {{source}}",
+        "illustrationAlt": "Illustration for the explanation",
         "newRound": "New round with new questions"
       },
 

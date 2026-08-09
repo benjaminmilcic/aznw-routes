@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- links: runder Deckel liegt sicher auf -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="34" y="150" width="184" height="130" rx="10" fill="#8d99ab"/>
+    <ellipse cx="126" cy="150" rx="92" ry="26" fill="#6f7c90"/>
+    <ellipse cx="126" cy="150" rx="62" ry="17" fill="#3b4657"/>
+    <!-- Deckel schraeg darueber, passt nirgends durch -->
+    <g transform="translate(126,96) rotate(-14)">
+      <ellipse rx="74" ry="21" fill="#b9c1cc"/>
+      <ellipse rx="74" ry="21" fill="none" stroke="#23324d" stroke-width="3.6"/>
+      <ellipse rx="52" ry="13" fill="none" stroke="#8d99ab" stroke-width="3"/>
+    </g>
+  </g>
+  <!-- gruener Haken -->
+  <g stroke="#5a9e6f" stroke-width="9" stroke-linecap="round" fill="none">
+    <path d="M56 56 l16 18 l30 -36"/>
+  </g>
+
+  <!-- rechts: quadratischer Deckel fällt diagonal durch -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="262" y="150" width="184" height="130" rx="10" fill="#8d99ab"/>
+    <path d="M282 150 h144 l-26 26 h-92 Z" fill="#6f7c90"/>
+    <path d="M300 150 h108 l-16 16 h-76 Z" fill="#3b4657"/>
+    <!-- Deckel kippt hinein -->
+    <g transform="translate(356,150) rotate(38)">
+      <rect x="-52" y="-9" width="104" height="18" rx="4" fill="#b9c1cc"/>
+      <rect x="-52" y="-9" width="104" height="18" rx="4" fill="none" stroke="#23324d" stroke-width="3.6"/>
+    </g>
+  </g>
+  <!-- rotes Kreuz -->
+  <g stroke="#d9614c" stroke-width="9" stroke-linecap="round">
+    <path d="M290 44 l34 34"/><path d="M324 44 l-34 34"/>
+  </g>
+  <!-- Fallpfeil -->
+  <path d="M356 196 V236" stroke="#d9614c" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 7"/>
+  <path d="M356 246 l-9 -14 h18 Z" fill="#d9614c"/>
+</svg>

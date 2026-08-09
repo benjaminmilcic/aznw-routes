@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Brett -->
+    <path d="M52 246 h330 l26 22 H78 Z" fill="#c8a06a"/>
+    <path d="M52 246 v-10 h330 v10" fill="#dcb47c"/>
+
+    <!-- Kaesekeil: Seitenflaeche -->
+    <path d="M96 236 V138 l176 -34 v98 Z" fill="#f0b53f"/>
+    <!-- Deckflaeche -->
+    <path d="M96 138 l176 -34 l84 26 l-168 40 Z" fill="#f7cd77"/>
+    <!-- Schnittkante rechts -->
+    <path d="M272 104 v98 l84 -34 V130 Z" fill="#e2a02c"/>
+
+    <!-- Loecher Seitenflaeche -->
+    <g fill="#d98f22">
+      <ellipse cx="140" cy="186" rx="19" ry="20"/>
+      <ellipse cx="196" cy="152" rx="13" ry="14"/>
+      <ellipse cx="216" cy="204" rx="16" ry="17"/>
+      <ellipse cx="253" cy="160" rx="9" ry="10"/>
+      <ellipse cx="123" cy="222" rx="8" ry="8"/>
+    </g>
+    <!-- Loecher Deckflaeche (perspektivisch flacher) -->
+    <g fill="#e0a63a">
+      <ellipse cx="197" cy="127" rx="16" ry="7"/>
+      <ellipse cx="262" cy="140" rx="11" ry="5"/>
+    </g>
+    <!-- Loecher Schnittkante -->
+    <g fill="#c8891f">
+      <ellipse cx="303" cy="150" rx="10" ry="14"/>
+      <ellipse cx="330" cy="180" rx="7" ry="10"/>
+    </g>
+  </g>
+
+  <!-- CO2-Blaeschen, die aufsteigen -->
+  <g fill="none" stroke="#2f5d99" stroke-width="2.8" stroke-linecap="round">
+    <circle cx="140" cy="146" r="6"/>
+    <circle cx="152" cy="118" r="4.5"/>
+    <circle cx="143" cy="96" r="3"/>
+    <circle cx="216" cy="170" r="5"/>
+    <circle cx="228" cy="146" r="3.4"/>
+  </g>
+
+  <!-- Bakterien als Lupenmotiv -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="392" cy="234" r="46" fill="#eaf2fb"/>
+    <path d="M425 267 l28 28" stroke-width="9"/>
+    <path d="M425 267 l28 28" stroke="#2f5d99" stroke-width="4.5"/>
+  </g>
+  <g stroke="#2f5d99" stroke-width="3" stroke-linecap="round" fill="#a8c8e8">
+    <rect x="366" y="216" width="30" height="13" rx="6.5"/>
+    <rect x="392" y="240" width="26" height="12" rx="6"/>
+    <rect x="368" y="246" width="22" height="11" rx="5.5"/>
+  </g>
+  <g fill="none" stroke="#2f5d99" stroke-width="2.4" stroke-linecap="round">
+    <circle cx="404" cy="212" r="3.4"/>
+    <circle cx="414" cy="228" r="2.6"/>
+    <circle cx="376" cy="236" r="2.6"/>
+  </g>
+</svg>

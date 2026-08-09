@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#eaf2fb"/>
+
+  <!-- Decke oben -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <rect x="0" y="0" width="480" height="46" fill="#e6e9ee"/>
+  </g>
+  <g stroke="#c2c9d4" stroke-width="3">
+    <path d="M60 46 V16 M180 46 V16 M300 46 V16 M420 46 V16"/>
+  </g>
+
+  <!-- Fliege haengt kopfunter -->
+  <g stroke="#23324d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Beine -->
+    <path d="M112 96 L84 62 M132 100 L118 58 M152 102 L152 58" fill="none"/>
+    <path d="M170 100 L188 58 M188 96 L216 62" fill="none"/>
+    <!-- Fluegel -->
+    <path d="M118 132 C86 140 66 164 78 180 C96 178 118 160 126 142 Z" fill="#cfe0f2" opacity=".9"/>
+    <path d="M182 132 C214 140 234 164 222 180 C204 178 182 160 174 142 Z" fill="#cfe0f2" opacity=".9"/>
+    <!-- Koerper -->
+    <ellipse cx="150" cy="150" rx="40" ry="26" fill="#3b4657"/>
+    <ellipse cx="150" cy="118" rx="26" ry="22" fill="#2b3444"/>
+    <circle cx="136" cy="112" r="9" fill="#d9614c"/>
+    <circle cx="164" cy="112" r="9" fill="#d9614c"/>
+  </g>
+  <!-- Haftpolster an den Fussspitzen -->
+  <g fill="#f0b53f" stroke="#23324d" stroke-width="2.6">
+    <circle cx="84" cy="58" r="7"/><circle cx="118" cy="54" r="7"/><circle cx="152" cy="54" r="7"/>
+    <circle cx="188" cy="54" r="7"/><circle cx="216" cy="58" r="7"/>
+  </g>
+
+  <!-- Lupe: Haerchen mit Fluessigkeitsfilm -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <circle cx="352" cy="196" r="94" fill="#ffffff"/>
+    <path d="M418 262 l38 38" stroke-width="10"/>
+    <path d="M418 262 l38 38" stroke="#2f5d99" stroke-width="5"/>
+  </g>
+  <!-- Oberflaeche in der Lupe -->
+  <path d="M270 148 H434" stroke="#c2c9d4" stroke-width="8" stroke-linecap="round"/>
+  <!-- Fluessigkeitsfilm -->
+  <path d="M272 158 H432" stroke="#a8c8e8" stroke-width="9" stroke-linecap="round" opacity=".85"/>
+  <!-- Haerchen mit verbreiterten Spitzen -->
+  <g stroke="#3b4657" stroke-width="4" stroke-linecap="round">
+    <path d="M292 232 V162"/><path d="M316 240 V162"/><path d="M340 244 V162"/>
+    <path d="M364 244 V162"/><path d="M388 240 V162"/><path d="M412 232 V162"/>
+  </g>
+  <g fill="#3b4657">
+    <ellipse cx="292" cy="160" rx="8" ry="4.5"/><ellipse cx="316" cy="160" rx="8" ry="4.5"/>
+    <ellipse cx="340" cy="160" rx="8" ry="4.5"/><ellipse cx="364" cy="160" rx="8" ry="4.5"/>
+    <ellipse cx="388" cy="160" rx="8" ry="4.5"/><ellipse cx="412" cy="160" rx="8" ry="4.5"/>
+  </g>
+  <!-- Fussbasis -->
+  <path d="M282 244 H422" stroke="#3b4657" stroke-width="12" stroke-linecap="round"/>
+  <!-- Haftkraft nach oben -->
+  <g stroke="#5a9e6f" stroke-width="4.5" stroke-linecap="round">
+    <path d="M352 216 V184"/>
+  </g>
+  <path d="M352 176 l-10 15 h20 Z" fill="#5a9e6f"/>
+</svg>

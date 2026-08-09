@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- Eule mit gedrehtem Kopf -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Koerper -->
+    <path d="M96 288 C68 288 62 244 70 210 C78 176 100 156 132 156 C164 156 186 176 194 210 C202 244 196 288 168 288 Z" fill="#a8763f"/>
+    <path d="M104 280 C86 274 84 240 90 214 C96 188 112 174 132 174 C152 174 168 188 174 214 C180 240 178 274 160 280 Z" fill="#d9b184"/>
+    <!-- Kopf, deutlich gedreht -->
+    <g transform="translate(132,120) rotate(-24)">
+      <path d="M-52 6 C-52 -34 -28 -58 0 -58 C28 -58 52 -34 52 6 C52 34 28 50 0 50 C-28 50 -52 34 -52 6 Z" fill="#a8763f"/>
+      <!-- Federohren -->
+      <path d="M-44 -30 l-14 -26 l26 8 Z" fill="#a8763f"/>
+      <path d="M44 -30 l14 -26 l-26 8 Z" fill="#a8763f"/>
+      <!-- Gesichtsschleier -->
+      <path d="M-40 2 C-40 -28 -22 -46 0 -46 C22 -46 40 -28 40 2 C40 26 22 40 0 40 C-22 40 -40 26 -40 2 Z" fill="#e8d3b4"/>
+      <!-- Roehrenaugen: unbeweglich -->
+      <circle cx="-17" cy="-4" r="15" fill="#f0b53f"/>
+      <circle cx="17" cy="-4" r="15" fill="#f0b53f"/>
+      <circle cx="-17" cy="-4" r="7" fill="#23324d"/>
+      <circle cx="17" cy="-4" r="7" fill="#23324d"/>
+      <path d="M0 8 l9 16 l-9 10 l-9 -10 Z" fill="#c8891f"/>
+    </g>
+  </g>
+
+  <!-- Drehwinkel-Bogen 270 Grad -->
+  <g fill="none" stroke="#2f5d99" stroke-width="5" stroke-linecap="round">
+    <path d="M132 40 A76 76 0 1 1 56 116"/>
+  </g>
+  <path d="M56 116 l-10 -14 l18 -2 Z" fill="#2f5d99"/>
+  <path d="M132 40 l14 -10 l2 18 Z" fill="#2f5d99"/>
+
+  <!-- Halswirbelsaeule: 14 Wirbel -->
+  <g stroke="#23324d" stroke-width="3" stroke-linejoin="round">
+    <rect x="300" y="34" width="128" height="252" rx="14" fill="#eaf2fb"/>
+  </g>
+  <g fill="#c9d2de" stroke="#23324d" stroke-width="2.6">
+    <rect x="336" y="50" width="56" height="14" rx="7"/>
+    <rect x="336" y="68" width="56" height="14" rx="7"/>
+    <rect x="336" y="86" width="56" height="14" rx="7"/>
+    <rect x="336" y="104" width="56" height="14" rx="7"/>
+    <rect x="336" y="122" width="56" height="14" rx="7"/>
+    <rect x="336" y="140" width="56" height="14" rx="7"/>
+    <rect x="336" y="158" width="56" height="14" rx="7"/>
+    <rect x="336" y="176" width="56" height="14" rx="7"/>
+    <rect x="336" y="194" width="56" height="14" rx="7"/>
+    <rect x="336" y="212" width="56" height="14" rx="7"/>
+    <rect x="336" y="230" width="56" height="14" rx="7"/>
+    <rect x="336" y="248" width="56" height="14" rx="7"/>
+  </g>
+  <g fill="#f0b53f" stroke="#23324d" stroke-width="2.6">
+    <rect x="336" y="266" width="56" height="14" rx="7"/>
+    <rect x="336" y="32" width="56" height="14" rx="7"/>
+  </g>
+</svg>

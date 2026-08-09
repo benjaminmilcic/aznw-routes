@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- Glas mit Wasser -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M56 56 h140 l-16 216 h-108 Z" fill="#dbe9f8"/>
+    <path d="M50 132 h142" stroke="#2f5d99" stroke-width="3"/>
+    <!-- Eiswuerfel: Spitze schaut heraus -->
+    <path d="M92 96 h58 v52 h-58 Z" fill="#ffffff"/>
+    <path d="M92 96 l14 -16 h58 l-14 16 Z" fill="#f2f7fd"/>
+    <path d="M150 96 l14 -16 v52 l-14 16 Z" fill="#e4eef9"/>
+  </g>
+  <!-- neun Prozent des Wuerfels ueber der Linie -->
+  <path d="M214 108 H246" stroke="#5a9e6f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M214 132 H246" stroke="#5a9e6f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M230 108 V132" stroke="#5a9e6f" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Molekuelgitter: fluessig dicht, Eis weitmaschig -->
+  <g stroke="#23324d" stroke-width="3.2" stroke-linejoin="round">
+    <rect x="272" y="60" width="80" height="80" rx="10" fill="#eaf2fb"/>
+    <rect x="380" y="60" width="80" height="80" rx="10" fill="#ffffff"/>
+  </g>
+  <!-- dicht gepackt -->
+  <g fill="#2f5d99">
+    <circle cx="288" cy="76" r="7"/><circle cx="308" cy="86" r="7"/><circle cx="330" cy="74" r="7"/>
+    <circle cx="284" cy="100" r="7"/><circle cx="306" cy="110" r="7"/><circle cx="332" cy="98" r="7"/>
+    <circle cx="294" cy="124" r="7"/><circle cx="318" cy="128" r="7"/><circle cx="338" cy="120" r="7"/>
+  </g>
+  <!-- weitmaschiges Gitter mit Hohlraeumen -->
+  <g stroke="#a8c8e8" stroke-width="3" stroke-linecap="round">
+    <path d="M400 78 L420 90 L440 78"/><path d="M400 122 L420 110 L440 122"/>
+    <path d="M420 90 V110"/><path d="M400 78 V100 M440 78 V100"/>
+    <path d="M400 100 L386 108 M440 100 L454 108"/>
+  </g>
+  <g fill="#2f5d99">
+    <circle cx="400" cy="78" r="7"/><circle cx="420" cy="90" r="7"/><circle cx="440" cy="78" r="7"/>
+    <circle cx="420" cy="110" r="7"/><circle cx="400" cy="122" r="7"/><circle cx="440" cy="122" r="7"/>
+    <circle cx="400" cy="100" r="7"/><circle cx="440" cy="100" r="7"/>
+  </g>
+
+  <!-- Pfeil: gleiche Anzahl, mehr Platz -->
+  <path d="M356 236 H392" stroke="#d9614c" stroke-width="6" stroke-linecap="round"/>
+  <path d="M400 236 l-14 -9 v18 Z" fill="#d9614c"/>
+  <g stroke="#23324d" stroke-width="3.2" fill="none">
+    <rect x="272" y="200" width="72" height="72" rx="10" fill="#eaf2fb"/>
+    <rect x="408" y="188" width="52" height="96" rx="10" fill="#ffffff"/>
+  </g>
+</svg>

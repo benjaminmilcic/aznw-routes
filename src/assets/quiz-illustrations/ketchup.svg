@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- links: in Ruhe. Partikelnetz haelt den Ketchup wie einen Feststoff -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M96 82 h48 v-20 h-48 Z" fill="#c9d2de"/>
+    <path d="M80 82 h80 c8 42 10 122 4 172 h-88 c-6 -50 -4 -130 4 -172 Z" fill="#e8b0a4"/>
+    <path d="M90 116 h60 c6 34 6 96 2 130 h-64 c-4 -38 -4 -96 2 -130 Z" fill="#d9614c"/>
+  </g>
+  <g stroke="#8c2f22" stroke-width="2.6">
+    <path d="M98 142 L120 154 L142 142 M98 176 L120 164 L142 176 M120 154 V164"/>
+    <path d="M98 194 L120 206 L142 194 M98 228 L120 216 L142 228 M120 206 V216"/>
+  </g>
+  <g fill="#8c2f22">
+    <circle cx="98" cy="142" r="5"/><circle cx="120" cy="154" r="5"/><circle cx="142" cy="142" r="5"/>
+    <circle cx="98" cy="176" r="5"/><circle cx="120" cy="164" r="5"/><circle cx="142" cy="176" r="5"/>
+    <circle cx="98" cy="194" r="5"/><circle cx="120" cy="206" r="5"/><circle cx="142" cy="194" r="5"/>
+    <circle cx="98" cy="228" r="5"/><circle cx="120" cy="216" r="5"/><circle cx="142" cy="228" r="5"/>
+  </g>
+  <g stroke="#d9614c" stroke-width="9" stroke-linecap="round">
+    <path d="M100 282 l24 24"/><path d="M124 282 l-24 24"/>
+  </g>
+
+  <!-- Pfeil: genug Kraft, das Netz bricht -->
+  <g stroke="#23324d" stroke-width="5" stroke-linecap="round">
+    <path d="M198 168 H250"/>
+  </g>
+  <path d="M262 168 l-18 -11 v22 Z" fill="#23324d"/>
+
+  <!-- rechts: gekippt, das Netz ist gebrochen, alles laeuft auf einmal -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(360,110) rotate(38)">
+      <path d="M-40 -96 h80 c8 40 10 116 4 162 h-88 c-6 -48 -4 -122 4 -162 Z" fill="#e8b0a4"/>
+      <path d="M-28 -64 h56 c6 32 6 88 2 122 h-60 c-4 -36 -4 -90 2 -122 Z" fill="#d9614c"/>
+      <path d="M-24 -118 h48 v22 h-48 Z" fill="#c9d2de"/>
+    </g>
+    <!-- Schwall -->
+    <path d="M330 176 C318 214 328 250 358 272 C384 290 418 286 434 264 C414 236 380 210 330 176 Z" fill="#d9614c"/>
+  </g>
+  <g fill="#d9614c" stroke="#23324d" stroke-width="2.6">
+    <circle cx="306" cy="214" r="7"/><circle cx="300" cy="248" r="5"/>
+  </g>
+  <g stroke="#5a9e6f" stroke-width="9" stroke-linecap="round" fill="none">
+    <path d="M292 62 l16 18 l30 -36"/>
+  </g>
+</svg>

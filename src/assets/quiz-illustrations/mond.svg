@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+
+  <!-- Umlaufbahn -->
+  <ellipse cx="240" cy="160" rx="176" ry="116" fill="none" stroke="#3d5273" stroke-width="3" stroke-dasharray="9 9"/>
+
+  <!-- Erde -->
+  <circle cx="240" cy="160" r="42" fill="#2f5d99" stroke="#23324d" stroke-width="3.6"/>
+  <path d="M212 138 c14 -8 26 4 38 -2 c10 -5 18 2 22 8 c-6 22 -26 36 -48 32 c-14 -3 -20 -22 -12 -38 Z" fill="#5a9e6f" opacity=".85"/>
+
+  <!-- Vier Mondstellungen: dieselbe Seite (Krater) zeigt immer zur Erde -->
+  <g stroke="#23324d" stroke-width="3.2">
+    <!-- rechts -->
+    <g transform="translate(416,160)">
+      <circle r="26" fill="#e6e9ee"/>
+      <g fill="#b9c1cc" stroke="none">
+        <circle cx="-13" cy="-7" r="6"/><circle cx="-8" cy="9" r="4"/><circle cx="-17" cy="4" r="3"/>
+      </g>
+    </g>
+    <!-- unten -->
+    <g transform="translate(240,276)">
+      <circle r="26" fill="#e6e9ee"/>
+      <g fill="#b9c1cc" stroke="none">
+        <circle cx="-7" cy="-13" r="6"/><circle cx="9" cy="-8" r="4"/><circle cx="4" cy="-17" r="3"/>
+      </g>
+    </g>
+    <!-- links -->
+    <g transform="translate(64,160)">
+      <circle r="26" fill="#e6e9ee"/>
+      <g fill="#b9c1cc" stroke="none">
+        <circle cx="13" cy="-7" r="6"/><circle cx="8" cy="9" r="4"/><circle cx="17" cy="4" r="3"/>
+      </g>
+    </g>
+    <!-- oben -->
+    <g transform="translate(240,44)">
+      <circle r="26" fill="#e6e9ee"/>
+      <g fill="#b9c1cc" stroke="none">
+        <circle cx="-7" cy="13" r="6"/><circle cx="9" cy="8" r="4"/><circle cx="4" cy="17" r="3"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Blickachsen zur Erde -->
+  <g stroke="#f0b53f" stroke-width="2.6" stroke-dasharray="6 6" opacity=".85">
+    <path d="M388 160 H286"/>
+    <path d="M240 248 V206"/>
+    <path d="M92 160 H194"/>
+    <path d="M240 72 V114"/>
+  </g>
+</svg>

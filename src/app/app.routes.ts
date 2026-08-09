@@ -185,11 +185,11 @@ export const routes: Routes = [
               ),
           },
           {
-            path: 'wwds-quiz',
+            path: 'trivia-quiz',
             loadComponent: () =>
-              import('./pages/gimmicks/games/wwds-quiz/wwds-quiz.component').then(
-                (m) => m.WwdsQuizComponent,
-              ),
+              import(
+                './pages/gimmicks/games/trivia-quiz/trivia-quiz.component'
+              ).then((m) => m.TriviaQuizComponent),
           },
         ],
       },

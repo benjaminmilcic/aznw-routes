@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+
+  <!-- Sonne links -->
+  <circle cx="52" cy="160" r="40" fill="#f0b53f" stroke="#23324d" stroke-width="3.6"/>
+  <g stroke="#f0b53f" stroke-width="5" stroke-linecap="round">
+    <path d="M100 122 h26"/><path d="M100 160 h26"/><path d="M100 198 h26"/>
+  </g>
+
+  <!-- Strahlen zu beiden Erden -->
+  <g stroke="#f7d07a" stroke-width="3" stroke-linecap="round" opacity=".8">
+    <path d="M132 128 H196"/><path d="M132 150 H196"/><path d="M132 172 H196"/><path d="M132 194 H196"/>
+    <path d="M132 106 H332"/><path d="M132 216 H332"/>
+  </g>
+
+  <!-- Erde: Nordsommer -->
+  <g transform="translate(238,160)">
+    <circle r="52" fill="#2f5d99" stroke="#23324d" stroke-width="3.6"/>
+    <path d="M-52 0 A52 52 0 0 1 52 0" fill="#3f7d99" opacity=".45"/>
+    <!-- geneigte Achse -->
+    <g transform="rotate(-23)">
+      <path d="M0 -66 V66" stroke="#fdf6e8" stroke-width="4" stroke-linecap="round"/>
+      <circle cy="-66" r="5" fill="#d9614c" stroke="#23324d" stroke-width="2.5"/>
+      <path d="M-52 0 H52" stroke="#fdf6e8" stroke-width="2.5" stroke-dasharray="7 6"/>
+    </g>
+  </g>
+
+  <!-- Erde: Nordwinter, halbes Jahr spaeter -->
+  <g transform="translate(392,160)">
+    <circle r="42" fill="#2f5d99" stroke="#23324d" stroke-width="3.6"/>
+    <g transform="rotate(-23)">
+      <path d="M0 -54 V54" stroke="#fdf6e8" stroke-width="4" stroke-linecap="round"/>
+      <circle cy="-54" r="4.5" fill="#a8c8e8" stroke="#23324d" stroke-width="2.5"/>
+      <path d="M-42 0 H42" stroke="#fdf6e8" stroke-width="2.5" stroke-dasharray="7 6"/>
+    </g>
+  </g>
+
+  <!-- Bahnpfeil zwischen den beiden Stellungen -->
+  <path d="M300 258 C336 274 366 268 392 240" fill="none" stroke="#a8c8e8" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 8"/>
+  <path d="M392 240 l-3 17 l15 -8 Z" fill="#a8c8e8"/>
+</svg>

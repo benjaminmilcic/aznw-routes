@@ -1,0 +1,142 @@
+<div class="trivia">
+  <p class="trivia-subtitle">
+    {{ "gimmicks.games.triviaQuizGame.subtitle" | translate }}
+  </p>
+
+  @if (loading()) {
+  <p class="trivia-state">
+    {{ "gimmicks.games.triviaQuizGame.loading" | translate }}
+  </p>
+  }
+
+  @if (loadFailed()) {
+  <div class="trivia-state trivia-state-error">
+    <p>{{ "gimmicks.games.triviaQuizGame.loadError" | translate }}</p>
+    <button type="button" class="trivia-button" (click)="loadQuestions()">
+      {{ "gimmicks.games.triviaQuizGame.retry" | translate }}
+    </button>
+  </div>
+  }
+
+  @if (!loading() && !loadFailed()) { @if (!finished()) { @if (current(); as
+  question) {
+  <!-- ---------------- Laufende Runde ---------------- -->
+  <div class="trivia-hud">
+    <span class="trivia-counter">
+      {{
+        "gimmicks.games.triviaQuizGame.counter"
+          | translate: { current: index() + 1, total: total() }
+      }}
+    </span>
+    <span class="trivia-score">
+      <span class="trivia-score-right">✓ {{ rightAnswers() }}</span>
+      <span class="trivia-score-wrong">✕ {{ wrongAnswers() }}</span>
+    </span>
+    <button type="button" class="trivia-quit" (click)="quit()">
+      {{ "gimmicks.games.quit" | translate }}
+    </button>
+  </div>
+
+  <div class="trivia-progress">
+    <div
+      class="trivia-progress-bar"
+      [style.width.%]="((index() + 1) * 100) / total()"
+    ></div>
+  </div>
+
+  <article class="trivia-card">
+    <p class="trivia-category">{{ question.category }}</p>
+    <h2 class="trivia-question">{{ question.question }}</h2>
+
+    <div class="trivia-answers">
+      @for (option of question.answers; track option.letter) {
+      <button
+        type="button"
+        class="trivia-answer"
+        [ngClass]="answerState(option.letter)"
+        [disabled]="answered()"
+        (click)="answer(option.letter)"
+      >
+        <span class="trivia-letter">{{ option.letter }}</span>
+        <span class="trivia-answer-text">{{ option.text }}</span>
+        @if (answered() && option.letter === question.correctAnswer) {
+        <span class="trivia-mark">✓</span>
+        } @else if (answered() && option.letter === selected()) {
+        <span class="trivia-mark">✕</span>
+        }
+      </button>
+      }
+    </div>
+  </article>
+
+  @if (answered()) {
+  <section
+    class="trivia-explanation"
+    [ngClass]="isRight() ? 'is-right' : 'is-wrong'"
+  >
+    <p class="trivia-verdict">
+      {{
+        (isRight() ? "gimmicks.games.rightAnswer" : "gimmicks.games.wrongAnswer")
+          | translate
+      }}
+    </p>
+    <h3 class="trivia-explanation-title">
+      {{ "gimmicks.games.triviaQuizGame.explanationTitle" | translate }}
+    </h3>
+    @for (paragraph of explanationParagraphs(); track $index) {
+    <p class="trivia-paragraph">{{ paragraph }}</p>
+    } @if (question.image) {
+    <img
+      class="trivia-illustration"
+      [src]="imageUrl(question.image)"
+      [alt]="'gimmicks.games.triviaQuizGame.illustrationAlt' | translate"
+    />
+    }
+    <button type="button" class="trivia-button" (click)="next()">
+      {{ "gimmicks.games.continue" | translate }}
+    </button>
+  </section>
+  } } } @else {
+  <!-- ---------------- Auswertung ---------------- -->
+  <section class="trivia-result">
+    <p class="trivia-result-intro">
+      {{ "gimmicks.games.quizIsOver" | translate }}
+    </p>
+    <h2 class="trivia-result-title">
+      {{ "gimmicks.games.evaluation" | translate }}
+    </h2>
+    <p
+      class="trivia-result-count"
+      [innerHTML]="
+        'gimmicks.games.howAnswered'
+          | translate
+            : {
+                all: answeredCount(),
+                rightAnswers: rightAnswers(),
+                wrongAnswers: wrongAnswers()
+              }
+      "
+    ></p>
+    <p class="trivia-result-text">
+      @if (answeredCount() === 0) {
+      {{ "gimmicks.games.dontFeelLikeDoingQuiz" | translate }}
+      } @else if (percentRight() === 100) {
+      {{ "gimmicks.games.evaluation100" | translate }}
+      } @else if (percentRight() > 80) {
+      {{ "gimmicks.games.evaluation80" | translate }}
+      } @else if (percentRight() > 60) {
+      {{ "gimmicks.games.evaluation60" | translate }}
+      } @else if (percentRight() > 40) {
+      {{ "gimmicks.games.evaluation40" | translate }}
+      } @else if (percentRight() > 20) {
+      {{ "gimmicks.games.evaluation20" | translate }}
+      } @else {
+      {{ "gimmicks.games.evaluation0" | translate }}
+      }
+    </p>
+    <button type="button" class="trivia-button" (click)="newRound()">
+      {{ "gimmicks.games.triviaQuizGame.newRound" | translate }}
+    </button>
+  </section>
+  } }
+</div>

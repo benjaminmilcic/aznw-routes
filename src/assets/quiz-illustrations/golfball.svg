@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- Rasen -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 268 C90 252 150 258 240 262 C330 266 400 258 480 268 V320 H0 Z" fill="#5a9e6f"/>
+  </g>
+  <g stroke="#3f7d53" stroke-width="3" stroke-linecap="round">
+    <path d="M44 288 v-16"/><path d="M96 292 v-14"/><path d="M356 290 v-16"/><path d="M410 288 v-14"/>
+  </g>
+
+  <!-- Stroemungslinien -->
+  <g fill="none" stroke="#a8c8e8" stroke-width="5" stroke-linecap="round">
+    <path d="M26 96 C90 96 106 116 140 128"/>
+    <path d="M20 150 C80 150 96 152 116 156"/>
+    <path d="M26 204 C90 204 106 186 140 176"/>
+  </g>
+  <g fill="#a8c8e8" stroke="none">
+    <path d="M136 122 l16 7 l-14 9 Z"/>
+    <path d="M112 150 l16 6 l-15 8 Z"/>
+    <path d="M136 182 l16 -7 l-14 -9 Z"/>
+  </g>
+
+  <!-- Turbulente Grenzschicht hinter dem Ball -->
+  <g fill="none" stroke="#2f5d99" stroke-width="4" stroke-linecap="round">
+    <path d="M318 116 c14 -12 30 4 44 -8"/>
+    <path d="M330 150 c16 -12 30 22 46 8"/>
+    <path d="M318 188 c14 12 30 -4 44 8"/>
+  </g>
+
+  <!-- Golfball -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <circle cx="238" cy="152" r="86" fill="#ffffff"/>
+  </g>
+  <!-- Dellen -->
+  <g fill="#e6e9ee" stroke="#c2c9d4" stroke-width="1.8">
+    <circle cx="204" cy="98" r="11"/><circle cx="238" cy="88" r="11"/><circle cx="272" cy="98" r="11"/>
+    <circle cx="180" cy="126" r="11"/><circle cx="214" cy="122" r="11"/><circle cx="250" cy="120" r="11"/><circle cx="284" cy="126" r="11"/>
+    <circle cx="168" cy="156" r="11"/><circle cx="202" cy="152" r="11"/><circle cx="238" cy="150" r="11"/><circle cx="274" cy="152" r="11"/><circle cx="306" cy="156" r="11"/>
+    <circle cx="182" cy="188" r="11"/><circle cx="216" cy="184" r="11"/><circle cx="252" cy="182" r="11"/><circle cx="288" cy="188" r="11"/>
+    <circle cx="206" cy="214" r="11"/><circle cx="240" cy="216" r="11"/><circle cx="274" cy="214" r="11"/>
+  </g>
+  <!-- Glanzlicht -->
+  <path d="M196 78 c14 -10 34 -12 50 -8" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Tee -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M226 240 h24 l-7 26 h-10 Z" fill="#f0b53f"/>
+  </g>
+</svg>

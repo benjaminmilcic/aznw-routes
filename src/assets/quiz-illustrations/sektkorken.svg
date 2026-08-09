@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#fdf6e8"/>
+
+  <!-- 1. Zylinder vor dem Verkorken -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <rect x="44" y="96" width="86" height="132" rx="10" fill="#d9a761"/>
+    <rect x="44" y="96" width="86" height="18" rx="9" fill="#e8bf85"/>
+  </g>
+  <g fill="#b8873f" opacity=".65">
+    <circle cx="66" cy="140" r="5"/><circle cx="104" cy="158" r="4"/><circle cx="78" cy="186" r="5"/><circle cx="112" cy="206" r="4"/>
+  </g>
+
+  <!-- Pfeil: wird zusammengedrueckt -->
+  <g stroke="#23324d" stroke-width="5" stroke-linecap="round">
+    <path d="M152 162 H186"/>
+  </g>
+  <path d="M198 162 l-16 -10 v20 Z" fill="#23324d"/>
+
+  <!-- 2. Im Flaschenhals: unten gepresst -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <path d="M216 240 h84 v-96 c0 -18 -10 -26 -10 -40 h-64 c0 14 -10 22 -10 40 Z" fill="#cfe0d2"/>
+    <path d="M226 104 h64 v-8 h-64 Z" fill="#a9c4ae"/>
+    <!-- Korken im Hals, schmal -->
+    <rect x="232" y="98" width="52" height="76" rx="8" fill="#d9a761"/>
+  </g>
+  <g stroke="#d9614c" stroke-width="5" stroke-linecap="round">
+    <path d="M212 136 H228"/><path d="M304 136 H288"/>
+  </g>
+  <g fill="#d9614c">
+    <path d="M234 136 l-13 -8 v16 Z"/><path d="M282 136 l13 -8 v16 Z"/>
+  </g>
+
+  <!-- Pfeil -->
+  <g stroke="#23324d" stroke-width="5" stroke-linecap="round">
+    <path d="M320 162 H354"/>
+  </g>
+  <path d="M366 162 l-16 -10 v20 Z" fill="#23324d"/>
+
+  <!-- 3. Herausgezogen: der freie Teil federt zum Pilzkopf auf -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linejoin="round">
+    <path d="M382 128 c0 -26 20 -40 44 -40 c24 0 44 14 44 40 c0 12 -10 18 -22 18 h-44 c-12 0 -22 -6 -22 -18 Z" fill="#e8bf85"/>
+    <rect x="402" y="146" width="48" height="76" rx="8" fill="#d9a761"/>
+  </g>
+  <g fill="#b8873f" opacity=".6">
+    <circle cx="416" cy="172" r="4.5"/><circle cx="438" cy="192" r="4"/><circle cx="420" cy="208" r="4"/>
+  </g>
+  <!-- Aufweiten -->
+  <g stroke="#5a9e6f" stroke-width="4.5" stroke-linecap="round" fill="none">
+    <path d="M394 78 C404 62 448 62 458 78"/>
+  </g>
+  <g fill="#5a9e6f">
+    <path d="M394 78 l-3 -16 l14 8 Z"/><path d="M458 78 l3 -16 l-14 8 Z"/>
+  </g>
+</svg>

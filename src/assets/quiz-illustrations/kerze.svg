@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img">
+  <rect width="480" height="320" rx="18" fill="#1c2a44"/>
+
+  <!-- links: auf der Erde, Flamme spitz durch Auftrieb -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="86" y="176" width="68" height="112" rx="8" fill="#f2ece3"/>
+    <path d="M86 176 c14 -8 54 -8 68 0 c-14 8 -54 8 -68 0 Z" fill="#ffffff"/>
+    <path d="M120 176 v-22" stroke-width="5" stroke="#3b4657"/>
+    <!-- Flamme: Traenenform -->
+    <path d="M120 62 C142 96 148 122 138 140 C130 154 110 154 102 140 C92 122 98 96 120 62 Z" fill="#f0b53f"/>
+    <path d="M120 96 C130 118 132 132 126 140 C121 146 112 145 108 138 C102 128 110 114 120 96 Z" fill="#fdf6e8"/>
+  </g>
+  <!-- kalte Luft stroemt von unten nach, heisses Gas steigt -->
+  <g stroke="#a8c8e8" stroke-width="3.4" stroke-linecap="round">
+    <path d="M40 190 C58 178 68 160 68 140"/>
+    <path d="M200 190 C182 178 172 160 172 140"/>
+  </g>
+  <g fill="#a8c8e8">
+    <path d="M68 132 l-8 14 h16 Z"/><path d="M172 132 l-8 14 h16 Z"/>
+  </g>
+  <g stroke="#d9614c" stroke-width="3.4" stroke-linecap="round">
+    <path d="M120 52 V26"/>
+  </g>
+  <path d="M120 18 l-8 14 h16 Z" fill="#d9614c"/>
+
+  <!-- rechts: in Schwerelosigkeit, Kugel, blaeulich -->
+  <g stroke="#23324d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="326" y="176" width="68" height="112" rx="8" fill="#f2ece3"/>
+    <path d="M326 176 c14 -8 54 -8 68 0 c-14 8 -54 8 -68 0 Z" fill="#ffffff"/>
+    <path d="M360 176 v-14" stroke-width="5" stroke="#3b4657"/>
+    <!-- kugelige Flamme -->
+    <circle cx="360" cy="130" r="34" fill="#5b8ec9"/>
+    <circle cx="360" cy="130" r="18" fill="#a8c8e8"/>
+  </g>
+  <!-- Sauerstoff diffundiert aus allen Richtungen herein -->
+  <g stroke="#a8c8e8" stroke-width="3.2" stroke-linecap="round">
+    <path d="M360 66 V96"/><path d="M424 130 H394"/><path d="M296 130 H326"/>
+    <path d="M406 84 L386 104"/><path d="M314 84 L334 104"/>
+    <path d="M406 176 L386 156"/><path d="M314 176 L334 156"/>
+  </g>
+  <g fill="#a8c8e8">
+    <path d="M360 100 l-7 -13 h14 Z"/><path d="M390 130 l13 -7 v14 Z"/><path d="M330 130 l-13 -7 v14 Z"/>
+  </g>
+</svg>
