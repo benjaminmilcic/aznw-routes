@@ -27,7 +27,7 @@ const QUESTIONS_PER_ROUND = 15;
  * zu muessen. Die Tonhoehe bleibt dabei erhalten, darum kuemmert sich der
  * Browser von sich aus.
  */
-const PLAYBACK_RATE = 1.1;
+const PLAYBACK_RATE = 1.0;
 
 /**
  * Quiz "Schon gewusst?" mit drei Antwortmoeglichkeiten und Erlaeuterung.
