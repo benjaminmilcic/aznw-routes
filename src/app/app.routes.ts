@@ -122,6 +122,16 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'dame',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/dame/dame.component').then((m) => m.DameComponent),
+          },
+          {
+            path: 'mill',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/mill/mill.component').then((m) => m.MillComponent),
+          },
+          {
             path: 'memo-quiz',
             loadComponent: () =>
               import('./pages/gimmicks/games/memo-quiz/memo-quiz.component').then(

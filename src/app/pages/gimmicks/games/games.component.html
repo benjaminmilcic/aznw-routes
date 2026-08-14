@@ -124,6 +124,20 @@
           <div>{{ "gimmicks.games.backgammon" | translate }}</div>
         </div>
       </button>
+      <button mat-menu-item (click)="changeGame('gimmicks.games.dame')" [routerLink]="['/gimmicks/games/dame']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/dame.svg" />
+          <div>{{ "gimmicks.games.dame" | translate }}</div>
+        </div>
+      </button>
+      <button mat-menu-item (click)="changeGame('gimmicks.games.mill')" [routerLink]="['/gimmicks/games/mill']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/mill.svg" />
+          <div>{{ "gimmicks.games.mill" | translate }}</div>
+        </div>
+      </button>
       <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.uno')"

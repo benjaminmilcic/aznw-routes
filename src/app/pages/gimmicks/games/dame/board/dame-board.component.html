@@ -1,0 +1,129 @@
+@if (game(); as g) {
+<div class="screen">
+  <header class="bar">
+    <div class="players">
+      <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
+        <span class="chip chip--{{ svc.me()?.color }}">{{ svc.me()?.emoji }}</span>
+        <span class="pname" [speakOnClick]="displayName(svc.me())">{{
+          displayName(svc.me())
+        }}</span>
+      </div>
+
+      <span class="vs">♟️</span>
+
+      @if (svc.opponent(); as opp) {
+      <div class="player" [class.player--active]="g.currentTurn === opp.id">
+        <span class="chip chip--{{ opp.color }}">{{ opp.emoji }}</span>
+        <span class="pname" [speakOnClick]="displayName(opp)">{{ displayName(opp) }}</span>
+      </div>
+      } @else {
+      <div class="player player--empty">
+        <span class="pname">{{ "gimmicks.games.dameGame.waitingPlayer" | translate }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="turn" [class.turn--mine]="g.currentTurn === svc.me()?.id && !svc.thinking()">
+      @if (svc.thinking()) {
+      {{ "gimmicks.games.dameGame.thinking" | translate }}
+      } @else if (g.currentTurn === svc.me()?.id) {
+      @if (svc.mustCapture()) {
+      {{ "gimmicks.games.dameGame.mustCapture" | translate }}
+      } @else {
+      {{ "gimmicks.games.dameGame.yourTurn" | translate }}
+      }
+      } @else {
+      {{
+        "gimmicks.games.dameGame.othersTurn"
+          | translate
+            : {
+                name: currentName() || ("gimmicks.games.dameGame.player" | translate)
+              }
+      }}
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.dameGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <div class="field-wrap">
+    <div class="board" [class.board--locked]="!svc.isMyTurn()">
+      @for (i of squares; track i) {
+      <button
+        type="button"
+        class="cell"
+        [class.cell--dark]="isDark(i)"
+        [class.cell--light]="!isDark(i)"
+        [class.cell--source]="isSource(i)"
+        [class.cell--selected]="isSelected(i)"
+        [class.cell--last]="isLast(i)"
+        [disabled]="!isDark(i)"
+        (click)="tapSquare(i)"
+      >
+        @if (pieceColor(i); as col) {
+        <span class="piece piece--{{ col }}" [class.piece--king]="isKing(i)">
+          @if (isKing(i)) {
+          <span class="crown">♛</span>
+          }
+        </span>
+        } @if (isTarget(i)) {
+        <span class="dot"></span>
+        }
+      </button>
+      }
+    </div>
+  </div>
+
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.dameGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.dameGame.codeShare" | translate }}</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.dameGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) {
+      @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      }
+      }
+
+      <h2 class="result-title">
+        @switch (outcome()) {
+        @case ('win') {
+        {{ "gimmicks.games.dameGame.won" | translate: { name: displayName(svc.me()) } }}
+        } @case ('lose') {
+        {{ "gimmicks.games.dameGame.lost" | translate: { name: displayName(svc.opponent()) } }}
+        }
+        }
+      </h2>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.dameGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.dameGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

@@ -1,0 +1,148 @@
+@if (game(); as g) {
+<div class="board-screen">
+  <header class="bar">
+    <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
+      @if (svc.me(); as m) {
+      <span class="dot" [style.background]="svc.mySeat() === 0 ? '#e11d48' : '#1d4ed8'"></span>
+      <span class="avatar">{{ m.emoji }}</span>
+      <span class="player-name" [speakOnClick]="displayName(m)">{{ displayName(m) }}</span>
+      @if (svc.phase() === 'place') {
+      <span class="count">{{ svc.toPlace()[svc.mySeat()] }}</span>
+      }
+      }
+    </div>
+
+    @if (svc.opponent(); as opp) {
+    <div class="player" [class.player--active]="g.currentTurn === opp.id">
+      <span class="dot" [style.background]="svc.mySeat() === 0 ? '#1d4ed8' : '#e11d48'"></span>
+      <span class="avatar">{{ opp.emoji }}</span>
+      <span class="player-name" [speakOnClick]="displayName(opp)">{{ displayName(opp) }}</span>
+      @if (svc.phase() === 'place') {
+      <span class="count">{{ svc.toPlace()[1 - svc.mySeat()] }}</span>
+      }
+    </div>
+    } @else {
+    <div class="player player--empty">
+      <span class="player-name">{{ "gimmicks.games.millGame.waitingPlayer" | translate }}</span>
+    </div>
+    }
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.millGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <p
+    class="status"
+    [class.status--mine]="svc.isMyTurn() && !svc.thinking()"
+    [class.status--remove]="svc.removing()"
+  >
+    @if (svc.thinking()) {
+    {{ "gimmicks.games.millGame.thinking" | translate }}
+    } @else if (svc.removing()) {
+    {{ "gimmicks.games.millGame.removeHint" | translate }}
+    } @else if (svc.isMyTurn()) {
+    @if (svc.phase() === 'place') {
+    {{ "gimmicks.games.millGame.placeHint" | translate }}
+    } @else if (selected() !== null) {
+    {{ "gimmicks.games.millGame.moveTargetHint" | translate }}
+    } @else {
+    {{ "gimmicks.games.millGame.moveHint" | translate }}
+    }
+    } @else {
+    {{
+      "gimmicks.games.millGame.othersTurn"
+        | translate
+          : {
+              name: currentName() || ("gimmicks.games.millGame.player" | translate)
+            }
+    }}
+    }
+  </p>
+
+  <main class="board-wrap">
+    <div class="board">
+      <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="6" y="6" width="88" height="88" />
+        <rect x="20.667" y="20.667" width="58.667" height="58.667" />
+        <rect x="35.333" y="35.333" width="29.333" height="29.333" />
+        <line x1="50" y1="6" x2="50" y2="35.333" />
+        <line x1="50" y1="64.667" x2="50" y2="94" />
+        <line x1="6" y1="50" x2="35.333" y2="50" />
+        <line x1="64.667" y1="50" x2="94" y2="50" />
+      </svg>
+
+      @for (p of points(); track p.index) {
+      <button
+        type="button"
+        class="point"
+        [class.point--empty]="p.occupant === -1"
+        [class.point--placeable]="p.placeable"
+        [class.point--selectable]="p.selectable"
+        [class.point--selected]="p.selected"
+        [class.point--target]="p.target"
+        [class.point--removable]="p.removable"
+        [style.left.%]="p.x"
+        [style.top.%]="p.y"
+        [disabled]="!p.placeable && !p.selectable && !p.selected && !p.target && !p.removable"
+        (click)="onPoint(p)"
+      >
+        @if (p.occupant !== -1) {
+        <span class="piece" [style.background]="p.color">{{ p.emoji }}</span>
+        }
+      </button>
+      }
+    </div>
+  </main>
+
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.millGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.millGame.codeShare" | translate }}</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.millGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) {
+      @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      }
+      }
+
+      <h2 class="result-title">
+        @switch (outcome()) {
+        @case ('win') {
+        {{ "gimmicks.games.millGame.won" | translate: { name: displayName(svc.me()) } }}
+        } @case ('lose') {
+        {{ "gimmicks.games.millGame.lost" | translate: { name: displayName(svc.opponent()) } }}
+        }
+        }
+      </h2>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.millGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.millGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}

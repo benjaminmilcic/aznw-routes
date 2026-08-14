@@ -184,6 +184,24 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.dame',
+    keywords: ['dame', 'checkers', 'dama', 'steine', 'schlagen'],
+    description:
+      'Dame Checkers Dama Brettspiel board game društvena igra Steine checkers pločice schlagen capture skočiti Dame king kraljica gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/dame',
+    icon: 'fa-solid fa-chess-pawn',
+    category: 'search.category.games',
+  },
+  {
+    labelKey: 'gimmicks.games.mill',
+    keywords: ['mühle', 'mill', 'muehle', 'nine mens morris', 'mlin', 'dreierreihe'],
+    description:
+      'Mühle Nine Mens Morris Mlin Brettspiel board game društvena igra Mühle mill mlin Steine setzen place pieces postavi pločice Dreierreihe row of three tri u nizu gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/mill',
+    icon: 'fa-solid fa-circle-nodes',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.memoQuiz',
     keywords: ['memo', 'memory', 'paare', 'pairs', 'karten', 'cards'],
     description:
