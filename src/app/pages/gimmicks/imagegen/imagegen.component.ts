@@ -36,7 +36,7 @@ interface GeneratedImage {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImagegenComponent {
-  private readonly workerUrl = environment.imagegen.workerUrl.replace(/\/+$/, '');
+  private readonly apiUrl = environment.imagegen.apiUrl.replace(/\/+$/, '');
   private readonly maxRetries = 2;
 
   // ===== Zustand (Signals) =====
@@ -152,8 +152,7 @@ export class ImagegenComponent {
       this.seed.set(this.randomSeed());
     }
     const ratio = this.selectedRatio();
-    const sourceUrl = this.buildUrl(trimmed, ratio);
-    this.runGeneration(sourceUrl, {
+    this.runGeneration({
       url: '',
       prompt: trimmed,
       model: this.model(),
@@ -168,11 +167,28 @@ export class ImagegenComponent {
    * nicht bei jeder Aktion neu erzeugt (und sieht z. B. bei Flux ohne Seed nicht
    * jedes Mal anders aus) und es wird nur einmal Workers-AI-Quota verbraucht.
    */
-  private async runGeneration(sourceUrl: string, meta: GeneratedImage) {
+  private async runGeneration(meta: GeneratedImage) {
     this.error.set(false);
     this.retrying.set(false);
     this.loading.set(true);
     this.currentImageUrl.set(null);
+
+    const ratio = this.selectedRatio();
+    const body: {
+      prompt: string;
+      model: ImageModel;
+      width?: number;
+      height?: number;
+      seed?: number;
+    } = {
+      prompt: meta.prompt,
+      model: meta.model,
+    };
+    if (meta.model === 'sdxl') {
+      body.width = ratio.width;
+      body.height = ratio.height;
+      body.seed = meta.seed;
+    }
 
     for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
       try {
@@ -180,8 +196,11 @@ export class ImagegenComponent {
           this.retrying.set(true);
           await this.delay(1500 * attempt);
         }
-        const url = attempt === 0 ? sourceUrl : `${sourceUrl}&_retry=${attempt}`;
-        const response = await fetch(url);
+        const response = await fetch(this.apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
         if (!response.ok) {
           throw new Error(`status ${response.status}`);
         }
@@ -235,19 +254,6 @@ export class ImagegenComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
-
-  private buildUrl(prompt: string, ratio: AspectRatio): string {
-    const params = new URLSearchParams({
-      prompt,
-      model: this.model(),
-    });
-    if (this.model() === 'sdxl') {
-      params.set('width', String(ratio.width));
-      params.set('height', String(ratio.height));
-      params.set('seed', String(this.seed()));
-    }
-    return `${this.workerUrl}/?${params.toString()}`;
   }
 
   private delay(ms: number): Promise<void> {

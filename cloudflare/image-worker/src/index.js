@@ -4,47 +4,40 @@
  * Nutzt Cloudflare Workers AI (kostenloses Tageskontingent) und liefert ein
  * fertiges Bild zurück, das direkt in ein <img>-Tag geladen werden kann.
  *
- * Aufruf (GET):
- *   /?prompt=ein%20roter%20Fuchs&model=flux
- *   /?prompt=...&model=sdxl&width=1280&height=720&seed=1234&negative=blurry
+ * Aufruf nur über die Nest-API (Shared Secret in X-Worker-Secret).
+ * Direkt aus dem Browser oder per curl ohne Secret → 403.
+ *
+ *   GET /?prompt=ein%20roter%20Fuchs&model=flux
+ *   GET /?prompt=...&model=sdxl&width=1280&height=720&seed=1234&negative=blurry
  *
  * Modelle:
  *   flux  -> @cf/black-forest-labs/flux-1-schnell  (1024x1024, sehr schnell, hohe Qualität)
  *   sdxl  -> @cf/stabilityai/stable-diffusion-xl-base-1.0 (Format & Seed steuerbar)
  */
 
-const ALLOWED_ORIGINS = [
-  'https://auf-zu-neuen-welten.de',
-  'https://www.auf-zu-neuen-welten.de',
-  'http://localhost:4200',
-];
-
-function corsHeaders(request) {
-  const origin = request.headers.get('Origin') || '';
-  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+function corsHeaders() {
   return {
-    'Access-Control-Allow-Origin': allow,
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Vary': 'Origin',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Worker-Secret',
   };
 }
 
-/** Leichter Missbrauchsschutz: Referer/Origin muss (falls vorhanden) erlaubt sein. */
-function isAllowedCaller(request) {
-  const origin = request.headers.get('Origin');
-  const referer = request.headers.get('Referer');
-  const host = (value) => {
-    try {
-      return new URL(value).origin;
-    } catch {
-      return null;
-    }
-  };
-  if (origin) return ALLOWED_ORIGINS.includes(origin);
-  if (referer) return ALLOWED_ORIGINS.includes(host(referer));
-  // Kein Origin/Referer (z. B. manche img-Requests) -> zulassen.
-  return true;
+function timingSafeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const encoder = new TextEncoder();
+  const aa = encoder.encode(a);
+  const bb = encoder.encode(b);
+  if (aa.length !== bb.length) return false;
+  let out = 0;
+  for (let i = 0; i < aa.length; i++) out |= aa[i] ^ bb[i];
+  return out === 0;
+}
+
+function hasValidSecret(request, env) {
+  const secret = env.WORKER_SECRET;
+  if (!secret) return false;
+  return timingSafeEqual(request.headers.get('X-Worker-Secret') || '', secret);
 }
 
 function clamp(value, min, max, fallback) {
@@ -60,9 +53,7 @@ function clamp(value, min, max, fallback) {
  *   GET  /embed?q=wie%20wird%20das%20wetter
  *   POST /embed   { "q": "wie wird das wetter" }
  *
- * Liefert { vector: number[] } – ein mehrsprachiges Embedding (bge-m3, 1024 Dim.),
- * das im Frontend per Cosine-Ähnlichkeit gegen den vorab berechneten Routen-Index
- * verglichen wird. Gleiches Modell wie beim Index-Bau -> Vektoren sind vergleichbar.
+ * Liefert { vector: number[] } – ein mehrsprachiges Embedding (bge-m3, 1024 Dim.).
  */
 async function handleEmbed(request, env, cors) {
   let query = '';
@@ -111,12 +102,12 @@ async function handleEmbed(request, env, cors) {
 
 export default {
   async fetch(request, env) {
-    const cors = corsHeaders(request);
+    const cors = corsHeaders();
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: cors });
     }
-    if (!isAllowedCaller(request)) {
+    if (!hasValidSecret(request, env)) {
       return new Response('Forbidden', { status: 403, headers: cors });
     }
 

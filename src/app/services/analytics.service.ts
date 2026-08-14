@@ -78,7 +78,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Sammelt alle verfügbaren Besucherdaten ohne Genehmigung
+   * Sammelt verfügbare Besucherdaten
    */
   collectVisitorData(): VisitorData {
     const data: VisitorData = {

@@ -10,7 +10,6 @@ const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
 const geoapifyKey = process.env['GEOAPIFY_API_KEY'] || '';
 const maptilerKey = process.env['MAPTILER_API_KEY'] || '';
-const elevenLabsKey = process.env['ELEVENLABS_API_KEY'] || '';
 const tmdbKey = process.env['TMDB_API_KEY'] || '';
 const googleMapsKey = process.env['GOOGLE_MAPS_API_KEY'] || '';
 const tinymceKey = process.env['TINYMCE_API_KEY'] || '';
@@ -48,7 +47,7 @@ export const environment = {
     getJokesFile: `http://${ip}:3000/auth/jokes`,
     login: `http://${ip}:3000/auth/login`,
     signup: `http://${ip}:3000/auth/signup`,
-    elevenLabsKey: elevenLabsKey,
+    tts: `http://${ip}:3000/auth/tts`,
   },
   moorhuhn: {
     moorhuhnApi: `http://${ip}:3000/moorhuhn`,
@@ -96,10 +95,10 @@ export const environment = {
     apiKey: tinymceKey,
   },
   imagegen: {
-    workerUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/',
+    apiUrl: `http://${ip}:3000/imagegen`,
   },
   search: {
-    embedUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/embed',
+    embedUrl: `http://${ip}:3000/imagegen/embed`,
   },
   production: false,
   version: new Date().getTime(),

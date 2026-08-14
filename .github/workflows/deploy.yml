@@ -39,7 +39,7 @@ jobs:
               getJokesFile: `https://${ip}:3000/auth/jokes`,
               login: `https://${ip}:3000/auth/login`,
               signup: `https://${ip}:3000/auth/signup`,
-              elevenLabsKey: '${{ secrets.ELEVENLABS_API_KEY }}',
+              tts: `https://${ip}:3000/auth/tts`,
 
             },
             moorhuhn: {
@@ -91,10 +91,10 @@ jobs:
               apiKey: '${{ secrets.TINYMCE_API_KEY }}',
             },
             imagegen: {
-              workerUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/',
+              apiUrl: `https://${ip}:3000/imagegen`,
             },
             search: {
-              embedUrl: 'https://little-sky-725e.benjamin-milcic.workers.dev/embed',
+              embedUrl: `https://${ip}:3000/imagegen/embed`,
             },
             production: true,
             version: new Date().getTime(),

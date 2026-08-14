@@ -37,9 +37,6 @@ export class AuthMainComponent implements OnInit {
   german = true;
   croatian = true;
 
-  private elevenLabsApiKey: string;
-  private voiceId = 'pNInz6obpgDQGcFmaJgB'; // Change to your preferred voice
-  private elevenLabsApiUrl = `https://api.elevenlabs.io/v1/text-to-speech/${this.voiceId}`;
   isLoading = false;
   audio = new Audio();
 
@@ -47,9 +44,7 @@ export class AuthMainComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService,
     private httpErrorService: HttpErrorService,
-  ) {
-    this.elevenLabsApiKey = environment.auth.elevenLabsKey;
-  }
+  ) {}
   async ngOnInit() {
     //old firebase solution, when authentication works via firebase
     // this.jokes = await lastValueFrom(
@@ -113,24 +108,21 @@ export class AuthMainComponent implements OnInit {
   }
 
   generateSpeech(text: string): Observable<Blob> {
+    const authUserData: {
+      _token: string;
+    } = JSON.parse(localStorage.getItem('authUserData'));
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'xi-api-key': this.elevenLabsApiKey,
+      Authorization: `Bearer ${authUserData?._token ?? ''}`,
     });
 
-    const body = {
-      text: text,
-      model_id: 'eleven_flash_v2_5',
-      voice_settings: {
-        stability: 0.5,
-        similarity_boost: 0.8,
+    return this.http.post(
+      environment.auth.tts,
+      { text },
+      {
+        headers,
+        responseType: 'blob',
       },
-    };
-
-    return this.http.post(this.elevenLabsApiUrl, body, {
-      headers,
-      responseType: 'blob',
-    });
+    );
   }
 
   async onPlay(text: string) {

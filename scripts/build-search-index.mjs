@@ -14,6 +14,7 @@
  *
  * Voraussetzung: Der Worker mit dem /embed-Endpoint ist deployed.
  * Worker-URL via Umgebungsvariable EMBED_URL überschreibbar.
+ * Secret via WORKER_SECRET (gleicher Wert wie in Nest und Wrangler).
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -32,6 +33,7 @@ const LANGS = ['de', 'en', 'hr'];
 const EMBED_URL =
   process.env.EMBED_URL ||
   'https://little-sky-725e.benjamin-milcic.workers.dev/embed';
+const WORKER_SECRET = process.env.WORKER_SECRET || '';
 
 /** Wert an einem Punkt-Pfad ("gimmicks.weather") aus einem Objekt holen. */
 function resolvePath(obj, path) {
@@ -91,9 +93,17 @@ async function parseOverviewConstants(i18nDe) {
 
 /** Embedding für einen Text vom Worker holen. */
 async function embed(text) {
+  if (!WORKER_SECRET) {
+    throw new Error(
+      'WORKER_SECRET fehlt. Derselbe Wert wie in der Nest-.env und bei wrangler secret put.',
+    );
+  }
   const res = await fetch(EMBED_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Worker-Secret': WORKER_SECRET,
+    },
     body: JSON.stringify({ q: text }),
   });
   if (!res.ok) {
