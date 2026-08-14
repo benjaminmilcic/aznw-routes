@@ -132,6 +132,11 @@ export const routes: Routes = [
               import('./pages/gimmicks/games/mill/mill.component').then((m) => m.MillComponent),
           },
           {
+            path: 'schach',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/schach/schach.component').then((m) => m.SchachComponent),
+          },
+          {
             path: 'memo-quiz',
             loadComponent: () =>
               import('./pages/gimmicks/games/memo-quiz/memo-quiz.component').then(

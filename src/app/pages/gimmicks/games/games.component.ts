@@ -102,6 +102,12 @@ export class GamesComponent {
         });
         this.gameIconSrc = '/assets/svg/mill.svg';
         break;
+      case 'schach':
+        this.translate.get('gimmicks.games.chess').subscribe((res: string) => {
+          this.gameName = res;
+        });
+        this.gameIconSrc = '/assets/svg/schach.svg';
+        break;
       case 'tiktaktoe':
         this.gameName = 'TikTakToe';
         this.gameIconSrc = '/assets/tic-tac-toe.png';
@@ -186,6 +192,9 @@ export class GamesComponent {
         break;
       case 'gimmicks.games.mill':
         this.gameIconSrc = '/assets/svg/mill.svg';
+        break;
+      case 'gimmicks.games.chess':
+        this.gameIconSrc = '/assets/svg/schach.svg';
         break;
       case 'TikTakToe':
         this.gameIconSrc = '/assets/tic-tac-toe.png';

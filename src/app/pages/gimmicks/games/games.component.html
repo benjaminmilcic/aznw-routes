@@ -138,6 +138,13 @@
           <div>{{ "gimmicks.games.mill" | translate }}</div>
         </div>
       </button>
+      <button mat-menu-item (click)="changeGame('gimmicks.games.chess')" [routerLink]="['/gimmicks/games/schach']"
+        routerLinkActive="router-link-active">
+        <div class="flex gap-2 items-center">
+          <img class="w-[20px] h-auto" src="/assets/svg/schach.svg" />
+          <div>{{ "gimmicks.games.chess" | translate }}</div>
+        </div>
+      </button>
       <button
         mat-menu-item
         (click)="changeGame('gimmicks.games.uno')"

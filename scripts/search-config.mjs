@@ -122,7 +122,7 @@ export const SEARCH_ROUTES = [
     route: '/gimmicks/games', labelKey: 'gimmicks.menu.games',
     icon: 'fa-solid fa-gamepad', category: 'search.category.gimmicks',
     prefixes: ['gimmicks.menu.games'],
-    extra: 'Spiele Games Igre spielen play Vier Gewinnt Memory Puzzle Wissensquiz Flaggenquiz Yahtzee Kniffel Tic Tac Toe Moorhuhn Minesweeper Backgammon Dame Mühle',
+    extra: 'Spiele Games Igre spielen play Vier Gewinnt Memory Puzzle Wissensquiz Flaggenquiz Yahtzee Kniffel Tic Tac Toe Moorhuhn Minesweeper Backgammon Dame Mühle Schach',
   },
   {
     route: '/gimmicks/games/connect-four', labelKey: 'gimmicks.games.connectFour',
@@ -146,6 +146,12 @@ export const SEARCH_ROUTES = [
     icon: 'fa-solid fa-circle-nodes', category: 'search.category.games',
     prefixes: ['gimmicks.games.millGame'],
     extra: 'Mühle Mill Mlin Nine Mens Morris Dreierreihe Steine setzen gegen Computer online',
+  },
+  {
+    route: '/gimmicks/games/schach', labelKey: 'gimmicks.games.chess',
+    icon: 'fa-solid fa-chess', category: 'search.category.games',
+    prefixes: ['gimmicks.games.chessGame'],
+    extra: 'Schach Chess Sah Matt checkmate König king gegen Computer online',
   },
   {
     route: '/gimmicks/games/memo-quiz', labelKey: 'gimmicks.games.memoQuiz',

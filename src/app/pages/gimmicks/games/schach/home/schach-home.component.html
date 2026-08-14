@@ -1,0 +1,128 @@
+<div class="home">
+  <div class="home-card">
+    <p class="subtitle">{{ "gimmicks.games.chessGame.subtitle" | translate }}</p>
+
+    @if (svc.error(); as err) {
+    <p class="error">{{ err | translate }}</p>
+    }
+
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.chessGame.mode" | translate }}</span>
+      <ion-segment
+        [ngModel]="mode()"
+        (ngModelChange)="onMode($event)"
+        mode="ios"
+        class="chess-segment"
+      >
+        <ion-segment-button value="computer">
+          <ion-label>{{ "gimmicks.games.chessGame.modeComputer" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="online">
+          <ion-label>{{ "gimmicks.games.chessGame.modeOnline" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <label class="field">
+      <span class="field-label">{{ "gimmicks.games.chessGame.nameLabel" | translate }}</span>
+      <input
+        class="text-input"
+        type="text"
+        maxlength="12"
+        [placeholder]="'gimmicks.games.chessGame.namePlaceholder' | translate"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </label>
+
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.chessGame.chooseAvatar" | translate }}</span>
+      <div class="avatar-grid">
+        @for (a of avatars; track a) {
+        <button
+          type="button"
+          class="avatar"
+          [class.avatar--active]="emoji() === a"
+          (click)="emoji.set(a)"
+        >
+          {{ a }}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (mode() === 'computer') {
+    <div class="field">
+      <span class="field-label">{{ "gimmicks.games.chessGame.level" | translate }}</span>
+      <ion-segment
+        [ngModel]="level()"
+        (ngModelChange)="level.set($event)"
+        mode="ios"
+        class="chess-segment"
+      >
+        <ion-segment-button value="easy">
+          <ion-label>{{ "gimmicks.games.easy" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medium">
+          <ion-label>{{ "gimmicks.games.medium" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hard">
+          <ion-label>{{ "gimmicks.games.difficult" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+      {{ "gimmicks.games.chessGame.startGame" | translate }}
+    </button>
+    } @else {
+    @if (!showJoin()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || svc.busy()"
+      (click)="create()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.chessGame.creating"
+          : "gimmicks.games.chessGame.newGame"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(true)">
+      {{ "gimmicks.games.chessGame.joinPrompt" | translate }}
+    </button>
+    } @else {
+    <label class="field">
+      <span class="field-label">{{ "gimmicks.games.chessGame.codeLabel" | translate }}</span>
+      <input
+        class="text-input code-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="4"
+        [placeholder]="'gimmicks.games.chessGame.codePlaceholder' | translate"
+        [ngModel]="joinCode()"
+        (ngModelChange)="onCode($event)"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || joinCode().length !== 4 || svc.busy()"
+      (click)="join()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.chessGame.connecting"
+          : "gimmicks.games.chessGame.join"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(false)">
+      {{ "gimmicks.games.chessGame.back" | translate }}
+    </button>
+    } }
+  </div>
+</div>

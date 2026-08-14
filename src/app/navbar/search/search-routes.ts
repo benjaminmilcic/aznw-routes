@@ -202,6 +202,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.chess',
+    keywords: ['schach', 'chess', 'šah', 'sah', 'matt', 'checkmate', 'könig'],
+    description:
+      'Schach Chess Šah Brettspiel board game društvena igra Matt checkmate šah-mat König king kralj gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/schach',
+    icon: 'fa-solid fa-chess',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.memoQuiz',
     keywords: ['memo', 'memory', 'paare', 'pairs', 'karten', 'cards'],
     description:

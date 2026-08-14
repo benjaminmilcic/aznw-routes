@@ -1,0 +1,162 @@
+@if (game(); as g) {
+<div class="screen">
+  <header class="bar">
+    <div class="players">
+      <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
+        <span class="chip chip--{{ svc.me()?.color }}">{{ svc.me()?.emoji }}</span>
+        <span class="pname" [speakOnClick]="displayName(svc.me())">{{
+          displayName(svc.me())
+        }}</span>
+      </div>
+
+      <span class="vs">♚</span>
+
+      @if (svc.opponent(); as opp) {
+      <div class="player" [class.player--active]="g.currentTurn === opp.id">
+        <span class="chip chip--{{ opp.color }}">{{ opp.emoji }}</span>
+        <span class="pname" [speakOnClick]="displayName(opp)">{{ displayName(opp) }}</span>
+      </div>
+      } @else {
+      <div class="player player--empty">
+        <span class="pname">{{ "gimmicks.games.chessGame.waitingPlayer" | translate }}</span>
+      </div>
+      }
+    </div>
+
+    <div
+      class="turn"
+      [class.turn--mine]="g.currentTurn === svc.me()?.id && !svc.thinking()"
+      [class.turn--check]="g.check && !svc.thinking()"
+    >
+      @if (svc.thinking()) {
+      {{ "gimmicks.games.chessGame.thinking" | translate }}
+      } @else {
+      @if (g.check) { ⚠️ {{ "gimmicks.games.chessGame.check" | translate }} · }
+      @if (g.currentTurn === svc.me()?.id) {
+      {{ "gimmicks.games.chessGame.yourTurn" | translate }}
+      } @else {
+      {{
+        "gimmicks.games.chessGame.othersTurn"
+          | translate
+            : {
+                name: currentName() || ("gimmicks.games.chessGame.player" | translate)
+              }
+      }}
+      }
+      }
+    </div>
+
+    <button type="button" class="end-game" (click)="leave()">
+      {{ "gimmicks.games.chessGame.endGame" | translate }}
+    </button>
+  </header>
+
+  <div class="field-wrap">
+    <aside class="tray tray--black">
+      <div class="caps">
+        @for (gl of capturedByWhite(); track $index) {
+        <span class="cap cap--black">{{ gl }}</span>
+        }
+      </div>
+    </aside>
+
+    <div class="board-area">
+      <div class="ranks">
+        @for (r of ranks(); track $index) {
+        <span class="coord">{{ r }}</span>
+        }
+      </div>
+
+      <div class="board" [class.board--locked]="!svc.isMyTurn()">
+        @for (i of view(); track i) {
+        <button
+          type="button"
+          class="cell"
+          [class.cell--dark]="isDark(i)"
+          [class.cell--light]="!isDark(i)"
+          [class.cell--source]="isSource(i)"
+          [class.cell--selected]="isSelected(i)"
+          [class.cell--last]="isLast(i)"
+          [class.cell--check]="isCheck(i)"
+          (click)="tapSquare(i)"
+        >
+          @if (glyph(i); as gl) {
+          <span class="piece piece--{{ pieceColor(i) }}">{{ gl }}</span>
+          } @if (isTarget(i)) {
+          <span class="mark" [class.mark--capture]="isCapture(i)"></span>
+          }
+        </button>
+        }
+      </div>
+
+      <div class="files">
+        @for (f of files(); track $index) {
+        <span class="coord">{{ f }}</span>
+        }
+      </div>
+    </div>
+
+    <aside class="tray tray--white">
+      <div class="caps">
+        @for (gl of capturedByBlack(); track $index) {
+        <span class="cap cap--white">{{ gl }}</span>
+        }
+      </div>
+    </aside>
+  </div>
+
+  @if (g.status === 'waiting') {
+  <div class="overlay">
+    <div class="panel">
+      <h2 class="panel-title">{{ "gimmicks.games.chessGame.codeTitle" | translate }}</h2>
+      <p class="code">{{ g.code }}</p>
+      <p class="panel-text">{{ "gimmicks.games.chessGame.codeShare" | translate }}</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.chessGame.cancel" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+
+  @if (g.status === 'finished') {
+  <div class="overlay">
+    <div
+      class="panel"
+      appDraggable
+      [class.panel--win]="outcome() === 'win'"
+      [class.panel--lose]="outcome() === 'lose'"
+    >
+      @switch (outcome()) {
+      @case ('win') {
+      <div class="result-emoji anim-win">🏆</div>
+      } @case ('lose') {
+      <div class="result-emoji anim-lose">😢</div>
+      } @case ('draw') {
+      <div class="result-emoji anim-win">🤝</div>
+      }
+      }
+
+      <h2 class="result-title">
+        @switch (outcome()) {
+        @case ('win') {
+        {{ "gimmicks.games.chessGame.won" | translate: { name: displayName(svc.me()) } }}
+        } @case ('lose') {
+        {{ "gimmicks.games.chessGame.lost" | translate: { name: displayName(svc.opponent()) } }}
+        } @case ('draw') {
+        {{ "gimmicks.games.chessGame.draw" | translate }}
+        }
+        }
+      </h2>
+
+      <button type="button" class="btn btn-primary" (click)="playAgain()">
+        {{ "gimmicks.games.chessGame.playAgain" | translate }}
+      </button>
+      <button type="button" class="btn btn-ghost" (click)="leave()">
+        {{ "gimmicks.games.chessGame.home" | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+}
