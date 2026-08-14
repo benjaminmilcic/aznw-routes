@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   LOCALE_ID,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './guestbook.model';
 import { registerLocaleData } from '@angular/common';
@@ -43,13 +44,14 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './guestbook.component.html',
   styleUrl: './guestbook.component.css',
 })
-export class GuestbookComponent implements OnInit, AfterViewInit {
+export class GuestbookComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly tinymceApiKey = environment.tinymce.apiKey;
   showcreatePostDialog = false;
   postName: string;
   postContent: string;
   posts: Post[] = [];
   editorInitialized = false;
+  private langChangeSub: Subscription;
 
   get config(): EditorComponent['init'] {
     return {
@@ -154,7 +156,7 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
     registerLocaleData(de.default);
 
     // Subscribe to language changes and reinitialize editor if dialog is open
-    this.translateService.onLangChange.subscribe(() => {
+    this.langChangeSub = this.translateService.onLangChange.subscribe(() => {
       if (this.showcreatePostDialog && this.editorInitialized) {
         // Reinitialize editor with new language
         this.editorInitialized = false;
@@ -164,6 +166,10 @@ export class GuestbookComponent implements OnInit, AfterViewInit {
         }, 0);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 
   async ngOnInit() {

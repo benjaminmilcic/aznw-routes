@@ -1,14 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  ActivatedRoute,
-  Router,
-  RouterModule,
-  RouterOutlet,
-} from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { GamesService } from './games.service';
 
 @Component({
@@ -24,9 +20,11 @@ import { GamesService } from './games.service';
     templateUrl: './games.component.html',
     styleUrl: './games.component.css'
 })
-export class GamesComponent {
+export class GamesComponent implements OnDestroy {
   gameName: string;
   gameIconSrc: string;
+  private langChangeSub: Subscription;
+  private gameNameSub: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -36,14 +34,19 @@ export class GamesComponent {
     let urlParts = router.url.split('/');
     let currentGame = urlParts[urlParts.length - 1];
     this.translateGameName(currentGame);
-    translate.onLangChange.subscribe(() => {
+    this.langChangeSub = translate.onLangChange.subscribe(() => {
       let urlParts = router.url.split('/');
       let currentGame = urlParts[urlParts.length - 1];
       this.translateGameName(currentGame);
     });
-    gameService.changeGameName.subscribe(result => {
+    this.gameNameSub = gameService.changeGameName.subscribe(result => {
       this.translateGameName(result);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
+    this.gameNameSub?.unsubscribe();
   }
 
   translateGameName(currentGame: string) {

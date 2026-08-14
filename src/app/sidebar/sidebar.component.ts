@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateSendButtonService } from '../pages/home/components/shared/translate-send-button.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,10 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   sidebarActivated: boolean = false;
 
   language: string = this.translate.currentLang;
+  private langChangeSub: Subscription;
 
   @ViewChild(MatMenuTrigger) languageMenuTrigger!: MatMenuTrigger;
   @ViewChild('sidebarWrapper') sidebarWrapper!: ElementRef;
@@ -32,9 +34,13 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.translate.onLangChange.subscribe(
+    this.langChangeSub = this.translate.onLangChange.subscribe(
       () => (this.language = this.translate.currentLang),
     );
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 
   onToggleSidebar(event: Event | null) {

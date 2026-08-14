@@ -141,23 +141,38 @@ export class WeatherComponent implements OnInit, OnDestroy {
           this.fetchCities(value, this.translateService.currentLang).pipe(
             finalize(() => (this.isLoading = false))
           )
-        )
+        ),
+        takeUntil(this._onDestroy)
       )
       .subscribe((cities) => {
         this.filteredCities = cities;
       });
 
+    this.countryFilterCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        takeUntil(this._onDestroy),
+        map((value) => (value ?? '').toLowerCase())
+      )
+      .subscribe((search) => {
+        this.filteredCountries = this.allCountries.filter((c) =>
+          c.name.toLowerCase().includes(search)
+        );
+      });
+
     await this.init();
-    this.translateService.onLangChange.subscribe(async () => {
-      await this.init();
-      if (this.selectedWay === 'location') {
-        if (this.currentWeather) {
-          this.getLocation();
+    this.translateService.onLangChange
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(async () => {
+        await this.init();
+        if (this.selectedWay === 'location') {
+          if (this.currentWeather) {
+            this.getLocation();
+          }
+        } else {
+          this.searchCity();
         }
-      } else {
-        this.searchCity();
-      }
-    });
+      });
   }
 
   async init() {
@@ -174,17 +189,10 @@ export class WeatherComponent implements OnInit, OnDestroy {
       })),
     ];
 
-    this.countryFilterCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        takeUntil(this._onDestroy),
-        map((value) => value.toLowerCase())
-      )
-      .subscribe((search) => {
-        this.filteredCountries = this.allCountries.filter((c) =>
-          c.name.toLowerCase().includes(search)
-        );
-      });
+    const search = (this.countryFilterCtrl.value ?? '').toLowerCase();
+    this.filteredCountries = this.allCountries.filter((c) =>
+      c.name.toLowerCase().includes(search)
+    );
   }
 
   getLocation() {

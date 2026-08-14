@@ -8,6 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import * as maptilerSDK from '@maptiler/sdk';
 import { Map } from '@maptiler/sdk';
 import {
@@ -36,6 +37,7 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   private map!: Map;
   private currentWeatherLayer: any = null;
   private currentLayerId: string | null = null;
+  private langChangeSub: Subscription;
 
   activeLayer: WeatherLayerType = 'temperature';
   isGlobeProjection: boolean = false;
@@ -93,7 +95,7 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
         );
       });
 
-      this.translateService.onLangChange.subscribe((event) => {
+      this.langChangeSub = this.translateService.onLangChange.subscribe((event) => {
         if (this.map) {
           this.map.setLanguage(event.lang as any);
         }
@@ -258,6 +260,7 @@ export class LocationMapComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
     if (this.currentLayerId && this.map && this.map.getLayer(this.currentLayerId)) {
       this.map.removeLayer(this.currentLayerId);
     }

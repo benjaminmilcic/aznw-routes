@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { GamesService } from '../games.service';
     templateUrl: './jigsaw.component.html',
     styleUrl: './jigsaw.component.css'
 })
-export class JigsawComponent implements OnInit {
+export class JigsawComponent implements OnInit, OnDestroy {
   trustedUrl;
   enabled = true;
+  private langChangeSub: Subscription;
+
   constructor(
     public translateService: TranslateService,
     private sanitizer: DomSanitizer,
@@ -25,7 +28,7 @@ export class JigsawComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.changeGameName.next('jigsaw');
-    this.translateService.onLangChange.subscribe(() => {
+    this.langChangeSub = this.translateService.onLangChange.subscribe(() => {
       this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
         '/assets/iframe-content/index.html?lang=' +
           this.translateService.currentLang
@@ -35,5 +38,9 @@ export class JigsawComponent implements OnInit {
     setTimeout(() => {
       this.enabled = true;
     }, 50);
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 }
