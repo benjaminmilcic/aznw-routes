@@ -115,6 +115,13 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'backgammon',
+            loadComponent: () =>
+              import('./pages/gimmicks/games/backgammon/backgammon.component').then(
+                (m) => m.BackgammonComponent,
+              ),
+          },
+          {
             path: 'memo-quiz',
             loadComponent: () =>
               import('./pages/gimmicks/games/memo-quiz/memo-quiz.component').then(

@@ -122,12 +122,18 @@ export const SEARCH_ROUTES = [
     route: '/gimmicks/games', labelKey: 'gimmicks.menu.games',
     icon: 'fa-solid fa-gamepad', category: 'search.category.gimmicks',
     prefixes: ['gimmicks.menu.games'],
-    extra: 'Spiele Games Igre spielen play Vier Gewinnt Memory Puzzle Wissensquiz Flaggenquiz Yahtzee Kniffel Tic Tac Toe Moorhuhn Minesweeper',
+    extra: 'Spiele Games Igre spielen play Vier Gewinnt Memory Puzzle Wissensquiz Flaggenquiz Yahtzee Kniffel Tic Tac Toe Moorhuhn Minesweeper Backgammon',
   },
   {
     route: '/gimmicks/games/connect-four', labelKey: 'gimmicks.games.connectFour',
     icon: 'fa-solid fa-circle-dot', category: 'search.category.games',
     extra: 'Vier Gewinnt Connect Four 4 Gewinnt Četiri u nizu Brettspiel Strategie',
+  },
+  {
+    route: '/gimmicks/games/backgammon', labelKey: 'gimmicks.games.backgammon',
+    icon: 'fa-solid fa-dice', category: 'search.category.games',
+    prefixes: ['gimmicks.games.backgammonGame'],
+    extra: 'Backgammon Würfel dice kocke Steine checkers pločice Bar Heim bear off gegen Computer online',
   },
   {
     route: '/gimmicks/games/memo-quiz', labelKey: 'gimmicks.games.memoQuiz',

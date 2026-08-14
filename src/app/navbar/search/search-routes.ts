@@ -175,6 +175,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     category: 'search.category.games',
   },
   {
+    labelKey: 'gimmicks.games.backgammon',
+    keywords: ['backgammon', 'würfel', 'dice', 'steine', 'checkers', 'tavla', 'backgamon'],
+    description:
+      'Backgammon Brettspiel board game društvena igra Würfel dice kocke Steine checkers pločice Bar bar šipka Heim home kuća herausspielen bear off iznijeti gegen den Computer against the computer protiv računala online zu zweit two players dva igrača Spiel-Code game code kod igre',
+    route: '/gimmicks/games/backgammon',
+    icon: 'fa-solid fa-dice',
+    category: 'search.category.games',
+  },
+  {
     labelKey: 'gimmicks.games.memoQuiz',
     keywords: ['memo', 'memory', 'paare', 'pairs', 'karten', 'cards'],
     description:

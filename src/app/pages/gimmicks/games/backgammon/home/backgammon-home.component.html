@@ -1,0 +1,147 @@
+<div class="home">
+  <div class="home-card">
+    <p class="subtitle">{{ "gimmicks.games.backgammonGame.subtitle" | translate }}</p>
+
+    @if (svc.error(); as err) {
+    <p class="error">{{ err | translate }}</p>
+    }
+
+    <!-- Spielart -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.backgammonGame.mode" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="mode()"
+        (ngModelChange)="onMode($event)"
+        mode="ios"
+        class="bg-segment"
+      >
+        <ion-segment-button value="computer">
+          <ion-label>{{
+            "gimmicks.games.backgammonGame.modeComputer" | translate
+          }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="online">
+          <ion-label>{{
+            "gimmicks.games.backgammonGame.modeOnline" | translate
+          }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <!-- Name -->
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.backgammonGame.nameLabel" | translate
+      }}</span>
+      <input
+        class="text-input"
+        type="text"
+        maxlength="12"
+        [placeholder]="'gimmicks.games.backgammonGame.namePlaceholder' | translate"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+      />
+    </label>
+
+    <!-- Zeichen -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.backgammonGame.chooseAvatar" | translate
+      }}</span>
+      <div class="avatar-grid">
+        @for (a of avatars; track a) {
+        <button
+          type="button"
+          class="avatar"
+          [class.avatar--active]="emoji() === a"
+          (click)="emoji.set(a)"
+        >
+          {{ a }}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if (mode() === 'computer') {
+    <!-- ---------------- Gegen den Computer ---------------- -->
+    <div class="field">
+      <span class="field-label">{{
+        "gimmicks.games.backgammonGame.level" | translate
+      }}</span>
+      <ion-segment
+        [ngModel]="level()"
+        (ngModelChange)="level.set($event)"
+        mode="ios"
+        class="bg-segment"
+      >
+        <ion-segment-button value="easy">
+          <ion-label>{{ "gimmicks.games.easy" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="medium">
+          <ion-label>{{ "gimmicks.games.medium" | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hard">
+          <ion-label>{{ "gimmicks.games.difficult" | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+      {{ "gimmicks.games.backgammonGame.startGame" | translate }}
+    </button>
+    } @else {
+    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    @if (!showJoin()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || svc.busy()"
+      (click)="create()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.backgammonGame.creating"
+          : "gimmicks.games.backgammonGame.newGame"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(true)">
+      {{ "gimmicks.games.backgammonGame.joinPrompt" | translate }}
+    </button>
+    } @else {
+    <label class="field">
+      <span class="field-label">{{
+        "gimmicks.games.backgammonGame.codeLabel" | translate
+      }}</span>
+      <input
+        class="text-input code-input"
+        type="text"
+        inputmode="numeric"
+        maxlength="4"
+        [placeholder]="'gimmicks.games.backgammonGame.codePlaceholder' | translate"
+        [ngModel]="joinCode()"
+        (ngModelChange)="onCode($event)"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!nameValid() || joinCode().length !== 4 || svc.busy()"
+      (click)="join()"
+    >
+      {{
+        (svc.busy()
+          ? "gimmicks.games.backgammonGame.connecting"
+          : "gimmicks.games.backgammonGame.join"
+        ) | translate
+      }}
+    </button>
+    <button type="button" class="btn btn-ghost" (click)="showJoin.set(false)">
+      {{ "gimmicks.games.backgammonGame.back" | translate }}
+    </button>
+    } }
+  </div>
+</div>

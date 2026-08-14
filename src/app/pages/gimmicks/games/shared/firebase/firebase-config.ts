@@ -1,5 +1,5 @@
 // =============================================================
-//  Firebase-Konfiguration für "4 Gewinnt" (Online-Modus).
+//  Firebase-Konfiguration für die Online-Spiele (4 Gewinnt, Backgammon, …).
 // =============================================================
 // Diese Werte sind KEINE Geheimnisse – eine Web-Firebase-Config landet
 // ohnehin im Browser-Bundle und darf öffentlich sein. Deshalb stehen sie

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Backgammon">
+  <rect width="64" height="64" rx="12" fill="#7c2d12" />
+  <rect x="6" y="8" width="52" height="48" rx="4" fill="#f3e2c7" />
+  <rect x="30" y="8" width="4" height="48" fill="#6e431b" />
+
+  <polygon points="8,10 16,10 12,30" fill="#b5651d" />
+  <polygon points="16,10 24,10 20,30" fill="#e6b787" />
+  <polygon points="24,10 30,10 27,30" fill="#b5651d" />
+  <polygon points="34,10 40,10 37,30" fill="#e6b787" />
+  <polygon points="40,10 48,10 44,30" fill="#b5651d" />
+  <polygon points="48,10 56,10 52,30" fill="#e6b787" />
+
+  <polygon points="8,54 16,54 12,34" fill="#e6b787" />
+  <polygon points="16,54 24,54 20,34" fill="#b5651d" />
+  <polygon points="24,54 30,54 27,34" fill="#e6b787" />
+  <polygon points="34,54 40,54 37,34" fill="#b5651d" />
+  <polygon points="40,54 48,54 44,34" fill="#e6b787" />
+  <polygon points="48,54 56,54 52,34" fill="#b5651d" />
+
+  <circle cx="12" cy="14" r="3.2" fill="#f7f3ea" stroke="#cbbfa6" stroke-width="0.8" />
+  <circle cx="12" cy="21" r="3.2" fill="#f7f3ea" stroke="#cbbfa6" stroke-width="0.8" />
+  <circle cx="52" cy="50" r="3.2" fill="#2b2b36" />
+  <circle cx="52" cy="43" r="3.2" fill="#2b2b36" />
+
+  <g transform="rotate(-12 40 32)">
+    <rect x="34" y="26" width="12" height="12" rx="2" fill="#ffffff" stroke="#cbbfa6" stroke-width="0.8" />
+    <circle cx="37.5" cy="29.5" r="1.1" fill="#7c2d12" />
+    <circle cx="42.5" cy="34.5" r="1.1" fill="#7c2d12" />
+    <circle cx="40" cy="32" r="1.1" fill="#7c2d12" />
+  </g>
+</svg>

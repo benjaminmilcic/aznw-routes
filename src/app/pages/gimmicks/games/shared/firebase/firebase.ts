@@ -1,5 +1,5 @@
 // =============================================================
-//  Firebase-Anbindung für die Online-Spiele (4 Gewinnt, Memo-Quiz).
+//  Firebase-Anbindung für die Online-Spiele (4 Gewinnt, Memo-Quiz, Backgammon, …).
 // =============================================================
 // Die Konfiguration steht in firebase-config.ts (keine Geheimnisse, siehe dort).
 // Der Schutz kommt über die Datenbank-Regeln des Projekts (`auth != null`)
