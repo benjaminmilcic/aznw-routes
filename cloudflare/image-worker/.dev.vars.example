@@ -1,3 +1,0 @@
-# Kopie als .dev.vars ablegen (nicht committen).
-# Derselbe Wert wie WORKER_SECRET in der Nest-.env.
-WORKER_SECRET=bitte-langes-zufaelliges-secret-einsetzen

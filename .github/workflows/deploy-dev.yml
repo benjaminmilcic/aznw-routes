@@ -1,0 +1,127 @@
+name: Deploy Frontend (benjamin-milcic.dev)
+
+on:
+  push:
+    branches: [new]
+
+env:
+  DEPLOY_HOST: 212.227.31.144
+  DEPLOY_USER: deploy
+  TARGET_DIR: /var/www/benjamin-milcic.dev/frontend/
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Environment für den neuen Server erzeugen
+        run: |
+          cat > src/environments/environment.prod.ts << 'EOF'
+          const api = 'https://api.benjamin-milcic.dev';
+
+          export const environment = {
+            stripePublishableKey: '${{ secrets.STRIPE_PUBLISHABLE_KEY }}',
+            stripe: {
+              createApi: `${api}/stripe`,
+              returnUrl: `https://benjamin-milcic.dev`,
+            },
+            guestbook: {
+              getAllPostsApi: `${api}/guestbook`,
+              addPostApi: `${api}/guestbook`,
+              filesUrl: `${api}/files`,
+            },
+            contact: {
+              form2mailApi: `${api}/form2email`,
+            },
+            auth: {
+              getJokesFile: `${api}/auth/jokes`,
+              login: `${api}/auth/login`,
+              signup: `${api}/auth/signup`,
+              tts: `${api}/auth/tts`,
+            },
+            moorhuhn: {
+              moorhuhnApi: `${api}/moorhuhn`,
+            },
+            triviaQuiz: {
+              randomQuestionsApi: `${api}/trivia/questions/random`,
+              questionsByNumbersApi: `${api}/trivia/questions/by-numbers`,
+            },
+            error: {
+              errorMessageApi: `${api}/error2email`,
+            },
+            yahtzeeGame: {
+              webSocketsUrl: `${api}/yahtzee-game`,
+            },
+            geoLocation: {
+              reverseGeoCodeApi: `${api}/geolocation/reverse-geocode`,
+              geoCodeApi: `${api}/geolocation/geocode`,
+              citiesApi: `${api}/geolocation/cities`,
+            },
+            googleLogin: {
+              loginApi: `${api}/auth/google`,
+            },
+            recipes: {
+              recipesApi: `${api}/recipes`,
+              filesUrl: `${api}/files`,
+              translationEmail: 'benjamin.milcic@gmail.com',
+            },
+            analytics: {
+              sendData: `${api}/analytics/visitor-data`,
+            },
+            geoapify: { apiKey: '${{ secrets.GEOAPIFY_API_KEY }}' },
+            maptiler: { apiKey: '${{ secrets.MAPTILER_API_KEY }}' },
+            telegram: {
+              apiUrl: `${api}/telegram`,
+              webSocketsUrl: `${api}/telegramws`,
+            },
+            tmdb: { apiKey: '${{ secrets.TMDB_API_KEY }}' },
+            googleMaps: { apiKey: '${{ secrets.GOOGLE_MAPS_API_KEY }}' },
+            tinymce: { apiKey: '${{ secrets.TINYMCE_API_KEY }}' },
+            imagegen: { apiUrl: `${api}/imagegen` },
+            search: { embedUrl: `${api}/imagegen/embed` },
+            production: true,
+            version: new Date().getTime(),
+          };
+          EOF
+
+      - name: Build
+        run: |
+          npm install --force
+          npm run build
+
+      - name: Build-Ausgabe finden
+        id: dist
+        run: |
+          if   [ -f dist/aznw-routes/browser/index.html ]; then D=dist/aznw-routes/browser
+          elif [ -f dist/aznw-routes/index.html ];        then D=dist/aznw-routes
+          else D=$(dirname "$(find dist -maxdepth 3 -name index.html | head -1)"); fi
+          echo "Gefunden: $D"
+          ls -la "$D" | head
+          echo "dir=$D" >> "$GITHUB_OUTPUT"
+
+      - name: SSH vorbereiten
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Übertragen
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" \
+            "${{ steps.dist.outputs.dir }}/" \
+            "$DEPLOY_USER@$DEPLOY_HOST:$TARGET_DIR"
+
+      - name: Prüfen
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
+          echo "Startseite: HTTP $code"
+          [ "$code" = "200" ] || exit 1
+          curl -s --max-time 15 https://benjamin-milcic.dev/ | grep -qi '<app-root\|<script' \
+            && echo "Angular-Build ausgeliefert" \
+            || { echo "Inhalt sieht nicht nach Angular aus"; exit 1; }
