@@ -14,7 +14,7 @@ export class PortfolioComponent {
   constructor(
     public homeService: HomeService,
     public translate: TranslateService,
-    private router: Router
+    private router: Router,
   ) {}
 
   get gameCollectionImage(): string {
@@ -22,6 +22,13 @@ export class PortfolioComponent {
     const supported = ['de', 'en', 'hr'];
     const suffix = supported.includes(lang) ? lang : 'en';
     return `assets/game-collection-${suffix}.webp`;
+  }
+
+  get gimmicksImage(): string {
+    const lang = this.translate.currentLang;
+    const supported = ['de', 'en', 'hr'];
+    const suffix = supported.includes(lang) ? lang : 'en';
+    return `assets/gimmicks-${suffix}.webp`;
   }
 
   closeDialog(dialog: HTMLDialogElement) {
@@ -33,8 +40,12 @@ export class PortfolioComponent {
     dialog.showModal();
     this.homeService.overflowHidden = true;
 
-    dialog.addEventListener('close', () => {
-      this.homeService.overflowHidden = false;
-    }, { once: true });
+    dialog.addEventListener(
+      'close',
+      () => {
+        this.homeService.overflowHidden = false;
+      },
+      { once: true },
+    );
   }
 }
