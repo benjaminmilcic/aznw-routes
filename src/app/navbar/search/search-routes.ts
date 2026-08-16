@@ -163,6 +163,15 @@ export const SEARCHABLE_ROUTES: SearchableRoute[] = [
     icon: 'fa-solid fa-wand-magic-sparkles',
     category: 'search.category.gimmicks',
   },
+  // {
+  //   labelKey: 'gimmicks.menu.orbit',
+  //   keywords: ['orbit', 'sonnensystem', 'solar system', 'planeten', 'planets', '3d', 'three.js', 'erde', 'jupiter', 'saturn'],
+  //   description:
+  //     'Orbit Sonnensystem Solar System 3D Planeten planets Three.js WebGL Sonne Sun Erde Earth Jupiter Saturn Observatorium telescope',
+  //   route: '/gimmicks/orbit',
+  //   icon: 'fa-solid fa-sun',
+  //   category: 'search.category.gimmicks',
+  // },
 
   // Games
   {

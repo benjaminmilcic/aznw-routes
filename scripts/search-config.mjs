@@ -116,6 +116,12 @@ export const SEARCH_ROUTES = [
     prefixes: ['gimmicks.telegram'],
     extra: 'Telegram Chat Messenger Nachrichten chatten Webchat poruke',
   },
+  // {
+  //   route: '/gimmicks/orbit', labelKey: 'gimmicks.menu.orbit',
+  //   icon: 'fa-solid fa-sun', category: 'search.category.gimmicks',
+  //   prefixes: ['gimmicks.orbit', 'gimmicks.menu.orbit'],
+  //   extra: 'Sonnensystem Solar System Sunčev sustav Planeten 3D Three.js WebGL Orbit Observatorium Erde Jupiter Saturn',
+  // },
 
   // ── Spiele ───────────────────────────────────────────────────────────
   {

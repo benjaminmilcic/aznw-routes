@@ -230,6 +230,10 @@
   background: rgba(59, 130, 246, 0.2);
   color: #60a5fa;
 }
+/* .mega-icon.brass {
+  background: rgba(212, 180, 131, 0.22);
+  color: #d4b483;
+} */
 
 .mega-icon .game-icon {
   width: 20px;
@@ -596,6 +600,10 @@
   background: rgba(59, 130, 246, 0.2);
   color: #60a5fa;
 }
+/* .sublink-icon.brass {
+  background: rgba(212, 180, 131, 0.22);
+  color: #d4b483;
+} */
 
 /* Active gimmick highlight – desktop mega menu.
    Uses the icon's own themed color via currentColor for the ring/glow. */
