@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { knownFragmentGuard } from './known-fragment.guard';
 import { AuthLoginGuard } from './pages/gimmicks/auth/auth-login.guard';
 import { AuthMainGuard } from './pages/gimmicks/auth/auth-main.guard';
 import { TelgramAuthGuard } from './pages/gimmicks/telegram/guards/telegram-auth.guard';
@@ -6,6 +7,10 @@ import { TelgramAuthGuard } from './pages/gimmicks/telegram/guards/telegram-auth
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [knownFragmentGuard],
+    // Ohne 'always' laeuft der Guard bei einer reinen Fragment-Aenderung
+    // (gleiche Route) nicht erneut - genau der Fall /#/ -> /#/#irgendwas.
+    runGuardsAndResolvers: 'always',
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
@@ -395,6 +400,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/gimmicks/recipes/recipe-print/recipe-print.component').then(
         (m) => m.RecipePrintComponent,
+      ),
+  },
+  {
+    path: '404',
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent,
       ),
   },
   {

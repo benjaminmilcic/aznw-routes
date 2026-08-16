@@ -1449,7 +1449,9 @@
   },
   "pageNotFound": {
     "error": "Tražena stranica nije pronađena!",
-    "goToHomepage": "Idi na početnu stranicu"
+    "goToHomepage": "Idi na početnu stranicu",
+    "goBack": "Natrag",
+    "caption": "Hm, ništa nije pronađeno"
   },
   "httpError": {
     "httpErrorOccurs": "Došlo je do pogreške u prijenosu podataka. Provjerite internetsku vezu i pokušajte ponovo.",

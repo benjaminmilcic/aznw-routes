@@ -1,7 +1,39 @@
-<div class="flex flex-col justify-center items-center h-full gap-6 main">
-    <div class="text-2xl text-color3">Ups...</div>
-    <div class="text-5xl text-color4">404 Error</div>
-    <div class="text-center text-2xl  text-color3">{{'pageNotFound.error'|translate}}</div>
-    <img src="/assets/page-not-found.jpg" class="rounded-lg w-72 sm:w-[420px]">
-    <a [routerLink]="['/']" class="cursor-pointer text-color3 text-2xl" >{{'pageNotFound.goToHomepage'|translate}}</a>
-</div>
+<section class="nf">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+
+  <div class="nf-inner">
+    <div class="nf-copy">
+      <div class="code" aria-hidden="true">404</div>
+
+      <h1>Ups&hellip;</h1>
+
+      <p class="lead">{{ "pageNotFound.error" | translate }}</p>
+
+      <div class="btn-row">
+        <a [routerLink]="['/']" class="btn btn-primary">
+          <i class="fa-solid fa-house"></i>
+          {{ "pageNotFound.goToHomepage" | translate }}
+        </a>
+        <button type="button" class="btn btn-ghost" (click)="goBack()">
+          <i class="fa-solid fa-arrow-left"></i>
+          {{ "pageNotFound.goBack" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <figure class="nf-figure">
+      <div class="frame">
+        <img
+          src="/assets/page-not-found.jpg"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="sweep"></span>
+      </div>
+      <figcaption>{{ "pageNotFound.caption" | translate }}</figcaption>
+    </figure>
+  </div>
+</section>
