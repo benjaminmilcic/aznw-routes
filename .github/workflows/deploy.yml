@@ -5,6 +5,10 @@ on:
     branches:
       - new  # Passe den Branch an, den du deployen willst
 
+env:
+  # Strato leitet intern jetzt auf ein Unterverzeichnis um – hier landet das Frontend
+  DEPLOY_DIR: www
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -111,7 +115,7 @@ jobs:
           echo "Checking build output structure:"
           ls -R dist/ || echo "dist folder not found"
 
-      - name: Zielverzeichnis bereinigen
+      - name: Zielverzeichnis anlegen und bereinigen
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -119,13 +123,14 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
           script: |
-            find ~/ -maxdepth 1 -mindepth 1 \
-              ! -name '.ssh' \
+            set -e
+            mkdir -p ~/${{ env.DEPLOY_DIR }}
+            find ~/${{ env.DEPLOY_DIR }}/ -maxdepth 1 -mindepth 1 \
               ! -name 'api' \
               ! -name 'ckeditor' \
-              ! -name '.bash_history' \
-              ! -name '.htaccess' \
               -exec rm -rf {} +
+            echo "Inhalt von ~/${{ env.DEPLOY_DIR }} nach dem Bereinigen:"
+            ls -la ~/${{ env.DEPLOY_DIR }}
 
       - name: Deploy via SFTP
         uses: appleboy/scp-action@v0.1.4
@@ -135,5 +140,18 @@ jobs:
             password: ${{ secrets.FTP_PASSWORD }}
             port: 22
             source: "dist/aznw-routes/*"
-            target: "~/"
+            target: "~/${{ env.DEPLOY_DIR }}"
             strip_components: 2
+
+      - name: Deployment prüfen
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          script: |
+            set -e
+            test -f ~/${{ env.DEPLOY_DIR }}/index.html
+            echo "index.html liegt in ~/${{ env.DEPLOY_DIR }}"
+            ls -la ~/${{ env.DEPLOY_DIR }} | head -20
