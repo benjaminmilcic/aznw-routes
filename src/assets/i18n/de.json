@@ -1448,8 +1448,7 @@
   "pageNotFound": {
     "error": "Die angeforderte Seite wurde nicht gefunden!",
     "goToHomepage": "Zur Startseite",
-    "goBack": "Zurück",
-    "caption": "Hm, nichts gefunden"
+    "goBack": "Zurück"
   },
   "httpError": {
     "httpErrorOccurs": "Es ist ein Datenübertragungsfehler aufgetreten. Bitte überprüfen Sie die Internetverbindung und versuchen Sie es erneut.",

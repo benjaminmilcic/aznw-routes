@@ -1448,8 +1448,7 @@
   "pageNotFound": {
     "error": "The requested page was not found!",
     "goToHomepage": "Go to Homepage",
-    "goBack": "Go back",
-    "caption": "Hm, nothing found"
+    "goBack": "Go back"
   },
   "httpError": {
     "httpErrorOccurs": "A data transfer error occurred. Please check your internet connection and try again.",

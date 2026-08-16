@@ -1,13 +1,18 @@
 :host {
   display: block;
+  /* Sicherheitsnetz: kein weisser Grund, falls doch mal gescrollt wird */
+  background: #000018;
 }
 
 /* ============ SECTION ============ */
 .nf {
   position: relative;
-  min-height: calc(100vh - 70px);
-  margin-top: 70px;
-  padding: clamp(40px, 7vw, 90px) 20px clamp(56px, 8vw, 100px);
+  /* Kein margin-top fuer die Navbar: der Margin wuerde durch app-root nach
+     aussen kollabieren und sich zur Body-Hoehe addieren -> Scrollbalken.
+     Der Platz kommt deshalb ueber das padding. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: calc(70px + clamp(40px, 7vw, 90px)) 20px clamp(56px, 8vw, 100px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,11 +264,8 @@ h1 {
 
 /* ============ BILD ============ */
 .nf-figure {
-  margin: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  justify-content: center;
   animation: nfIn 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) 0.15s both;
 }
 
@@ -323,17 +325,6 @@ h1 {
   100% {
     transform: translateX(100%);
   }
-}
-
-figcaption {
-  font-family: "Caveat", "Segoe Script", cursive;
-  font-size: clamp(19px, 2.4vw, 25px);
-  line-height: 1.3;
-  color: #bfdbfe;
-  text-align: center;
-  text-wrap: balance;
-  max-width: 32ch;
-  opacity: 0.9;
 }
 
 @media (prefers-reduced-motion: reduce) {
