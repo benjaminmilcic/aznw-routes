@@ -1,0 +1,152 @@
+<section class="orbit-page">
+  <div class="viewport" #viewport>
+    <canvas #canvas class="stage" aria-label="Sonnensystem"></canvas>
+
+    <div class="labels" #labels [class.off]="!showLabels()">
+      @for (id of labelIds; track id) {
+        <button
+          type="button"
+          class="lbl"
+          [attr.data-orbit-id]="id"
+          (click)="select(id)"
+        >
+          {{ "gimmicks.orbit.bodies." + id + ".name" | translate }}
+        </button>
+      }
+    </div>
+
+    @if (loading()) {
+      <div class="boot" role="status">
+        <div class="boot-ring"></div>
+        <p>{{ "gimmicks.orbit.loading" | translate }}</p>
+      </div>
+    }
+
+    <header class="mast">
+      <div class="mast-kicker">{{ "gimmicks.orbit.kicker" | translate }}</div>
+      <h1>{{ "gimmicks.orbit.title" | translate }}</h1>
+      <p>{{ "gimmicks.orbit.subtitle" | translate }}</p>
+    </header>
+
+    <nav class="rail" [attr.aria-label]="'gimmicks.orbit.railLabel' | translate">
+      @for (body of major; track body.id) {
+        <button
+          type="button"
+          class="rail-btn"
+          [class.on]="selected() === body.id"
+          [class.hot]="hovered() === body.id"
+          [class.dim]="selected() && selected() !== body.id"
+          (click)="select(body.id)"
+        >
+          <span class="rail-dot" [style.background]="body.swatch"></span>
+          <span class="rail-name">{{
+            "gimmicks.orbit.bodies." + body.id + ".name" | translate
+          }}</span>
+        </button>
+      }
+    </nav>
+
+    <aside class="plate" [class.open]="!!selected()" [attr.aria-hidden]="!selected()">
+      @if (selectedDef(); as body) {
+        <div class="plate-rule"></div>
+        <div class="plate-top">
+          <span class="plate-kind">{{
+            "gimmicks.orbit.bodies." + body.id + ".type" | translate
+          }}</span>
+          <button type="button" class="icon-btn" (click)="closePlate()" [attr.aria-label]="'gimmicks.orbit.close' | translate">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <h2>{{ "gimmicks.orbit.bodies." + body.id + ".name" | translate }}</h2>
+        <p class="plate-blurb">{{
+          "gimmicks.orbit.bodies." + body.id + ".blurb" | translate
+        }}</p>
+        <dl class="stats">
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.diameter" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".diameter" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.mass" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".mass" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.distance" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".distance" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.orbit" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".orbit" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.rotation" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".rotation" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.moons" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".moons" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.temp" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".temp" | translate }}</dd>
+          </div>
+          <div>
+            <dt>{{ "gimmicks.orbit.stats.tilt" | translate }}</dt>
+            <dd>{{ "gimmicks.orbit.bodies." + body.id + ".tilt" | translate }}</dd>
+          </div>
+        </dl>
+        <p class="plate-fact">{{
+          "gimmicks.orbit.bodies." + body.id + ".fact" | translate
+        }}</p>
+      }
+    </aside>
+
+    <footer class="console">
+      <div class="console-left">
+        <button type="button" class="console-btn" (click)="togglePause()">
+          <i class="fa-solid" [class.fa-pause]="!paused()" [class.fa-play]="paused()"></i>
+          <span>{{ (paused() ? "gimmicks.orbit.play" : "gimmicks.orbit.pause") | translate }}</span>
+        </button>
+        <button type="button" class="console-btn" (click)="cycleSpeed()" [attr.title]="'gimmicks.orbit.speedHint' | translate">
+          <i class="fa-solid fa-forward"></i>
+          <span>{{ speed() }}×</span>
+        </button>
+        <button type="button" class="console-btn" (click)="jumpToday()">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>{{ "gimmicks.orbit.today" | translate }}</span>
+        </button>
+      </div>
+      <div class="console-mid">
+        <span class="date-label">{{ "gimmicks.orbit.simDate" | translate }}</span>
+        <span class="date-value">{{ simDate() }}</span>
+      </div>
+      <div class="console-right">
+        <button type="button" class="console-btn" [class.on]="showOrbits()" (click)="toggleOrbits()">
+          <i class="fa-regular fa-circle"></i>
+          <span>{{ "gimmicks.orbit.showOrbits" | translate }}</span>
+        </button>
+        <button type="button" class="console-btn" [class.on]="showLabels()" (click)="toggleLabels()">
+          <i class="fa-solid fa-tag"></i>
+          <span>{{ "gimmicks.orbit.showLabels" | translate }}</span>
+        </button>
+        <button type="button" class="console-btn" (click)="resetView()">
+          <i class="fa-solid fa-expand"></i>
+          <span>{{ "gimmicks.orbit.reset" | translate }}</span>
+        </button>
+        <button type="button" class="console-btn icon-only" (click)="helpOpen.set(!helpOpen())" [attr.aria-label]="'gimmicks.orbit.help' | translate">
+          <i class="fa-solid fa-question"></i>
+        </button>
+      </div>
+    </footer>
+
+    @if (helpOpen()) {
+      <div class="help">
+        <p>{{ "gimmicks.orbit.hintDrag" | translate }}</p>
+        <p>{{ "gimmicks.orbit.hintScroll" | translate }}</p>
+        <p>{{ "gimmicks.orbit.hintClick" | translate }}</p>
+        <p>{{ "gimmicks.orbit.hintKeys" | translate }}</p>
+        <p class="credit">{{ "gimmicks.orbit.credit" | translate }}</p>
+      </div>
+    }
+  </div>
+</section>
