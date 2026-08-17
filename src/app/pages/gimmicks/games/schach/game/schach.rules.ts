@@ -385,6 +385,7 @@ export function emptyLocalGame(host: ChessPlayer, guest: ChessPlayer): ChessGame
     check: false,
     winnerId: null,
     lastMove: null,
+    rev: 0,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };

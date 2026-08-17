@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { pickAction } from './mill.ai';
 import {
   applyMovePiece,
@@ -20,6 +21,8 @@ import { PIECES, POINTS_COUNT, type MillGame, type MillLevel, type MillMode, typ
 const PLAYER_ID_KEY = 'mill_player_id';
 const PLAYER_NAME_KEY = 'mill_player_name';
 const PLAYER_EMOJI_KEY = 'mill_player_emoji';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'mill_active_code';
 const CODE_ALPHABET = '0123456789';
 
 /** Feste Id des Computer-Gegners. */
@@ -32,16 +35,56 @@ const T = 'gimmicks.games.millGame';
 
 @Injectable({ providedIn: 'root' })
 export class MillService {
-  readonly game = signal<MillGame | null>(null);
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
+   * ganz normaler lokaler Zustand.
+   */
+  private readonly channel = new GameChannel<MillGame>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'mill/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as MillGame),
+    canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
+  });
+
+  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  readonly game = this.channel.state;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
   readonly mode = signal<MillMode | null>(null);
   readonly level = signal<MillLevel>('medium');
-  readonly error = signal<string | null>(null);
+  readonly error = this.channel.error;
   readonly busy = signal(false);
   readonly thinking = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly me = computed<MillPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
@@ -145,11 +188,12 @@ export class MillService {
         removing: false,
         winnerId: null,
         lastAction: null,
+        rev: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      await this.withTimeout(set(ref(db, `mill/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `mill/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -169,7 +213,7 @@ export class MillService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `mill/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `mill/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as MillGame);
@@ -184,10 +228,11 @@ export class MillService {
         state.removing = false;
         state.winnerId = null;
         state.lastAction = null;
+        state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
-        await this.withTimeout(set(ref(db, `mill/games/${code}`), state));
+        await withTimeout(set(ref(db, `mill/games/${code}`), state));
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -254,7 +299,7 @@ export class MillService {
 
   private async writeOnline(code: string, next: MillGame): Promise<void> {
     try {
-      await update(ref(db, `mill/games/${code}`), {
+      await this.channel.commit({
         board: next.board,
         placed: next.placed,
         currentTurn: next.currentTurn,
@@ -308,13 +353,19 @@ export class MillService {
     }, 550);
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
+   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
+   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearCpuTimer();
     this.thinking.set(false);
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
@@ -325,18 +376,6 @@ export class MillService {
     }
   }
 
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    this.gameUnsub = onValue(
-      ref(db, `mill/games/${code}`),
-      (snap) => {
-        const raw = snap.val() as MillGame | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
-  }
-
   private normalize(g: MillGame): MillGame {
     const board = Array.from({ length: POINTS_COUNT }, (_, i) =>
       typeof g.board?.[i] === 'number' ? g.board[i] : -1,
@@ -344,6 +383,7 @@ export class MillService {
     const placed = [Number(g.placed?.[0] ?? 0), Number(g.placed?.[1] ?? 0)];
     return {
       ...g,
+      rev: g.rev ?? 0,
       order: g.order ?? [],
       players: g.players ?? {},
       board,
@@ -357,7 +397,7 @@ export class MillService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `mill/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `mill/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -373,15 +413,6 @@ export class MillService {
 
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  private withTimeout<T2>(p: Promise<T2>, ms = 12000): Promise<T2> {
-    return Promise.race([
-      p,
-      new Promise<T2>((_, reject) =>
-        setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms),
-      ),
-    ]);
   }
 
   private toMessage(e: unknown): string {

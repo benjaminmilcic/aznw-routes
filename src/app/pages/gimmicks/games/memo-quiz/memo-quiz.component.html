@@ -1,3 +1,12 @@
+<!-- Verbindungs-/Fehlerhinweis – gilt für Start- und Spielansicht. -->
+<app-sync-status
+  [offline]="svc.offline()"
+  [error]="svc.error()"
+  [pending]="svc.pending()"
+  (retried)="svc.resync()"
+  (dismissed)="svc.dismissError()"
+/>
+
 @if (game()) {
 <app-memo-quiz-board />
 } @else {

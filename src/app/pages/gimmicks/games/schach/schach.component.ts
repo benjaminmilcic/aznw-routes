@@ -3,6 +3,7 @@ import { SchachBoardComponent } from './board/schach-board.component';
 import { SchachService } from './game/schach.service';
 import { SchachHomeComponent } from './home/schach-home.component';
 import { GamesService } from '../games.service';
+import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
  * Schach – zeigt entweder den Startbildschirm oder das laufende Spiel.
@@ -11,7 +12,7 @@ import { GamesService } from '../games.service';
  */
 @Component({
   selector: 'app-schach',
-  imports: [SchachHomeComponent, SchachBoardComponent],
+  imports: [SchachHomeComponent, SchachBoardComponent, SyncStatusComponent],
   templateUrl: './schach.component.html',
   styleUrl: './schach.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,9 +25,12 @@ export class SchachComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('schach');
+    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
+    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    this.svc.leaveGame();
+    this.svc.suspend();
   }
 }

@@ -80,6 +80,9 @@ export interface UnoGame {
   lastAction: UnoAction | null;
   /** Zuletzt ausgestiegener Mitspieler – die anderen bekommen dazu einen Hinweis. */
   lastLeft?: { name: string; at: number } | null;
+  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
+   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  rev: number;
   createdAt: number;
   updatedAt: number;
 }

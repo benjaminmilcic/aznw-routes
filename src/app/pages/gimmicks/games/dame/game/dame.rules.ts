@@ -223,6 +223,7 @@ export function emptyLocalGame(host: DamePlayer, guest: DamePlayer): DameGame {
     players: { [host.id]: host, [guest.id]: guest },
     winnerId: null,
     lastMove: null,
+    rev: 0,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };

@@ -34,6 +34,9 @@ export interface MillGame {
   removing: boolean;
   winnerId: string | null;
   lastAction: MillAction | null;
+  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
+   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  rev: number;
   createdAt: number;
   updatedAt: number;
 }

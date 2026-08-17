@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, remove, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, remove, set, update } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { bestMove } from './ludo.ai';
 import {
   applyMove,
@@ -31,6 +32,8 @@ import {
 const PLAYER_ID_KEY = 'ludo_player_id';
 const PLAYER_NAME_KEY = 'ludo_player_name';
 const PLAYER_EMOJI_KEY = 'ludo_player_emoji';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'ludo_active_code';
 const CODE_ALPHABET = '0123456789';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
@@ -61,18 +64,58 @@ const CPU_MOVE_DELAY = 750;
 @Injectable({ providedIn: 'root' })
 export class LudoService {
   /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
-  readonly game = signal<LudoGame | null>(null);
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
+   * ganz normaler lokaler Zustand.
+   */
+  private readonly channel = new GameChannel<LudoGame>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'ludo/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as LudoGame),
+    canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
+  });
+
+  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  readonly game = this.channel.state;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<LudoMode | null>(null);
   /** Spielstärke der Computer-Gegner. */
   readonly level = signal<LudoLevel>('medium');
   /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
-  readonly error = signal<string | null>(null);
+  readonly error = this.channel.error;
   readonly busy = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ---- Abgeleitete Signale für die Oberfläche -----------------------------
@@ -240,8 +283,8 @@ export class LudoService {
         ...this.freshGame(code, this.playerId, { [this.playerId]: player }, [this.playerId]),
         status: 'waiting',
       };
-      await this.withTimeout(set(ref(db, `ludo/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `ludo/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -261,7 +304,7 @@ export class LudoService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `ludo/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `ludo/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as LudoGame);
@@ -270,7 +313,7 @@ export class LudoService {
         if (state.order.length >= MAX_PLAYERS) throw new Error(`${T}.errors.full`);
 
         const order = [...state.order, this.playerId];
-        await this.withTimeout(
+        await withTimeout(
           update(ref(db, `ludo/games/${code}`), {
             [`players/${this.playerId}`]: {
               id: this.playerId,
@@ -279,11 +322,12 @@ export class LudoService {
             },
             [`pieces/${this.playerId}`]: freshPieces(),
             order,
+            rev: (state.rev ?? 0) + 1,
             updatedAt: Date.now(),
           }),
         );
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -306,7 +350,7 @@ export class LudoService {
       const pieces: Record<string, LudoPos[]> = {};
       for (const id of g.order) pieces[id] = freshPieces();
       const started = withTurn({ ...g, seats, pieces, status: 'playing' }, g.order[0]);
-      await update(ref(db, `ludo/games/${g.code}`), {
+      await this.channel.commit({
         seats,
         pieces,
         status: 'playing',
@@ -474,12 +518,18 @@ export class LudoService {
     return rest.order[0];
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
+   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
+   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearCpuTimer();
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
@@ -496,7 +546,7 @@ export class LudoService {
 
   private async pushOnline(next: LudoGame): Promise<void> {
     try {
-      await update(ref(db, `ludo/games/${next.code}`), {
+      await this.channel.commit({
         pieces: next.pieces,
         status: next.status,
         currentTurn: next.currentTurn,
@@ -585,6 +635,7 @@ export class LudoService {
       winnerId: null,
       ranking: [],
       lastAction: null,
+      rev: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
@@ -597,19 +648,6 @@ export class LudoService {
     const seats: Record<string, number> = {};
     order.forEach((id, i) => (seats[id] = layout[i] ?? i));
     return seats;
-  }
-
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    const gameRef = ref(db, `ludo/games/${code}`);
-    this.gameUnsub = onValue(
-      gameRef,
-      (snap) => {
-        const raw = snap.val() as LudoGame | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
   }
 
   /**
@@ -629,6 +667,7 @@ export class LudoService {
     }
     return {
       ...g,
+      rev: g.rev ?? 0,
       order,
       players,
       seats,
@@ -646,7 +685,7 @@ export class LudoService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `ludo/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `ludo/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -662,13 +701,6 @@ export class LudoService {
 
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  private withTimeout<R>(p: Promise<R>, ms = 12000): Promise<R> {
-    return Promise.race([
-      p,
-      new Promise<R>((_, reject) => setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms)),
-    ]);
   }
 
   private toMessage(e: unknown): string {

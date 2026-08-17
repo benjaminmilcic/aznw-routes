@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { bestMove } from './ai';
 import { COLS, ROWS, dropIndex, emptyBoard, findWin, isBoardFull } from './board.utils';
 import type { C4Color, C4Game, C4Level, C4Mode, C4Player } from './game.types';
@@ -8,6 +9,8 @@ import type { C4Color, C4Game, C4Level, C4Mode, C4Player } from './game.types';
 const PLAYER_ID_KEY = 'c4_player_id';
 const PLAYER_NAME_KEY = 'c4_player_name';
 const PLAYER_EMOJI_KEY = 'c4_player_emoji';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'c4_active_code';
 const CODE_ALPHABET = '0123456789';
 
 /** Feste Id des Computer-Gegners. */
@@ -20,22 +23,62 @@ const T = 'gimmicks.games.connectFourGame';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectFourService {
+  readonly playerId = this.loadPlayerId();
+
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – `state` dient dann als
+   * ganz normales lokales Signal.
+   */
+  private readonly channel = new GameChannel<C4Game>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'connect4/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as C4Game),
+    canResume: (g) => !!g.players[this.playerId] && g.status !== 'finished',
+  });
+
   /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
-  readonly game = signal<C4Game | null>(null);
+  readonly game = this.channel.state;
+  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  readonly error = this.channel.error;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<C4Mode | null>(null);
   /** Spielstärke des Computers. */
   readonly level = signal<C4Level>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
-  readonly error = signal<string | null>(null);
   readonly busy = signal(false);
   /** Der Computer "überlegt" gerade (kurze Verzögerung, damit man den Zug sieht). */
   readonly thinking = signal(false);
 
-  readonly playerId = this.loadPlayerId();
-
-  private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
 
   // ---- Abgeleitete Signale für die Oberfläche -----------------------------
   readonly me = computed<C4Player | null>(() => this.game()?.players[this.playerId] ?? null);
@@ -120,6 +163,7 @@ export class ConnectFourService {
       winnerId: null,
       winningCells: null,
       lastMove: null,
+      rev: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
@@ -154,11 +198,12 @@ export class ConnectFourService {
         winnerId: null,
         winningCells: null,
         lastMove: null,
+        rev: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      await this.withTimeout(set(ref(db, `connect4/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `connect4/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -178,7 +223,7 @@ export class ConnectFourService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `connect4/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `connect4/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as C4Game);
@@ -197,10 +242,11 @@ export class ConnectFourService {
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
         state.currentTurn = state.order[0]; // Host beginnt
+        state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
-        await this.withTimeout(set(ref(db, `connect4/games/${code}`), state));
+        await withTimeout(set(ref(db, `connect4/games/${code}`), state));
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -250,27 +296,34 @@ export class ConnectFourService {
     };
 
     if (this.mode() === 'online') {
-      void update(ref(db, `connect4/games/${g.code}`), fresh).catch((e) =>
-        this.error.set(this.toMessage(e)),
-      );
+      void this.channel.commit(fresh);
       return;
     }
     this.game.set({ ...g, ...fresh });
     this.maybeScheduleComputerMove();
   }
 
-  /** Laufendes Spiel verlassen und zurück zum Startbildschirm. */
+  /**
+   * Laufendes Spiel bewusst verlassen (Knopf im Spiel) – der gemerkte Code wird
+   * vergessen, ein Zurückkommen führt also auf den Startbildschirm.
+   */
   leaveGame(): void {
     this.reset();
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der Code
+   * aber behalten: beim Zurückkommen findet `resume()` die laufende Partie
+   * wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearCpuTimer();
     this.thinking.set(false);
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
@@ -301,19 +354,15 @@ export class ConnectFourService {
   private async dropOnline(g: C4Game, col: number, playerId: string): Promise<void> {
     const next = this.applyMove(g, col, playerId);
     if (!next) return;
-    try {
-      await update(ref(db, `connect4/games/${g.code}`), {
-        board: next.board,
-        lastMove: next.lastMove,
-        status: next.status,
-        currentTurn: next.currentTurn,
-        winnerId: next.winnerId,
-        winningCells: next.winningCells,
-        updatedAt: next.updatedAt,
-      });
-    } catch (e) {
-      this.error.set(this.toMessage(e));
-    }
+    // commit() meldet Fehler selbst über `error` – kein try/catch nötig.
+    await this.channel.commit({
+      board: next.board,
+      lastMove: next.lastMove,
+      status: next.status,
+      currentTurn: next.currentTurn,
+      winnerId: next.winnerId,
+      winningCells: next.winningCells,
+    });
   }
 
   /** Ist der Computer dran, zieht er nach kurzer Bedenkzeit. */
@@ -352,18 +401,6 @@ export class ConnectFourService {
   }
 
   // ---- Online-Intern -------------------------------------------------------
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    this.gameUnsub = onValue(
-      ref(db, `connect4/games/${code}`),
-      (snap) => {
-        const raw = snap.val() as C4Game | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
-  }
-
   /**
    * Firebase speichert keine leeren Arrays/Null-Werte sauber – beim Einlesen
    * ergänzen, damit die Oberfläche niemals auf "undefined" zugreift.
@@ -380,6 +417,7 @@ export class ConnectFourService {
       winnerId: g.winnerId ?? null,
       winningCells: g.winningCells ?? null,
       lastMove: g.lastMove ?? null,
+      rev: g.rev ?? 0,
       board: Array.from({ length: rows * cols }, (_, i) => (g.board?.[i] ?? '') as string),
     };
   }
@@ -387,7 +425,7 @@ export class ConnectFourService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `connect4/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `connect4/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -404,16 +442,6 @@ export class ConnectFourService {
   /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  /** Verhindert ewiges Hängen, falls die Datenbank nicht antwortet. */
-  private withTimeout<T2>(p: Promise<T2>, ms = 12000): Promise<T2> {
-    return Promise.race([
-      p,
-      new Promise<T2>((_, reject) =>
-        setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms),
-      ),
-    ]);
   }
 
   private toMessage(e: unknown): string {

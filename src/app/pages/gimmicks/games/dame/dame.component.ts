@@ -3,6 +3,7 @@ import { DameBoardComponent } from './board/dame-board.component';
 import { DameService } from './game/dame.service';
 import { DameHomeComponent } from './home/dame-home.component';
 import { GamesService } from '../games.service';
+import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
  * Dame – zeigt entweder den Startbildschirm oder das laufende Spiel.
@@ -11,7 +12,7 @@ import { GamesService } from '../games.service';
  */
 @Component({
   selector: 'app-dame',
-  imports: [DameHomeComponent, DameBoardComponent],
+  imports: [DameHomeComponent, DameBoardComponent, SyncStatusComponent],
   templateUrl: './dame.component.html',
   styleUrl: './dame.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,9 +25,12 @@ export class DameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('dame');
+    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
+    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    this.svc.leaveGame();
+    this.svc.suspend();
   }
 }

@@ -36,6 +36,9 @@ export interface DameGame {
   winnerId: string | null;
   /** Zuletzt gezogener Stein (zum Hervorheben) oder null. */
   lastMove: { from: number; to: number } | null;
+  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
+   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  rev: number;
   createdAt: number;
   updatedAt: number;
 }

@@ -3,6 +3,7 @@ import { BackgammonBoardComponent } from './board/backgammon-board.component';
 import { BackgammonService } from './game/backgammon.service';
 import { BackgammonHomeComponent } from './home/backgammon-home.component';
 import { GamesService } from '../games.service';
+import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
  * Backgammon – zeigt entweder den Startbildschirm oder das laufende Spiel.
@@ -11,7 +12,7 @@ import { GamesService } from '../games.service';
  */
 @Component({
   selector: 'app-backgammon',
-  imports: [BackgammonHomeComponent, BackgammonBoardComponent],
+  imports: [BackgammonHomeComponent, BackgammonBoardComponent, SyncStatusComponent],
   templateUrl: './backgammon.component.html',
   styleUrl: './backgammon.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,9 +25,12 @@ export class BackgammonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('backgammon');
+    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
+    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    this.svc.leaveGame();
+    this.svc.suspend();
   }
 }

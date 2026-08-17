@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { GamesService } from '../games.service';
+import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 import { UnoBoardComponent } from './board/uno-board.component';
 import { UnoService } from './game/uno.service';
 import { UnoHomeComponent } from './home/uno-home.component';
@@ -14,7 +15,7 @@ import { UnoHomeComponent } from './home/uno-home.component';
  */
 @Component({
   selector: 'app-uno',
-  imports: [UnoHomeComponent, UnoBoardComponent],
+  imports: [UnoHomeComponent, UnoBoardComponent, SyncStatusComponent],
   templateUrl: './uno.component.html',
   styleUrl: './uno.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,10 +28,13 @@ export class UnoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('uno');
+    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
+    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    void this.svc.resume();
   }
 
   ngOnDestroy(): void {
     // Beim Verlassen der Seite Firebase-Abo und Computer-Timer aufräumen.
-    this.svc.leaveGame();
+    this.svc.suspend();
   }
 }

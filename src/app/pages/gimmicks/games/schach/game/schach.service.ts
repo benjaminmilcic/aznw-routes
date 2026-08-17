@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { pickMove } from './schach.ai';
 import { applyMove, emptyLocalGame, freshRound, kingSquare, legalMoves, startBoard } from './schach.rules';
 import type { ChessColor, ChessGame, ChessLevel, ChessMode, ChessPlayer } from './game.types';
@@ -8,6 +9,8 @@ import type { ChessColor, ChessGame, ChessLevel, ChessMode, ChessPlayer } from '
 const PLAYER_ID_KEY = 'schach_player_id';
 const PLAYER_NAME_KEY = 'schach_player_name';
 const PLAYER_EMOJI_KEY = 'schach_player_emoji';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'schach_active_code';
 const CODE_ALPHABET = '0123456789';
 
 /** Feste Id des Computer-Gegners. */
@@ -20,16 +23,56 @@ const T = 'gimmicks.games.chessGame';
 
 @Injectable({ providedIn: 'root' })
 export class SchachService {
-  readonly game = signal<ChessGame | null>(null);
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
+   * ganz normaler lokaler Zustand.
+   */
+  private readonly channel = new GameChannel<ChessGame>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'schach/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as ChessGame),
+    canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
+  });
+
+  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  readonly game = this.channel.state;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
   readonly mode = signal<ChessMode | null>(null);
   readonly level = signal<ChessLevel>('medium');
-  readonly error = signal<string | null>(null);
+  readonly error = this.channel.error;
   readonly busy = signal(false);
   readonly thinking = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly me = computed<ChessPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
@@ -121,11 +164,12 @@ export class SchachService {
         check: false,
         winnerId: null,
         lastMove: null,
+        rev: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      await this.withTimeout(set(ref(db, `schach/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `schach/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -145,7 +189,7 @@ export class SchachService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `schach/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `schach/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as ChessGame);
@@ -162,10 +206,11 @@ export class SchachService {
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
         state.currentTurn = state.order[0];
+        state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
-        await this.withTimeout(set(ref(db, `schach/games/${code}`), state));
+        await withTimeout(set(ref(db, `schach/games/${code}`), state));
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -195,7 +240,7 @@ export class SchachService {
     this.clearCpuTimer();
     const fresh = freshRound(g);
     if (this.mode() === 'online') {
-      void update(ref(db, `schach/games/${g.code}`), fresh).catch((e) =>
+      void this.channel.commit(fresh).catch((e) =>
         this.error.set(this.toMessage(e)),
       );
       return;
@@ -233,19 +278,25 @@ export class SchachService {
     return kingSquare(g.board, color);
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
+   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
+   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearCpuTimer();
     this.thinking.set(false);
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
   private async writeOnline(code: string, next: ChessGame): Promise<void> {
     try {
-      await update(ref(db, `schach/games/${code}`), {
+      await this.channel.commit({
         board: next.board,
         castling: next.castling,
         enPassant: next.enPassant,
@@ -293,21 +344,10 @@ export class SchachService {
     }
   }
 
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    this.gameUnsub = onValue(
-      ref(db, `schach/games/${code}`),
-      (snap) => {
-        const raw = snap.val() as ChessGame | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
-  }
-
   private normalize(g: ChessGame): ChessGame {
     return {
       ...g,
+      rev: g.rev ?? 0,
       order: g.order ?? [],
       players: g.players ?? {},
       board: Array.from({ length: 64 }, (_, i) => g.board?.[i] ?? ''),
@@ -322,7 +362,7 @@ export class SchachService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `schach/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `schach/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -336,15 +376,6 @@ export class SchachService {
 
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  private withTimeout<T2>(p: Promise<T2>, ms = 12000): Promise<T2> {
-    return Promise.race([
-      p,
-      new Promise<T2>((_, reject) =>
-        setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms),
-      ),
-    ]);
   }
 
   private toMessage(e: unknown): string {

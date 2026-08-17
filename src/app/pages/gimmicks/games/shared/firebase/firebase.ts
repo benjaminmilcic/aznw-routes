@@ -9,7 +9,7 @@
 // [DEFAULT]-App (z. B. über @angular/fire) kollidiert.
 // =============================================================
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signInAnonymously, type Auth } from 'firebase/auth';
 import { getDatabase, type Database } from 'firebase/database';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { firebaseConfig } from './firebase-config';
@@ -67,7 +67,7 @@ export const authReady: Promise<void> =
 
 function ensureAnonAuth(firebaseApp: FirebaseApp): Promise<void> {
   const auth = getAuth(firebaseApp);
-  return new Promise<void>((resolve, reject) => {
+  const ready = new Promise<void>((resolve, reject) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         unsub();
@@ -80,5 +80,39 @@ function ensureAnonAuth(firebaseApp: FirebaseApp): Promise<void> {
         reject(err);
       });
     }
+  });
+  void ready.then(() => watchAuth(auth)).catch(() => {
+    /* Fehler meldet der Aufrufer – hier nur keine unbehandelte Rejection */
+  });
+  return ready;
+}
+
+/**
+ * Hält die anonyme Anmeldung aufrecht.
+ *
+ * Fällt der Benutzer im laufenden Betrieb weg (z. B. weil der Token nicht
+ * erneuert werden konnte), verlieren offene Listener ihre Leseberechtigung –
+ * Firebase bricht sie ab und hängt sie NIE wieder an, das Spiel bleibt dann
+ * stumm stehen. Deshalb wird hier sofort neu angemeldet.
+ */
+function watchAuth(auth: Auth): void {
+  let retries = 0;
+  let signingIn = false;
+  const MAX_RETRIES = 5;
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      retries = 0;
+      return;
+    }
+    if (signingIn || retries >= MAX_RETRIES) return;
+    signingIn = true;
+    retries++;
+    console.warn(`[sync] Anmeldung verloren – melde neu an (Versuch ${retries}).`);
+    signInAnonymously(auth)
+      .catch((err) => console.warn('[sync] Erneute Anmeldung fehlgeschlagen:', err))
+      .finally(() => {
+        signingIn = false;
+      });
   });
 }

@@ -3,6 +3,7 @@ import { MillBoardComponent } from './board/mill-board.component';
 import { MillService } from './game/mill.service';
 import { MillHomeComponent } from './home/mill-home.component';
 import { GamesService } from '../games.service';
+import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
  * Muehle – zeigt entweder den Startbildschirm oder das laufende Spiel.
@@ -11,7 +12,7 @@ import { GamesService } from '../games.service';
  */
 @Component({
   selector: 'app-mill',
-  imports: [MillHomeComponent, MillBoardComponent],
+  imports: [MillHomeComponent, MillBoardComponent, SyncStatusComponent],
   templateUrl: './mill.component.html',
   styleUrl: './mill.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,9 +25,12 @@ export class MillComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('mill');
+    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
+    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    this.svc.leaveGame();
+    this.svc.suspend();
   }
 }

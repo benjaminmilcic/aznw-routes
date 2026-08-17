@@ -194,6 +194,7 @@ export function emptyLocalGame(host: MillPlayer, guest: MillPlayer): MillGame {
     removing: false,
     winnerId: null,
     lastAction: null,
+    rev: 0,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };

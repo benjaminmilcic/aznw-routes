@@ -620,6 +620,16 @@
       "testFormInfo": "Dies ist nur ein Testformular. Sie können das Buch hier nicht wirklich kaufen."
     },
     "games": {
+      "sync": {
+        "offline": "Keine Verbindung – warte auf das Netz …",
+        "sending": "Zug wird gesendet …",
+        "notSaved": "Dein Zug wurde nicht gespeichert. Prüfe die Verbindung und tippe noch einmal.",
+        "changed": "Das Spiel hat sich zwischenzeitlich geändert – die Anzeige ist wieder aktuell.",
+        "lost": "Verbindung zum Spiel verloren – wird neu aufgebaut …",
+        "timeout": "Die Datenbank antwortet nicht.",
+        "retry": "Aktualisieren",
+        "dismiss": "Ausblenden"
+      },
       "connectFour": "4 Gewinnt",
       "backgammon": "Backgammon",
       "dame": "Dame",

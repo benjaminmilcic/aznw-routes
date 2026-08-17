@@ -620,6 +620,16 @@
       "testFormInfo": "This is just a test form. You cannot actually buy the book here."
     },
     "games": {
+      "sync": {
+        "offline": "No connection – waiting for the network …",
+        "sending": "Sending your move …",
+        "notSaved": "Your move was not saved. Check your connection and tap again.",
+        "changed": "The game changed in the meantime – the view is up to date again.",
+        "lost": "Lost connection to the game – reconnecting …",
+        "timeout": "The database is not responding.",
+        "retry": "Refresh",
+        "dismiss": "Hide"
+      },
       "connectFour": "Connect 4",
       "backgammon": "Backgammon",
       "dame": "Checkers",

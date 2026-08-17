@@ -1,12 +1,15 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { CARD_MOTIFS } from '../data/card-motifs';
 import type { MemoCard, MemoGame, MemoLevel, MemoMode, MemoPlayer } from './memo.types';
 
 const PLAYER_ID_KEY = 'memo_player_id';
 const PLAYER_NAME_KEY = 'memo_player_name';
 const PLAYER_AVATAR_KEY = 'memo_player_avatar';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'memo_active_code';
 const CODE_ALPHABET = '0123456789';
 
 /** Wie lange ein Fehlversuch offen liegen bleibt. */
@@ -30,18 +33,58 @@ const T = 'gimmicks.games.memoQuizGame';
 @Injectable({ providedIn: 'root' })
 export class MemoQuizService {
   /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
-  readonly game = signal<MemoGame | null>(null);
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
+   * ganz normaler lokaler Zustand.
+   */
+  private readonly channel = new GameChannel<MemoGame>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'memory/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as MemoGame),
+    canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
+  });
+
+  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  readonly game = this.channel.state;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<MemoMode | null>(null);
   /** Gedächtnis-Stärke des Computers. */
   readonly level = signal<MemoLevel>('medium');
   /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
-  readonly error = signal<string | null>(null);
+  readonly error = this.channel.error;
   readonly busy = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  private gameUnsub: Unsubscribe | null = null;
   private mismatchTimer: ReturnType<typeof setTimeout> | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -126,6 +169,7 @@ export class MemoQuizService {
         [CPU_ID]: { id: CPU_ID, name: 'Computer', avatar: 'robot', score: 0 },
       },
       winnerId: null,
+      rev: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -155,11 +199,12 @@ export class MemoQuizService {
           [this.playerId]: { id: this.playerId, name: name.trim() || 'Spieler', avatar, score: 0 },
         },
         winnerId: null,
+        rev: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      await this.withTimeout(set(ref(db, `memory/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `memory/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -179,7 +224,7 @@ export class MemoQuizService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `memory/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `memory/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as MemoGame);
@@ -194,10 +239,11 @@ export class MemoQuizService {
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
         state.currentTurn = state.order[0]; // Host beginnt
+        state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
-        await this.withTimeout(set(ref(db, `memory/games/${code}`), state));
+        await withTimeout(set(ref(db, `memory/games/${code}`), state));
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -244,7 +290,7 @@ export class MemoQuizService {
     };
 
     if (this.mode() === 'online') {
-      void update(ref(db, `memory/games/${g.code}`), fresh).catch((e) =>
+      void this.channel.commit(fresh).catch((e) =>
         this.error.set(this.toMessage(e)),
       );
       return;
@@ -258,13 +304,19 @@ export class MemoQuizService {
     this.reset();
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
+   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
+   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearTimers();
     this.cpuMemory.clear();
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
@@ -410,12 +462,11 @@ export class MemoQuizService {
   private async flipOnline(index: number): Promise<void> {
     const g = this.game();
     if (!g) return;
-    const path = `memory/games/${g.code}`;
     const flipped = [...g.flipped, index];
 
     try {
       if (flipped.length < 2) {
-        await update(ref(db, path), { flipped, updatedAt: Date.now() });
+        await this.channel.commit({ flipped, updatedAt: Date.now() });
         return;
       }
 
@@ -430,7 +481,7 @@ export class MemoQuizService {
           score: players[this.playerId].score + 1,
         };
         const finished = board.every((c) => c.matchedBy);
-        await update(ref(db, path), {
+        await this.channel.commit({
           board,
           players,
           flipped: [],
@@ -444,32 +495,36 @@ export class MemoQuizService {
       }
 
       // Kein Paar: kurz zeigen, dann ist der Mitspieler dran.
-      await update(ref(db, path), { flipped, resolving: true, updatedAt: Date.now() });
+      await this.channel.commit({ flipped, resolving: true, updatedAt: Date.now() });
       const next = this.nextPlayer(g);
       this.mismatchTimer = setTimeout(() => {
         this.mismatchTimer = null;
-        update(ref(db, path), {
-          flipped: [],
-          resolving: false,
-          currentTurn: next,
-          updatedAt: Date.now(),
-        }).catch((e) => this.error.set(this.toMessage(e)));
+        void this.unflipOnline(next);
       }, MISMATCH_MS);
     } catch (e) {
       this.error.set(this.toMessage(e));
     }
   }
 
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    this.gameUnsub = onValue(
-      ref(db, `memory/games/${code}`),
-      (snap) => {
-        const raw = snap.val() as MemoGame | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
+  /**
+   * Dreht die beiden nicht passenden Karten zurück und gibt ab.
+   *
+   * Dieser Schreibvorgang kommt zeitversetzt – geht er verloren, bliebe das
+   * Spiel für BEIDE mit `resolving: true` stehen (niemand darf dann tippen).
+   * Deshalb wird er einmal wiederholt, bevor der Hinweisbalken übernimmt.
+   */
+  private async unflipOnline(next: string, retry = true): Promise<void> {
+    const ok = await this.channel.commit({
+      flipped: [],
+      resolving: false,
+      currentTurn: next,
+    });
+    if (!ok && retry) {
+      this.mismatchTimer = setTimeout(() => {
+        this.mismatchTimer = null;
+        void this.unflipOnline(next, false);
+      }, MISMATCH_MS);
+    }
   }
 
   /**
@@ -479,6 +534,7 @@ export class MemoQuizService {
   private normalize(g: MemoGame): MemoGame {
     return {
       ...g,
+      rev: g.rev ?? 0,
       flipped: g.flipped ?? [],
       order: g.order ?? [],
       players: g.players ?? {},
@@ -523,7 +579,7 @@ export class MemoQuizService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `memory/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `memory/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -540,16 +596,6 @@ export class MemoQuizService {
   /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  /** Verhindert ewiges Hängen, falls die Datenbank nicht antwortet. */
-  private withTimeout<TResult>(p: Promise<TResult>, ms = 12000): Promise<TResult> {
-    return Promise.race([
-      p,
-      new Promise<TResult>((_, reject) =>
-        setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms),
-      ),
-    ]);
   }
 
   private toMessage(e: unknown): string {

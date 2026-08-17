@@ -34,6 +34,9 @@ export interface MemoGame {
   order: string[];
   players: Record<string, MemoPlayer>;
   winnerId: string | null; // playerId, 'tie' oder null
+  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
+   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  rev: number;
   createdAt: number;
   updatedAt: number;
 }

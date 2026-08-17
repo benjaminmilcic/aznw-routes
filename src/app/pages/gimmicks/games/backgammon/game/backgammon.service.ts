@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { get, onValue, ref, set, update, type Unsubscribe } from 'firebase/database';
+import { get, ref, set } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
+import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { pickMove } from './backgammon.ai';
 import {
   anyMove,
@@ -17,6 +18,8 @@ import type { BgColor, BgGame, BgLevel, BgMode, BgMove, BgPlayer } from './game.
 const PLAYER_ID_KEY = 'bg_player_id';
 const PLAYER_NAME_KEY = 'bg_player_name';
 const PLAYER_EMOJI_KEY = 'bg_player_emoji';
+/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+const ACTIVE_CODE_KEY = 'bg_active_code';
 const CODE_ALPHABET = '0123456789';
 
 /** Feste Id des Computer-Gegners. */
@@ -30,20 +33,60 @@ const T = 'gimmicks.games.backgammonGame';
 @Injectable({ providedIn: 'root' })
 export class BackgammonService {
   /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
-  readonly game = signal<BgGame | null>(null);
+  /**
+   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
+   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
+   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
+   * ganz normaler lokaler Zustand.
+   */
+  private readonly channel = new GameChannel<BgGame>({
+    db,
+    configured: databaseConfigured,
+    authReady,
+    basePath: 'backgammon/games',
+    activeKey: ACTIVE_CODE_KEY,
+    normalize: (raw) => this.normalize(raw as BgGame),
+    canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
+  });
+
+  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  readonly game = this.channel.state;
+  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  readonly offline = this.channel.offline;
+  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  readonly pending = this.channel.pending;
+
+  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  resync(): Promise<void> {
+    return this.channel.resync();
+  }
+
+  dismissError(): void {
+    this.channel.dismissError();
+  }
+
+  /**
+   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
+   * Seite zwischenzeitlich verlassen wurde.
+   */
+  async resume(): Promise<boolean> {
+    if (this.game()) return false;
+    const ok = await this.channel.resume();
+    if (ok) this.mode.set('online');
+    return ok;
+  }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<BgMode | null>(null);
   /** Spielstärke des Computers. */
   readonly level = signal<BgLevel>('medium');
   /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
-  readonly error = signal<string | null>(null);
+  readonly error = this.channel.error;
   readonly busy = signal(false);
   /** Der Computer "überlegt" gerade (kurze Verzögerung, damit man den Zug sieht). */
   readonly thinking = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ---- Abgeleitete Signale für die Oberfläche -----------------------------
@@ -144,6 +187,7 @@ export class BackgammonService {
       diceLeft: [],
       rolled: false,
       winnerId: null,
+      rev: 0,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
@@ -181,11 +225,12 @@ export class BackgammonService {
         diceLeft: [],
         rolled: false,
         winnerId: null,
+        rev: 0,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      await this.withTimeout(set(ref(db, `backgammon/games/${code}`), state));
-      this.subscribe(code);
+      await withTimeout(set(ref(db, `backgammon/games/${code}`), state));
+      this.channel.open(code);
       return code;
     } catch (e) {
       this.mode.set(null);
@@ -205,7 +250,7 @@ export class BackgammonService {
     try {
       this.assertConfig();
       await authReady;
-      const snap = await this.withTimeout(get(ref(db, `backgammon/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `backgammon/games/${code}`)));
       if (!snap.exists()) throw new Error(`${T}.errors.notFound`);
 
       const state = this.normalize(snap.val() as BgGame);
@@ -223,10 +268,11 @@ export class BackgammonService {
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
         state.currentTurn = state.order[0];
+        state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
-        await this.withTimeout(set(ref(db, `backgammon/games/${code}`), state));
+        await withTimeout(set(ref(db, `backgammon/games/${code}`), state));
       }
-      this.subscribe(code);
+      this.channel.open(code);
     } catch (e) {
       this.mode.set(null);
       this.error.set(this.toMessage(e));
@@ -277,7 +323,7 @@ export class BackgammonService {
     if (!g || g.status !== 'playing' || g.currentTurn !== this.playerId) return;
 
     if (this.mode() === 'online') {
-      void update(ref(db, `backgammon/games/${g.code}`), {
+      void this.channel.commit({
         dice: [],
         diceLeft: [],
         rolled: false,
@@ -303,7 +349,7 @@ export class BackgammonService {
     const fresh = freshRound(starter);
 
     if (this.mode() === 'online') {
-      void update(ref(db, `backgammon/games/${g.code}`), fresh).catch((e) =>
+      void this.channel.commit(fresh).catch((e) =>
         this.error.set(this.toMessage(e)),
       );
       return;
@@ -330,20 +376,26 @@ export class BackgammonService {
     return targetsFrom(g, this.playerId, from);
   }
 
-  private reset(): void {
-    this.gameUnsub?.();
-    this.gameUnsub = null;
+  /**
+   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
+   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
+   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   */
+  suspend(): void {
+    this.reset({ forget: false });
+  }
+
+  private reset(opts: { forget?: boolean } = {}): void {
+    this.channel.close(opts);
     this.clearCpuTimer();
     this.thinking.set(false);
-    this.error.set(null);
-    this.game.set(null);
     this.mode.set(null);
   }
 
   private async rollOnline(g: BgGame): Promise<void> {
     const rolled = applyRoll(g);
     try {
-      await update(ref(db, `backgammon/games/${g.code}`), {
+      await this.channel.commit({
         dice: rolled.dice,
         diceLeft: rolled.diceLeft,
         rolled: true,
@@ -358,7 +410,7 @@ export class BackgammonService {
     const next = applyMove(g, from, to, die, this.playerId);
     if (!next) return;
     try {
-      await update(ref(db, `backgammon/games/${g.code}`), {
+      await this.channel.commit({
         board: next.board,
         barWhite: next.barWhite,
         barBlack: next.barBlack,
@@ -454,18 +506,6 @@ export class BackgammonService {
   }
 
   // ---- Online-Intern -------------------------------------------------------
-  private subscribe(code: string): void {
-    this.gameUnsub?.();
-    this.gameUnsub = onValue(
-      ref(db, `backgammon/games/${code}`),
-      (snap) => {
-        const raw = snap.val() as BgGame | null;
-        this.game.set(raw ? this.normalize(raw) : null);
-      },
-      (err) => this.error.set(this.toMessage(err)),
-    );
-  }
-
   /**
    * Firebase speichert keine leeren Arrays/Null-Werte sauber – beim Einlesen
    * ergänzen, damit die Oberfläche niemals auf "undefined" zugreift.
@@ -473,6 +513,7 @@ export class BackgammonService {
   private normalize(g: BgGame): BgGame {
     return {
       ...g,
+      rev: g.rev ?? 0,
       order: g.order ?? [],
       players: g.players ?? {},
       board: Array.from({ length: 24 }, (_, i) => g.board?.[i] ?? 0),
@@ -490,7 +531,7 @@ export class BackgammonService {
   private async uniqueCode(): Promise<string> {
     for (let attempt = 0; attempt < 8; attempt++) {
       const code = this.randomCode();
-      const snap = await this.withTimeout(get(ref(db, `backgammon/games/${code}`)));
+      const snap = await withTimeout(get(ref(db, `backgammon/games/${code}`)));
       if (!snap.exists()) return code;
     }
     return this.randomCode();
@@ -506,15 +547,6 @@ export class BackgammonService {
 
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
-  }
-
-  private withTimeout<T2>(p: Promise<T2>, ms = 12000): Promise<T2> {
-    return Promise.race([
-      p,
-      new Promise<T2>((_, reject) =>
-        setTimeout(() => reject(new Error(`${T}.errors.timeout`)), ms),
-      ),
-    ]);
   }
 
   private toMessage(e: unknown): string {

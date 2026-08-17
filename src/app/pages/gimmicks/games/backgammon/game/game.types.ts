@@ -47,6 +47,9 @@ export interface BgGame {
   /** Hat der aktuelle Spieler in diesem Zug schon gewürfelt? */
   rolled: boolean;
   winnerId: string | null;
+  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
+   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  rev: number;
   createdAt: number;
   updatedAt: number;
 }
