@@ -502,3 +502,19 @@ ion-popover.rounded-popover {
   background: #b87333 !important;
   opacity: 1 !important;
 }
+
+/* ---------------------------------------------------------------------------
+   Spiel-Hinweise ("X hat das Spiel verlassen")
+   ---------------------------------------------------------------------------
+   Diese Toasts liegen unten mittig — bei Uno genau über der eigenen Hand, bei
+   Ludo über der Würfel-Leiste, bei Yahtzee über dem Block. Ein normaler Toast
+   ist klickbar (pointer-events: auto) und schließt sich beim Antippen. Damit
+   ging der erste Klick auf eine Karte für den Hinweis drauf und man musste ein
+   zweites Mal klicken.
+
+   Deshalb: durchklickbar machen. Der Hinweis verschwindet von allein.
+   Wird in ludo/uno/yahtzee als toastClass gesetzt.
+--------------------------------------------------------------------------- */
+.toast-container .ngx-toastr.game-notice {
+  pointer-events: none;
+}

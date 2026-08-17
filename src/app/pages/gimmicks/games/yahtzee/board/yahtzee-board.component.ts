@@ -115,7 +115,16 @@ export class YahtzeeBoardComponent implements OnDestroy {
         this.toastr.info(
           this.translate.instant('gimmicks.games.yahtzeeGame.playerLeft', { name }),
           'Info',
-          { positionClass: 'toast-bottom-center', timeOut: 6000 },
+          {
+            positionClass: 'toast-bottom-center',
+            timeOut: 6000,
+            // Der Hinweis liegt über dem Spielfeld (bei Uno über der Hand).
+            // Ohne diese Klasse fängt er den ersten Klick ab: statt den Zug zu
+            // machen, schließt man nur den Hinweis und muss ein zweites Mal
+            // klicken. Siehe .game-notice in styles.scss.
+            toastClass: 'ngx-toastr game-notice',
+            tapToDismiss: false,
+          },
         );
       }
     });
