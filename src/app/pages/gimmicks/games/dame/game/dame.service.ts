@@ -23,7 +23,6 @@ const T = 'gimmicks.games.dameGame';
 
 @Injectable({ providedIn: 'root' })
 export class DameService {
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
   /**
    * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
    * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
@@ -36,6 +35,7 @@ export class DameService {
     authReady,
     basePath: 'dame/games',
     activeKey: ACTIVE_CODE_KEY,
+    playerId: () => this.playerId,
     normalize: (raw) => this.normalize(raw as DameGame),
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
@@ -46,6 +46,8 @@ export class DameService {
   readonly offline = this.channel.offline;
   /** Ein Zug ist unterwegs und dauert auffällig lange. */
   readonly pending = this.channel.pending;
+  /** Mitspieler, die nicht mehr verbunden sind. */
+  readonly absent = this.channel.awayPlayers;
 
   /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
   resync(): Promise<void> {

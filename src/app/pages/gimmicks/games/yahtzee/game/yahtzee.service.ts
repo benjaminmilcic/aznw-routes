@@ -1,7 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { get, ref, remove, set, update } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
-import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
+import { ABSENT_GRACE_MS, GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { chooseCategory, chooseHolds, shouldRollAgain } from './ai';
 import {
   CATEGORIES,
@@ -37,7 +37,6 @@ const T = 'gimmicks.games.yahtzeeGame';
 
 @Injectable({ providedIn: 'root' })
 export class YahtzeeService {
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
   /**
    * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
    * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
@@ -50,6 +49,7 @@ export class YahtzeeService {
     authReady,
     basePath: 'yatzy/games',
     activeKey: ACTIVE_CODE_KEY,
+    playerId: () => this.playerId,
     normalize: (raw) => this.normalize(raw as YatzyGame),
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
@@ -79,6 +79,34 @@ export class YahtzeeService {
     const ok = await this.channel.resume();
     if (ok) this.mode.set('online');
     return ok;
+  }
+
+  // ---- Abwesende Mitspieler ------------------------------------------------
+  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  readonly absent = this.channel.awayPlayers;
+
+  /**
+   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
+   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
+   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   */
+  readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
+    const g = this.game();
+    if (!g || g.status !== 'playing') return null;
+    if (g.currentTurn === this.playerId) return null;
+    const grace = ABSENT_GRACE_MS / 1000;
+    return this.absent().find((p) => p.id === g.currentTurn && p.seconds >= grace) ?? null;
+  });
+
+  /**
+   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
+   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   */
+  async skipAbsent(playerId: string): Promise<void> {
+    const g = this.game();
+    if (!g || this.mode() !== 'online' || !g.players[playerId]) return;
+    if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
+    await this.removeFromOnlineGame(g, playerId);
   }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<YMode | null>(null);
@@ -330,20 +358,20 @@ export class YahtzeeService {
   leaveGame(): void {
     const g = this.game();
     if (this.mode() === 'online' && g?.players[this.playerId]) {
-      void this.removeSelfFromOnlineGame(g);
+      void this.removeFromOnlineGame(g, this.playerId);
     }
     this.reset();
   }
 
   /**
-   * Trägt diesen Spieler aus der Online-Runde aus: Spalte raus, ggf. der
+   * Trägt einen Spieler aus der Online-Runde aus: Spalte raus, ggf. der
    * Nächste ist dran, notfalls wechselt die Gastgeber-Rolle. Der letzte
    * Aussteigende räumt das Spiel ganz weg.
    */
-  private async removeSelfFromOnlineGame(g: YatzyGame): Promise<void> {
+  private async removeFromOnlineGame(g: YatzyGame, who: string): Promise<void> {
     const path = `yatzy/games/${g.code}`;
-    const remaining = g.order.filter((id) => id !== this.playerId);
-    const myName = g.players[this.playerId]?.name ?? 'Spieler';
+    const remaining = g.order.filter((id) => id !== who);
+    const leftName = g.players[who]?.name ?? 'Spieler';
 
     try {
       if (remaining.length === 0) {
@@ -358,15 +386,15 @@ export class YahtzeeService {
         scores[id] = g.scores[id] ?? {};
       }
 
-      const wasMyTurn = g.currentTurn === this.playerId;
+      const wasHisTurn = g.currentTurn === who;
       await update(ref(db, path), {
         players,
         scores,
         order: remaining,
-        currentTurn: wasMyTurn ? this.playerAfterMe(g, remaining) : g.currentTurn,
-        hostId: g.hostId === this.playerId ? remaining[0] : g.hostId,
-        // War ich gerade dran, beginnt der Nächste mit frischen Würfeln.
-        ...(wasMyTurn
+        currentTurn: wasHisTurn ? this.playerAfter(who, g, remaining) : g.currentTurn,
+        hostId: g.hostId === who ? remaining[0] : g.hostId,
+        // War er gerade dran, beginnt der Nächste mit frischen Würfeln.
+        ...(wasHisTurn
           ? {
               dice: this.freshDice(),
               held: this.freshHeld(),
@@ -374,7 +402,8 @@ export class YahtzeeService {
               rolledThisTurn: false,
             }
           : {}),
-        lastLeft: { name: myName, at: Date.now() },
+        lastLeft: { name: leftName, at: Date.now() },
+        rev: (g.rev ?? 0) + 1,
         updatedAt: Date.now(),
       });
     } catch (e) {
@@ -382,9 +411,9 @@ export class YahtzeeService {
     }
   }
 
-  /** Der nächste verbliebene Spieler nach mir in der ursprünglichen Reihenfolge. */
-  private playerAfterMe(g: YatzyGame, remaining: string[]): string {
-    const start = g.order.indexOf(this.playerId);
+  /** Der nächste verbliebene Spieler nach `who` in der ursprünglichen Reihenfolge. */
+  private playerAfter(who: string, g: YatzyGame, remaining: string[]): string {
+    const start = g.order.indexOf(who);
     for (let step = 1; step <= g.order.length; step++) {
       const candidate = g.order[(start + step) % g.order.length];
       if (remaining.includes(candidate)) return candidate;

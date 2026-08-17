@@ -36,6 +36,39 @@
     ✕
   </button>
 </div>
+} @else if (blocking()) {
+<!-- Wartet die Runde auf jemanden, der lange weg ist: Ausweg anbieten. -->
+<div
+  role="alert"
+  class="fixed top-2 left-1/2 -translate-x-1/2 z-50 max-w-[92vw]
+         flex items-center gap-3 rounded-2xl bg-slate-800/95 text-white
+         px-4 py-2.5 shadow-2xl ring-2 ring-white/40"
+>
+  <span class="text-xl shrink-0" aria-hidden="true">🔌</span>
+  <span class="text-sm font-bold">
+    {{ "gimmicks.games.sync.blocking" | translate: { name: blocking()!.name } }}
+  </span>
+  <button
+    type="button"
+    (click)="skipped.emit(blocking()!.id)"
+    class="shrink-0 rounded-full bg-rose-500 hover:bg-rose-600 text-white
+           text-xs font-extrabold px-3 py-1.5 active:scale-95 transition"
+  >
+    {{ "gimmicks.games.sync.skip" | translate }}
+  </button>
+</div>
+} @else if (awayNames()) {
+<div
+  role="status"
+  class="fixed top-2 left-1/2 -translate-x-1/2 z-50 max-w-[92vw] pointer-events-none
+         flex items-center gap-3 rounded-full bg-slate-700/95 text-white
+         px-5 py-2 shadow-xl ring-2 ring-white/30"
+>
+  <span class="text-lg" aria-hidden="true">🔌</span>
+  <span class="text-sm font-bold">
+    {{ "gimmicks.games.sync.away" | translate: { names: awayNames() } }}
+  </span>
+</div>
 } @else if (pending()) {
 <div
   role="status"

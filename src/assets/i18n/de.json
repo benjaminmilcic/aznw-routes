@@ -621,6 +621,9 @@
     },
     "games": {
       "sync": {
+        "away": "{{names}} ist gerade nicht verbunden",
+        "blocking": "{{name}} ist nicht mehr verbunden und ist am Zug",
+        "skip": "Überspringen",
         "offline": "Keine Verbindung – warte auf das Netz …",
         "sending": "Zug wird gesendet …",
         "notSaved": "Dein Zug wurde nicht gespeichert. Prüfe die Verbindung und tippe noch einmal.",

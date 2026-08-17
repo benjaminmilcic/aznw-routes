@@ -37,6 +37,7 @@ export class ConnectFourService {
     authReady,
     basePath: 'connect4/games',
     activeKey: ACTIVE_CODE_KEY,
+    playerId: () => this.playerId,
     normalize: (raw) => this.normalize(raw as C4Game),
     canResume: (g) => !!g.players[this.playerId] && g.status !== 'finished',
   });
@@ -49,6 +50,8 @@ export class ConnectFourService {
   readonly offline = this.channel.offline;
   /** Ein Zug ist unterwegs und dauert auffällig lange. */
   readonly pending = this.channel.pending;
+  /** Mitspieler, die nicht mehr verbunden sind. */
+  readonly absent = this.channel.awayPlayers;
 
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<C4Mode | null>(null);

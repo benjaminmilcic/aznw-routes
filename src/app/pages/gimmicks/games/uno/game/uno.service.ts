@@ -1,7 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { get, ref, remove, set, update } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
-import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
+import { ABSENT_GRACE_MS, GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { bestMove } from './uno.ai';
 import {
   applyDraw,
@@ -56,7 +56,6 @@ export { MAX_PLAYERS, MIN_PLAYERS } from './uno.types';
  */
 @Injectable({ providedIn: 'root' })
 export class UnoService {
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
   /**
    * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
    * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
@@ -69,6 +68,7 @@ export class UnoService {
     authReady,
     basePath: 'uno/games',
     activeKey: ACTIVE_CODE_KEY,
+    playerId: () => this.playerId,
     normalize: (raw) => this.normalize(raw as UnoGame),
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
@@ -98,6 +98,34 @@ export class UnoService {
     const ok = await this.channel.resume();
     if (ok) this.mode.set('online');
     return ok;
+  }
+
+  // ---- Abwesende Mitspieler ------------------------------------------------
+  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  readonly absent = this.channel.awayPlayers;
+
+  /**
+   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
+   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
+   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   */
+  readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
+    const g = this.game();
+    if (!g || g.status !== 'playing') return null;
+    if (g.currentTurn === this.playerId) return null;
+    const grace = ABSENT_GRACE_MS / 1000;
+    return this.absent().find((p) => p.id === g.currentTurn && p.seconds >= grace) ?? null;
+  });
+
+  /**
+   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
+   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   */
+  async skipAbsent(playerId: string): Promise<void> {
+    const g = this.game();
+    if (!g || this.mode() !== 'online' || !g.players[playerId]) return;
+    if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
+    await this.removeFromOnlineGame(g, playerId);
   }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<UnoMode | null>(null);
@@ -406,20 +434,20 @@ export class UnoService {
   leaveGame(): void {
     const g = this.game();
     if (this.mode() === 'online' && g?.players[this.playerId]) {
-      void this.removeSelfFromOnlineGame(g);
+      void this.removeFromOnlineGame(g, this.playerId);
     }
     this.reset();
   }
 
   /**
-   * Trägt diesen Spieler aus der Online-Runde aus: seine Karten wandern
+   * Trägt einen Spieler aus der Online-Runde aus: seine Karten wandern
    * zurück in den Nachziehstapel, ggf. ist der Nächste dran, notfalls
    * wechselt die Gastgeber-Rolle. Der letzte Aussteigende räumt das Spiel weg.
    */
-  private async removeSelfFromOnlineGame(g: UnoGame): Promise<void> {
+  private async removeFromOnlineGame(g: UnoGame, who: string): Promise<void> {
     const path = `uno/games/${g.code}`;
-    const remaining = g.order.filter((id) => id !== this.playerId);
-    const myName = g.players[this.playerId]?.name ?? 'Spieler';
+    const remaining = g.order.filter((id) => id !== who);
+    const leftName = g.players[who]?.name ?? 'Spieler';
 
     try {
       if (remaining.length === 0) {
@@ -434,10 +462,10 @@ export class UnoService {
         hands[id] = g.hands[id] ?? [];
       }
       // Die abgegebenen Karten kommen zurück unter den Nachziehstapel.
-      const drawPile = [...(g.hands[this.playerId] ?? []), ...g.drawPile];
+      const drawPile = [...(g.hands[who] ?? []), ...g.drawPile];
       const ranking = g.ranking.filter((id) => remaining.includes(id));
       const rest: UnoGame = { ...g, players, hands, drawPile, order: remaining, ranking };
-      const hostId = g.hostId === this.playerId ? remaining[0] : g.hostId;
+      const hostId = g.hostId === who ? remaining[0] : g.hostId;
 
       if (g.status === 'playing') {
         const decided = finishIfDecided(rest);
@@ -451,16 +479,17 @@ export class UnoService {
             status: 'finished',
             winnerId: decided.winnerId,
             ranking: decided.ranking,
-            lastLeft: { name: myName, at: Date.now() },
+            lastLeft: { name: leftName, at: Date.now() },
+            rev: (g.rev ?? 0) + 1,
             updatedAt: Date.now(),
           });
           return;
         }
       }
 
-      // War ich gerade dran, rückt der Nächste nach.
-      const wasMyTurn = g.currentTurn === this.playerId;
-      const currentTurn = wasMyTurn ? this.playerAfterMe(g.order, rest) : g.currentTurn;
+      // War der Ausgetragene gerade dran, rückt der Nächste nach.
+      const wasHisTurn = g.currentTurn === who;
+      const currentTurn = wasHisTurn ? this.playerAfter(who, g.order, rest) : g.currentTurn;
 
       await update(ref(db, path), {
         players,
@@ -470,7 +499,8 @@ export class UnoService {
         hostId,
         ranking,
         currentTurn,
-        lastLeft: { name: myName, at: Date.now() },
+        lastLeft: { name: leftName, at: Date.now() },
+        rev: (g.rev ?? 0) + 1,
         updatedAt: Date.now(),
       });
     } catch (e) {
@@ -479,11 +509,11 @@ export class UnoService {
   }
 
   /**
-   * Der nächste Spieler nach mir in der ursprünglichen Reihenfolge, der noch
+   * Der nächste Spieler nach `who` in der ursprünglichen Reihenfolge, der noch
    * dabei ist und noch Karten hat.
    */
-  private playerAfterMe(fullOrder: string[], rest: UnoGame): string {
-    const start = fullOrder.indexOf(this.playerId);
+  private playerAfter(who: string, fullOrder: string[], rest: UnoGame): string {
+    const start = fullOrder.indexOf(who);
     for (let step = 1; step <= fullOrder.length; step++) {
       const candidate = fullOrder[(start + step) % fullOrder.length];
       if (rest.order.includes(candidate) && !isDone(rest, candidate)) return candidate;

@@ -623,6 +623,9 @@
     },
     "games": {
       "sync": {
+        "away": "{{names}} trenutno nije povezan",
+        "blocking": "{{name}} nije povezan, a na redu je",
+        "skip": "Preskoči",
         "offline": "Nema veze – čekam mrežu …",
         "sending": "Šaljem tvoj potez …",
         "notSaved": "Tvoj potez nije spremljen. Provjeri vezu i pokušaj ponovno.",

@@ -1,7 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { get, ref, remove, set, update } from 'firebase/database';
 import { authReady, databaseConfigured, db } from '../../shared/firebase/firebase';
-import { GameChannel, withTimeout } from '../../shared/firebase/game-channel';
+import { ABSENT_GRACE_MS, GameChannel, withTimeout } from '../../shared/firebase/game-channel';
 import { bestMove } from './ludo.ai';
 import {
   applyMove,
@@ -63,7 +63,6 @@ const CPU_MOVE_DELAY = 750;
  */
 @Injectable({ providedIn: 'root' })
 export class LudoService {
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
   /**
    * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
    * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
@@ -76,6 +75,7 @@ export class LudoService {
     authReady,
     basePath: 'ludo/games',
     activeKey: ACTIVE_CODE_KEY,
+    playerId: () => this.playerId,
     normalize: (raw) => this.normalize(raw as LudoGame),
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
@@ -105,6 +105,34 @@ export class LudoService {
     const ok = await this.channel.resume();
     if (ok) this.mode.set('online');
     return ok;
+  }
+
+  // ---- Abwesende Mitspieler ------------------------------------------------
+  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  readonly absent = this.channel.awayPlayers;
+
+  /**
+   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
+   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
+   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   */
+  readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
+    const g = this.game();
+    if (!g || g.status !== 'playing') return null;
+    if (g.currentTurn === this.playerId) return null;
+    const grace = ABSENT_GRACE_MS / 1000;
+    return this.absent().find((p) => p.id === g.currentTurn && p.seconds >= grace) ?? null;
+  });
+
+  /**
+   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
+   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   */
+  async skipAbsent(playerId: string): Promise<void> {
+    const g = this.game();
+    if (!g || this.mode() !== 'online' || !g.players[playerId]) return;
+    if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
+    await this.removeFromOnlineGame(g, playerId);
   }
   /** Gewählte Spielart – null bedeutet: Startbildschirm. */
   readonly mode = signal<LudoMode | null>(null);
@@ -424,23 +452,27 @@ export class LudoService {
   leaveGame(): void {
     const g = this.game();
     if (this.mode() === 'online' && g?.players[this.playerId]) {
-      void this.removeSelfFromOnlineGame(g);
+      void this.removeFromOnlineGame(g, this.playerId);
     }
     this.reset();
   }
 
   /**
-   * Trägt diesen Spieler aus der Online-Runde aus: seine Figuren kommen vom
+   * Trägt einen Spieler aus der Online-Runde aus: seine Figuren kommen vom
    * Brett, ggf. ist der Nächste dran, notfalls wechselt die Gastgeber-Rolle.
    * Der letzte Aussteigende räumt das Spiel ganz weg.
    *
    * Die Sitzplätze der Verbleibenden bleiben, wie sie sind – sonst würden
    * ihre Figuren mitten im Spiel auf andere Felder springen.
+   *
+   * `who` ist normalerweise man selbst (Knopf „Spiel verlassen"), kann aber auch
+   * ein abwesender Mitspieler sein, den die Runde überspringt (siehe
+   * `skipAbsent`).
    */
-  private async removeSelfFromOnlineGame(g: LudoGame): Promise<void> {
+  private async removeFromOnlineGame(g: LudoGame, who: string): Promise<void> {
     const path = `ludo/games/${g.code}`;
-    const remaining = g.order.filter((id) => id !== this.playerId);
-    const myName = g.players[this.playerId]?.name ?? 'Spieler';
+    const remaining = g.order.filter((id) => id !== who);
+    const leftName = g.players[who]?.name ?? 'Spieler';
 
     try {
       if (remaining.length === 0) {
@@ -460,7 +492,7 @@ export class LudoService {
 
       const ranking = g.ranking.filter((id) => remaining.includes(id));
       const rest: LudoGame = { ...g, players, pieces, seats, order: remaining, ranking };
-      const hostId = g.hostId === this.playerId ? remaining[0] : g.hostId;
+      const hostId = g.hostId === who ? remaining[0] : g.hostId;
 
       // Bleibt nur noch einer unterwegs, sind die Plätze damit verteilt.
       if (g.status === 'playing') {
@@ -476,16 +508,17 @@ export class LudoService {
             winnerId: decided.winnerId,
             ranking: decided.ranking,
             dice: null,
-            lastLeft: { name: myName, at: Date.now() },
+            lastLeft: { name: leftName, at: Date.now() },
+            rev: (g.rev ?? 0) + 1,
             updatedAt: Date.now(),
           });
           return;
         }
       }
 
-      // War ich gerade dran, rückt der Nächste nach – mit frischem Würfel.
-      const wasMyTurn = g.currentTurn === this.playerId;
-      const next = wasMyTurn ? withTurn(rest, this.playerAfterMe(g.order, rest)) : rest;
+      // War der Ausgetragene gerade dran, rückt der Nächste nach – frischer Würfel.
+      const wasHisTurn = g.currentTurn === who;
+      const next = wasHisTurn ? withTurn(rest, this.playerAfter(who, g.order, rest)) : rest;
 
       await update(ref(db, path), {
         players,
@@ -497,7 +530,8 @@ export class LudoService {
         currentTurn: next.currentTurn,
         dice: next.dice,
         rollsLeft: next.rollsLeft,
-        lastLeft: { name: myName, at: Date.now() },
+        lastLeft: { name: leftName, at: Date.now() },
+        rev: (g.rev ?? 0) + 1,
         updatedAt: Date.now(),
       });
     } catch (e) {
@@ -506,11 +540,11 @@ export class LudoService {
   }
 
   /**
-   * Der nächste Spieler nach mir in der ursprünglichen Reihenfolge, der noch
+   * Der nächste Spieler nach `who` in der ursprünglichen Reihenfolge, der noch
    * dabei und noch nicht im Ziel ist.
    */
-  private playerAfterMe(fullOrder: string[], rest: LudoGame): string {
-    const start = fullOrder.indexOf(this.playerId);
+  private playerAfter(who: string, fullOrder: string[], rest: LudoGame): string {
+    const start = fullOrder.indexOf(who);
     for (let step = 1; step <= fullOrder.length; step++) {
       const candidate = fullOrder[(start + step) % fullOrder.length];
       if (rest.order.includes(candidate) && !isDone(rest, candidate)) return candidate;

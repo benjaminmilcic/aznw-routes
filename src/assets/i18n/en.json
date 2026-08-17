@@ -621,6 +621,9 @@
     },
     "games": {
       "sync": {
+        "away": "{{names}} is not connected right now",
+        "blocking": "{{name}} is disconnected and it is their turn",
+        "skip": "Skip",
         "offline": "No connection – waiting for the network …",
         "sending": "Sending your move …",
         "notSaved": "Your move was not saved. Check your connection and tap again.",
