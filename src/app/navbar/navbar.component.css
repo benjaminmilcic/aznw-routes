@@ -104,7 +104,16 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: all 0.3s var(--transition-smooth);
+  /* NUR opacity und transform animieren.
+     Mit "transition: all" laufen auch visibility und pointer-events mit: beim
+     Schließen springt pointer-events erst nach der halben Dauer auf "none" und
+     visibility erst ganz am Ende. Dieses Panel ist mehrere hundert Pixel hoch
+     und ragt weit ins Spielfeld – es hat danach noch ~300 ms lang Klicks
+     abgefangen, unsichtbar bis auf seinen großen Schatten. Wer die Maus auf dem
+     Weg zum Spiel über "Gimmicks" führte, musste deshalb zweimal klicken. */
+  transition:
+    opacity 0.3s var(--transition-smooth),
+    transform 0.3s var(--transition-smooth);
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
@@ -340,13 +349,20 @@
   -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   z-index: 1001;
-  transition: all 0.4s var(--transition-smooth);
+  /* Gleiche Falle wie beim Mega-Menü, nur schlimmer: dieses Element liegt mit
+     inset:0 über der GANZEN Seite. Mit "transition: all" blieb es nach dem
+     Schließen noch 0,4 s sichtbar und klickbar und hat jeden Klick geschluckt. */
+  transition:
+    opacity 0.4s var(--transition-smooth),
+    backdrop-filter 0.4s var(--transition-smooth);
 }
 
 .mobile-overlay.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
