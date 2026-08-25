@@ -263,6 +263,12 @@ section::before {
   padding: 16px;
   width: 35px;
   height: 35px;
+  /* Ohne das hier staucht der Flex-Container .circle (feste 100px Hoehe) den
+     Kreis vertikal, sobald Icon + Label darueber hinausgehen - er wird oval.
+     Betraf JavaScript und Tailwind: nur bei denen ist das Label nicht weit
+     genug negativ hochgezogen UND das Icon flach genug, dass die
+     automatische Mindesthoehe das Schrumpfen nicht schon verhindert. */
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   transition: all 0.25s;
