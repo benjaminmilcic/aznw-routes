@@ -1,56 +1,71 @@
+<ng-template #arrow>
+  <svg class="progress" viewBox="0 0 50 50" aria-hidden="true">
+    <circle class="progress-track" cx="25" cy="25" r="23" />
+    <circle
+      class="progress-value"
+      cx="25"
+      cy="25"
+      r="23"
+      [attr.stroke-dasharray]="progressCircumference"
+      [attr.stroke-dashoffset]="progressOffset"
+    />
+  </svg>
+  <i class="fas fa-angle-up"></i>
+</ng-template>
+
 <a
   *ngIf="currentRoute === '/'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute === '/gimmicks'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/gimmicks']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute === '/gimmicks/guestbook'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/gimmicks/guestbook']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute === '/gimmicks/map'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/gimmicks/map']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute === '/gimmicks/auth/login'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/gimmicks/auth/login']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute === '/gimmicks/auth/main'"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="['/gimmicks/auth/main']"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute && currentRoute.includes('/gimmicks/movies')"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="[currentRoute]"
   fragment="movies-scroll-container"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
   *ngIf="currentRoute && currentRoute.includes('/gimmicks/countries')"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="[currentRoute]"
   fragment="header"
-  ><i class="fas fa-angle-up"></i
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>

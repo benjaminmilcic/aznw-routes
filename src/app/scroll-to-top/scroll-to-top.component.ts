@@ -12,9 +12,24 @@ import { Subscription } from 'rxjs';
 })
 export class ScrollToTopComponent implements OnInit, OnDestroy {
   scrollToTopVisible = false;
+
+  /** Umfang des Fortschrittskreises (r=23 im 50x50-viewBox des Templates). */
+  readonly progressCircumference = 2 * Math.PI * 23;
+  /** 0 = ganz oben, 1 = ganz unten. */
+  scrollProgress = 0;
+
+  get progressOffset(): number {
+    return this.progressCircumference * (1 - this.scrollProgress);
+  }
+
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll(event: Event) {
-    this.scrollToTopVisible = document.documentElement.scrollTop > 100;
+  onWindowScroll(event?: Event) {
+    const el = document.documentElement;
+    const scrolled = el.scrollTop;
+    const scrollable = el.scrollHeight - el.clientHeight;
+    this.scrollToTopVisible = scrolled > 600;
+    this.scrollProgress =
+      scrollable > 0 ? Math.min(1, Math.max(0, scrolled / scrollable)) : 0;
   }
 
   currentRoute: string;
@@ -22,6 +37,7 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router) {}
   ngOnInit(): void {
+    this.onWindowScroll();
     this.routerEventsSub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = this.router.url.split('#')[0];

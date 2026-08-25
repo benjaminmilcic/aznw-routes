@@ -1,4 +1,4 @@
-a{
+a {
   position: fixed;
   right: 15px;
   bottom: 15px;
@@ -8,25 +8,66 @@ a{
   color: var(--color1);
   background: var(--color2);
   line-height: 50px;
-  border-radius: 0.25rem;
+  border-radius: 100%;
   opacity: 0;
   /* Unsichtbar heißt nicht harmlos: ohne das hier bleibt der Knopf ein
      klickbares 50x50-Feld unten rechts über JEDER Seite (z-index 999) – auf
      den Spieleseiten also über dem Brett bzw. dem rechten Rand der Uno-Hand.
      Dort scrollt nichts, er wird also nie sichtbar und schluckt trotzdem. */
+  transform: translateY(40px);
   pointer-events: none;
-  transition: opacity 0.5s ease-in;
+  /* Die Abdunklung im Ruhezustand laeuft ueber filter statt ueber opacity,
+     weil filter bewusst NICHT in der transition steht: so bleibt das Ein- und
+     Ausblenden weich (0.5s), der Hover schaltet aber in beide Richtungen
+     sofort um. Mit opacity ginge das nicht - die Hover-Regel teilt sich die
+     transition mit dem Einblenden. */
+  filter: opacity(0.7);
+  transition:
+    opacity 0.5s ease-in,
+    transform 0.5s ease-in;
   z-index: 999;
 }
- 
+
 a.visible:hover {
-  opacity: 1;
+  filter: none;
 }
 a i {
   font-weight: 800;
 }
 
-a.visible{
-  opacity: 0.8;
+a.visible {
+  opacity: 1;
+  transform: translateY(0px);
   pointer-events: auto;
+}
+
+/* Fortschrittsring: zeigt an, wie weit die Seite runtergescrollt ist.
+   Absolut im (fixed positionierten) a platziert, damit das Pfeil-Icon
+   weiterhin per line-height mittig sitzt. */
+a .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  /* Ohne die Drehung würde der Ring bei 3 Uhr statt oben beginnen. */
+  transform: rotate(-90deg);
+  pointer-events: none;
+  overflow: visible;
+}
+
+a .progress circle {
+  fill: none;
+  stroke-width: 3;
+}
+
+a .progress-track {
+  stroke: var(--color1);
+  opacity: 0.25;
+}
+
+a .progress-value {
+  stroke: var(--color1);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
 }
