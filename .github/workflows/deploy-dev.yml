@@ -117,6 +117,21 @@ jobs:
             "${{ steps.dist.outputs.dir }}/" \
             "$DEPLOY_USER@$DEPLOY_HOST:$TARGET_DIR"
 
+      # Cloudflare cached /assets/ praktisch unbegrenzt (s-maxage im vHost).
+      # Ohne diesen Schritt liefert die Kante nach einem Deploy weiter die
+      # alte Datei, sobald ein Bild unter gleichem Namen ersetzt wurde -
+      # Angular hasht nur Bundles, nicht den Inhalt von src/assets/.
+      - name: Cloudflare-Cache leeren
+        run: |
+          resp=$(curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$resp"
+          echo "$resp" | grep -q '"success":true' \
+            || { echo "Purge fehlgeschlagen - Kante liefert womoeglich alte Dateien"; exit 1; }      
+
       - name: Prüfen
         run: |
           code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
