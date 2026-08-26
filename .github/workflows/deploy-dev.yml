@@ -132,11 +132,31 @@ jobs:
           echo "$resp" | grep -q '"success":true' \
             || { echo "Purge fehlgeschlagen - Kante liefert womoeglich alte Dateien"; exit 1; }      
 
+      # Prueft, dass genau DIESER Build live ist - nicht nur "irgendein Angular".
+      # Der Bundle-Name traegt einen Content-Hash und aendert sich bei jeder
+      # Code-Aenderung; ein gruener Deploy heisst damit wirklich "draussen".
       - name: Prüfen
         run: |
-          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
-          echo "Startseite: HTTP $code"
-          [ "$code" = "200" ] || exit 1
-          curl -s --max-time 15 https://benjamin-milcic.dev/ | grep -qi '<app-root\|<script' \
-            && echo "Angular-Build ausgeliefert" \
-            || { echo "Inhalt sieht nicht nach Angular aus"; exit 1; }
+          bundle=$(grep -oE 'main\.[0-9a-f]+\.js' "${{ steps.dist.outputs.dir }}/index.html" | head -1)
+          [ -n "$bundle" ] || { echo "Kein main-Bundle im Build gefunden - Abbruch"; exit 1; }
+          echo "Erwartet wird: $bundle"
+
+          # Nach dem Purge braucht die Cloudflare-Kante ein paar Sekunden.
+          for i in $(seq 1 10); do
+            html=$(curl -sS --max-time 15 https://benjamin-milcic.dev/ || true)
+            if printf '%s' "$html" | grep -q "$bundle"; then
+              echo "Versuch $i: index.html referenziert $bundle"
+              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "https://benjamin-milcic.dev/$bundle")
+              [ "$code" = "200" ] || { echo "Bundle selbst nicht abrufbar: HTTP $code"; exit 1; }
+              echo "Bundle abrufbar: HTTP 200"
+              echo "Deploy verifiziert - der neue Build ist live."
+              exit 0
+            fi
+            echo "Versuch $i: noch der alte Stand, warte 6s"
+            sleep 6
+          done
+
+          echo "FEHLER: index.html referenziert $bundle auch nach 10 Versuchen nicht."
+          echo "Ausgeliefert wird stattdessen:"
+          printf '%s' "$html" | grep -oE 'main\.[0-9a-f]+\.js' | sort -u | sed 's/^/  /'
+          exit 1
