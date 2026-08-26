@@ -121,16 +121,35 @@ hr {
   color: #64748b;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  margin-top: 18px;
+  text-align: center;
+  /* Zeilenfluss statt Flex: nur so kann ein <br> den Umbruch erzwingen. */
+  line-height: 2.1;
+}
+
+/* Ein Eintrag bleibt immer zusammen, umbrochen wird nur zwischen Eintraegen. */
+.footer-meta .meta-item {
+  white-space: nowrap;
 }
 
 .footer-meta .sep {
   color: #334155;
+}
+
+/*
+ * Umbricht die Zeile zwischen zwei Eintraegen, setzt die Komponente
+ * .is-break: der Punkt entfaellt, das <br> uebernimmt den Umbruch.
+ */
+.footer-meta .meta-break {
+  display: none;
+}
+
+.footer-meta .meta-gap.is-break .sep {
+  display: none;
+}
+
+.footer-meta .meta-gap.is-break .meta-break {
+  display: inline;
 }
 
 .meta-link {

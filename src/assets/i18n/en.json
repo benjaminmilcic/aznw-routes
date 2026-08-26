@@ -107,7 +107,9 @@
     "croatia": "Croatia",
     "sourceCode": "Source of this page",
     "builtWith": "Built with",
-    "hostedOn": "Hosted on"
+    "hostedOn": "Hosted on",
+    "domainFrom": "Domain from",
+    "and": "and"
   },
   "sidebar": {
     "home": "Home",

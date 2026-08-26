@@ -109,7 +109,9 @@
     "croatia": "Hrvatska",
     "sourceCode": "Izvorni kod ove stranice",
     "builtWith": "Napravljeno s",
-    "hostedOn": "Hostirano na"
+    "hostedOn": "Hostirano na",
+    "domainFrom": "Domena od",
+    "and": "i"
   },
   "sidebar": {
     "home": "Početna",

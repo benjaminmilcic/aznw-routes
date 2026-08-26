@@ -17,19 +17,21 @@
     {{ "footer.sourceCode" | translate }}
   </a>
 
-  <hr />
-
-  <div class="copyright">© Benjamin Milčić · {{currentYear()}}</div>
-
-  <div class="meta-wrapper">
-    <div class="footer-meta">
-      <span>{{ "footer.builtWith" | translate }} <a href="https://angular.dev" target="_blank"
-          class="meta-link">Angular</a></span>
-      <span class="sep">·</span>
-      <span>{{ "footer.hostedOn" | translate }} <a href="https://www.strato.de" target="_blank"
-          class="meta-link">Strato</a></span>
-      <span class="sep">·</span>
-      <span>v3.0</span>
+  <div class="meta-wrapper" #metaWrapper>
+    <div class="footer-meta" #meta>
+      <span class="meta-item">{{ "footer.builtWith" | translate }} <a href="https://angular.dev" target="_blank"
+          class="meta-link">Angular</a> {{ "footer.and" | translate }} <a href="https://nestjs.com/" target="_blank"
+          class="meta-link">NestJS</a></span><span
+        class="meta-gap"><span class="sep"> · </span><br class="meta-break" /></span><span
+        class="meta-item">{{ "footer.hostedOn" | translate }} <a href="https://www.strato.de" target="_blank"
+          class="meta-link">Strato</a></span><span
+        class="meta-gap"><span class="sep"> · </span><br class="meta-break" /></span><span
+        class="meta-item">{{ "footer.domainFrom" | translate }} <a href="https://www.cloudflare.com/" target="_blank"
+          class="meta-link">Cloudflare</a></span><span
+        class="meta-gap"><span class="sep"> · </span><br class="meta-break" /></span><span
+        class="meta-item">v3.0</span>
     </div>
   </div>
+
+  <div class="copyright">© Benjamin Milčić · {{currentYear()}}</div>
 </footer>
