@@ -1741,5 +1741,40 @@
       "recipes": "Recipes",
       "movies": "Movies"
     }
+  },
+  "seo": {
+    "titleSuffix": "Benjamin Milčić",
+    "description": {
+      "home": "Portfolio of Benjamin Milčić, full stack web developer. Angular, NestJS and Ionic – projects, background and contact.",
+      "gimmicks": "A playground of interactive demos: maps, weather, charts, recipes, movies and 17 browser games.",
+      "map": "Interactive Google Maps demo: search for places, place markers by drag and drop and manage them in a table.",
+      "calendar": "Appointment calendar for creating, editing and printing appointments, with month and week views.",
+      "guestbook": "Guestbook for leaving messages including image upload. Entries are stored through a NestJS API.",
+      "charts": "Charts built with Chart.js: bars, lines and pies that update live as you change the input fields.",
+      "weather": "Weather forecast for any place: temperature, rain and climate charts from OpenMeteo, optionally by geolocation.",
+      "imagegen": "Generate images from text descriptions – an AI image generator built on Cloudflare Workers AI.",
+      "countries": "World map with country data: capital, population, languages, currencies and flag for every country.",
+      "recipesList": "Recipe collection with photos, ingredient lists and automatic translation. Recipes can be printed.",
+      "moviesPopular": "Currently popular movies with posters, ratings and plot summaries – data from The Movie Database.",
+      "moviesTopRated": "The highest rated movies of all time, with posters, scores and plot summaries.",
+      "moviesNowPlaying": "Movies currently showing in cinemas, with posters, ratings and plot summaries.",
+      "gamesConnectFour": "Connect Four in the browser – against the computer or two players on one device.",
+      "gamesTiktaktoe": "Tic-tac-toe in the browser: three in a row, against the computer or two players.",
+      "gamesBackgammon": "Backgammon with dice, hitting and bearing off – against the computer or two players.",
+      "gamesDame": "Draughts with classic rules, including forced captures and promotion to king.",
+      "gamesMill": "Nine men’s morris with placing, moving and flying phases – against the computer or two players.",
+      "gamesSchach": "Chess in the browser with all move rules, castling, en passant and pawn promotion.",
+      "gamesMemoQuiz": "Memory as a quiz: turn over matching pairs and answer questions along the way.",
+      "gamesJigsaw": "Jigsaw puzzle with your own images: choose the number of pieces and the shape of the cuts.",
+      "gamesKnowledgeQuiz": "Knowledge quiz with questions from various fields and a summary at the end.",
+      "gamesMoorhuhn": "A Moorhuhn remake: shoot as many chickens as you can before time runs out, with a high score list.",
+      "gamesYahtzee": "Yahtzee for several players, locally or over the network, with a complete score sheet.",
+      "gamesMinesweeper": "Minesweeper in three difficulty levels – uncover the fields without hitting a mine.",
+      "gamesFlagQuiz": "Flag quiz: match flags from all over the world to the right countries.",
+      "gamesShips": "Battleship against the computer or against another player over the network.",
+      "gamesLudo": "Ludo for up to four players, locally or over the network.",
+      "gamesUno": "Uno with action cards and colour picking – against the computer or against other players.",
+      "gamesTriviaQuiz": "Quiz game with spoken questions, several difficulty levels and scoring."
+    }
   }
 }

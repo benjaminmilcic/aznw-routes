@@ -13,7 +13,7 @@ import { filter, Subscription, take } from 'rxjs';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.service';
 import { AuthService } from './pages/gimmicks/auth/auth.service';
-import { Meta, Title } from '@angular/platform-browser';
+import { SeoService } from './seo/seo.service';
 import { AnalyticsService } from './services/analytics.service';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -46,8 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private chartsHelperService: ChartsHelperService,
     private authService: AuthService,
-    private meta: Meta,
-    private title: Title,
+    private seoService: SeoService,
     private analyticsService: AnalyticsService,
     private router: Router,
     private mapService: MapService,
@@ -91,12 +90,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.reloadGoogleMapsScript(lang);
       }
     });
-    this.title.setTitle('Benjamin Milčić - Full Stack Web Developer');
-    this.meta.updateTag({
-      name: 'description',
-      content:
-        'Passionate developer with a focus on modern web technologies. I transform ideas into elegant, functional solutions. Core competencies: Angular, Ionic and NestJS',
-    });
+    // Setzt Titel, Beschreibung und Canonical je Route und bei Sprachwechsel.
+    this.seoService.init();
     this.authService.autoLogin();
 
     // Analytics-Tracking beim App-Start initialisieren

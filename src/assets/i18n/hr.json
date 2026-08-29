@@ -1743,5 +1743,40 @@
       "recipes": "Recepti",
       "movies": "Filmovi"
     }
+  },
+  "seo": {
+    "titleSuffix": "Benjamin Milčić",
+    "description": {
+      "home": "Portfelj Benjamina Milčića, full stack web programera. Angular, NestJS i Ionic – projekti, životopis i kontakt.",
+      "gimmicks": "Igralište s interaktivnim primjerima: karte, vrijeme, grafikoni, recepti, filmovi i 17 igara u pregledniku.",
+      "map": "Interaktivna karta s Google Maps: pretraživanje mjesta, postavljanje oznaka povlačenjem i tablica sa svim oznakama.",
+      "calendar": "Kalendar za unos, uređivanje i ispis termina, s mjesečnim i tjednim prikazom.",
+      "guestbook": "Knjiga gostiju za ostavljanje poruka uz mogućnost slanja slike. Unosi se spremaju preko NestJS API-ja.",
+      "charts": "Grafikoni izrađeni s Chart.js: stupci, linije i krugovi koji se mijenjaju uživo preko polja za unos.",
+      "weather": "Vremenska prognoza za bilo koje mjesto: temperatura, kiša i klimatski grafikoni iz OpenMeteo, po želji preko lokacije.",
+      "imagegen": "Stvaranje slika iz tekstualnog opisa – generator slika umjetnom inteligencijom na Cloudflare Workers AI.",
+      "countries": "Karta svijeta s podacima o državama: glavni grad, broj stanovnika, jezici, valute i zastava.",
+      "recipesList": "Zbirka recepata sa slikama, popisom sastojaka i automatskim prijevodom. Recepti se mogu ispisati.",
+      "moviesPopular": "Trenutno popularni filmovi s plakatima, ocjenama i opisom radnje – podaci s The Movie Database.",
+      "moviesTopRated": "Najbolje ocijenjeni filmovi svih vremena, s plakatima, ocjenama i opisom radnje.",
+      "moviesNowPlaying": "Filmovi koji se trenutno prikazuju u kinima, s plakatima, ocjenama i opisom radnje.",
+      "gamesConnectFour": "Četiri u nizu u pregledniku – protiv računala ili udvoje na istom uređaju.",
+      "gamesTiktaktoe": "Križić-kružić u pregledniku: tri u nizu, protiv računala ili udvoje.",
+      "gamesBackgammon": "Backgammon s kockicama, izbacivanjem i skidanjem figura – protiv računala ili udvoje.",
+      "gamesDame": "Dama po klasičnim pravilima, uključujući obavezno uzimanje i pretvaranje u damu.",
+      "gamesMill": "Mlin s fazama postavljanja, pomicanja i skakanja – protiv računala ili udvoje.",
+      "gamesSchach": "Šah u pregledniku sa svim pravilima poteza, rokadom, en passantom i promocijom pješaka.",
+      "gamesMemoQuiz": "Memory kao kviz: okrenite parove karata i usput odgovarajte na pitanja.",
+      "gamesJigsaw": "Slagalica s vlastitim slikama: broj dijelova i oblik rezova slobodno se biraju.",
+      "gamesKnowledgeQuiz": "Kviz znanja s pitanjima iz raznih područja i ocjenom na kraju.",
+      "gamesMoorhuhn": "Obrada igre Moorhuhn: gađajte koke dok teče vrijeme, s ljestvicom najboljih.",
+      "gamesYahtzee": "Jamb za više igrača, lokalno ili preko mreže, s potpunim blokom za bodovanje.",
+      "gamesMinesweeper": "Minolovac u tri težine – otkrivajte polja i izbjegnite mine.",
+      "gamesFlagQuiz": "Kviz zastava: povežite zastave iz cijelog svijeta s pravim državama.",
+      "gamesShips": "Potapanje brodova protiv računala ili protiv suigrača preko mreže.",
+      "gamesLudo": "Čovječe ne ljuti se za najviše četiri igrača, lokalno ili preko mreže.",
+      "gamesUno": "Uno s akcijskim kartama i biranjem boje – protiv računala ili protiv suigrača.",
+      "gamesTriviaQuiz": "Kviz s izgovorenim pitanjima, više težina i bodovanjem."
+    }
   }
 }

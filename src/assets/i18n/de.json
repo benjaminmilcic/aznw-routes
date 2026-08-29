@@ -1741,5 +1741,40 @@
       "recipes": "Rezepte",
       "movies": "Filme"
     }
+  },
+  "seo": {
+    "titleSuffix": "Benjamin Milčić",
+    "description": {
+      "home": "Portfolio von Benjamin Milčić, Full Stack Web Developer. Angular, NestJS und Ionic – Projekte, Werdegang und Kontakt.",
+      "gimmicks": "Spielwiese mit interaktiven Demos: Karten, Wetter, Diagramme, Rezepte, Filme und 17 Browserspiele.",
+      "map": "Interaktive Karte mit Google Maps: Orte suchen, Marker per Drag and Drop setzen und in einer Tabelle verwalten.",
+      "calendar": "Terminkalender zum Anlegen, Bearbeiten und Ausdrucken von Terminen – mit Monats- und Wochenansicht.",
+      "guestbook": "Gästebuch zum Hinterlassen von Nachrichten samt Bild-Upload. Die Einträge liegen in einer NestJS-API.",
+      "charts": "Diagramme mit Chart.js: Balken, Linien und Kreise, die sich live über Eingabefelder verändern lassen.",
+      "weather": "Wettervorhersage für jeden Ort: Temperatur, Regen und Klimadiagramme aus OpenMeteo, wahlweise per Standortabfrage.",
+      "imagegen": "Bilder aus Textbeschreibungen erzeugen – ein KI-Bildgenerator auf Basis von Cloudflare Workers AI.",
+      "countries": "Weltkarte mit Länderdaten: Hauptstadt, Einwohnerzahl, Sprachen, Währungen und Flagge zu jedem Land.",
+      "recipesList": "Rezeptsammlung mit Bildern, Zutatenlisten und automatischer Übersetzung. Rezepte lassen sich drucken.",
+      "moviesPopular": "Aktuell beliebte Filme mit Poster, Bewertung und Beschreibung – Daten von The Movie Database.",
+      "moviesTopRated": "Die am besten bewerteten Filme aller Zeiten mit Poster, Wertung und Handlung.",
+      "moviesNowPlaying": "Filme, die gerade im Kino laufen, mit Poster, Bewertung und Inhaltsangabe.",
+      "gamesConnectFour": "Vier gewinnt im Browser – gegen den Computer oder zu zweit an einem Gerät.",
+      "gamesTiktaktoe": "Tic-Tac-Toe im Browser: drei in einer Reihe, gegen den Computer oder zu zweit.",
+      "gamesBackgammon": "Backgammon mit Würfeln, Schlagen und Auswürfeln – gegen den Computer oder zu zweit.",
+      "gamesDame": "Dame nach klassischen Regeln, inklusive Schlagzwang und Umwandlung zur Dame.",
+      "gamesMill": "Mühle mit Setz-, Zieh- und Sprungphase – gegen den Computer oder zu zweit.",
+      "gamesSchach": "Schach im Browser mit allen Zugregeln, Rochade, En passant und Bauernumwandlung.",
+      "gamesMemoQuiz": "Memory als Quiz: Kartenpaare aufdecken und dabei Fragen beantworten.",
+      "gamesJigsaw": "Puzzle mit eigenen Bildern: Teilezahl und Form der Teile lassen sich frei einstellen.",
+      "gamesKnowledgeQuiz": "Wissensquiz mit Fragen aus verschiedenen Gebieten und Auswertung am Ende.",
+      "gamesMoorhuhn": "Moorhuhn-Nachbau: Hühner abschießen, solange die Zeit läuft, mit Bestenliste.",
+      "gamesYahtzee": "Kniffel für mehrere Spieler, lokal oder über das Netz, mit vollständigem Spielblock.",
+      "gamesMinesweeper": "Minesweeper in drei Schwierigkeitsgraden – Felder aufdecken, ohne eine Mine zu treffen.",
+      "gamesFlagQuiz": "Flaggenquiz: Flaggen aus aller Welt den richtigen Ländern zuordnen.",
+      "gamesShips": "Schiffe versenken gegen den Computer oder gegen einen Mitspieler über das Netz.",
+      "gamesLudo": "Mensch ärgere dich nicht für bis zu vier Spieler, lokal oder über das Netz.",
+      "gamesUno": "Uno mit Aktionskarten und Farbwahl – gegen den Computer oder gegen Mitspieler.",
+      "gamesTriviaQuiz": "Quizspiel mit vorgelesenen Fragen, mehreren Schwierigkeitsgraden und Punktewertung."
+    }
   }
 }
