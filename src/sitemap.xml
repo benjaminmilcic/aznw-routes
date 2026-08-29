@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Nur statische, oeffentlich erreichbare Routen aus src/app/app.routes.ts.
+
+  Bewusst NICHT enthalten:
+  - Parameter-Routen (recipe/:id, movie/:id, actor/:id, country/:code, ...),
+    weil die Inhalte aus externen APIs bzw. der Datenbank kommen
+  - alles unter /gimmicks/auth und /gimmicks/telegram (Guards bzw. Login)
+  - /gimmicks/recipes/add und /update/:id (Bearbeiten)
+  - /gimmicks/movies/search (reine Suchmaske ohne eigenen Inhalt)
+  - /404, die Wildcard-Route und die Print-Outlets
+  - Redirect-Pfade wie /gimmicks/games; stattdessen steht das Ziel drin
+
+  ACHTUNG beim Erweitern: unbekannte Pfade liefern HTTP 200 mit der
+  PageNotFoundComponent (Soft-404). Ein Tippfehler faellt hier also NICHT
+  ueber den Statuscode auf - neue Eintraege am gerenderten Inhalt pruefen.
+
+  Kein lastmod/changefreq/priority: changefreq und priority wertet Google
+  nicht aus, und ein lastmod, das niemand pflegt, ist schlechter als keins.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://benjamin-milcic.dev/</loc></url>
+
+  <url><loc>https://benjamin-milcic.dev/gimmicks</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/map</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/calendar</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/guestbook</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/charts</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/weather</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/imagegen</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/countries</loc></url>
+
+  <url><loc>https://benjamin-milcic.dev/gimmicks/recipes/list</loc></url>
+
+  <url><loc>https://benjamin-milcic.dev/gimmicks/movies/popular</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/movies/top-rated</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/movies/now-playing</loc></url>
+
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/connect-four</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/tiktaktoe</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/backgammon</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/dame</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/mill</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/schach</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/memo-quiz</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/jigsaw</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/knowledge-quiz</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/moorhuhn</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/yahtzee</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/minesweeper</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/flag-quiz</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/ships</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/ludo</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/uno</loc></url>
+  <url><loc>https://benjamin-milcic.dev/gimmicks/games/trivia-quiz</loc></url>
+</urlset>
