@@ -513,15 +513,26 @@ h1 em {
 
 .marquee-track {
   display: flex;
-  gap: 48px;
   align-items: center;
-  animation: marqueeScroll 28s linear infinite;
+  width: max-content;
+  animation: marqueeScroll 90s linear infinite;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 13px;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   white-space: nowrap;
+}
+
+/* Jede Kopie ist eine eigene Gruppe. Der Abstand zur naechsten Kopie steckt im
+   padding-right, damit alle 5 Gruppen exakt gleich breit sind (= je 20 % des
+   Tracks) und der Ruecksprung bei -80 % nahtlos ist. */
+.marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 48px;
+  align-items: center;
+  padding-right: 48px;
 }
 
 .marquee-track .dot {
@@ -533,13 +544,13 @@ h1 em {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-80%);
   }
 }
 
 @media (max-width: 768px) {
   .marquee-track {
-    animation-duration: 14s;
+    animation-duration: 72s;
   }
 }
 
