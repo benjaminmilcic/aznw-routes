@@ -24,8 +24,8 @@
     "passion": "Leidenschaft",
     "specialized": "Spezialisiert auf moderne Web-Technologien",
     "mainCompetencies": "Hauptkompetenzen",
-    "h3": "Vom ersten Wireframe bis zur fertigen <em>App</em>",
-    "sectionH": "Spezialisiert auf <em>moderne Web- und App-Entwicklung</em><br/>mit Fokus auf Performance.",
+    "h3": "Von der Idee bis zur fertigen <em>App</em>",
+    "sectionH": "Moderne <em>Web- und App-Entwicklung</em>",
     "spec": "Spezialisiert auf moderne Web- und App-Entwicklung mit Fokus auf Performance.",
     "p1": "Über zehn Jahre Erfahrung in der Softwareentwicklung haben mich eines gelehrt: <strong>Code ist nur die halbe Miete</strong>. Es geht darum, Probleme zu verstehen, Anforderungen zu hinterfragen, und Lösungen zu liefern, die auch in zwei Jahren noch wartbar sind.",
     "p2": "Aktuell arbeite ich an Frontends mit <strong>Angular und Ionic</strong> sowie an Backends mit <strong>NestJS</strong> — vom internen Dashboard bis zur produktiven Mobile App mit tausenden Nutzern.",
@@ -33,8 +33,8 @@
   },
   "skills": {
     "headline": "Programmiersprachen & Werkzeuge",
-    "workplace": "Mein Arbeitsplatz im Home-Office",
-    "sectionH": "Werkzeuge, die ich <em>täglich</em> verwende",
+    "workplace": "Mein Arbeitsplatz",
+    "sectionH": "Meine <em>Werkzeuge</em>",
     "viewPortfolio": "Portfolio ansehen"
   },
   "portfolio": {
