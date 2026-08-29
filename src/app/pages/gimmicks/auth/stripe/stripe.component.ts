@@ -32,7 +32,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, map, take, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IonSpinner } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { environment } from '../../../../../environments/environment';
 import { HttpErrorService } from '../../../http-error/http-error.service';
@@ -117,6 +117,7 @@ export class StripeComponent implements OnInit {
     private http: HttpClient,
     private translate: TranslateService,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private httpErrorService: HttpErrorService,
   ) {}
@@ -134,13 +135,16 @@ export class StripeComponent implements OnInit {
   // }
 
   async ngOnInit() {
-    const url = window.location.toString();
-    let clientSecret;
-    if (url.includes('?payment_intent')) {
-      let queryParams = url.split('?');
-      let params = queryParams[2].split('&');
-      let language = queryParams[1].split('=').pop();
-      this.translate.use(language);
+    // Stripe haengt seine Parameter an die return_url an. Bei Pfad-Routing
+    // sind das gewoehnliche Query-Parameter der aktuellen Route.
+    const queryParams = this.route.snapshot.queryParamMap;
+    const clientSecret = queryParams.get('payment_intent_client_secret');
+
+    if (clientSecret) {
+      const language = queryParams.get('lang');
+      if (language) {
+        this.translate.use(language);
+      }
 
       let isNotAuthenticated = await lastValueFrom(
         this.authService.authUser.pipe(
@@ -156,11 +160,6 @@ export class StripeComponent implements OnInit {
       } else {
         this.router.navigate(['/gimmicks/auth/main']);
       }
-
-      clientSecret = params
-        .filter((param) => param.includes('payment_intent_client_secret'))[0]
-        .split('=')
-        .pop();
 
       const { paymentIntent, error } = await lastValueFrom(
         this.stripe.retrievePaymentIntent(clientSecret),
@@ -285,9 +284,8 @@ export class StripeComponent implements OnInit {
           },
           return_url:
             environment.stripe.returnUrl +
-            '/#/gimmicks/auth/login?lang=' +
-            this.translate.currentLang +
-            '&',
+            '/gimmicks/auth/login?lang=' +
+            this.translate.currentLang,
         },
         redirect: 'if_required',
       })

@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IonContent, IonPopover } from '@ionic/angular/standalone';
 import { HttpErrorService } from '../../../http-error/http-error.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -44,6 +45,7 @@ export class AuthMainComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService,
     private httpErrorService: HttpErrorService,
+    private route: ActivatedRoute,
   ) {}
   async ngOnInit() {
     //old firebase solution, when authentication works via firebase
@@ -82,8 +84,7 @@ export class AuthMainComponent implements OnInit {
         this.httpErrorService.showHttpError(error, 'AuthMainComponent');
       }
     }
-    const url = window.location.toString();
-    if (url.includes('?from=googleLogin')) {
+    if (this.route.snapshot.queryParamMap.get('from') === 'googleLogin') {
       const element = document.getElementById('jokes-box');
       if (element) {
         setTimeout(() => {

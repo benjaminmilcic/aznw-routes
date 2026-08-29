@@ -18,6 +18,35 @@ The backend that is used by this website can be viewed here: [Backend repository
 
 If you have any hints or questions feel free to write me an email to [benjamin.milcic@gmail.com](mailto:benjamin.milcic@gmail.com).
 
+## Serverkonfiguration (benjamin-milcic.dev)
+
+Die App nutzt Pfad-Routing (kein `/#/` mehr). Jede Unterseite haengt damit am
+SPA-Fallback des Webservers: Pfade ohne Dateiendung, die keiner echten Datei
+entsprechen, muessen `index.html` ausliefern.
+
+**Diese Einstellungen leben ausschliesslich im Apache-vHost**
+(`/etc/apache2/sites-available/benjamin-milcic.dev.conf`), nicht im Repo:
+
+- der SPA-Fallback (`RewriteRule ^ /index.html`),
+- die Cache-Header (`no-store` fuer `index.html`, `immutable` nur fuer
+  gehashte Bundles `\.[0-9a-fA-F]{8,}\.(js|css|mjs)$`).
+
+Eine `.htaccess` im Build-Output waere wirkungslos, weil der `<Directory>`-Block
+des vHosts `AllowOverride None` setzt. Frueher lag hier eine — sie wurde nie
+gelesen und hat bei der Fehlersuche in die Irre gefuehrt.
+
+Nicht gehashte Dateien unter `src/assets/` (z. B.
+`assets/iframe-content/script.js`) duerfen **kein** `immutable` bekommen: sie
+werden beim Deploy unter gleichem Namen ueberschrieben.
+
+Pruefen, ob der Fallback steht - muss `200` liefern:
+
+```
+curl -o /dev/null -w '%{http_code}\n' https://benjamin-milcic.dev/gimmicks/map
+```
+
+Der Deploy-Workflow testet das seit der Umstellung selbst mit.
+
 <p align="center">
   <a href="https://angular.dev/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Angular_gradient_logo.png/960px-Angular_gradient_logo.png" width="120" alt="Angular Logo" /></a>
 </p>

@@ -3,7 +3,6 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router,
-  ActivatedRoute,
 } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,8 +14,7 @@ import { AuthService } from './auth.service';
 export class AuthLoginGuard implements CanActivate {
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {}
 
   canActivate(
@@ -30,16 +28,15 @@ export class AuthLoginGuard implements CanActivate {
       }),
       tap((isNotAuth) => {
         if (!isNotAuth) {
-          let href = window.location.href;
-
-          if (href.includes('?')) {
-            let params = href.split('?');
-            let lang = params[2].slice(0, -1);
-
-            this.router.navigateByUrl('/gimmicks/auth/main?' + lang);
-          } else {
-            this.router.navigate(['/gimmicks/auth/main']);
-          }
+          // Query-Parameter muessen die Umleitung ueberleben: Nach einer
+          // Stripe-Zahlung fuehrt die return_url hierher und traegt ?lang=..
+          // sowie payment_intent_client_secret. Die StripeComponent haengt
+          // an der Eltern-Route und wird erst NACH dieser Umleitung erzeugt -
+          // ohne Weitergabe stuende sie ohne Zahlungsdaten da.
+          // (Frueher uebernahm das die ParameterHashLocationStrategy.)
+          this.router.navigate(['/gimmicks/auth/main'], {
+            queryParams: route.queryParams,
+          });
         }
       })
     );

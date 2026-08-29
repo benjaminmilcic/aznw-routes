@@ -124,7 +124,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // Extract route path (before any fragment)
         const routePath = url.split('#')[0] || '/';
-        // Extract fragment from URL (handles hash routing with fragments like /#/#portfolio)
+        // Extract fragment from URL (e.g. /#portfolio)
         const fragmentMatch = url.match(/#([^#]+)$/);
         const fragment = fragmentMatch ? fragmentMatch[1] : null;
 

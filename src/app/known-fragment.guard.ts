@@ -15,8 +15,7 @@ export const HOME_FRAGMENTS = [
 ];
 
 /**
- * Beim Hash-Routing wird ein zweites "#" als Fragment gelesen:
- * /#/#irgendwas landet auf der Startseite mit dem Fragment "irgendwas".
+ * /#irgendwas landet auf der Startseite mit dem Fragment "irgendwas".
  * Zeigt das Fragment auf keine existierende Sektion, ist die Adresse
  * genauso ungueltig wie ein unbekannter Pfad -> 404.
  */

@@ -17,8 +17,6 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import { environment } from '../environments/environment';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideNgxStripe } from 'ngx-stripe';
-import { LocationStrategy } from '@angular/common';
-import { ParameterHashLocationStrategy } from './ParameterHashLocationStrategy';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { provideStore } from '@ngrx/store';
 import { recipeReducer } from './pages/gimmicks/recipes/store/reducers/recipe.reducer';
@@ -51,7 +49,6 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'disabled',
         scrollOffset: [0, 70],
-        useHash: true,
       })
     ),
     importProvidersFrom(
@@ -85,10 +82,6 @@ export const appConfig: ApplicationConfig = {
     //   multi: true,
     // },
     provideNgxStripe(environment.stripePublishableKey),
-    {
-      provide: LocationStrategy,
-      useClass: ParameterHashLocationStrategy,
-    },
     importProvidersFrom(NgCircleProgressModule.forRoot({})),
     provideStore({
       recipes: recipeReducer,

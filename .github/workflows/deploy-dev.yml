@@ -154,7 +154,12 @@ jobs:
             if printf '%s' "$live" | grep -q "\"sha\":\"$GITHUB_SHA\""; then
               code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
               [ "$code" = "200" ] || { echo "Startseite antwortet mit HTTP $code"; exit 1; }
-              echo "Deploy verifiziert - Commit $GITHUB_SHA ist live, Startseite HTTP 200."
+              # Seit der Umstellung auf Pfad-Routing haengt jede Unterseite am
+              # SPA-Fallback des Apache. Faellt der aus, ist nur die Startseite
+              # erreichbar - das wuerde die Pruefung oben nicht bemerken.
+              deep=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/gimmicks/map)
+              [ "$deep" = "200" ] || { echo "Deeplink /gimmicks/map antwortet mit HTTP $deep - SPA-Fallback fehlt (FallbackResource/AllowOverride im Apache pruefen)"; exit 1; }
+              echo "Deploy verifiziert - Commit $GITHUB_SHA ist live, Startseite und Deeplink HTTP 200."
               exit 0
             fi
             sleep 6
