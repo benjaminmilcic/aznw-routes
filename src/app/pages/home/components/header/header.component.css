@@ -515,7 +515,7 @@ h1 em {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: marqueeScroll 90s linear infinite;
+  animation: marqueeScroll 110s linear infinite;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 13px;
   color: #94a3b8;
@@ -550,7 +550,7 @@ h1 em {
 
 @media (max-width: 768px) {
   .marquee-track {
-    animation-duration: 72s;
+    animation-duration: 88s;
   }
 }
 
