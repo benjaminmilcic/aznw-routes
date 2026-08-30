@@ -28,7 +28,7 @@
       }
     </div>
 
-    <div class="turn" [class.turn--mine]="g.currentTurn === svc.me()?.id">
+    <div class="turn" data-cy="c4-turn" [class.turn--mine]="g.currentTurn === svc.me()?.id">
       @if (svc.thinking()) {
       {{ "gimmicks.games.connectFourGame.thinking" | translate }}
       } @else if (g.currentTurn === svc.me()?.id) {
@@ -46,7 +46,7 @@
       }
     </div>
 
-    <button type="button" class="end-game" (click)="leave()">
+    <button type="button" class="end-game" data-cy="c4-end-game" (click)="leave()">
       {{ "gimmicks.games.connectFourGame.endGame" | translate }}
     </button>
   </header>
@@ -58,6 +58,7 @@
       <button
         type="button"
         class="column"
+        [attr.data-cy]="'c4-column-' + c"
         [disabled]="!canDrop(c)"
         (click)="drop(c)"
         [attr.aria-label]="'Spalte ' + (c + 1)"

@@ -25,6 +25,7 @@
             [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
             class="tab-item px-6 py-[10px] cursor-pointer transition-colors duration-300 whitespace-nowrap"
             [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 0 }"
+            data-cy="movies-tab-popular"
             (click)="onTabChange(0)"
           >
             {{ "gimmicks.movies.tabs.popular" | translate }}
@@ -35,6 +36,7 @@
             [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
             class="tab-item px-6 py-[10px] cursor-pointer transition-colors duration-300 whitespace-nowrap"
             [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 1 }"
+            data-cy="movies-tab-top-rated"
             (click)="onTabChange(1)"
           >
             {{ "gimmicks.movies.tabs.topRated" | translate }}
@@ -45,6 +47,7 @@
             [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
             class="tab-item px-6 py-[10px] cursor-pointer transition-colors duration-300 whitespace-nowrap"
             [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 2 }"
+            data-cy="movies-tab-now-playing"
             (click)="onTabChange(2)"
           >
             {{ "gimmicks.movies.tabs.nowPlaying" | translate }}
@@ -55,6 +58,7 @@
             [matRippleColor]="'rgba(255, 255, 0, 0.2)'"
             class="tab-item px-6 py-[10px] cursor-pointer transition-colors duration-300 whitespace-nowrap"
             [ngClass]="{ 'text-yellow-200': selectedTabIndex() === 3 }"
+            data-cy="movies-tab-search"
             (click)="onTabChange(3)"
           >
             {{ "gimmicks.movies.tabs.search" | translate }}

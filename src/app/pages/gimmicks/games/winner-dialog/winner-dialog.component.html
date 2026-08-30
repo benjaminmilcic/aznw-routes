@@ -1,4 +1,4 @@
-<div class="relative background">
+<div class="relative background" data-cy="winner-dialog">
   <ng-fireworks
     [options]="options"
     class="fireworks"
@@ -8,7 +8,7 @@
     @if (data.showWin) {
 
     <div class="flex flex-col justify-center mt-6">
-      <div class="flex w-full justify-center">{{ data.winner }}</div>
+      <div class="flex w-full justify-center" data-cy="winner-name">{{ data.winner }}</div>
       <div class="flex w-full justify-center">
         {{ "gimmicks.games.wins" | translate }}
       </div>
@@ -31,7 +31,7 @@
 <div class="flex w-full absolute bottom-2 left-0">
   <div class="flex w-full justify-center">
     <mat-dialog-actions>
-      <button [mat-dialog-close] mat-stroked-button>
+      <button [mat-dialog-close] mat-stroked-button data-cy="winner-new-game">
         {{ "gimmicks.games.newGame" | translate }}
       </button>
     </mat-dialog-actions>

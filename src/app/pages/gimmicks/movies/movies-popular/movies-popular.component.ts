@@ -159,8 +159,13 @@ export class MoviesPopularComponent implements OnInit, OnDestroy {
         // Maximal 20 Seiten laden, um Rate Limiting zu vermeiden
         const maxPages = Math.min(totalPages, 20);
 
-        if (maxPages === 1) {
-          // Nur eine Seite vorhanden
+        // <= statt ===: bei einem leeren Ergebnis meldet die API
+        // total_pages: 0. Mit === liefe der Fall in den else-Zweig, dort
+        // bliebe die Liste der Nachladeanfragen leer, und forkJoin([])
+        // schliesst ohne je einen Wert zu liefern - loading bliebe fuer
+        // immer true und die Seite drehte endlos den Ladekreis.
+        if (maxPages <= 1) {
+          // Nur eine Seite vorhanden (oder gar kein Ergebnis)
           this.results.set(firstResponse.results);
           this.pageIndex = 0;
           this.updatePaginatedResults();

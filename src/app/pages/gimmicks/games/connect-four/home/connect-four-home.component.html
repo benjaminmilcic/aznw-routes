@@ -37,6 +37,7 @@
       }}</span>
       <input
         class="text-input"
+        data-cy="c4-name"
         type="text"
         maxlength="12"
         [placeholder]="'gimmicks.games.connectFourGame.namePlaceholder' | translate"
@@ -88,7 +89,7 @@
       </ion-segment>
     </div>
 
-    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+    <button type="button" class="btn btn-primary" data-cy="c4-start" [disabled]="!nameValid()" (click)="start()">
       {{ "gimmicks.games.connectFourGame.startGame" | translate }}
     </button>
     } @else {

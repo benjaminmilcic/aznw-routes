@@ -9,7 +9,12 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   loadRecipes,
@@ -77,6 +82,7 @@ export class RecipesComponent implements OnInit {
   constructor(
     private store: Store,
     private router: Router,
+    private route: ActivatedRoute,
     private recipeService: RecipesService
   ) {}
 
@@ -86,9 +92,10 @@ export class RecipesComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         this.currentRoute.set(event.urlAfterRedirects);
       });
+    this.applyMenuPointFromEntryRoute();
+
     this.error = this.store.select(selectError);
     this.store.dispatch(loadRecipes());
-    this.router.navigate(['/gimmicks/recipes/list']);
     this.recipeService.changeRoute.subscribe(
       (value: { id: number; route: string }) => {
         switch (value.route) {
@@ -107,6 +114,30 @@ export class RecipesComponent implements OnInit {
         }
       }
     );
+  }
+
+  /**
+   * Markiert beim Betreten des Bereichs den Reiter zur aufgerufenen Adresse.
+   *
+   * Gelesen wird der Kindpfad aus dem Routen-Snapshot statt aus einem
+   * NavigationEnd: der Routenbaum steht schon fest, wenn diese Komponente
+   * gebaut wird, waehrend das Ereignis erst spaeter kommt.
+   *
+   * Und bewusst nur einmal beim Betreten: "Rezept des Tages" fuehrt auf
+   * /recipe/:id, die Suche bleibt auf /list - beide Zustaende stehen nicht in
+   * der Adresse und wuerden bei jeder weiteren Navigation ueberschrieben.
+   * Danach steuern die Klicks den Reiter allein.
+   *
+   * Nur das Formular hat eine eigene Adresse; alles andere startet auf der
+   * Liste - auch ein direkt aufgerufenes einzelnes Rezept, das ja aus der
+   * Liste heraus geoeffnet worden waere.
+   */
+  private applyMenuPointFromEntryRoute(): void {
+    const childPath = this.route.snapshot.firstChild?.routeConfig?.path ?? '';
+
+    if (childPath.startsWith('add') || childPath.startsWith('update')) {
+      this.selectedMenuPoint.set('add');
+    }
   }
 
   onSelectList() {

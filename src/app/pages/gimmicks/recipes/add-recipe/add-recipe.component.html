@@ -23,7 +23,7 @@
       floatLabel="always"
     >
       <mat-label>{{ "gimmicks.recipes.recipeName" | translate }}</mat-label>
-      <input matInput formControlName="title" [disabled]="isLoading()" />
+      <input matInput data-cy="recipe-form-title" formControlName="title" [disabled]="isLoading()" />
     </mat-form-field>
 
     <div
@@ -137,6 +137,7 @@
           mat-fab
           color="primary"
           type="button"
+          data-cy="recipe-form-add-ingredient"
           (click)="onAddIngredient()"
           [disabled]="isLoading()"
         >
@@ -157,6 +158,7 @@
           cdkTextareaAutosize
           cdkAutosizeMinRows="10"
           cdkAutosizeMaxRows="500"
+          data-cy="recipe-form-preparation"
           formControlName="preparation"
           [disabled]="isLoading()"
         ></textarea>
@@ -167,6 +169,7 @@
         mat-raised-button
         color="accent"
         type="submit"
+        data-cy="recipe-form-save"
         (click)="onSaveRecipe()"
         [disabled]="isLoading()"
       >
@@ -183,7 +186,7 @@
   </form>
 </div>
 }@else {
-<div class="mt-8 text-center text-2xl">✅</div>
+<div class="mt-8 text-center text-2xl" data-cy="recipe-saved">✅</div>
 <div class="mt-4 text-center">
   {{ "gimmicks.recipes.savedSuccessfully" | translate }}
 </div>

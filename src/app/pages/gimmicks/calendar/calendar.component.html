@@ -82,17 +82,20 @@
         <div class="flex gap-5 place-items-center">
           <button
             class="cursor-pointer bg-gradient-to-br from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 rounded-lg shadow-lg px-2 py-1"
+            data-cy="calendar-prev-month"
             (click)="decrementCurrentMonth()"
           >
             <i class="fa-solid fa-caret-left text-lg text-white"></i>
           </button>
           <div
+            data-cy="calendar-month"
             class="w-20 flex justify-center my-4 font-bold bg-gradient-to-br from-white/70 to-white/50 shadow-lg rounded-lg px-4 py-1"
           >
             {{ "gimmicks.calendar.months." + months[currentMonth] | translate }}
           </div>
           <button
             class="cursor-pointer bg-gradient-to-br from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 rounded-lg shadow-lg px-2 py-1"
+            data-cy="calendar-next-month"
             (click)="incrementCurrentMonth()"
           >
             <i class="fa-solid fa-caret-right text-lg text-white"></i>

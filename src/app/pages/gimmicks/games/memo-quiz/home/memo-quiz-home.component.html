@@ -29,6 +29,7 @@
       <span class="field-label">{{ "gimmicks.games.memoQuizGame.nameLabel" | translate }}</span>
       <input
         class="text-input"
+        data-cy="memo-name"
         type="text"
         maxlength="12"
         [placeholder]="'gimmicks.games.memoQuizGame.namePlaceholder' | translate"
@@ -86,7 +87,7 @@
       </ion-segment>
     </div>
 
-    <button type="button" class="btn btn-primary" [disabled]="!nameValid()" (click)="start()">
+    <button type="button" class="btn btn-primary" data-cy="memo-start" [disabled]="!nameValid()" (click)="start()">
       {{ "gimmicks.games.memoQuizGame.startGame" | translate }}
     </button>
     } @else {

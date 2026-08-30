@@ -18,7 +18,7 @@
         <div class="text-center font-bold text-lg">
           ⚠️ {{ "gimmicks.recipes.errorOccurred" | translate }}
         </div>
-        <div class="text-center mt-4">{{ error | async }}</div>
+        <div class="text-center mt-4" data-cy="recipes-error">{{ error | async }}</div>
       </div>
       }
 
@@ -29,6 +29,7 @@
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'list'
           }"
+          data-cy="recipes-tab-list"
           (click)="onSelectList()"
         >
           {{ "gimmicks.recipes.recipeList" | translate }}
@@ -40,6 +41,7 @@
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'day'
           }"
+          data-cy="recipes-tab-day"
           (click)="onSelectDay()"
         >
           {{ "gimmicks.recipes.recipeOfTheDay" | translate }}
@@ -51,6 +53,7 @@
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'search'
           }"
+          data-cy="recipes-tab-search"
           (click)="onSelectSearch()"
         >
           {{ "gimmicks.recipes.recipeSearch" | translate }}
@@ -61,6 +64,7 @@
             'border-b-2 border-orange-300 text-orange-300':
               selectedMenuPoint() === 'add'
           }"
+          data-cy="recipes-tab-add"
           (click)="onSelectAdd()"
         >
           +{{ "gimmicks.recipes.addRecipe" | translate }}

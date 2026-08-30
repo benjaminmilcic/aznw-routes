@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Ada Lovelace",
+    "content": "<p>Great page, the games are a lot of fun!</p>",
+    "date": "2026-03-14T10:15:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Alan Turing",
+    "content": "<p>The weather charts are my favourite part.</p>",
+    "date": "2026-05-02T08:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Grace Hopper",
+    "content": "<p>Nice work on the recipe manager.</p>",
+    "date": "2026-01-09T19:45:00.000Z"
+  }
+]

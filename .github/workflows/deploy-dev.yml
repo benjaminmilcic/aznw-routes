@@ -10,7 +10,63 @@ env:
   TARGET_DIR: /var/www/benjamin-milcic.dev/frontend/
 
 jobs:
+  # Erst testen, dann ausliefern. Der Deploy-Job wartet ueber `needs` auf
+  # diesen hier - ein roter Test verhindert die Veroeffentlichung.
+  e2e:
+    name: Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # environment.ts liest die Schluessel ueber process.env, die der
+      # DefinePlugin aus .env einsetzt. Ohne Datei blieben die Ausdruecke
+      # undefiniert und der Browser wuerde "process is not defined" melden.
+      # Die Werte sind bedeutungslos: alle externen Dienste sind in den Tests
+      # abgeklemmt.
+      - name: Platzhalter-Schluessel erzeugen
+        run: |
+          cat > .env << 'EOF'
+          STRIPE_PUBLISHABLE_KEY=pk_test_placeholder
+          GEOAPIFY_API_KEY=test-placeholder
+          MAPTILER_API_KEY=test-placeholder
+          ELEVENLABS_API_KEY=test-placeholder
+          TMDB_API_KEY=test-placeholder
+          GOOGLE_MAPS_API_KEY=test-placeholder
+          TINYMCE_API_KEY=test-placeholder
+          EOF
+
+      - name: Abhaengigkeiten
+        run: npm install --force
+
+      - name: Cypress-Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Cypress-Binary sicherstellen
+        run: npx cypress install
+
+      # Startet den Dev-Server, wartet auf Port 4200 und laesst danach alle
+      # Specs laufen. Der Server wird am Ende automatisch beendet.
+      - name: E2E-Tests
+        run: npm run e2e
+
+      - name: Screenshots bei Fehlschlag sichern
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
+
   deploy:
+    needs: e2e
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

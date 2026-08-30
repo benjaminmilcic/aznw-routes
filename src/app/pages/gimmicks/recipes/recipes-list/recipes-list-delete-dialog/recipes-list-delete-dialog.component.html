@@ -8,6 +8,6 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">{{ 'gimmicks.recipes.cancel' | translate }}</button>
-  <button mat-raised-button color="warn" (click)="onDelete()">{{ 'gimmicks.recipes.delete' | translate }}</button>
+  <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary" data-cy="recipe-delete-cancel">{{ 'gimmicks.recipes.cancel' | translate }}</button>
+  <button mat-raised-button color="warn" data-cy="recipe-delete-confirm" (click)="onDelete()">{{ 'gimmicks.recipes.delete' | translate }}</button>
 </mat-dialog-actions>

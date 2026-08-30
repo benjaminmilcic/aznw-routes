@@ -3,6 +3,7 @@
   class="flex min-h-full pt-[70px] box-border h-fit bg-blue-900 gap-x-16 gap-y-2 flex-col xl:flex-row px-4 sm:px-0"
 >
   <dialog
+    data-cy="guestbook-dialog"
     #createPostDialog
     [open]="showcreatePostDialog"
     class="my-4 mx-auto rounded-xl !p-0"
@@ -25,6 +26,7 @@
       <div class="mt-2">
         <div class="mb-1">Name:</div>
         <ion-input
+          data-cy="guestbook-name"
           fill="outline"
           class="mb-4"
           [(ngModel)]="postName"
@@ -39,7 +41,7 @@
         class=""
       ></editor>
       <div class="flex justify-end">
-        <button class="create-post-btn" (click)="onSavePost()">
+        <button class="create-post-btn" data-cy="guestbook-save-post" (click)="onSavePost()">
           <i class="fa-solid fa-paper-plane"></i>
           <span>{{ "gimmicks.guestbook.save" | translate }}</span>
         </button>
@@ -72,14 +74,14 @@
       </div>
     </div>
     <div class="xl:self-start self-center mt-10 mb-2">
-      <button class="create-post-btn" (click)="onCreatePost()">
+      <button class="create-post-btn" data-cy="guestbook-new-post" (click)="onCreatePost()">
         <i class="fa-solid fa-pen-to-square"></i>
         <span>{{ "gimmicks.guestbook.createComment" | translate }}</span>
       </button>
     </div>
     <div class="flex justify-center xl:justify-start">
       <div class="my-4 max-w-[800px] w-full flex flex-col gap-10">
-        <div *ngFor="let post of posts" class="post-card">
+        <div *ngFor="let post of posts" class="post-card" data-cy="guestbook-post">
           <div class="post-header">
             <div class="post-avatar">
               {{ getInitials(post.name) }}

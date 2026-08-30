@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "questionNumber": 1,
+    "language": "de",
+    "question": "Test question one?",
+    "answers": [
+      {
+        "letter": "A",
+        "text": "Answer A"
+      },
+      {
+        "letter": "B",
+        "text": "Answer B"
+      },
+      {
+        "letter": "C",
+        "text": "Answer C"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Test explanation for question 1.",
+    "image": null,
+    "category": "Test category"
+  },
+  {
+    "id": 2,
+    "questionNumber": 2,
+    "language": "de",
+    "question": "Test question two?",
+    "answers": [
+      {
+        "letter": "A",
+        "text": "Answer A"
+      },
+      {
+        "letter": "B",
+        "text": "Answer B"
+      },
+      {
+        "letter": "C",
+        "text": "Answer C"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Test explanation for question 2.",
+    "image": null,
+    "category": "Test category"
+  },
+  {
+    "id": 3,
+    "questionNumber": 3,
+    "language": "de",
+    "question": "Test question three?",
+    "answers": [
+      {
+        "letter": "A",
+        "text": "Answer A"
+      },
+      {
+        "letter": "B",
+        "text": "Answer B"
+      },
+      {
+        "letter": "C",
+        "text": "Answer C"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Test explanation for question 3.",
+    "image": null,
+    "category": "Test category"
+  }
+]

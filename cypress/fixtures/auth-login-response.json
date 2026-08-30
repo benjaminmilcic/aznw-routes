@@ -1,0 +1,8 @@
+{
+  "idToken": "header.payload.signature",
+  "email": "guest@guest.com",
+  "refreshToken": "refresh-token",
+  "expiresIn": "3600",
+  "localId": "test-user-id",
+  "registered": true
+}

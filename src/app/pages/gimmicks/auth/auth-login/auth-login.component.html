@@ -3,6 +3,7 @@
 >
   <div class="sm:text-lg mb-4 px-6 text-center">{{ "gimmicks.jokes.loginToRead" | translate }}</div>
   <div
+    data-cy="auth-error"
     *ngIf="error"
     class="flex justify-center p-8 bg-red-300/60 rounded mb-4 w-[calc(100%-100px)] sm:w-96 text-center"
   >
@@ -26,6 +27,7 @@
           <mat-label>E-Mail</mat-label>
           <input
             #emailInput
+            data-cy="login-email"
             matInput
             type="email"
             id="email"
@@ -39,6 +41,7 @@
           <mat-label>{{ "gimmicks.jokes.password" | translate }}</mat-label>
           <input
             #passwordInput
+            data-cy="login-password"
             matInput
             type="password"
             id="password"
@@ -51,6 +54,7 @@
 
       <button
         type="submit"
+        data-cy="login-submit"
         (click)="onLogin(loginForm)"
         class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer w-full"
       >
@@ -63,7 +67,7 @@
       --- {{ "gimmicks.jokes.noAccount" | translate }} ---
     </div>
     <div class="flex justify-center mt-6">
-      <a class="cursor-pointer hover:scale-125" (click)="onSwitchMode()">
+      <a class="cursor-pointer hover:scale-125" data-cy="auth-switch-mode" (click)="onSwitchMode()">
         <u>{{ "gimmicks.jokes.signUp" | translate }}</u>
       </a>
     </div>
@@ -85,6 +89,7 @@
           <mat-label>E-Mail</mat-label>
           <input
             #emailInput2
+            data-cy="signup-email"
             matInput
             type="email"
             id="email"
@@ -98,6 +103,7 @@
           <mat-label>{{ "gimmicks.jokes.password" | translate }}</mat-label>
           <input
             #passwordInput2
+            data-cy="signup-password"
             matInput
             type="password"
             id="password"
@@ -116,6 +122,7 @@
           }}</mat-label>
           <input
             #confirmInput
+            data-cy="signup-confirm"
             matInput
             type="password"
             id="confirmPassword"
@@ -129,6 +136,7 @@
 
       <button
         type="submit"
+        data-cy="signup-submit"
         (click)="onSignUp(signUpForm)"
         class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow cursor-pointer w-full"
       >
