@@ -2,15 +2,23 @@
   {
     "id": 1,
     "title": "Pancakes",
-    "imagePath": "",
-    "ingredients": ["200 g flour", "3 eggs", "300 ml milk"],
+    "imagePath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    "ingredients": [
+      "200 g flour",
+      "3 eggs",
+      "300 ml milk"
+    ],
     "preparation": "Mix everything and bake in a pan."
   },
   {
     "id": 2,
     "title": "Tomato Soup",
     "imagePath": "",
-    "ingredients": ["1 kg tomatoes", "1 onion", "500 ml stock"],
+    "ingredients": [
+      "1 kg tomatoes",
+      "1 onion",
+      "500 ml stock"
+    ],
     "preparation": "Simmer for 30 minutes and blend."
   }
 ]

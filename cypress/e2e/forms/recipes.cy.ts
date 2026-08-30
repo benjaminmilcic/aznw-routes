@@ -91,6 +91,52 @@ describe('Recipes', () => {
     cy.contains('Mix everything and bake in a pan.').should('be.visible');
   });
 
+  it('shows the picture in the same square box as the placeholder', () => {
+    /**
+     * Ohne feste Masse zieht Flexbox das Bild auf die Hoehe der Textspalte:
+     * der Container setzt kein items-*, es gilt also align-items: stretch,
+     * und Tailwinds Preflight (img { height: auto }) ist in diesem Projekt
+     * abgeschaltet. Je laenger das Rezept, desto staerker die Verzerrung.
+     *
+     * Geprueft wird die gerenderte Box, nicht das Bild: die Fixture liefert
+     * absichtlich ein 1x1-Pixel, damit nur das CSS die Groesse bestimmt.
+     */
+    cy.intercept(apiRoute(RECIPES), { fixture: 'recipes.json' }).as(
+      'loadRecipes',
+    );
+
+    cy.visitApp('/gimmicks/recipes/recipe/1');
+    cy.byCy('recipe-title').should('contain.text', 'Pancakes');
+
+    cy.byCy('recipe-image').should(($image) => {
+      const box = $image[0].getBoundingClientRect();
+      expect(Math.round(box.width), 'Breite').to.equal(200);
+      expect(Math.round(box.height), 'Hoehe').to.equal(200);
+    });
+  });
+
+  it('gives a recipe without a picture the same box', () => {
+    cy.intercept(apiRoute(RECIPES), { fixture: 'recipes.json' }).as(
+      'loadRecipes',
+    );
+
+    cy.visitApp('/gimmicks/recipes/recipe/2');
+    cy.byCy('recipe-title').should('contain.text', 'Tomato Soup');
+
+    // Der Platzhalter setzt seine Groesse selbst - beide Zweige muessen
+    // gleich aussehen, sonst springt das Layout beim Wechsel.
+    cy.byCy('recipe-image').should('not.exist');
+    cy.byCy('recipe-image-placeholder').should(($box) => {
+      const box = $box[0].getBoundingClientRect();
+      // Exakt dieselbe Box wie das Bild. Der Platzhalter hat einen
+      // 1px-Rahmen; damit der nach innen geht statt aussen drauf, traegt er
+      // box-border - ohne Tailwinds Preflight gibt es kein globales
+      // box-sizing: border-box, das ihm das abnehmen wuerde.
+      expect(Math.round(box.width), 'Breite').to.equal(200);
+      expect(Math.round(box.height), 'Hoehe').to.equal(200);
+    });
+  });
+
   it('filters the list through the search tab', () => {
     openRecipes();
 

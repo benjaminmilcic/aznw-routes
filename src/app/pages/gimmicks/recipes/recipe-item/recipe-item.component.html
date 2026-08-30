@@ -13,10 +13,24 @@
   <div class="text-3xl sm:text-4xl text-center" data-cy="recipe-title">{{ r.title }}</div>
   <div class="flex flex-wrap sm:flex-nowrap justify-center gap-8 mt-8">
     @if (r.imagePath) {
-    <img [src]="r.imagePath" [alt]="r.title" class="rounded" />
+    <!--
+      Feste Masse, identisch zum Platzhalter im else-Zweig. Ohne sie zieht
+      Flexbox das Bild auf die Hoehe der Textspalte: der Container hat kein
+      items-*, also gilt align-items: stretch, und Tailwinds Preflight mit
+      seinem img { height: auto } ist in tailwind.config.js abgeschaltet.
+      object-cover beschneidet statt zu verzerren, falls imagePath einmal auf
+      ein nicht quadratisches Bild zeigt - das Feld ist eine freie URL.
+    -->
+    <img
+      [src]="r.imagePath"
+      [alt]="r.title"
+      data-cy="recipe-image"
+      class="w-[200px] h-[200px] min-w-[200px] min-h-[200px] object-cover rounded"
+    />
     } @else {
     <div
-      class="w-[200px] h-[200px] min-w-[200px] min-h-[200px] flex items-center justify-center bg-gray-100 rounded border border-gray-300"
+      data-cy="recipe-image-placeholder"
+      class="box-border w-[200px] h-[200px] min-w-[200px] min-h-[200px] flex items-center justify-center bg-gray-100 rounded border border-gray-300"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

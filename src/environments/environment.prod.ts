@@ -1,4 +1,13 @@
-const ip = 'benjaminmilcic.site';
+// ACHTUNG: Diese Datei wird beim Deploy vollstaendig ueberschrieben.
+// .github/workflows/deploy-dev.yml erzeugt sie im Schritt "Environment fuer
+// den neuen Server erzeugen" neu, bevor gebaut wird. Aenderungen hier wirken
+// deshalb NUR bei einem lokalen Prod-Build. Wer den Produktiv-Host aendern
+// will, aendert den Workflow - nicht diese Datei.
+//
+// Sie wird trotzdem aktuell gehalten, damit sie niemanden in die Irre fuehrt:
+// der alte Host benjaminmilcic.site laeuft noch, mit eigenem Datenbestand.
+
+const api = 'https://api.benjamin-milcic.dev';
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
@@ -16,8 +25,8 @@ export const environment = {
     // new spring boot API => createApi: `https://87.106.117.170:8443/api/v2/stripe`,
     // new spring boot API with url name => createApi: `https://${ip}:8443/api/v2/stripe`,
     // new nest api:
-    createApi: `https://${ip}:3000/stripe`,
-    returnUrl: `https://auf-zu-neuen-welten.de`,
+    createApi: `${api}/stripe`,
+    returnUrl: `https://benjamin-milcic.dev`,
   },
   guestbook: {
     // old PHP API =>
@@ -31,16 +40,16 @@ export const environment = {
     //                  addPostApi: `https://${ip}:8443/api/v2/guestbook`,
     //                  filesUrl: `https://${ip}:8443/api/v2/guestbook/files`,
     // new nest api:
-    getAllPostsApi: `https://${ip}:3000/guestbook`,
-    addPostApi: `https://${ip}:3000/guestbook`,
-    filesUrl: `https://${ip}:3000/files`,
+    getAllPostsApi: `${api}/guestbook`,
+    addPostApi: `${api}/guestbook`,
+    filesUrl: `${api}/files`,
   },
   contact: {
     // old nest API => form2mailApi: `https://nest-form2mail.adaptable.app/`,
     // new spring boot API => form2mailApi: `https://87.106.117.170:8443/api/v2/form2mail`,
     // new spring boot API with url name => form2mailApi: `https://${ip}:8443/api/v2/form2mail`,
     // new nest api:
-    form2mailApi: `https://${ip}:3000/form2email`,
+    form2mailApi: `${api}/form2email`,
   },
   auth: {
     // old firebase solution =>
@@ -48,36 +57,39 @@ export const environment = {
     //                          login: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBzuR3T7b8V2iC-K5-0wmfqRxnjWnh8QGs`,
     //                          signup: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBzuR3T7b8V2iC-K5-0wmfqRxnjWnh8QGs`,
     // new nest solution:
-    getJokesFile: `https://${ip}:3000/auth/jokes`,
-    login: `https://${ip}:3000/auth/login`,
-    signup: `https://${ip}:3000/auth/signup`,
-    tts: `https://${ip}:3000/auth/tts`,
+    getJokesFile: `${api}/auth/jokes`,
+    login: `${api}/auth/login`,
+    signup: `${api}/auth/signup`,
+    tts: `${api}/auth/tts`,
   },
   moorhuhn: {
-    moorhuhnApi: `https://${ip}:3000/moorhuhn`,
+    moorhuhnApi: `${api}/moorhuhn`,
   },
   triviaQuiz: {
-    randomQuestionsApi: `https://${ip}:3000/trivia/questions/random`,
-    questionsByNumbersApi: `https://${ip}:3000/trivia/questions/by-numbers`,
+    randomQuestionsApi: `${api}/trivia/questions/random`,
+    questionsByNumbersApi: `${api}/trivia/questions/by-numbers`,
   },
   error: {
-    errorMessageApi: `https://${ip}:3000/error2email`,
+    errorMessageApi: `${api}/error2email`,
+  },
+  yahtzeeGame: {
+    webSocketsUrl: `${api}/yahtzee-game`,
   },
   geoLocation: {
-    reverseGeoCodeApi: `https://${ip}:3000/geolocation/reverse-geocode`,
-    geoCodeApi: `https://${ip}:3000/geolocation/geocode`,
-    citiesApi: `https://${ip}:3000/geolocation/cities`,
+    reverseGeoCodeApi: `${api}/geolocation/reverse-geocode`,
+    geoCodeApi: `${api}/geolocation/geocode`,
+    citiesApi: `${api}/geolocation/cities`,
   },
   googleLogin: {
-    loginApi: `https://${ip}:3000/auth/google`,
+    loginApi: `${api}/auth/google`,
   },
   recipes: {
-    recipesApi: `https://${ip}:3000/recipes`,
-    filesUrl: `https://${ip}:3000/files`,
+    recipesApi: `${api}/recipes`,
+    filesUrl: `${api}/files`,
     translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
   },
   analytics: {
-    sendData: `https://${ip}:3000/analytics/visitor-data`,
+    sendData: `${api}/analytics/visitor-data`,
   },
   geoapify: {
     apiKey: geoapifyKey,
@@ -86,8 +98,8 @@ export const environment = {
     apiKey: maptilerKey,
   },
   telegram: {
-    apiUrl: `https://${ip}:3000/telegram`,
-    webSocketsUrl: `https://${ip}:3000/telegramws`,
+    apiUrl: `${api}/telegram`,
+    webSocketsUrl: `${api}/telegramws`,
   },
   tmdb: {
     apiKey: tmdbKey,
@@ -99,10 +111,10 @@ export const environment = {
     apiKey: tinymceKey,
   },
   imagegen: {
-    apiUrl: `https://${ip}:3000/imagegen`,
+    apiUrl: `${api}/imagegen`,
   },
   search: {
-    embedUrl: `https://${ip}:3000/imagegen/embed`,
+    embedUrl: `${api}/imagegen/embed`,
   },
   production: true,
   version: new Date().getTime(),
