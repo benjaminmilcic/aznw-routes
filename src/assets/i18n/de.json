@@ -27,9 +27,12 @@
     "h3": "Von der Idee bis zur fertigen <em>App</em>",
     "sectionH": "Moderne <em>Web- und App-Entwicklung</em>",
     "spec": "Moderne Web- und App-Entwicklung mit Fokus auf Performance.",
-    "p1": "Über zehn Jahre Erfahrung in der Softwareentwicklung haben mich eines gelehrt: <strong>Code ist nur die halbe Miete</strong>. Es geht darum, Probleme zu verstehen, Anforderungen zu hinterfragen, und Lösungen zu liefern, die auch in zwei Jahren noch wartbar sind.",
-    "p2": "Aktuell arbeite ich an Frontends mit <strong>Angular und Ionic</strong> sowie an Backends mit <strong>NestJS</strong> — vom internen Dashboard bis zur produktiven Mobile App mit tausenden Nutzern.",
-    "p3": "Sauberer Code, klare Komponentenstruktur, getestet mit Cypress. Wenn dich interessiert, was zwischen den Zeilen steht: schau dir die Projekte an oder melde dich direkt."
+    "p1": "Über zehn Jahre Erfahrung in der Softwareentwicklung haben mich eines gelehrt: Code ist nur die halbe Miete. Es geht darum, Probleme zu verstehen, Anforderungen zu hinterfragen, und Lösungen zu liefern, die auch in zwei Jahren noch wartbar sind.",
+    "p2": "Aktuell arbeite ich an Frontends mit Angular und Ionic sowie an Backends mit NestJS — vom internen Dashboard bis zur produktiven Mobile App mit tausenden Nutzern.",
+    "p3a": "Sauberer Code, klare Komponentenstruktur, getestet mit Cypress. Wenn dich interessiert, was zwischen den Zeilen steht: schau dir die",
+    "p3ProjectsLink": "Projekte",
+    "p3b": "an oder melde dich",
+    "p3ContactLink": "direkt"
   },
   "skills": {
     "headline": "Programmiersprachen & Werkzeuge",

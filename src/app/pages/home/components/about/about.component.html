@@ -54,7 +54,16 @@
         <div class="about-text">
           <p [innerHTML]="'about.p1' | translate"></p>
           <p [innerHTML]="'about.p2' | translate"></p>
-          <p>{{ "about.p3" | translate }}</p>
+          <p>
+            {{ "about.p3a" | translate }}
+            <a [routerLink]="['/']" fragment="portfolio" class="inline-link"
+              >{{ "about.p3ProjectsLink" | translate }}</a
+            >
+            {{ "about.p3b" | translate }}
+            <a [routerLink]="['/']" fragment="contact" class="inline-link"
+              >{{ "about.p3ContactLink" | translate }}</a
+            >.
+          </p>
         </div>
 
         <div class="competencies">

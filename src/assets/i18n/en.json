@@ -27,9 +27,12 @@
     "h3": "From the first idea to a finished <em>app</em>",
     "sectionH": "Modern <em>web and app development</em>",
     "spec": "Modern web and app development with a focus on performance.",
-    "p1": "Over ten years of experience in software development have taught me one thing: <strong>code is only half the battle</strong>. It's about understanding problems, questioning requirements, and delivering solutions that are still maintainable two years from now.",
-    "p2": "Currently I work on frontends with <strong>Angular and Ionic</strong> as well as backends with <strong>NestJS</strong> — from internal dashboards to production mobile apps with thousands of users.",
-    "p3": "Clean code, clear component structure, tested with Cypress. If you're interested in what's between the lines: check out the projects or get in touch directly."
+    "p1": "Over ten years of experience in software development have taught me one thing: code is only half the battle. It's about understanding problems, questioning requirements, and delivering solutions that are still maintainable two years from now.",
+    "p2": "Currently I work on frontends with Angular and Ionic as well as backends with NestJS — from internal dashboards to production mobile apps with thousands of users.",
+    "p3a": "Clean code, clear component structure, tested with Cypress. If you're interested in what's between the lines: check out the",
+    "p3ProjectsLink": "projects",
+    "p3b": "or get in touch",
+    "p3ContactLink": "directly"
   },
   "skills": {
     "headline": "Programming languages & Tools",
