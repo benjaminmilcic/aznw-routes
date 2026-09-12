@@ -3,6 +3,14 @@ name: Deploy Frontend (benjamin-milcic.dev)
 on:
   push:
     branches: [new]
+  # Manueller Start ueber Actions -> "Run workflow". Dort laesst sich der
+  # Testlauf per Haken ueberspringen, wenn es schnell gehen muss.
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'E2E-Tests ueberspringen und direkt deployen'
+        type: boolean
+        default: false
 
 env:
   DEPLOY_HOST: 212.227.31.144
@@ -10,17 +18,30 @@ env:
   TARGET_DIR: /var/www/benjamin-milcic.dev/frontend/
 
 jobs:
-  # Erst testen, dann ausliefern. Der Deploy-Job wartet ueber `needs` auf
-  # diesen hier - ein roter Test verhindert die Veroeffentlichung.
+  # Tests und Build laufen parallel; nur das Ausliefern wartet auf beide.
+  # Ein roter Test verhindert weiterhin die Veroeffentlichung.
+  #
+  # Ueberspringen geht auf zwei Wegen:
+  #   1. Manueller Start mit gesetztem Haken "skip_tests".
+  #   2. "[skip tests]" oder "[skip e2e]" irgendwo in der Commit-Nachricht.
+  # In beiden Faellen laeuft dieser Job gar nicht erst an und der Deploy
+  # startet sofort.
   e2e:
     name: Cypress
     runs-on: ubuntu-latest
+    if: >-
+      !(
+        (github.event_name == 'workflow_dispatch' && inputs.skip_tests) ||
+        contains(github.event.head_commit.message, '[skip tests]') ||
+        contains(github.event.head_commit.message, '[skip e2e]')
+      )
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       # environment.ts liest die Schluessel ueber process.env, die der
       # DefinePlugin aus .env einsetzt. Ohne Datei blieben die Ausdruecke
@@ -65,15 +86,24 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  deploy:
-    needs: e2e
+  # `always()` ist noetig, damit der Job auch dann laeuft, wenn `e2e`
+  # uebersprungen wurde - ohne das wuerde GitHub ihn mitueberspringen.
+  # Ein wirklich roter Test blockiert weiterhin.
+  # Laeuft parallel zu `e2e` - der Build haengt nicht vom Testergebnis ab.
+  # Ein Deploy kostet dadurch nur noch die Dauer des laengeren der beiden
+  # Jobs statt deren Summe.
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      # `cache: npm` legt ~/.npm zwischen den Laeufen ab, geschluesselt ueber
+      # package-lock.json. Spart den Download der Abhaengigkeiten, solange
+      # sich das Lockfile nicht aendert.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Environment für den neuen Server erzeugen
         run: |
@@ -170,6 +200,35 @@ jobs:
             > "${{ steps.dist.outputs.dir }}/build-info.json"
           cat "${{ steps.dist.outputs.dir }}/build-info.json"
 
+      # Der Deploy-Job liegt auf einem eigenen Runner und sieht das dist/
+      # des Builds nicht. Das Artefakt ist die Bruecke dazwischen.
+      - name: Build-Ausgabe als Artefakt ablegen
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ${{ steps.dist.outputs.dir }}/
+          retention-days: 3
+
+  # Liefert aus, sobald der Build fertig ist und die Tests nicht rot sind.
+  # `always()` loest die Kopplung an uebersprungene Tests; die Abfrage auf
+  # `needs.build.result` verhindert, dass ohne fertigen Build deployt wird.
+  # Checkout und Node braucht dieser Job nicht - er laedt nur das Artefakt
+  # hoch und prueft danach das Ergebnis.
+  deploy:
+    needs: [e2e, build]
+    if: >-
+      always()
+      && needs.build.result == 'success'
+      && needs.e2e.result != 'failure'
+      && needs.e2e.result != 'cancelled'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build-Ausgabe holen
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist-out
+
       - name: SSH vorbereiten
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
@@ -180,7 +239,7 @@ jobs:
       - name: Übertragen
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" \
-            "${{ steps.dist.outputs.dir }}/" \
+            dist-out/ \
             "$DEPLOY_USER@$DEPLOY_HOST:$TARGET_DIR"
 
       # Cloudflare cached /assets/ praktisch unbegrenzt (s-maxage im vHost).
