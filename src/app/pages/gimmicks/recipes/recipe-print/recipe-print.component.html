@@ -1,8 +1,8 @@
 <div *ngIf="recipe | async as r" class="mt-0 w-full">
   <div class="text-4xl text-center">{{ r.title }}</div>
-  <div class="flex gap-8 mt-8">
+  <div class="flex gap-8 mt-8 flex-wrap sm:flex-nowrap justify-center">
     @if (r.imagePath) {
-    <img #recipeImage [src]="r.imagePath" [alt]="r.title" class="rounded" (load)="onImageLoad()" />
+    <img #recipeImage [src]="r.imagePath" [alt]="r.title" class="w-[200px] h-[200px] min-w-[200px] min-h-[200px] object-cover rounded" (load)="onImageLoad()" />
     } @else {
     <div
       class="w-[200px] h-[200px] min-w-[200px] min-h-[200px] flex items-center justify-center bg-gray-100 rounded border border-gray-300"
