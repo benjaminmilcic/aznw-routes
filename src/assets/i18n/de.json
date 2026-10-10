@@ -53,12 +53,18 @@
     "vocabularyTrainerTitle": "Vokabeltrainer",
     "gamesCollectionDesc": "Sammlung bekannter Mehrspieler-Spiele",
     "gamesCollectionTitle": "Spielesammlung",
+    "todoAppTitle": "ToDo-App",
+    "todoAppDesc": "Multi-User-Aufgabenliste mit Live-Sync – als PWA und Android-App.",
     "solakonDesc": "iOS- und Android-App für Solar-Monitoring. Live im Play Store.",
     "hippoDataDesc": "B2B-Plattform für Datenanalyse und Reporting.",
     "vocabularyTrainer": {
       "text1": "Web-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular, Ionic und Firebase.",
       "text2": "Android-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular, Ionic und Firebase.",
       "sourceCode": "Quellcode"
+    },
+    "todoApp": {
+      "text1": "Aufgabenliste für beliebig viele Geräte: Änderungen erscheinen per WebSocket sofort überall. Anmeldung mit E-Mail oder Google, Spracheingabe mit KI (Whisper), Fälligkeiten mit Uhrzeit, Darkmode und drei Sprachen. Läuft als installierbare PWA und als Android-App. Realisiert mit Angular, Ionic, NestJS und MySQL.",
+      "downloadApk": "Android-App herunterladen"
     },
     "gameCollection": {
       "text1": "Sammlung bekannter Mehrspieler-Spiele. Realisiert mit Angular und Firebase."

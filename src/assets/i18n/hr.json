@@ -53,12 +53,18 @@
     "vocabularyTrainerTitle": "Trener vokabulara",
     "gamesCollectionDesc": "Kolekcija poznatih igara za više igrača",
     "gamesCollectionTitle": "Kolekcija igara",
+    "todoAppTitle": "Aplikacija za zadatke",
+    "todoAppDesc": "Popis zadataka za više korisnika s trenutnom sinkronizacijom – kao PWA i Android aplikacija.",
     "solakonDesc": "iOS i Android aplikacija za solar-monitoring. Dostupno na Play Storeu.",
     "hippoDataDesc": "B2B platforma za analizu podataka i izvješćivanje.",
     "vocabularyTrainer": {
       "text1": "Web aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
       "text2": "Android aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
       "sourceCode": "Izvorni kod"
+    },
+    "todoApp": {
+      "text1": "Popis zadataka za neograničen broj uređaja: promjene se putem WebSocketa odmah pojavljuju svugdje. Prijava e-poštom ili Googleom, glasovni unos s umjetnom inteligencijom (Whisper), rokovi s vremenom, tamni način rada i tri jezika. Radi kao PWA koja se može instalirati i kao Android aplikacija. Izrađeno s Angularom, Ionicom, NestJS-om i MySQL-om.",
+      "downloadApk": "Preuzmi Android aplikaciju"
     },
     "gameCollection": {
       "text1": "Kolekcija poznatih igara za više igrača. Razvijeno pomoću Angulara i Firebasea."

@@ -53,12 +53,18 @@
     "vocabularyTrainerTitle": "Vocabulary Trainer",
     "gamesCollectionDesc": "Collection of well-known multiplayer games",
     "gamesCollectionTitle": "Game collection",
+    "todoAppTitle": "To-do app",
+    "todoAppDesc": "Multi-user to-do list with live sync – as a PWA and an Android app.",
     "solakonDesc": "iOS and Android app for solar monitoring. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
       "text1": "Web App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "text2": "Android App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "sourceCode": "Source code"
+    },
+    "todoApp": {
+      "text1": "A to-do list for any number of devices: changes show up everywhere instantly via WebSocket. Sign-in with email or Google, AI voice input (Whisper), due dates with times, dark mode and three languages. Runs as an installable PWA and as an Android app. Built with Angular, Ionic, NestJS and MySQL.",
+      "downloadApk": "Download the Android app"
     },
     "gameCollection": {
       "text1": "A collection of well-known multiplayer games. Developed with Angular and Firebase."

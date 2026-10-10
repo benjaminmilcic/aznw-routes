@@ -24,6 +24,13 @@ export class PortfolioComponent {
     return `assets/game-collection-${suffix}.webp`;
   }
 
+  get todoAppImage(): string {
+    const lang = this.translate.currentLang;
+    const supported = ['de', 'en', 'hr'];
+    const suffix = supported.includes(lang) ? lang : 'en';
+    return `assets/todo-app-${suffix}.webp`;
+  }
+
   get gimmicksImage(): string {
     const lang = this.translate.currentLang;
     const supported = ['de', 'en', 'hr'];
