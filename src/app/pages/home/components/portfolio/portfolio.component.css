@@ -159,12 +159,13 @@
   box-shadow: 0 28px 56px rgba(0,0,0,.35);
   z-index: 3;
 }
-.pinned:nth-child(1) { transform: rotate(-2deg); }
-.pinned:nth-child(2) { transform: rotate(1.5deg); }
-.pinned:nth-child(3) { transform: rotate(-1deg); }
-.pinned:nth-child(4) { transform: rotate(2deg); }
-.pinned:nth-child(5) { transform: rotate(-1.5deg); }
-.pinned:nth-child(6) { transform: rotate(1deg); }
+/* Tilt pattern repeats every 6 cards, so new projects are tilted too. */
+.pinned:nth-child(6n + 1) { transform: rotate(-2deg); }
+.pinned:nth-child(6n + 2) { transform: rotate(1.5deg); }
+.pinned:nth-child(6n + 3) { transform: rotate(-1deg); }
+.pinned:nth-child(6n + 4) { transform: rotate(2deg); }
+.pinned:nth-child(6n + 5) { transform: rotate(-1.5deg); }
+.pinned:nth-child(6n + 6) { transform: rotate(1deg); }
 
 /* ── Pin (on cards) ──────────────────────────────────── */
 .pin {

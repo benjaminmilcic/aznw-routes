@@ -447,27 +447,6 @@
         </div>
       </div>
 
-      <div class="pinned" (click)="openDialog(todoAppDialog)">
-        <div class="pin right red">
-          <div class="shadow"></div>
-          <div class="metal"></div>
-          <div class="bottom-circle"></div>
-        </div>
-        <div class="proj-thumb">
-          <img [src]="todoAppImage" alt="ToDo App" />
-        </div>
-        <div class="proj-info">
-          <h3 class="proj-h">{{ "portfolio.todoAppTitle" | translate }}</h3>
-          <p class="proj-d">{{ "portfolio.todoAppDesc" | translate }}</p>
-          <div class="proj-stack">
-            <span class="tag">Angular</span>
-            <span class="tag">Ionic</span>
-            <span class="tag">NestJS</span>
-            <span class="tag">MySQL</span>
-          </div>
-        </div>
-      </div>
-
       <div class="pinned" (click)="openDialog(catchCupDialog)">
         <div class="pin right yellow">
           <div class="shadow"></div>
@@ -561,6 +540,27 @@
           <div class="proj-stack">
             <span class="tag">Angular</span>
             <span class="tag">Firebase</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pinned" (click)="openDialog(todoAppDialog)">
+        <div class="pin right red">
+          <div class="shadow"></div>
+          <div class="metal"></div>
+          <div class="bottom-circle"></div>
+        </div>
+        <div class="proj-thumb">
+          <img [src]="todoAppImage" alt="ToDo App" />
+        </div>
+        <div class="proj-info">
+          <h3 class="proj-h">{{ "portfolio.todoAppTitle" | translate }}</h3>
+          <p class="proj-d">{{ "portfolio.todoAppDesc" | translate }}</p>
+          <div class="proj-stack">
+            <span class="tag">Angular</span>
+            <span class="tag">Ionic</span>
+            <span class="tag">NestJS</span>
+            <span class="tag">MySQL</span>
           </div>
         </div>
       </div>
