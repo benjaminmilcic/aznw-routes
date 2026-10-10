@@ -63,7 +63,7 @@
       "sourceCode": "Quellcode"
     },
     "todoApp": {
-      "text1": "Aufgabenliste für beliebig viele Geräte: Änderungen erscheinen per WebSocket sofort überall. Anmeldung mit E-Mail oder Google, Spracheingabe mit KI (Whisper), Fälligkeiten mit Uhrzeit, Darkmode und drei Sprachen. Läuft als installierbare PWA und als Android-App. Realisiert mit Angular, Ionic, NestJS und MySQL.",
+      "text1": "Aufgabenliste mit Live-Sync auf allen Geräten und KI-Spracheingabe – als PWA und Android-App. Realisiert mit Angular, Ionic, NestJS und MySQL.",
       "downloadApk": "Android-App herunterladen"
     },
     "gameCollection": {

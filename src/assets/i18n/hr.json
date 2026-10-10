@@ -63,7 +63,7 @@
       "sourceCode": "Izvorni kod"
     },
     "todoApp": {
-      "text1": "Popis zadataka za neograničen broj uređaja: promjene se putem WebSocketa odmah pojavljuju svugdje. Prijava e-poštom ili Googleom, glasovni unos s umjetnom inteligencijom (Whisper), rokovi s vremenom, tamni način rada i tri jezika. Radi kao PWA koja se može instalirati i kao Android aplikacija. Izrađeno s Angularom, Ionicom, NestJS-om i MySQL-om.",
+      "text1": "Popis zadataka s trenutnom sinkronizacijom na svim uređajima i glasovnim unosom uz umjetnu inteligenciju – kao PWA i Android aplikacija. Izrađeno s Angularom, Ionicom, NestJS-om i MySQL-om.",
       "downloadApk": "Preuzmi Android aplikaciju"
     },
     "gameCollection": {

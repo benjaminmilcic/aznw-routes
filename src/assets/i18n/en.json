@@ -63,7 +63,7 @@
       "sourceCode": "Source code"
     },
     "todoApp": {
-      "text1": "A to-do list for any number of devices: changes show up everywhere instantly via WebSocket. Sign-in with email or Google, AI voice input (Whisper), due dates with times, dark mode and three languages. Runs as an installable PWA and as an Android app. Built with Angular, Ionic, NestJS and MySQL.",
+      "text1": "To-do list with live sync across all devices and AI voice input – as a PWA and an Android app. Built with Angular, Ionic, NestJS and MySQL.",
       "downloadApk": "Download the Android app"
     },
     "gameCollection": {
