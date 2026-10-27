@@ -12,6 +12,13 @@ on:
         type: boolean
         default: false
 
+# One deploy at a time: a new push waits for the running deploy instead of
+# racing it (an older run finishing last would otherwise put the old state live).
+# Waiting runs are superseded by newer ones, so only the latest commit is deployed.
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
 env:
   DEPLOY_HOST: 212.227.31.144
   DEPLOY_USER: deploy

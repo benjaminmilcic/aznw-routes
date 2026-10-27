@@ -8,7 +8,7 @@ describe('Scrollbalken-Farben', () => {
   });
 
   const cases: Array<{ path: string; theme: string | undefined }> = [
-    { path: '/', theme: undefined },
+    { path: '/', theme: 'navbar' },
     { path: '/gimmicks', theme: 'wood' },
     { path: '/gimmicks/weather', theme: 'wood' },
     { path: '/gimmicks/imagegen', theme: 'wood' },

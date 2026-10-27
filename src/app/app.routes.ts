@@ -11,6 +11,7 @@ export const routes: Routes = [
     // Ohne 'always' laeuft der Guard bei einer reinen Fragment-Aenderung
     // (gleiche Route) nicht erneut - genau der Fall / -> /#irgendwas.
     runGuardsAndResolvers: 'always',
+    data: { scrollbar: 'navbar' },
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },

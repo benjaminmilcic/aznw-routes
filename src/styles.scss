@@ -48,6 +48,12 @@ html[data-scrollbar="night"] {
   scrollbar-color: rgba(96, 165, 250, 0.45) #000018;
 }
 
+// Home page: one color for all sections, matching the navbar (slate track,
+// thumb in the blue of the profile picture border)
+html[data-scrollbar="navbar"] {
+  scrollbar-color: rgba(96, 165, 250, 0.7) #0f172a;
+}
+
 // Dialogs, menus and select lists lie in the overlay above the page and
 // keep their default scrollbars
 .cdk-overlay-container {
