@@ -2,21 +2,21 @@ import { GAME_PATHS } from '../../support/app-routes';
 import { API_PATHS, apiRoute } from '../../support/api';
 
 /**
- * Ein kurzer Test je Spiel.
+ * A short test per game.
  *
- * Siebzehn Spiele in voller Tiefe zu testen waere Wochen Arbeit fuer wenig
- * zusaetzliche Sicherheit. Diese Ebene beantwortet die Frage, die am
- * haeufigsten schiefgeht: "Laedt das Spiel ueberhaupt und ist es bedienbar?"
- * Vier Spiele werden darueber hinaus vollstaendig durchgespielt - siehe die
- * uebrigen Dateien in diesem Ordner.
+ * Testing seventeen games in full depth would be weeks of work for little
+ * additional safety. This level answers the question that most
+ * often goes wrong: "Does the game load at all and is it usable?"
+ * Beyond that, four games are played through completely - see the
+ * other files in this folder.
  *
- * Der feste Zufalls-Startwert sorgt dafuer, dass Spiele mit Zufallsanteil in
- * jedem Lauf identisch starten.
+ * The fixed random seed makes sure that games with a random part start
+ * identically in every run.
  */
 describe('Game smoke tests', () => {
   beforeEach(() => {
-    // Das Trivia-Quiz zeigt ohne Fragen nur einen Hinweistext. Mit Fixture
-    // rendert es sein Spielfeld und der Kurztest prueft dasselbe wie ueberall.
+    // Without questions the trivia quiz only shows a notice. With a fixture
+    // it renders its board and the short test checks the same as everywhere.
     cy.intercept(apiRoute(API_PATHS.triviaRandom), {
       fixture: 'trivia-questions.json',
     });
@@ -29,9 +29,9 @@ describe('Game smoke tests', () => {
       cy.byCy('page-not-found').should('not.exist');
       cy.byCy('game-area').should('exist');
 
-      // Jedes Spiel bringt mindestens ein eigenes Element mit: ein Brett,
-      // eine Auswahl, einen Startknopf - oder, im Fall von Puzzle, den
-      // eingebetteten Rahmen der fremden App.
+      // Every game brings at least one element of its own: a board,
+      // a selection, a start button - or, in the case of the puzzle, the
+      // embedded frame of the third-party app.
       cy.byCy('game-area')
         .find('button, canvas, input, select, ion-segment-button, iframe')
         .should('have.length.at.least', 1);

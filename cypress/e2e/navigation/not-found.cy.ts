@@ -31,10 +31,10 @@ describe('404 handling', () => {
   });
 
   /**
-   * Der knownFragmentGuard behandelt ein unbekanntes Fragment wie einen
-   * unbekannten Pfad. Ohne `runGuardsAndResolvers: 'always'` liefe er bei
-   * einer reinen Fragment-Aenderung nicht erneut - deshalb wird hier auch
-   * der Wechsel VON einem gueltigen Anker aus geprueft.
+   * The knownFragmentGuard treats an unknown fragment like an
+   * unknown path. Without `runGuardsAndResolvers: 'always'` it would not run
+   * again on a pure fragment change - that's why the switch FROM a valid
+   * anchor is checked here too.
    */
   describe('knownFragmentGuard', () => {
     HOME_FRAGMENTS.forEach((fragment) => {

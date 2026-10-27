@@ -8,8 +8,8 @@ export const routes: Routes = [
   {
     path: '',
     canActivate: [knownFragmentGuard],
-    // Ohne 'always' laeuft der Guard bei einer reinen Fragment-Aenderung
-    // (gleiche Route) nicht erneut - genau der Fall / -> /#irgendwas.
+    // Without 'always' the guard does not run again on a pure fragment change
+    // (same route) - exactly the case / -> /#something.
     runGuardsAndResolvers: 'always',
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),

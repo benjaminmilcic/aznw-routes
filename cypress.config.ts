@@ -1,17 +1,17 @@
 import { defineConfig } from 'cypress';
 
 /**
- * Cypress-Konfiguration fuer aznw-routes.
+ * Cypress configuration for aznw-routes.
  *
- * Die Tests laufen gegen den Angular-Dev-Server auf Port 4200. Sie starten ihn
- * NICHT selbst - lokal laeuft ohnehin einer (`npm start`), und zwei parallele
- * `ng serve` beschaedigen den Webpack-Cache in `.angular/cache`. Fuer CI gibt
- * es dafuer das Script `npm run e2e:ci`, das Server und Tests gemeinsam
- * hochfaehrt.
+ * The tests run against the Angular dev server on port 4200. They do NOT
+ * start it themselves - locally one is running anyway (`npm start`), and two parallel
+ * `ng serve` damage the webpack cache in `.angular/cache`. For CI there
+ * is the script `npm run e2e:ci`, which starts server and tests
+ * together.
  */
 export default defineConfig({
-  // Kein Test liest Werte ueber Cypress.env(); die Abschaltung entfernt die
-  // Warnung beim Start und schliesst den unsicheren Zugriff aus dem Browser aus.
+  // No test reads values via Cypress.env(); turning it off removes the
+  // warning on start and rules out the insecure access from the browser.
   allowCypressEnv: false,
 
   e2e: {
@@ -22,9 +22,9 @@ export default defineConfig({
     viewportWidth: 1440,
     viewportHeight: 900,
 
-    // Der Dev-Build laedt jede Route als eigenen Lazy-Chunk. Der allererste
-    // Aufruf einer Seite muss den Chunk erst bauen - daher die grosszuegigen
-    // Zeitfenster. Im Prod-Build sind sie nie noetig, schaden dort aber nicht.
+    // The dev build loads every route as its own lazy chunk. The very first
+    // visit of a page has to build the chunk first - hence the generous
+    // time windows. In the prod build they are never needed, but they don't hurt there.
     pageLoadTimeout: 120000,
     defaultCommandTimeout: 12000,
     responseTimeout: 30000,
@@ -32,16 +32,16 @@ export default defineConfig({
     video: false,
     screenshotOnRunFailure: true,
 
-    // Ein Wiederholungsversuch faengt echte Ausreisser ab (Chunk-Ladefehler),
-    // ohne dass ein dauerhaft kaputter Test durchrutscht.
+    // One retry catches real outliers (chunk loading errors),
+    // without a permanently broken test slipping through.
     retries: { runMode: 2, openMode: 0 },
 
     experimentalMemoryManagement: true,
     numTestsKeptInMemory: 5,
 
     setupNodeEvents(on) {
-      // Ausgabe aus dem Browser ins Terminal durchreichen - der
-      // Barrierefreiheitstest listet damit seine Befunde lesbar auf.
+      // Pass output from the browser to the terminal - that way the
+      // accessibility test lists its findings readably.
       on('task', {
         log(message: string) {
           console.log(message);

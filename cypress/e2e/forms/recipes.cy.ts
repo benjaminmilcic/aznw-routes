@@ -1,12 +1,12 @@
 import { API_PATHS, apiRoute } from '../../support/api';
 /**
- * Rezeptverwaltung (NgRx-Store + eigene API).
+ * Recipe management (NgRx store + own API).
  *
- * Deeplinks in diesen Bereich muessen funktionieren: ein einzelnes Rezept
- * soll sich verlinken lassen, und ein Neuladen darf einen nicht auf die Liste
- * zurueckwerfen. Frueher navigierte `RecipesComponent.ngOnInit` bedingungslos
- * auf `/list` und hat genau das verhindert - die Tests unten halten den
- * reparierten Zustand fest.
+ * Deep links into this section must work: a single recipe
+ * should be linkable, and a reload must not throw you back to the list.
+ * `RecipesComponent.ngOnInit` used to navigate to `/list` unconditionally
+ * and prevented exactly that - the tests below pin down the
+ * fixed state.
  */
 describe('Recipes', () => {
   const RECIPES = API_PATHS.recipes;
@@ -48,7 +48,7 @@ describe('Recipes', () => {
 
     cy.location('pathname').should('eq', '/gimmicks/recipes/add');
     cy.byCy('recipe-form-title').should('be.visible');
-    // Der Reiter muss zum Formular passen, nicht zur Liste.
+    // The tab must match the form, not the list.
     cy.byCy('recipes-tab-add').should('have.class', 'text-orange-300');
   });
 
@@ -67,7 +67,7 @@ describe('Recipes', () => {
   });
 
   it('still sends the bare area address to the list', () => {
-    // Das erledigt die Umleitung in app.routes.ts - nicht mehr ngOnInit.
+    // That is done by the redirect in app.routes.ts - no longer ngOnInit.
     cy.intercept(apiRoute(RECIPES), { fixture: 'recipes.json' }).as(
       'loadRecipes',
     );
@@ -93,13 +93,13 @@ describe('Recipes', () => {
 
   it('shows the picture in the same square box as the placeholder', () => {
     /**
-     * Ohne feste Masse zieht Flexbox das Bild auf die Hoehe der Textspalte:
-     * der Container setzt kein items-*, es gilt also align-items: stretch,
-     * und Tailwinds Preflight (img { height: auto }) ist in diesem Projekt
-     * abgeschaltet. Je laenger das Rezept, desto staerker die Verzerrung.
+     * Without a fixed size, flexbox stretches the image to the height of the text column:
+     * the container sets no items-*, so align-items: stretch applies,
+     * and Tailwind's preflight (img { height: auto }) is switched off in this
+     * project. The longer the recipe, the stronger the distortion.
      *
-     * Geprueft wird die gerenderte Box, nicht das Bild: die Fixture liefert
-     * absichtlich ein 1x1-Pixel, damit nur das CSS die Groesse bestimmt.
+     * The rendered box is checked, not the image: the fixture deliberately
+     * delivers a 1x1 pixel, so that only the CSS determines the size.
      */
     cy.intercept(apiRoute(RECIPES), { fixture: 'recipes.json' }).as(
       'loadRecipes',
@@ -123,15 +123,15 @@ describe('Recipes', () => {
     cy.visitApp('/gimmicks/recipes/recipe/2');
     cy.byCy('recipe-title').should('contain.text', 'Tomato Soup');
 
-    // Der Platzhalter setzt seine Groesse selbst - beide Zweige muessen
-    // gleich aussehen, sonst springt das Layout beim Wechsel.
+    // The placeholder sets its size itself - both branches must
+    // look the same, otherwise the layout jumps when switching.
     cy.byCy('recipe-image').should('not.exist');
     cy.byCy('recipe-image-placeholder').should(($box) => {
       const box = $box[0].getBoundingClientRect();
-      // Exakt dieselbe Box wie das Bild. Der Platzhalter hat einen
-      // 1px-Rahmen; damit der nach innen geht statt aussen drauf, traegt er
-      // box-border - ohne Tailwinds Preflight gibt es kein globales
-      // box-sizing: border-box, das ihm das abnehmen wuerde.
+      // Exactly the same box as the image. The placeholder has a
+      // 1px border; so that it goes inwards instead of on top, it carries
+      // box-border - without Tailwind's preflight there is no global
+      // box-sizing: border-box that would do that for it.
       expect(Math.round(box.width), 'Breite').to.equal(200);
       expect(Math.round(box.height), 'Hoehe').to.equal(200);
     });
@@ -173,7 +173,7 @@ describe('Recipes', () => {
 
     cy.byCy('recipes-tab-add').click();
 
-    // Das Formular startet ohne Zutatenfeld - erst der Knopf legt eines an.
+    // The form starts without an ingredient field - only the button creates one.
     cy.byCy('recipe-form-add-ingredient').click();
     cy.get('[formarrayname="ingredients"] input')
       .should('have.length.at.least', 1)

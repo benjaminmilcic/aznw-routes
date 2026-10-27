@@ -1,10 +1,10 @@
 /**
- * Verhalten auf verschiedenen Bildschirmgroessen.
+ * Behavior on different screen sizes.
  *
- * Geprueft wird nur, was wirklich vom Platz abhaengt: welche Navigation
- * sichtbar ist und ob die Seite waagerecht ueberlaeuft. Ein waagerechter
- * Ueberlauf faellt am Schreibtisch nie auf und macht die Seite auf dem Handy
- * unbenutzbar.
+ * Only what really depends on the space is checked: which navigation
+ * is visible and whether the page overflows horizontally. A horizontal
+ * overflow is never noticed at the desk and makes the page unusable on a
+ * phone.
  */
 const VIEWPORTS: Array<{ name: string; width: number; height: number }> = [
   { name: 'phone', width: 390, height: 844 },

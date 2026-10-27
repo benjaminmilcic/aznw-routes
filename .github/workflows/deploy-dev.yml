@@ -3,12 +3,12 @@ name: Deploy Frontend (benjamin-milcic.dev)
 on:
   push:
     branches: [new]
-  # Manueller Start ueber Actions -> "Run workflow". Dort laesst sich der
-  # Testlauf per Haken ueberspringen, wenn es schnell gehen muss.
+  # Manual start via Actions -> "Run workflow". There the test run can be
+  # skipped with a checkbox when it has to be quick.
   workflow_dispatch:
     inputs:
       skip_tests:
-        description: 'E2E-Tests ueberspringen und direkt deployen'
+        description: 'Skip the E2E tests and deploy right away'
         type: boolean
         default: false
 
@@ -18,14 +18,14 @@ env:
   TARGET_DIR: /var/www/benjamin-milcic.dev/frontend/
 
 jobs:
-  # Tests und Build laufen parallel; nur das Ausliefern wartet auf beide.
-  # Ein roter Test verhindert weiterhin die Veroeffentlichung.
+  # Tests and build run in parallel; only the delivery waits for both.
+  # A red test still prevents publishing.
   #
-  # Ueberspringen geht auf zwei Wegen:
-  #   1. Manueller Start mit gesetztem Haken "skip_tests".
-  #   2. "[skip tests]" oder "[skip e2e]" irgendwo in der Commit-Nachricht.
-  # In beiden Faellen laeuft dieser Job gar nicht erst an und der Deploy
-  # startet sofort.
+  # Skipping works in two ways:
+  #   1. Manual start with the "skip_tests" checkbox set.
+  #   2. "[skip tests]" or "[skip e2e]" anywhere in the commit message.
+  # In both cases this job does not even start and the deploy
+  # starts right away.
   e2e:
     name: Cypress
     runs-on: ubuntu-latest
@@ -43,12 +43,12 @@ jobs:
           node-version: 20
           cache: npm
 
-      # environment.ts liest die Schluessel ueber process.env, die der
-      # DefinePlugin aus .env einsetzt. Ohne Datei blieben die Ausdruecke
-      # undefiniert und der Browser wuerde "process is not defined" melden.
-      # Die Werte sind bedeutungslos: alle externen Dienste sind in den Tests
-      # abgeklemmt.
-      - name: Platzhalter-Schluessel erzeugen
+      # environment.ts reads the keys via process.env, which the
+      # DefinePlugin fills in from .env. Without the file the expressions would stay
+      # undefined and the browser would report "process is not defined".
+      # The values are meaningless: all external services are cut off in the
+      # tests.
+      - name: Create placeholder keys
         run: |
           cat > .env << 'EOF'
           STRIPE_PUBLISHABLE_KEY=pk_test_placeholder
@@ -60,24 +60,24 @@ jobs:
           TINYMCE_API_KEY=test-placeholder
           EOF
 
-      - name: Abhaengigkeiten
+      - name: Dependencies
         run: npm install --force
 
-      - name: Cypress-Cache
+      - name: Cypress cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Cypress-Binary sicherstellen
+      - name: Make sure the Cypress binary is installed
         run: npx cypress install
 
-      # Startet den Dev-Server, wartet auf Port 4200 und laesst danach alle
-      # Specs laufen. Der Server wird am Ende automatisch beendet.
-      - name: E2E-Tests
+      # Starts the dev server, waits for port 4200 and then runs all
+      # specs. The server is stopped automatically at the end.
+      - name: E2E tests
         run: npm run e2e
 
-      - name: Screenshots bei Fehlschlag sichern
+      - name: Keep screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -86,26 +86,26 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  # `always()` ist noetig, damit der Job auch dann laeuft, wenn `e2e`
-  # uebersprungen wurde - ohne das wuerde GitHub ihn mitueberspringen.
-  # Ein wirklich roter Test blockiert weiterhin.
-  # Laeuft parallel zu `e2e` - der Build haengt nicht vom Testergebnis ab.
-  # Ein Deploy kostet dadurch nur noch die Dauer des laengeren der beiden
-  # Jobs statt deren Summe.
+  # `always()` is needed so that the job also runs when `e2e`
+  # was skipped - without it GitHub would skip it as well.
+  # A really red test still blocks.
+  # Runs in parallel to `e2e` - the build does not depend on the test result.
+  # A deploy therefore only takes as long as the longer of the two
+  # jobs instead of their sum.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # `cache: npm` legt ~/.npm zwischen den Laeufen ab, geschluesselt ueber
-      # package-lock.json. Spart den Download der Abhaengigkeiten, solange
-      # sich das Lockfile nicht aendert.
+      # `cache: npm` keeps ~/.npm between runs, keyed by
+      # package-lock.json. Saves downloading the dependencies as long as
+      # the lockfile does not change.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Environment für den neuen Server erzeugen
+      - name: Create the environment for the new server
         run: |
           cat > src/environments/environment.prod.ts << 'EOF'
           const api = 'https://api.benjamin-milcic.dev';
@@ -188,40 +188,40 @@ jobs:
           npm install --force
           npm run build
 
-      - name: Build-Ausgabe finden
+      - name: Find the build output
         id: dist
         run: |
           if   [ -f dist/aznw-routes/browser/index.html ]; then D=dist/aznw-routes/browser
           elif [ -f dist/aznw-routes/index.html ];        then D=dist/aznw-routes
           else D=$(dirname "$(find dist -maxdepth 3 -name index.html | head -1)"); fi
-          echo "Gefunden: $D"
+          echo "Found: $D"
           ls -la "$D" | head
           echo "dir=$D" >> "$GITHUB_OUTPUT"
 
-      # Legt die Commit-Kennung in die Build-Ausgabe, damit spaeter eindeutig
-      # pruefbar ist, welcher Stand live ist - unabhaengig davon, ob sich
-      # Bundle-Namen geaendert haben. Muss vor dem rsync laufen.
-      - name: Build-Kennung schreiben
+      # Puts the commit id into the build output, so that it can later be checked
+      # unambiguously which state is live - regardless of whether
+      # bundle names have changed. Must run before the rsync.
+      - name: Write the build id
         run: |
           printf '{"sha":"%s","run":"%s","built":"%s"}\n' \
             "$GITHUB_SHA" "$GITHUB_RUN_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
             > "${{ steps.dist.outputs.dir }}/build-info.json"
           cat "${{ steps.dist.outputs.dir }}/build-info.json"
 
-      # Der Deploy-Job liegt auf einem eigenen Runner und sieht das dist/
-      # des Builds nicht. Das Artefakt ist die Bruecke dazwischen.
-      - name: Build-Ausgabe als Artefakt ablegen
+      # The deploy job runs on its own runner and cannot see the dist/
+      # of the build. The artifact is the bridge in between.
+      - name: Store the build output as an artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: ${{ steps.dist.outputs.dir }}/
           retention-days: 3
 
-  # Liefert aus, sobald der Build fertig ist und die Tests nicht rot sind.
-  # `always()` loest die Kopplung an uebersprungene Tests; die Abfrage auf
-  # `needs.build.result` verhindert, dass ohne fertigen Build deployt wird.
-  # Checkout und Node braucht dieser Job nicht - er laedt nur das Artefakt
-  # hoch und prueft danach das Ergebnis.
+  # Delivers as soon as the build is done and the tests are not red.
+  # `always()` removes the coupling to skipped tests; the check of
+  # `needs.build.result` prevents deploying without a finished build.
+  # This job needs neither checkout nor Node - it only uploads the artifact
+  # and checks the result afterwards.
   deploy:
     needs: [e2e, build]
     if: >-
@@ -231,30 +231,30 @@ jobs:
       && needs.e2e.result != 'cancelled'
     runs-on: ubuntu-latest
     steps:
-      - name: Build-Ausgabe holen
+      - name: Get the build output
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist-out
 
-      - name: SSH vorbereiten
+      - name: Prepare SSH
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
-      - name: Übertragen
+      - name: Upload
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" \
             dist-out/ \
             "$DEPLOY_USER@$DEPLOY_HOST:$TARGET_DIR"
 
-      # Cloudflare cached /assets/ praktisch unbegrenzt (s-maxage im vHost).
-      # Ohne diesen Schritt liefert die Kante nach einem Deploy weiter die
-      # alte Datei, sobald ein Bild unter gleichem Namen ersetzt wurde -
-      # Angular hasht nur Bundles, nicht den Inhalt von src/assets/.
-      - name: Cloudflare-Cache leeren
+      # Cloudflare caches /assets/ practically forever (s-maxage in the vhost).
+      # Without this step the edge keeps delivering the old file after a deploy
+      # as soon as an image was replaced under the same name -
+      # Angular only hashes bundles, not the content of src/assets/.
+      - name: Purge the Cloudflare cache
         run: |
           resp=$(curl -sS -X POST \
             "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
@@ -263,29 +263,29 @@ jobs:
             --data '{"purge_everything":true}')
           echo "$resp"
           echo "$resp" | grep -q '"success":true' \
-            || { echo "Purge fehlgeschlagen - Kante liefert womoeglich alte Dateien"; exit 1; }      
+            || { echo "Purge failed - the edge may still deliver old files"; exit 1; }      
 
-      # Prueft, dass genau DIESER Commit live ist. Liest die Kennung aus, statt
-      # aus Bundle-Namen zu schliessen - erwischt damit auch Aenderungen, die
-      # keinen Bundle-Hash bewegen (Lazy-Chunks, Bilder, i18n-Dateien).
-      - name: Prüfen
+      # Checks that exactly THIS commit is live. Reads the id instead of
+      # inferring it from bundle names - that way it also catches changes that
+      # do not move a bundle hash (lazy chunks, images, i18n files).
+      - name: Verify
         run: |
-          echo "Erwartet wird sha=$GITHUB_SHA"
+          echo "Expecting sha=$GITHUB_SHA"
           for i in $(seq 1 10); do
             live=$(curl -sS --max-time 15 "https://benjamin-milcic.dev/build-info.json?r=$GITHUB_RUN_ID" || true)
-            echo "Versuch $i: $live"
+            echo "Attempt $i: $live"
             if printf '%s' "$live" | grep -q "\"sha\":\"$GITHUB_SHA\""; then
               code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
-              [ "$code" = "200" ] || { echo "Startseite antwortet mit HTTP $code"; exit 1; }
-              # Seit der Umstellung auf Pfad-Routing haengt jede Unterseite am
-              # SPA-Fallback des Apache. Faellt der aus, ist nur die Startseite
-              # erreichbar - das wuerde die Pruefung oben nicht bemerken.
+              [ "$code" = "200" ] || { echo "Home page answers with HTTP $code"; exit 1; }
+              # Since the switch to path routing every subpage depends on the
+              # SPA fallback of Apache. If it fails, only the home page is
+              # reachable - the check above would not notice that.
               deep=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/gimmicks/map)
-              [ "$deep" = "200" ] || { echo "Deeplink /gimmicks/map antwortet mit HTTP $deep - SPA-Fallback fehlt (FallbackResource/AllowOverride im Apache pruefen)"; exit 1; }
-              echo "Deploy verifiziert - Commit $GITHUB_SHA ist live, Startseite und Deeplink HTTP 200."
+              [ "$deep" = "200" ] || { echo "Deep link /gimmicks/map answers with HTTP $deep - SPA fallback missing (check FallbackResource/AllowOverride in Apache)"; exit 1; }
+              echo "Deploy verified - commit $GITHUB_SHA is live, home page and deep link HTTP 200."
               exit 0
             fi
             sleep 6
           done
-          echo "FEHLER: build-info.json meldet auch nach 10 Versuchen nicht $GITHUB_SHA"
+          echo "ERROR: build-info.json still does not report $GITHUB_SHA after 10 attempts"
           exit 1

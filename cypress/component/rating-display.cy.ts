@@ -1,14 +1,14 @@
 import { RatingDisplayComponent } from '../../src/app/pages/gimmicks/movies/movies-rating-display/movies-rating-display.component';
 
 /**
- * Beispiel fuer Component Testing.
+ * Example of component testing.
  *
- * Die Komponente wird ohne Router, ohne Store und ohne Backend allein im
- * Browser gemountet. Fuer eine reine Anzeigekomponente ist das der schnellste
- * Weg: jede Eingabe laesst sich einzeln durchspielen, ohne vorher durch die
- * halbe Anwendung zu klicken.
+ * The component is mounted alone in the browser without router, store and
+ * backend. For a pure display component that is the fastest
+ * way: every input can be tried out individually, without first clicking
+ * through half the application.
  *
- * Gestartet wird diese Ebene mit `npm run cy:component`.
+ * This level is started with `npm run cy:component`.
  */
 describe('RatingDisplayComponent', () => {
   it('shows the rating with one decimal place', () => {

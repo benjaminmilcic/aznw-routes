@@ -1,17 +1,17 @@
 /**
- * Wegverzeichnis der App fuer datengetriebene Tests.
+ * Route directory of the app for data-driven tests.
  *
- * Die Liste spiegelt `src/app/app.routes.ts`. Kommt dort eine Route dazu,
- * gehoert sie auch hierher - dann deckt `navigation/routing.cy.ts` sie
- * automatisch mit ab.
+ * The list mirrors `src/app/app.routes.ts`. If a route is added there,
+ * it belongs here too - then `navigation/routing.cy.ts` covers it
+ * automatically.
  *
- * Achtung: Ein Tippfehler im Pfad faellt NICHT ueber den Statuscode auf.
- * Unbekannte Pfade liefern HTTP 200 mit der PageNotFoundComponent. Genau
- * deshalb prueft der Routing-Test zusaetzlich, dass die 404-Seite NICHT
- * erscheint.
+ * Caution: A typo in the path does NOT show up via the status code.
+ * Unknown paths return HTTP 200 with the PageNotFoundComponent. Exactly
+ * for that reason the routing test additionally checks that the 404 page does NOT
+ * appear.
  */
 
-/** Alle Spiele unter /gimmicks/games. */
+/** All games under /gimmicks/games. */
 export const GAME_PATHS = [
   'tiktaktoe',
   'connect-four',
@@ -34,7 +34,7 @@ export const GAME_PATHS = [
 
 export const GAME_ROUTES = GAME_PATHS.map((game) => `/gimmicks/games/${game}`);
 
-/** Routen, die ohne Anmeldung direkt aufrufbar sind. */
+/** Routes that can be opened directly without signing in. */
 export const PUBLIC_ROUTES: string[] = [
   '/',
   '/gimmicks',
@@ -57,7 +57,7 @@ export const PUBLIC_ROUTES: string[] = [
   ...GAME_ROUTES,
 ];
 
-/** Umleitungen aus app.routes.ts: aufgerufener Pfad -> erwartetes Ziel. */
+/** Redirects from app.routes.ts: requested path -> expected target. */
 export const REDIRECTS: Array<{ from: string; to: string }> = [
   { from: '/gimmicks/auth', to: '/gimmicks/auth/login' },
   { from: '/gimmicks/games', to: '/gimmicks/games/connect-four' },
@@ -66,7 +66,7 @@ export const REDIRECTS: Array<{ from: string; to: string }> = [
 
 ];
 
-/** Anker der Startseite, die der knownFragmentGuard durchlaesst. */
+/** Anchors of the home page that the knownFragmentGuard lets through. */
 export const HOME_FRAGMENTS = [
   'header',
   'about',

@@ -4,23 +4,23 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Oeffnet eine Route der App und wartet, bis der Ladebildschirm aus
-       * index.html verschwunden ist. Setzt auf Wunsch Sprache, angemeldeten
-       * Benutzer und einen deterministischen Zufallsgenerator, bevor die
-       * Anwendung startet.
+       * Opens a route of the app and waits until the loading screen from
+       * index.html has disappeared. Optionally sets language, signed-in
+       * user and a deterministic random generator before the
+       * application starts.
        */
       visitApp(path: string, options?: VisitAppOptions): Chainable<void>;
 
-      /** Kurzform fuer `cy.get('[data-cy="..."]')`. */
+      /** Short form for `cy.get('[data-cy="..."]')`. */
       byCy(name: string): Chainable<JQuery<HTMLElement>>;
 
-      /** Text des Elements ohne umgebende Leerzeichen (auch geschuetzte). */
+      /** Text of the element without surrounding spaces (including non-breaking ones). */
       trimmedText(): Chainable<string>;
 
-      /** Schaltet Schriften, Icon-Kits, Google Maps, Kacheln und Analytics ab. */
+      /** Turns off fonts, icon kits, Google Maps, tiles and analytics. */
       stubExternals(): Chainable<void>;
 
-      /** Beantwortet alle sonst offenen API-Aufrufe mit einer leeren Liste. */
+      /** Answers all otherwise open API calls with an empty list. */
       stubBackend(): Chainable<void>;
     }
   }

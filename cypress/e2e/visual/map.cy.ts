@@ -1,14 +1,14 @@
 /**
- * Kartenseite.
+ * Map page.
  *
- * Die Karte selbst gehoert Google. In Tests wird das Maps-Skript durch eine
- * leere Datei ersetzt (siehe `cy.stubExternals`), damit kein Testlauf einen
- * gueltigen Schluessel braucht oder Kosten verursacht.
+ * The map itself belongs to Google. In tests the Maps script is replaced by an
+ * empty file (see `cy.stubExternals`), so that no test run needs a
+ * valid key or causes costs.
  *
- * Genau deshalb ist hier das Interessante nicht das Kartenbild, sondern das,
- * was die App SELBST tut: sie fordert das Skript mit den richtigen Parametern
- * an und laedt es bei einem Sprachwechsel neu. Beides ist pruefbar, ohne dass
- * je eine Karte gezeichnet wird.
+ * That's exactly why the interesting part here is not the map image, but
+ * what the app ITSELF does: it requests the script with the right parameters
+ * and reloads it on a language change. Both can be checked without
+ * a map ever being drawn.
  */
 describe('Map page', () => {
   const MAPS_SCRIPT = { hostname: 'maps.googleapis.com' };
@@ -63,9 +63,9 @@ describe('Map page', () => {
   });
 
   it('does not draw a map while the script is unavailable', () => {
-    // Festgehaltenes Verhalten: ohne geladenes Skript bleibt
-    // `MapService.mapsReady` false und <google-map> wird gar nicht erzeugt -
-    // die Seite bleibt aber bedienbar und stuerzt nicht ab.
+    // Pinned-down behavior: without a loaded script
+    // `MapService.mapsReady` stays false and <google-map> is not created at all -
+    // but the page stays usable and does not crash.
     cy.visitApp('/gimmicks/map');
 
     cy.get('google-map').should('not.exist');

@@ -104,13 +104,13 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  /* NUR opacity und transform animieren.
-     Mit "transition: all" laufen auch visibility und pointer-events mit: beim
-     Schließen springt pointer-events erst nach der halben Dauer auf "none" und
-     visibility erst ganz am Ende. Dieses Panel ist mehrere hundert Pixel hoch
-     und ragt weit ins Spielfeld – es hat danach noch ~300 ms lang Klicks
-     abgefangen, unsichtbar bis auf seinen großen Schatten. Wer die Maus auf dem
-     Weg zum Spiel über "Gimmicks" führte, musste deshalb zweimal klicken. */
+  /* ONLY animate opacity and transform.
+     With "transition: all" visibility and pointer-events are animated too: when
+     closing, pointer-events only switches to "none" after half the duration and
+     visibility only at the very end. This panel is several hundred pixels high
+     and reaches far into the game area – afterwards it kept catching clicks for
+     ~300 ms, invisible except for its large shadow. Whoever moved the mouse over
+     "Gimmicks" on the way to the game therefore had to click twice. */
   transition:
     opacity 0.3s var(--transition-smooth),
     transform 0.3s var(--transition-smooth);
@@ -381,9 +381,9 @@
   visibility: hidden;
   pointer-events: none;
   z-index: 1001;
-  /* Gleiche Falle wie beim Mega-Menü, nur schlimmer: dieses Element liegt mit
-     inset:0 über der GANZEN Seite. Mit "transition: all" blieb es nach dem
-     Schließen noch 0,4 s sichtbar und klickbar und hat jeden Klick geschluckt. */
+  /* Same trap as with the mega menu, only worse: this element lies with
+     inset:0 over the WHOLE page. With "transition: all" it stayed visible and
+     clickable for 0.4 s after closing and swallowed every click. */
   transition:
     opacity 0.4s var(--transition-smooth),
     backdrop-filter 0.4s var(--transition-smooth);

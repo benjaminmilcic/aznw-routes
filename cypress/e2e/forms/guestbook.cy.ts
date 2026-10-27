@@ -1,11 +1,11 @@
 import { API_PATHS, apiRoute } from '../../support/api';
 /**
- * Gaestebuch.
+ * Guestbook.
  *
- * Der Beitragstext entsteht im TinyMCE-Editor, der aus der Cloud nachgeladen
- * wird und in Tests bewusst nicht zur Verfuegung steht. Geprueft wird deshalb
- * alles drumherum: Liste, Sortierung, Dialog und die Anfrage an die API - der
- * Editor selbst ist fremder Code und braucht keinen eigenen Test.
+ * The post text is written in the TinyMCE editor, which is loaded from the cloud
+ * and is deliberately not available in tests. That's why everything around it
+ * is checked: list, sorting, dialog and the request to the API - the
+ * editor itself is third-party code and needs no test of its own.
  */
 describe('Guestbook', () => {
   const POSTS = API_PATHS.guestbook;
@@ -28,7 +28,7 @@ describe('Guestbook', () => {
     cy.visitApp('/gimmicks/guestbook');
     cy.wait('@loadPosts');
 
-    // Fixture-Reihenfolge ist bewusst unsortiert: 2026-03, 2026-05, 2026-01.
+    // The fixture order is deliberately unsorted: 2026-03, 2026-05, 2026-01.
     cy.byCy('guestbook-post').eq(0).should('contain.text', 'Alan Turing');
     cy.byCy('guestbook-post').eq(1).should('contain.text', 'Ada Lovelace');
     cy.byCy('guestbook-post').eq(2).should('contain.text', 'Grace Hopper');
@@ -78,7 +78,7 @@ describe('Guestbook', () => {
       expect(body).to.have.property('date');
     });
 
-    // Nach dem Speichern wird die Liste neu geladen und der Dialog schliesst.
+    // After saving, the list is reloaded and the dialog closes.
     cy.wait('@loadPosts');
     cy.byCy('guestbook-dialog').should('not.be.visible');
   });

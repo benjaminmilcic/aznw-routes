@@ -1,14 +1,14 @@
 import { PUBLIC_ROUTES, REDIRECTS } from '../../support/app-routes';
 
 /**
- * Jede oeffentliche Route wird DIREKT aufgerufen, nicht ueber das Menue
- * angeklickt. Damit haengt der Test am SPA-Fallback und am Lazy-Chunk der
- * Route - genau die beiden Dinge, die beim Umstieg auf Pfad-Routing kaputt
- * gehen koennen.
+ * Every public route is opened DIRECTLY, not clicked in the menu.
+ * That way the test depends on the SPA fallback and the lazy chunk of the
+ * route - exactly the two things that can break when switching to path
+ * routing.
  *
- * Ein unbekannter Pfad liefert HTTP 200 mit der PageNotFoundComponent. Der
- * Statuscode taugt hier also nicht als Beweis; geprueft wird stattdessen,
- * dass die 404-Seite NICHT erscheint.
+ * An unknown path returns HTTP 200 with the PageNotFoundComponent. So the
+ * status code is no proof here; instead it is checked
+ * that the 404 page does NOT appear.
  */
 describe('Routing', () => {
   PUBLIC_ROUTES.forEach((route) => {

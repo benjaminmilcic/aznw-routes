@@ -1,11 +1,11 @@
 import { API_PATHS, apiRoute } from '../../support/api';
 /**
- * Kontaktformular auf der Startseite.
+ * Contact form on the home page.
  *
- * Der Versand geht an `environment.contact.form2mailApi`. Kein Test darf dort
- * wirklich landen - sonst kaeme bei jedem Lauf eine echte Mail an. Deshalb
- * faengt jeder Test die Anfrage ab und prueft stattdessen, WAS gesendet
- * worden waere.
+ * The message goes to `environment.contact.form2mailApi`. No test may really
+ * end up there - otherwise a real mail would arrive on every run. That's why
+ * every test intercepts the request and instead checks WHAT would have
+ * been sent.
  */
 describe('Contact form', () => {
   const SEND = API_PATHS.contact;
@@ -89,7 +89,7 @@ describe('Contact form', () => {
 
     cy.get('#toast-container .toast-error').should('be.visible');
     cy.get('#toast-container .toast-success').should('not.exist');
-    // Die Eingaben bleiben stehen, damit niemand seinen Text neu tippen muss.
+    // The inputs stay, so that nobody has to retype their text.
     cy.get('#message').should('not.have.value', '');
   });
 

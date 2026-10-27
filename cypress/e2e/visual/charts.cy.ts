@@ -1,14 +1,14 @@
 /**
- * Diagramm-Seite.
+ * Charts page.
  *
- * Chart.js zeichnet in ein <canvas>. Pixel zu vergleichen waere sinnlos und
- * bei jeder Stiländerung rot. Geprueft wird deshalb die Verdrahtung: kommt
- * beim Umschalten der Diagrammtyp an, entsteht eine Zeichenflaeche mit echter
- * Groesse, und reagieren die Filter darunter.
+ * Chart.js draws into a <canvas>. Comparing pixels would be pointless and
+ * red on every style change. That's why the wiring is checked: does
+ * the chart type arrive when switching, is a drawing area with a real
+ * size created, and do the filters below react.
  *
- * Die Segmente werden ueber ihren `value` angesprochen, nicht ueber ihre
- * Beschriftung: das <ion-label> darin hat `pointer-events: none` und laesst
- * sich gar nicht anklicken - ausserdem bleibt der Test so sprachunabhaengig.
+ * The segments are addressed via their `value`, not via their
+ * label: the <ion-label> inside has `pointer-events: none` and cannot
+ * be clicked at all - besides, the test stays language-independent that way.
  */
 describe('Charts', () => {
   const segment = (value: string) =>

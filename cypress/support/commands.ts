@@ -1,23 +1,23 @@
 /// <reference types="cypress" />
 
 /**
- * Eigene Befehle fuer aznw-routes.
+ * Custom commands for aznw-routes.
  *
- * Zwei Dinge muessen in dieser App vor dem Start der Anwendung passieren und
- * lassen sich deshalb nicht nachtraeglich im Test erledigen:
+ * Two things in this app have to happen before the application starts and
+ * therefore cannot be done afterwards in the test:
  *
- *  1. Die Sprache. Der AppComponent liest im Konstruktor `navigator.language`
- *     und ruft damit `translate.use(..)`. Wer die Sprache eines Tests
- *     festnageln will, muss `navigator.language` VOR dem Bootstrap setzen.
- *  2. Der Zufall. Spiele ziehen teilweise schon im Konstruktor Zufallszahlen.
- *     Ein spaeter gesetzter Stub kaeme zu spaet.
+ *  1. The language. The AppComponent reads `navigator.language` in its constructor
+ *     and calls `translate.use(..)` with it. Whoever wants to pin down the language
+ *     of a test must set `navigator.language` BEFORE the bootstrap.
+ *  2. Randomness. Some games already draw random numbers in the constructor.
+ *     A stub set later would come too late.
  *
- * Beides erledigt `cy.visitApp()` in `onBeforeLoad`.
+ * `cy.visitApp()` does both in `onBeforeLoad`.
  */
 
 export type AppLanguage = 'de' | 'en' | 'hr';
 
-/** Browsersprache, die im AppComponent auf die jeweilige App-Sprache abbildet. */
+/** Browser language that maps to the respective app language in the AppComponent. */
 const BROWSER_LOCALE: Record<AppLanguage, string> = {
   de: 'de-DE',
   en: 'en-US',
@@ -27,24 +27,24 @@ const BROWSER_LOCALE: Record<AppLanguage, string> = {
 export interface SeedAuthOptions {
   email?: string;
   id?: string;
-  /** Gueltigkeit in Sekunden. Negativ = bereits abgelaufen. */
+  /** Validity in seconds. Negative = already expired. */
   expiresInSeconds?: number;
 }
 
 export interface VisitAppOptions {
-  /** Sprache, in der die App startet. Standard: de. */
+  /** Language in which the app starts. Default: de. */
   lang?: AppLanguage;
-  /** Legt vor dem Start einen angemeldeten Benutzer in den localStorage. */
+  /** Puts a signed-in user into localStorage before the start. */
   auth?: boolean | SeedAuthOptions;
-  /** Ersetzt Math.random durch einen deterministischen Generator. */
+  /** Replaces Math.random with a deterministic generator. */
   randomSeed?: number;
-  /** Feste Folge von Zufallswerten, die zyklisch zurueckgegeben wird. */
+  /** Fixed sequence of random values that is returned cyclically. */
   randomValues?: number[];
-  /** Zusaetzliche Vorbereitung am Fenster, bevor die App startet. */
+  /** Additional preparation on the window before the app starts. */
   onBeforeLoad?: (win: Cypress.AUTWindow) => void;
 }
 
-/** 1x1-Pixel-PNG als Antwort fuer Kartenkacheln und externe Bilder. */
+/** 1x1 pixel PNG as the response for map tiles and external images. */
 const TRANSPARENT_PNG_BASE64 =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
@@ -53,9 +53,9 @@ export function transparentPng() {
 }
 
 /**
- * Baut ein JWT mit gueltiger Struktur (Header.Payload.Signatur), aber ohne
- * echte Signatur. Reicht dem Frontend: `AuthService.setUserFromToken` liest
- * nur die Nutzdaten, geprueft wird die Signatur ausschliesslich im Backend.
+ * Builds a JWT with a valid structure (header.payload.signature), but without
+ * a real signature. Enough for the frontend: `AuthService.setUserFromToken` only reads
+ * the payload, the signature is only checked in the backend.
  */
 export function makeJwt(
   email = 'testuser@example.com',
@@ -77,7 +77,7 @@ export function makeJwt(
   return header + '.' + payload + '.testsignature';
 }
 
-/** Inhalt des localStorage-Schluessels `authUserData`, so wie AuthUser ihn ablegt. */
+/** Content of the localStorage key `authUserData`, as AuthUser stores it. */
 export function authUserData(options: SeedAuthOptions = {}) {
   const email = options.email ?? 'testuser@example.com';
   const id = options.id ?? 'test-user-id';
@@ -91,7 +91,7 @@ export function authUserData(options: SeedAuthOptions = {}) {
   };
 }
 
-/** Deterministischer Ersatz fuer Math.random (mulberry32). */
+/** Deterministic replacement for Math.random (mulberry32). */
 function installSeededRandom(win: Cypress.AUTWindow, seed: number): void {
   let state = seed >>> 0;
   win.Math.random = () => {
@@ -103,7 +103,7 @@ function installSeededRandom(win: Cypress.AUTWindow, seed: number): void {
   };
 }
 
-/** Gibt eine feste Folge von Werten zurueck und beginnt danach von vorn. */
+/** Returns a fixed sequence of values and then starts over. */
 function installFixedRandom(win: Cypress.AUTWindow, values: number[]): void {
   let index = 0;
   win.Math.random = () => values[index++ % values.length];
@@ -144,8 +144,8 @@ Cypress.Commands.add(
       },
     });
 
-    // Der Ladebildschirm aus index.html verschwindet erst, wenn die erste
-    // Route samt Lazy-Chunk fertig ist. Vorher hat kein Test etwas zu suchen.
+    // The loading screen from index.html only disappears when the first
+    // route including its lazy chunk is ready. Before that no test has anything to look for.
     cy.get('#appLoader', { timeout: 90000 }).should('not.exist');
   },
 );
@@ -153,26 +153,26 @@ Cypress.Commands.add(
 Cypress.Commands.add('byCy', (name: string) => cy.get('[data-cy="' + name + '"]'));
 
 /**
- * Text eines Elements ohne umgebende Leerzeichen.
+ * Text of an element without surrounding spaces.
  *
- * Angular rendert Ausdruecke wie `{{ board[0][0] }}` samt der Zeilenumbrueche
- * aus dem Template; im DOM steht dann " X ". `have.text` schlaegt
- * dabei fehl, obwohl die Anzeige stimmt. Als Query ist der Befehl
- * wiederholbar - `should` wartet also weiterhin auf den erwarteten Wert.
+ * Angular renders expressions like `{{ board[0][0] }}` including the line breaks
+ * from the template; the DOM then contains " X ". `have.text` fails
+ * on that, even though the display is correct. As a query the command is
+ * retryable - so `should` still waits for the expected value.
  */
 Cypress.Commands.addQuery('trimmedText', function trimmedText() {
   return (subject: JQuery<HTMLElement>) => subject.text().trim();
 });
 
 /**
- * Schaltet alles ab, was ein Test weder braucht noch beeinflussen kann:
- * Schriften, Icon-Kits, das Google-Maps-Skript, Kartenkacheln und die
- * Besucherstatistik. Laeuft global vor jedem Test.
+ * Turns off everything a test neither needs nor can influence:
+ * fonts, icon kits, the Google Maps script, map tiles and the
+ * visitor statistics. Runs globally before every test.
  *
- * Wichtig: das Google-Maps-Skript wird bewusst durch eine LEERE Datei ersetzt.
- * Damit ruft es seinen Callback nie auf, `MapService.mapsReady` bleibt false
- * und die Seite verhaelt sich genau wie mit fehlendem API-Key - nur ohne
- * Netzwerkzugriff und ohne Kosten.
+ * Important: the Google Maps script is deliberately replaced by an EMPTY file.
+ * That way it never calls its callback, `MapService.mapsReady` stays false
+ * and the page behaves exactly as with a missing API key - just without
+ * network access and without costs.
  */
 Cypress.Commands.add('stubExternals', () => {
   const emptyScript = {
@@ -192,7 +192,7 @@ Cypress.Commands.add('stubExternals', () => {
   );
   cy.intercept({ hostname: 'fonts.gstatic.com' }, { statusCode: 200, body: '' });
 
-  // Kartenkacheln und externe Bilder: ein transparentes Pixel reicht.
+  // Map tiles and external images: a transparent pixel is enough.
   const pixel = {
     statusCode: 200,
     headers: { 'content-type': 'image/png' },
@@ -202,22 +202,22 @@ Cypress.Commands.add('stubExternals', () => {
   cy.intercept({ hostname: /maptiler\.com$/ }, pixel);
   cy.intercept({ hostname: 'image.tmdb.org' }, pixel);
 
-  // Besucherstatistik: laeuft nur im Prod-Build, wird hier trotzdem
-  // abgefangen, damit ein Testlauf niemals in der echten Auswertung landet.
+  // Visitor statistics: only runs in the prod build, but is still
+  // intercepted here, so that a test run never ends up in the real statistics.
   cy.intercept('POST', '**/analytics/**', { statusCode: 204, body: {} }).as(
     'analytics',
   );
 });
 
 /**
- * Faengt jede Anfrage an die eigene API ab, fuer die kein Test etwas
- * Spezifisches vorgibt, und beantwortet sie mit einer leeren Liste.
- * Verhindert, dass ein Test unbemerkt gegen ein laufendes lokales Backend
- * arbeitet und dadurch je nach Umgebung anders ausgeht.
+ * Intercepts every request to our own API for which no test specifies anything
+ * specific, and answers it with an empty list.
+ * Prevents a test from unknowingly working against a running local backend
+ * and therefore turning out differently depending on the environment.
  *
- * Spezifischere `cy.intercept`-Regeln, die ein Test SPAETER registriert,
- * gewinnen gegen diesen Auffangbehaelter - Cypress wertet die zuletzt
- * registrierte passende Regel zuerst aus.
+ * More specific `cy.intercept` rules that a test registers LATER
+ * win against this catch-all - Cypress evaluates the most recently
+ * registered matching rule first.
  */
 Cypress.Commands.add('stubBackend', () => {
   const fallback = { statusCode: 200, body: [] };
@@ -229,8 +229,8 @@ Cypress.Commands.add('stubBackend', () => {
     body: { responseData: { translatedText: '' }, responseStatus: 200 },
   });
 
-  // Zusatzdaten der Laenderseite. Die Laenderliste selbst liegt als Asset im
-  // Projekt (`assets/data/countries-v3.1.json`) und bleibt echt.
+  // Additional data of the countries page. The country list itself is an asset in the
+  // project (`assets/data/countries-v3.1.json`) and stays real.
   cy.intercept({ hostname: /wikipedia\.org$/ }, { statusCode: 200, body: {} });
   cy.intercept({ hostname: 'api.open-meteo.com' }, { statusCode: 200, body: {} });
   cy.intercept({ hostname: 'api.worldbank.org' }, { statusCode: 200, body: [] });

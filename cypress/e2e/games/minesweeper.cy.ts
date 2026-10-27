@@ -1,10 +1,10 @@
 /**
  * Minesweeper.
  *
- * Reine Browser-Logik mit Signals, kein Backend. Interessant sind die Regeln,
- * die man leicht falsch implementiert: das erste Feld darf nie eine Mine sein,
- * Flaggen zaehlen den Minenzaehler herunter, und die Uhr laeuft erst ab dem
- * ersten Klick.
+ * Pure browser logic with signals, no backend. Interesting are the rules
+ * that are easy to implement wrongly: the first cell must never be a mine,
+ * flags count the mine counter down, and the clock only runs from the
+ * first click.
  */
 describe('Minesweeper', () => {
   const beginner = { rows: 9, cols: 9, mines: 10 };
@@ -26,8 +26,8 @@ describe('Minesweeper', () => {
   });
 
   it('never puts a mine under the very first click', () => {
-    // Ohne diese Regel koennte das Spiel im ersten Zug verloren sein. Der
-    // feste Startwert des Zufallsgenerators macht den Fall reproduzierbar.
+    // Without this rule the game could be lost on the first move. The
+    // fixed seed of the random generator makes the case reproducible.
     cy.get('.cell').first().click();
 
     cy.get('.cell').first().should('have.class', 'revealed');
@@ -37,8 +37,8 @@ describe('Minesweeper', () => {
   it('opens an area of empty cells in one click', () => {
     cy.get('.cell').first().click();
 
-    // Ein leeres Feld deckt seine Nachbarn mit auf - ein einzelner Klick
-    // legt daher mehr als nur ein Feld frei.
+    // An empty cell reveals its neighbors too - a single click
+    // therefore uncovers more than just one cell.
     cy.get('.cell.revealed').should('have.length.at.least', 2);
   });
 

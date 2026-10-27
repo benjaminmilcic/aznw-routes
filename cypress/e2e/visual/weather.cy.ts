@@ -1,11 +1,11 @@
 /**
- * Wetterseite.
+ * Weather page.
  *
- * Die Seite bietet zwei Wege zum Ort: den Geraetestandort oder die Suche nach
- * einer Stadt. Die Staedteliste kommt aus der eigenen API und wird gestubbt.
+ * The page offers two ways to the location: the device location or the search for
+ * a city. The city list comes from our own API and is stubbed.
  *
- * Die Segmente werden ueber ihren `value` angesprochen: das <ion-label> darin
- * hat `pointer-events: none` und laesst sich nicht anklicken.
+ * The segments are addressed via their `value`: the <ion-label> inside
+ * has `pointer-events: none` and cannot be clicked.
  */
 describe('Weather', () => {
   const CITIES = '/geolocation/cities';
@@ -58,8 +58,8 @@ describe('Weather', () => {
     cy.byCy('weather-country').click();
     cy.get('mat-option').should('have.length.at.least', 10);
 
-    // Das Suchfeld des Panels ist erst sichtbar, wenn das Panel offen ist -
-    // dieselbe Komponente existiert davor schon versteckt im DOM.
+    // The panel's search field is only visible when the panel is open -
+    // the same component already exists hidden in the DOM before that.
     cy.get('.mat-select-search-input:visible').type('Germ');
     cy.get('mat-option').should('have.length.at.least', 1);
 
@@ -72,8 +72,8 @@ describe('Weather', () => {
 
     cy.byCy('weather-city').type('Berlin');
 
-    // Die Suche fragt bei jedem Tastendruck nach; die erste Anfrage traegt
-    // erst "Be". Geprueft wird deshalb die zuletzt gesendete Anfrage.
+    // The search queries on every keystroke; the first request only carries
+    // "Be". That's why the last request sent is checked.
     cy.wait('@loadCities');
     cy.get('@loadCities.all').should((calls: any[]) => {
       expect(calls[calls.length - 1].request.url).to.include('q=Berlin');

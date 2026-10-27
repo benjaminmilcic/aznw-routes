@@ -1,10 +1,10 @@
 /**
- * Titel, Beschreibung und Canonical je Route.
+ * Title, description and canonical per route.
  *
- * Der SeoService setzt sie bei jedem NavigationEnd und bei jedem
- * Sprachwechsel. Da die Seite ohne SSR ausgeliefert wird, ist das die einzige
- * Stelle, an der diese Angaben ueberhaupt entstehen - ein Fehler hier faellt
- * im Alltag niemandem auf, kostet aber Sichtbarkeit in der Suche.
+ * The SeoService sets them on every NavigationEnd and on every
+ * language change. Since the site is delivered without SSR, this is the only
+ * place where this information is created at all - an error here is
+ * noticed by nobody in everyday use, but costs visibility in search.
  */
 describe('SEO metadata', () => {
   const DEFAULT_TITLE = 'Benjamin Milčić - Full Stack Web Developer';

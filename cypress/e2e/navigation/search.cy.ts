@@ -1,10 +1,10 @@
 /**
- * Suche in der Navigationsleiste.
+ * Search in the navigation bar.
  *
- * Die Suche arbeitet zweistufig: sofort lexikalisch aus SEARCHABLE_ROUTES,
- * danach zusaetzlich semantisch ueber die API. Die Tests pruefen die
- * lexikalische Stufe - sie ist die einzige, die ohne Backend garantiert
- * Ergebnisse liefert, und genau das soll auch so bleiben.
+ * The search works in two stages: immediately lexical from SEARCHABLE_ROUTES,
+ * then additionally semantic via the API. The tests check the
+ * lexical stage - it is the only one that is guaranteed to deliver results
+ * without a backend, and that is exactly how it should stay.
  */
 describe.skip('Search', () => {
   beforeEach(() => {
@@ -21,9 +21,9 @@ describe.skip('Search', () => {
   it('finds the skills section by keyword', () => {
     cy.get('.search-input').type('cypress');
 
-    // Bewusst ohne Anspruch an die Reihenfolge: die Rangfolge kommt aus
-    // Fuse.js und darf sich beim Nachschaerfen des Index aendern. Wichtig
-    // ist, dass das Stichwort ueberhaupt zur richtigen Sektion fuehrt.
+    // Deliberately without any claim on the order: the ranking comes from
+    // Fuse.js and may change when the index is fine-tuned. What matters
+    // is that the keyword leads to the right section at all.
     cy.get('.search-result-item').should('have.length.at.least', 1);
     cy.get('.search-result-item').filter(':contains("Fähigkeiten")').should('exist');
   });
