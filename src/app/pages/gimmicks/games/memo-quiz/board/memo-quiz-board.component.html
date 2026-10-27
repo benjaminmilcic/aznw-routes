@@ -1,6 +1,6 @@
 @if (game(); as g) {
 <div class="board-screen">
-  <!-- Kopfzeile: beide Spieler mit Punktestand + wer dran ist -->
+  <!-- Header: both players with score + whose turn it is -->
   <header class="bar">
     <div class="players">
       <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
@@ -50,7 +50,7 @@
     </button>
   </header>
 
-  <!-- Spielfeld -->
+  <!-- Board -->
   <main class="field-wrap">
     <div class="board" [style.--cols]="cols()" [style.--ratio]="ratio()">
       @for (card of g.board; track $index) {
@@ -66,7 +66,7 @@
     </div>
   </main>
 
-  <!-- Warten auf Mitspieler (nur online) -->
+  <!-- Waiting for the other player (online only) -->
   @if (g.status === 'waiting') {
   <div class="overlay">
     <div class="panel">
@@ -81,10 +81,10 @@
   </div>
   }
 
-  <!-- Spielende -->
+  <!-- Game over -->
   @if (g.status === 'finished') {
   <div class="overlay">
-    <!-- Der Dialog lässt sich zur Seite schieben, um das Spielfeld zu sehen. -->
+    <!-- The dialog can be pushed aside to see the board. -->
     <div
       class="panel"
       appDraggable

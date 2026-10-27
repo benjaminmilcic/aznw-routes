@@ -1,6 +1,6 @@
-/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild ueber die Seite. Ohne eigene
-   Positionierung liegt dieses Overlay ueber den Antwort-Knoepfen. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. Without its own
+   positioning this overlay lies on top of the answer buttons. */
 :host {
   display: block;
   position: relative;
@@ -25,7 +25,7 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-/* ---- Laden und Fehler --------------------------------------------------- */
+/* ---- Loading and errors ------------------------------------------------- */
 .trivia-state {
   margin: 1.5rem 0 0;
   text-align: center;
@@ -48,7 +48,7 @@
   margin: 0;
 }
 
-/* ---- Kopfzeile mit Zaehler und Punkten ---------------------------------- */
+/* ---- Header with counter and points ------------------------------------- */
 .trivia-hud {
   display: flex;
   flex-wrap: wrap;
@@ -112,7 +112,7 @@
   transition: width 0.3s ease;
 }
 
-/* ---- Fragekarte --------------------------------------------------------- */
+/* ---- Question card ------------------------------------------------------ */
 .trivia-card {
   background: rgba(255, 255, 255, 0.96);
   border-radius: 1.25rem;
@@ -121,7 +121,7 @@
   box-sizing: border-box;
 }
 
-/* Themenbereich als kleiner Chip ueber der Frage */
+/* Topic as a small chip above the question */
 .trivia-category {
   display: inline-block;
   margin: 0 0 0.55rem;
@@ -143,7 +143,7 @@
   font-weight: 700;
 }
 
-/* Erklaerende Illustration, steht in der Erlaeuterung unter dem Text */
+/* Explanatory illustration, placed in the explanation below the text */
 .trivia-illustration {
   display: block;
   width: 100%;
@@ -155,7 +155,7 @@
   background: #ffffff;
 }
 
-/* ---- Antworten ---------------------------------------------------------- */
+/* ---- Answers ------------------------------------------------------------ */
 .trivia-answers {
   display: flex;
   flex-direction: column;
@@ -241,7 +241,7 @@
   opacity: 0.55;
 }
 
-/* ---- Erlaeuterung ------------------------------------------------------- */
+/* ---- Explanation -------------------------------------------------------- */
 .trivia-explanation {
   border-radius: 1.25rem;
   border: 2px solid;
@@ -329,7 +329,7 @@
   line-height: 1.625;
 }
 
-/* ---- Auswertung --------------------------------------------------------- */
+/* ---- Evaluation --------------------------------------------------------- */
 .trivia-result {
   background: linear-gradient(145deg, #fef9c3 0%, #fde047 55%, #facc15 100%);
   border: 1px solid rgba(180, 83, 9, 0.35);
@@ -362,7 +362,7 @@
   line-height: 1.5;
 }
 
-/* ---- Knoepfe ------------------------------------------------------------ */
+/* ---- Buttons ------------------------------------------------------------ */
 .trivia-button {
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 999px;

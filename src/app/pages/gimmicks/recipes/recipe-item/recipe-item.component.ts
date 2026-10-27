@@ -46,14 +46,14 @@ export class RecipeItemComponent {
     null
   );
 
-  // Kombiniert Original und Übersetzung
+  // Combines original and translation
   recipe: Observable<Recipe> = combineLatest([
     toObservable(this.recipeId).pipe(
       switchMap((id) => this.store.select(selectRecipeById(id))),
       tap((recipe) => {
         if (recipe) {
           this.originalRecipe$.next(recipe);
-          // Sprache beim Laden erkennen
+          // Detect the language on load
           const lang = this.recipeService.detectLanguage(recipe.preparation);
           this.detectedLanguage.set(lang);
         }
@@ -62,7 +62,7 @@ export class RecipeItemComponent {
     this.translatedRecipe$,
   ]).pipe(
     map(([original, translated]) => {
-      // Zeige Übersetzung wenn vorhanden, sonst Original
+      // Show the translation if available, otherwise the original
       return translated || original;
     })
   );
@@ -86,7 +86,7 @@ export class RecipeItemComponent {
         }
         this.recipeId.set(id);
         this.error.set(false);
-        // Zurücksetzen der Übersetzung bei Rezept-Wechsel
+        // Reset the translation when the recipe changes
         this.translatedRecipe$.next(null);
         this.currentLanguage.set(null);
       });
@@ -100,11 +100,11 @@ export class RecipeItemComponent {
   }
 
   onPrint() {
-    // Speichere die aktuell angezeigte Version (übersetzt oder original) temporär
+    // Temporarily store the currently shown version (translated or original)
     const currentRecipe = this.translatedRecipe$.value || this.originalRecipe$.value;
 
     if (currentRecipe) {
-      // Speichere das aktuelle Rezept im sessionStorage für den Print-View
+      // Store the current recipe in sessionStorage for the print view
       sessionStorage.setItem('recipe_print_temp', JSON.stringify(currentRecipe));
     }
 
@@ -119,7 +119,7 @@ export class RecipeItemComponent {
   }
 
   /**
-   * Übersetzt das Rezept in die gewählte Sprache
+   * Translates the recipe into the selected language
    */
   translateTo(language: SupportedLanguage) {
     const original = this.originalRecipe$.value;
@@ -131,7 +131,7 @@ export class RecipeItemComponent {
     this.isTranslating.set(true);
     this.currentLanguage.set(language);
 
-    // Dispatch Action für Translation Start
+    // Dispatch the action for translation start
     this.store.dispatch(RecipeActions.translateRecipe({ recipeId: original.id }));
 
     this.recipeService.translateRecipe(original, language).subscribe({
@@ -146,7 +146,7 @@ export class RecipeItemComponent {
         console.error('Translation failed:', error);
         this.isTranslating.set(false);
 
-        // Fehler-Mapping basierend auf aktueller Sprache
+        // Error mapping based on the current language
         let errorMessage = '';
         const errorCode = error.message;
 
@@ -174,7 +174,7 @@ export class RecipeItemComponent {
   }
 
   /**
-   * Zeigt das Original-Rezept an
+   * Shows the original recipe
    */
   showOriginal() {
     this.translatedRecipe$.next(null);
@@ -182,23 +182,23 @@ export class RecipeItemComponent {
   }
 
   /**
-   * Löscht den gesamten Übersetzungs-Cache
+   * Clears the entire translation cache
    */
   clearCache() {
     this.recipeService.clearTranslationCache();
-    this.showOriginal(); // Zeige Original nach Cache-Leerung
+    this.showOriginal(); // Show the original after clearing the cache
     console.log('Translation cache cleared');
   }
 
   /**
-   * Gibt die Sprach-Labels zurück
+   * Returns the language labels
    */
   getLanguageLabel(lang: SupportedLanguage): string {
     return this.translate.instant(`gimmicks.recipes.${lang === 'de' ? 'german' : lang === 'en' ? 'english' : 'croatian'}`);
   }
 
   /**
-   * Gibt das Label der erkannten Sprache zurück
+   * Returns the label of the detected language
    */
   getDetectedLanguageLabel(): string {
     const lang = this.detectedLanguage();

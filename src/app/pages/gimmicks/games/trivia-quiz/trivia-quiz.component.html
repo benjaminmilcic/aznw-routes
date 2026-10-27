@@ -20,7 +20,7 @@
 
   @if (!loading() && !loadFailed()) { @if (!finished()) { @if (current(); as
   question) {
-  <!-- ---------------- Laufende Runde ---------------- -->
+  <!-- ---------------- Running round ----------------- -->
   <div class="trivia-hud">
     <span class="trivia-counter">
       {{
@@ -123,7 +123,7 @@
     </button>
   </section>
   } } } @else {
-  <!-- ---------------- Auswertung ---------------- -->
+  <!-- ---------------- Evaluation ---------------- -->
   <section class="trivia-result">
     <p class="trivia-result-intro">
       {{ "gimmicks.games.quizIsOver" | translate }}

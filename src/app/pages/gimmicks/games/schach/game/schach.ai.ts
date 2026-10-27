@@ -1,12 +1,12 @@
 // =============================================================
-//  Computer-Gegner für Schach.
+//  Computer opponent for chess.
 // =============================================================
-// Negamax mit Alpha-Beta, Zugsortierung und ruhiger Stellung
-// (Quieszenz nur für Schläge), damit hart nicht nur "greift irgendwas".
+// Negamax with alpha-beta, move ordering and quiet positions
+// (quiescence for captures only), so that hard doesn't just "grab anything".
 //
-//   easy   – oft zufällig, manchmal der beste Zug der Tiefe 1
-//   medium – iterative Vertiefung bis Tiefe 2 (~0,2 s)
-//   hard   – iterative Vertiefung bis Tiefe 3 plus Quieszenz (~0,5 s)
+//   easy   – often random, sometimes the best move of depth 1
+//   medium – iterative deepening up to depth 2 (~0.2 s)
+//   hard   – iterative deepening up to depth 3 plus quiescence (~0.5 s)
 // =============================================================
 import {
   applyMoveToPos,
@@ -22,7 +22,7 @@ const PIECE: Record<string, number> = {
   p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000,
 };
 
-/** Positionsbonus aus Sicht von Weiß (Index 0 = a8, wie das Brett). */
+/** Position bonus from white's point of view (index 0 = a8, like the board). */
 const PST: Record<string, number[]> = {
   p: [
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -90,7 +90,7 @@ function flip(i: number): number {
   return (7 - Math.floor(i / 8)) * 8 + (i % 8);
 }
 
-/** Material + Felder, immer aus Sicht von Weiß. */
+/** Material + squares, always from white's point of view. */
 export function evaluate(pos: ChessPos): number {
   let s = 0;
   for (let i = 0; i < 64; i++) {
@@ -216,7 +216,7 @@ function randomOf(moves: ChessMove[]): ChessMove {
   return moves[Math.floor(Math.random() * moves.length)];
 }
 
-/** Wählt den nächsten Zug des Computers. */
+/** Picks the computer's next move. */
 export function pickMove(g: ChessGame, playerId: string, level: ChessLevel): ChessMove | null {
   const color: ChessColor | undefined = g.players[playerId]?.color;
   if (!color) return null;

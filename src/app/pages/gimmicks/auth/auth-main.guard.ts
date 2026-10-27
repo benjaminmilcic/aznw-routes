@@ -25,7 +25,7 @@ export class AuthMainGuard implements CanActivate {
       }),
       tap((isAuth) => {
         if (!isAuth) {
-          // Query-Parameter weiterreichen - siehe AuthLoginGuard.
+          // Pass on query parameters - see AuthLoginGuard.
           this.router.navigate(['/gimmicks/auth/login'], {
             queryParams: route.queryParams,
           });

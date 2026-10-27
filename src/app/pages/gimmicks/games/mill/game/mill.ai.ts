@@ -1,9 +1,9 @@
 // =============================================================
-//  Computer-Gegner für Mühle.
+//  Computer opponent for Nine Men's Morris.
 // =============================================================
-//   easy   – rein zufällig
-//   medium – meistens der beste Zug, manchmal ein zufälliger
-//   hard   – immer der bestbewertete Zug
+//   easy   – purely random
+//   medium – mostly the best move, sometimes a random one
+//   hard   – always the best-rated move
 // =============================================================
 import { ADJACENCY, MILLS, POINTS_COUNT } from './game.types';
 import {
@@ -24,7 +24,7 @@ export type MillChoice =
   | { kind: 'move'; from: number; to: number }
   | { kind: 'remove'; index: number };
 
-/** Wählt die nächste Aktion des Computers. */
+/** Picks the computer's next action. */
 export function pickAction(g: MillGame, playerId: string, level: MillLevel): MillChoice | null {
   const options = allChoices(g, playerId);
   if (options.length === 0) return null;

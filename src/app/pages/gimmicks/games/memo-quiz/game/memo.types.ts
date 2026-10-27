@@ -1,21 +1,21 @@
 export type MemoStatus = 'waiting' | 'playing' | 'finished';
 
-/** Spielart: gegen den Computer oder online gegen einen echten Mitspieler. */
+/** Game mode: against the computer or online against a real player. */
 export type MemoMode = 'computer' | 'online';
 
-/** Gedächtnis-Stärke des Computers. */
+/** Memory strength of the computer. */
 export type MemoLevel = 'easy' | 'medium' | 'hard';
 
 export interface MemoPlayer {
   id: string;
   name: string;
-  avatar: string; // motif-id als bunter Avatar
+  avatar: string; // motif id as a colorful avatar
   score: number;
 }
 
 export interface MemoCard {
   motifId: string;
-  matchedBy: string | null; // playerId, der das Paar gefunden hat
+  matchedBy: string | null; // playerId who found the pair
 }
 
 export interface MemoGame {
@@ -24,18 +24,18 @@ export interface MemoGame {
   hostId: string;
   pairs: number;
   board: MemoCard[];
-  /** Indizes der aktuell offenen Karten (0, 1 oder 2). */
+  /** Indices of the currently face-up cards (0, 1 or 2). */
   flipped: number[];
-  /** true während der kurzen Anzeige eines Fehlversuchs. */
+  /** true during the short display of a failed attempt. */
   resolving: boolean;
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
-  /** Reihenfolge der Spieler-Ids. */
+  /** Order of the player ids. */
   order: string[];
   players: Record<string, MemoPlayer>;
-  winnerId: string | null; // playerId, 'tie' oder null
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  winnerId: string | null; // playerId, 'tie' or null
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;

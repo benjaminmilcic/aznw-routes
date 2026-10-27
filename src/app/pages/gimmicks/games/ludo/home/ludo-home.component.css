@@ -1,6 +1,6 @@
-/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild über die Seite. Ohne eigene
-   Positionierung liegt dieses Overlay über Buttons und Eingabefeldern. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. Without its own
+   positioning this overlay lies on top of buttons and input fields. */
 :host {
   display: block;
   position: relative;
@@ -76,7 +76,7 @@
   font-weight: 800;
 }
 
-/* ---- Spielerliste (am Gerät) -------------------------------------------- */
+/* ---- Player list (on the device) ---------------------------------------- */
 .seat {
   display: flex;
   align-items: center;
@@ -214,7 +214,7 @@
   box-shadow: inset 0 0 0 3px #a7f3d0;
 }
 
-/* Ion-Segment im hellen Karten-Look (wie bei den anderen Spielen). */
+/* Ion segment in the light card look (like in the other games). */
 ::ng-deep ion-segment.l-segment {
   --background: #e8fbf6;
   border-radius: 0.8rem;

@@ -135,8 +135,8 @@ export class StripeComponent implements OnInit {
   // }
 
   async ngOnInit() {
-    // Stripe haengt seine Parameter an die return_url an. Bei Pfad-Routing
-    // sind das gewoehnliche Query-Parameter der aktuellen Route.
+    // Stripe appends its parameters to the return_url. With path routing
+    // these are ordinary query parameters of the current route.
     const queryParams = this.route.snapshot.queryParamMap;
     const clientSecret = queryParams.get('payment_intent_client_secret');
 

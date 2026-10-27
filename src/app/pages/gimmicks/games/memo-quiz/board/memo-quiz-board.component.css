@@ -1,5 +1,5 @@
-/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild über die Seite. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. */
 :host {
   display: block;
   position: relative;
@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 
-/* ---- Kopfzeile ---------------------------------------------------------- */
+/* ---- Header ------------------------------------------------------------- */
 .bar {
   flex: 0 0 auto;
   display: flex;
@@ -115,7 +115,7 @@
   transform: scale(0.95);
 }
 
-/* ---- Spielfeld ---------------------------------------------------------- */
+/* ---- Board -------------------------------------------------------------- */
 .field-wrap {
   flex: 1 1 auto;
   min-height: 0;
@@ -124,10 +124,10 @@
   justify-content: center;
 }
 
-/* Die Breite richtet sich zusätzlich nach der verfügbaren Höhe: oben stehen
-   noch Navigationsleiste (~70px), Spiel-Auswahl (~68px) und die Kopfzeile
-   (auf dem Smartphone ggf. zweizeilig) – zusammen rund 15rem. Über das
-   Seitenverhältnis des Rasters ergibt sich daraus die Höhe. */
+/* The width also depends on the available height: above it there are
+   the navigation bar (~70px), the game selection (~68px) and the header
+   (on a smartphone possibly two lines) – together about 15rem. The aspect
+   ratio of the grid then gives the height. */
 .board {
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
@@ -153,7 +153,7 @@
   }
 }
 
-/* ---- Overlays (Warten / Spielende) ------------------------------------- */
+/* ---- Overlays (waiting / game over) ------------------------------------ */
 .overlay {
   position: absolute;
   inset: 0;
@@ -212,7 +212,7 @@
   color: #ef7d35;
 }
 
-/* ---- Ergebnis-Animationen ---------------------------------------------- */
+/* ---- Result animations ------------------------------------------------- */
 .result-stage {
   position: relative;
   height: 5rem;
@@ -295,7 +295,7 @@
 }
 
 .tear {
-  /* Reine Deko – darf keine Klicks abfangen (opacity wird animiert). */
+  /* Pure decoration – must not catch clicks (opacity is animated). */
   pointer-events: none;
   position: absolute;
   top: 45%;
@@ -408,7 +408,7 @@
   box-shadow: inset 0 0 0 3px #b9d8ff;
 }
 
-/* Ab Tablet etwas mehr Luft in der Kopfzeile. */
+/* A bit more room in the header from tablet size on. */
 @media (min-width: 768px) {
   .player-name {
     max-width: 8rem;

@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
   },
 })
 export class MinesweeperComponent implements AfterViewInit {
-  // 🎚️ Schwierigkeitsgrade
+  // 🎚️ Difficulty levels
   difficulties: MinesweeperDifficulty[] = [
     {
       name: 'Beginner (9x9, 10 Minen)',
@@ -142,7 +142,7 @@ export class MinesweeperComponent implements AfterViewInit {
   reveal(cell: MinesweeperCell) {
     if (this.gameOver() || cell.isRevealed || cell.isFlagged) return;
 
-    // 👉 Sonderfall: 1. Klick → jetzt Minen setzen
+    // 👉 Special case: 1st click → place the mines now
     if (this.firstClick()) {
       this.startTimer();
       this.placeMines(cell);
@@ -192,7 +192,7 @@ export class MinesweeperComponent implements AfterViewInit {
       const r = Math.floor(Math.random() * rows);
       const c = Math.floor(Math.random() * cols);
 
-      // verbotene Positionen: erstes Feld + seine Nachbarn
+      // forbidden positions: first cell + its neighbors
       if (!this.board()[r][c].hasMine && !this.isProtected(r, c, firstCell)) {
         this.board()[r][c].hasMine = true;
         placed++;
@@ -270,7 +270,7 @@ export class MinesweeperComponent implements AfterViewInit {
   }
 
   startTimer() {
-    if (this.timerRunning()) return; // nur einmal starten
+    if (this.timerRunning()) return; // only start once
     this.timerRunning.set(true);
     this.timerInterval = window.setInterval(() => {
       this.seconds.set(this.seconds() + 1);
@@ -306,7 +306,7 @@ export class MinesweeperComponent implements AfterViewInit {
       d.disabled = boardWidth > screenWidth || boardHeight > screenHeight;
     });
 
-    // Falls aktuelle Auswahl jetzt disabled wäre → zurück auf Beginner
+    // If the current selection would now be disabled → back to Beginner
     if (this.selectedDifficulty().disabled) {
       this.selectedDifficulty.set(this.difficulties[0]);
       this.startNewGame();

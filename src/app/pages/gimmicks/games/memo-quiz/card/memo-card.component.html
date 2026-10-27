@@ -7,7 +7,7 @@
   (click)="onClick()"
 >
   <div class="card-inner" [class.is-flipped]="faceUp()">
-    <!-- Rückseite (verdeckt) -->
+    <!-- Back side (face down) -->
     <div class="card-face card-cover">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
@@ -29,7 +29,7 @@
       </svg>
     </div>
 
-    <!-- Vorderseite (Motiv) -->
+    <!-- Front side (motif) -->
     <div class="card-face card-face--back card-front" [class.front-mine]="mine()">
       <app-memo-motif [motifId]="motifId()" />
     </div>

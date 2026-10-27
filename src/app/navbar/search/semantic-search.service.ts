@@ -15,13 +15,13 @@ export interface IndexedRoute {
 
 export interface RankedRoute extends IndexedRoute {
   score: number;
-  /** semantischer Cosine-Score (0 wenn Embedding nicht verfügbar). */
+  /** semantic cosine score (0 if the embedding is not available). */
   semScore: number;
-  /** lexikalischer Score (0..1): Anteil der gefundenen Suchbegriffe / Fuzzy. */
+  /** lexical score (0..1): share of the search terms found / fuzzy. */
   lexScore: number;
 }
 
-/** Häufige Funktionswörter (de/en), die als Suchbegriffe nur Rauschen erzeugen. */
+/** Common function words (de/en) that only add noise as search terms. */
 const STOPWORDS = new Set([
   'der', 'die', 'das', 'ein', 'eine', 'einen', 'und', 'oder', 'wie', 'was',
   'wo', 'wann', 'wird', 'ist', 'sind', 'im', 'in', 'an', 'auf', 'zu', 'mit',
@@ -31,18 +31,18 @@ const STOPWORDS = new Set([
 ]);
 
 /**
- * Hybride Volltextsuche über alle Routen.
+ * Hybrid full-text search across all routes.
  *
- *  - lexikalisch: kommt ein Suchbegriff im (mehrsprachigen) Routen-Text vor?
- *    Längenunabhängig – stark bei exakten Stichwörtern und Eigennamen
- *    ("NestJS", "Wikimedia", "SDXL"). Fuse dient nur noch der Tippfehler-Toleranz.
- *  - semantisch: Query wird per Cloudflare-Worker (bge-m3) embedded und per
- *    Cosine-Ähnlichkeit verglichen – stark bei natürlicher Sprache
+ *  - lexical: does a search term occur in the (multilingual) route text?
+ *    Independent of length – strong for exact keywords and proper names
+ *    ("NestJS", "Wikimedia", "SDXL"). Fuse is only used for typo tolerance.
+ *  - semantic: the query is embedded via the Cloudflare Worker (bge-m3) and
+ *    compared by cosine similarity – strong for natural language
  *    ("wie wird das wetter heute?").
  *
- * Eine Route ist Treffer, wenn sie lexikalisch ODER semantisch deutlich passt.
- * Sortiert wird nach der Summe beider Kanäle (exakte Stichwort-Treffer zuerst).
- * Fällt der Worker aus, bleibt die lexikalische Suche als Fallback aktiv.
+ * A route is a match if it fits clearly lexically OR semantically.
+ * It is sorted by the sum of both channels (exact keyword matches first).
+ * If the worker fails, the lexical search stays active as a fallback.
  */
 @Injectable({ providedIn: 'root' })
 export class SemanticSearchService {
@@ -51,10 +51,10 @@ export class SemanticSearchService {
   private docs: { route: IndexedRoute; hay: string }[] = [];
   private fuse?: Fuse<IndexedRoute>;
 
-  private readonly semThreshold = 0.5; // bge-m3-Cosine für "relevant"
-  private readonly lexThreshold = 0.5; // Anteil gefundener Suchbegriffe
+  private readonly semThreshold = 0.5; // bge-m3 cosine for "relevant"
+  private readonly lexThreshold = 0.5; // Share of search terms found
 
-  /** Index einmalig laden, cachen und Suchstrukturen aufbauen. */
+  /** Load the index once, cache it and build the search structures. */
   loadIndex(): Promise<IndexedRoute[]> {
     if (!this.indexPromise) {
       this.indexPromise = fetch('assets/search-index.json')
@@ -81,7 +81,7 @@ export class SemanticSearchService {
           return this.index;
         })
         .catch((err) => {
-          this.indexPromise = undefined; // erneuter Versuch möglich
+          this.indexPromise = undefined; // another attempt possible
           throw err;
         });
     }
@@ -89,8 +89,8 @@ export class SemanticSearchService {
   }
 
   /**
-   * Rein lexikalische Suche (synchron, sobald der Index geladen ist).
-   * Wird für sofortiges Feedback beim Tippen genutzt.
+   * Purely lexical search (synchronous as soon as the index is loaded).
+   * Used for instant feedback while typing.
    */
   lexical(query: string, limit = 12): RankedRoute[] {
     if (!this.docs.length) return [];
@@ -98,8 +98,8 @@ export class SemanticSearchService {
   }
 
   /**
-   * Hybride Suche. Liefert die relevantesten Routen, absteigend sortiert.
-   * @param signal optionaler AbortSignal, um veraltete Anfragen abzubrechen.
+   * Hybrid search. Returns the most relevant routes, sorted in descending order.
+   * @param signal optional AbortSignal to cancel outdated requests.
    */
   async search(
     query: string,
@@ -122,11 +122,11 @@ export class SemanticSearchService {
     return this.rank(q, qVec, limit);
   }
 
-  /** Lexikalische + (optional) semantische Scores berechnen und ranken. */
+  /** Compute and rank lexical + (optional) semantic scores. */
   private rank(query: string, qVec: number[] | null, limit: number): RankedRoute[] {
     const terms = this.terms(query);
 
-    // Fuzzy-Treffer (nur für Tippfehler) -> Map nach Route-Key.
+    // Fuzzy matches (only for typos) -> map by route key.
     const fuzzMap = new Map<string, number>();
     if (this.fuse) {
       for (const res of this.fuse.search(query)) {
@@ -147,7 +147,7 @@ export class SemanticSearchService {
       .slice(0, limit);
   }
 
-  /** Suchbegriffe normalisieren: gefaltet, ohne Stopwörter, min. 2 Zeichen. */
+  /** Normalize search terms: folded, without stop words, at least 2 characters. */
   private terms(query: string): string[] {
     return this.fold(query)
       .split(/[^\p{L}\p{N}]+/u)
@@ -155,10 +155,10 @@ export class SemanticSearchService {
   }
 
   /**
-   * Kleinschreibung + Diakritika entfernen ("Milčić" -> "milcic").
-   * Deutsche Umlaute werden zur ae/oe/ue/ss-Schreibweise expandiert, damit
-   * "täglich" und "taeglich" identisch falten ("taeglich") und beide gefunden
-   * werden. Die Expansion passiert vor dem Strippen, sonst würde ä -> a werden.
+   * Lowercase + remove diacritics ("Milčić" -> "milcic").
+   * German umlauts are expanded to the ae/oe/ue/ss spelling so that
+   * "täglich" and "taeglich" fold identically ("taeglich") and both are
+   * found. The expansion happens before stripping, otherwise ä would become a.
    */
   private fold(s: string): string {
     return s
@@ -171,7 +171,7 @@ export class SemanticSearchService {
       .replace(/[̀-ͯ]/g, '');
   }
 
-  /** Anteil der Suchbegriffe, die im Text vorkommen (0..1). */
+  /** Share of the search terms that occur in the text (0..1). */
   private containment(terms: string[], hay: string): number {
     if (!terms.length) return 0;
     let hits = 0;
@@ -183,7 +183,7 @@ export class SemanticSearchService {
     return r.route + (r.fragment ?? '');
   }
 
-  /** Query-Embedding vom Worker holen. */
+  /** Fetch the query embedding from the worker. */
   private async embed(q: string, signal?: AbortSignal): Promise<number[]> {
     const res = await fetch(environment.search.embedUrl, {
       method: 'POST',
@@ -202,7 +202,7 @@ export class SemanticSearchService {
     return v.map((x) => x / norm);
   }
 
-  /** Skalarprodukt = Cosine, da beide Vektoren normalisiert sind. */
+  /** Dot product = cosine, since both vectors are normalized. */
   private dot(a: number[], b: number[]): number {
     let s = 0;
     const len = Math.min(a.length, b.length);

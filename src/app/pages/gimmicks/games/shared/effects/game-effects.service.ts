@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import confetti from 'canvas-confetti';
 
 /**
- * Aus der Whiteboard-App übernommen – von allen Spielen hier nutzbar.
- * Kümmert sich um die „Show" am Spielende: Feuerwerk + Klang beim Sieg,
- * trauriger Klang beim Verlieren, fröhlich-neutral beim Unentschieden.
+ * Taken over from the whiteboard app – usable by all games here.
+ * Takes care of the "show" at the end of a game: fireworks + sound on a win,
+ * a sad sound on a loss, cheerful-neutral on a draw.
  *
- * Die Sounds werden mit der Web Audio API erzeugt, damit keine externen
- * Audio-Dateien gebündelt oder geladen werden müssen.
+ * The sounds are generated with the Web Audio API, so that no external
+ * audio files have to be bundled or loaded.
  */
 @Injectable({ providedIn: 'root' })
 export class GameEffectsService {
@@ -15,27 +15,27 @@ export class GameEffectsService {
   private fireworkTimer: ReturnType<typeof setInterval> | null = null;
   private soundTimers: ReturnType<typeof setTimeout>[] = [];
 
-  /** Feuerwerk + Feuerwerks-Sound beim Gewinnen. */
+  /** Fireworks + fireworks sound on a win. */
   celebrate(): void {
     this.stop();
     this.launchFireworks();
     this.playFireworkShow();
   }
 
-  /** Trauriger „Wah-Wah"-Klang beim Verlieren. */
+  /** Sad "wah-wah" sound on a loss. */
   commiserate(): void {
     this.stop();
     this.playSadTrombone();
   }
 
-  /** Freundliches Glöckchen + sanfter Konfettiregen beim Unentschieden. */
+  /** Friendly bells + gentle confetti rain on a draw. */
   draw(): void {
     this.stop();
     this.gentleConfetti();
     this.playChime();
   }
 
-  /** Räumt laufende Effekte auf (z. B. beim Verlassen des Bildschirms). */
+  /** Cleans up running effects (e.g. when leaving the screen). */
   stop(): void {
     if (this.fireworkTimer) {
       clearInterval(this.fireworkTimer);
@@ -46,7 +46,7 @@ export class GameEffectsService {
     confetti.reset();
   }
 
-  // ---- Konfetti / Feuerwerk (canvas-confetti) -------------------------
+  // ---- Confetti / fireworks (canvas-confetti) -------------------------
 
   private launchFireworks(): void {
     const duration = 5000;
@@ -77,7 +77,7 @@ export class GameEffectsService {
     this.soundTimers.push(timer);
   }
 
-  // ---- Klang-Erzeugung ------------------------------------------------
+  // ---- Sound generation -----------------------------------------------
 
   private ctx(): AudioContext | null {
     if (!this.audio) {
@@ -89,7 +89,7 @@ export class GameEffectsService {
     return this.audio;
   }
 
-  /** Mehrere „Aufstieg + Knall + Knistern"-Salven über ein paar Sekunden. */
+  /** Several "rise + bang + crackle" salvos over a few seconds. */
   private playFireworkShow(): void {
     const ctx = this.ctx();
     if (!ctx) return;
@@ -146,7 +146,7 @@ export class GameEffectsService {
     crackle.stop(boomAt + 0.65);
   }
 
-  /** Klassisches absteigendes „Wah-Wah-Wah-Waaah" beim Verlieren. */
+  /** Classic descending "wah-wah-wah-waaah" on a loss. */
   private playSadTrombone(): void {
     const ctx = this.ctx();
     if (!ctx) return;
@@ -155,7 +155,7 @@ export class GameEffectsService {
       { f: 311, dur: 0.32 }, // Eb4
       { f: 277, dur: 0.32 }, // C#4
       { f: 247, dur: 0.32 }, // B3
-      { f: 220, dur: 0.85 }, // A3 (zieht sich)
+      { f: 220, dur: 0.85 }, // A3 (drawn out)
     ];
     let t = start;
     notes.forEach((n, i) => {
@@ -191,12 +191,12 @@ export class GameEffectsService {
     });
   }
 
-  /** Freundliches aufsteigendes Glöckchen (Unentschieden). */
+  /** Friendly rising bells (draw). */
   private playChime(): void {
     const ctx = this.ctx();
     if (!ctx) return;
     const start = ctx.currentTime + 0.05;
-    const notes = [523.25, 659.25, 783.99]; // C5 – E5 – G5 (Dur-Dreiklang)
+    const notes = [523.25, 659.25, 783.99]; // C5 – E5 – G5 (major triad)
     let t = start;
     for (const f of notes) {
       const osc = ctx.createOscillator();
@@ -213,7 +213,7 @@ export class GameEffectsService {
     }
   }
 
-  /** Erzeugt einen kurzen Puffer mit weißem Rauschen. */
+  /** Creates a short buffer of white noise. */
   private noiseBuffer(ctx: AudioContext, seconds: number): AudioBuffer {
     const length = Math.floor(ctx.sampleRate * seconds);
     const buffer = ctx.createBuffer(1, length, ctx.sampleRate);

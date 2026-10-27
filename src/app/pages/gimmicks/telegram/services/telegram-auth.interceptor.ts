@@ -20,7 +20,7 @@ export class TelegramAuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isTelegramApi = req.url.startsWith(environment.telegram.apiUrl);
-    // Logout-Endpoint ausnehmen, um Endlosschleifen zu vermeiden
+    // Exclude the logout endpoint to avoid endless loops
     const isLogout = req.url.includes('/auth/logout');
 
     if (!isTelegramApi || isLogout) {

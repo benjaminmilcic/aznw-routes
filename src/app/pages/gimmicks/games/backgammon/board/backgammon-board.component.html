@@ -1,6 +1,6 @@
 @if (game(); as g) {
 <div class="screen">
-  <!-- Kopfzeile: beide Spieler + wer dran ist -->
+  <!-- Header: both players + whose turn it is -->
   <header class="bar">
     <div class="players">
       <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
@@ -45,7 +45,7 @@
     </button>
   </header>
 
-  <!-- Würfel & Aktionen -->
+  <!-- Dice & actions -->
   <div class="dice-strip">
     @if (g.diceLeft.length) {
     <div class="dice">
@@ -74,10 +74,10 @@
     }
   </div>
 
-  <!-- Spielbrett -->
+  <!-- Game board -->
   <div class="field-wrap">
     <div class="bgboard" [class.bgboard--locked]="!svc.isMyTurn()">
-      <!-- obere Hälfte -->
+      <!-- upper half -->
       <div class="half half-top">
         <div class="quadrant">
           @for (i of topLeft; track i) {
@@ -121,7 +121,7 @@
         </button>
       </div>
 
-      <!-- untere Hälfte -->
+      <!-- lower half -->
       <div class="half half-bottom">
         <div class="quadrant">
           @for (i of bottomLeft; track i) {
@@ -167,7 +167,7 @@
     </div>
   </div>
 
-  <!-- Warten auf Mitspieler -->
+  <!-- Waiting for other players -->
   @if (g.status === 'waiting') {
   <div class="overlay">
     <div class="panel">
@@ -182,7 +182,7 @@
   </div>
   }
 
-  <!-- Spielende -->
+  <!-- Game over -->
   @if (g.status === 'finished') {
   <div class="overlay">
     <div
@@ -223,7 +223,7 @@
 </div>
 }
 
-<!-- Wiederverwendbares Punkt-Dreieck mit Steinen -->
+<!-- Reusable point triangle with checkers -->
 <ng-template #point let-i let-pos="pos">
   <button
     type="button"

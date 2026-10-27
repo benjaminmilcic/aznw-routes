@@ -6,7 +6,7 @@
     <p class="error">{{ err | translate }}</p>
     }
 
-    <!-- Spielart -->
+    <!-- Game mode -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.backgammonGame.mode" | translate
@@ -45,7 +45,7 @@
       />
     </label>
 
-    <!-- Zeichen -->
+    <!-- Symbol -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.backgammonGame.chooseAvatar" | translate
@@ -65,7 +65,7 @@
     </div>
 
     @if (mode() === 'computer') {
-    <!-- ---------------- Gegen den Computer ---------------- -->
+    <!-- ---------------- Against the computer -------------- -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.backgammonGame.level" | translate
@@ -92,7 +92,7 @@
       {{ "gimmicks.games.backgammonGame.startGame" | translate }}
     </button>
     } @else {
-    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    <!-- ---------------- Online with game code ---------------- -->
     @if (!showJoin()) {
     <button
       type="button"

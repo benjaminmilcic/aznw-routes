@@ -2,8 +2,8 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
 /**
- * Anker, die es auf der Startseite tatsaechlich gibt (Sektions-IDs).
- * Muss mit den id-Attributen der Home-Sektionen uebereinstimmen.
+ * Anchors that actually exist on the home page (section IDs).
+ * Must match the id attributes of the home sections.
  */
 export const HOME_FRAGMENTS = [
   'header',
@@ -15,9 +15,9 @@ export const HOME_FRAGMENTS = [
 ];
 
 /**
- * /#irgendwas landet auf der Startseite mit dem Fragment "irgendwas".
- * Zeigt das Fragment auf keine existierende Sektion, ist die Adresse
- * genauso ungueltig wie ein unbekannter Pfad -> 404.
+ * /#something lands on the home page with the fragment "something".
+ * If the fragment points to no existing section, the address is
+ * just as invalid as an unknown path -> 404.
  */
 export const knownFragmentGuard: CanActivateFn = (route) => {
   const fragment = route.fragment;

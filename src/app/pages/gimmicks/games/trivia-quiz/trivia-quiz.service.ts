@@ -10,7 +10,7 @@ import { QuestionLanguage, TriviaQuestion } from './trivia-quiz.model';
 export class TriviaQuizService {
   private readonly http = inject(HttpClient);
 
-  /** Zufaellige Fragen fuer eine Runde. */
+  /** Random questions for a round. */
   getRandomQuestions(
     count: number,
     language: QuestionLanguage
@@ -21,8 +21,8 @@ export class TriviaQuizService {
   }
 
   /**
-   * Dieselben Fragen in einer anderen Sprache. Damit bleibt beim Sprachwechsel
-   * die laufende Runde mit Punktestand und Position erhalten.
+   * The same questions in another language. That way the running round with
+   * score and position is kept when the language changes.
    */
   getQuestionsByNumbers(
     numbers: number[],

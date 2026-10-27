@@ -110,29 +110,29 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
 
   search(query: string): void {
     this.loading.set(true);
-    // Erste Seite laden um total_pages zu erhalten
+    // Load the first page to get total_pages
     this.movieService.searchMovies(query, 1).subscribe({
       next: (firstResponse) => {
         const totalPages = firstResponse.total_pages;
-        // Maximal 20 Seiten laden, um Rate Limiting zu vermeiden
+        // Load at most 20 pages to avoid rate limiting
         const maxPages = Math.min(totalPages, 20);
 
         if (maxPages === 1) {
-          // Nur eine Seite vorhanden
+          // Only one page available
           this.results.set(firstResponse.results);
           this.pageIndex = 0;
           this.updatePaginatedResults();
           this.loading.set(false);
         } else {
-          // Mehrere Seiten: alle weiteren Seiten parallel laden
+          // Several pages: load all further pages in parallel
           const pageRequests = [];
           for (let page = 2; page <= maxPages; page++) {
-            // Jeden Request mit catchError wrappen, um bei Fehlern leere Ergebnisse zurückzugeben
+            // Wrap every request with catchError to return empty results on errors
             pageRequests.push(
               this.movieService.searchMovies(query, page).pipe(
                 catchError((error) => {
                   console.error(`Error loading page ${page}:`, error);
-                  // Leere Response zurückgeben, damit forkJoin nicht komplett fehlschlägt
+                  // Return an empty response so that forkJoin does not fail completely
                   return of({
                     page,
                     results: [],
@@ -146,7 +146,7 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
 
           forkJoin(pageRequests).subscribe({
             next: (responses) => {
-              // Alle Ergebnisse kombinieren (nur erfolgreiche)
+              // Combine all results (only successful ones)
               const allMovies = [
                 ...firstResponse.results,
                 ...responses.flatMap((r) => r.results),
@@ -158,7 +158,7 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
               console.error('Error loading additional pages:', error);
-              // Bei Fehler zumindest die erste Seite anzeigen
+              // On error at least show the first page
               this.results.set(firstResponse.results);
               this.pageIndex = 0;
               this.updatePaginatedResults();

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { GRID_SIZE, type CellView } from '../game/ships.types';
 
-/** Ein 8x8-Meer mit Beschriftung. Wird für beide Spielfelder benutzt. */
+/** An 8x8 sea with labels. Used for both boards. */
 @Component({
   selector: 'app-ships-board',
   templateUrl: './ships-board.component.html',
@@ -10,7 +10,7 @@ import { GRID_SIZE, type CellView } from '../game/ships.types';
 })
 export class ShipsBoardComponent {
   readonly rows = input.required<CellView[][]>();
-  /** Darf hier gerade geklickt werden? */
+  /** May you click here right now? */
   readonly interactive = input<boolean>(false);
   readonly cellClick = output<{ x: number; y: number }>();
 
@@ -19,7 +19,7 @@ export class ShipsBoardComponent {
     String.fromCharCode(65 + i),
   );
 
-  /** Auf beschossene Felder kann man nicht nochmal schießen. */
+  /** You cannot shoot again at cells that have already been shot at. */
   protected locked(cell: CellView): boolean {
     return cell.state === 'hit' || cell.state === 'miss' || cell.state === 'sunk';
   }

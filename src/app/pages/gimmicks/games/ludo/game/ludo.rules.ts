@@ -1,8 +1,8 @@
 // =============================================================
-//  Spielregeln von "Mensch ärgere dich nicht" als reine Funktionen.
+//  Rules of "Ludo" as pure functions.
 // =============================================================
-// Bewusst ohne Angular/Firebase: derselbe Code entscheidet über die Züge
-// am Gerät, im Online-Spiel und beim Computer-Gegner.
+// Deliberately without Angular/Firebase: the same code decides on the moves
+// on the device, in the online game and for the computer opponent.
 // =============================================================
 import {
   GOAL_BASE,
@@ -16,34 +16,34 @@ import {
   type LudoPos,
 } from './ludo.types';
 
-/** Sitzplatz (0 … 3) eines Spielers – bestimmt Farbe, Start, Garage und Ziel. */
+/** Seat (0 … 3) of a player – determines color, start, garage and goal. */
 export function seatOf(g: LudoGame, id: string): number {
   return g.seats?.[id] ?? 0;
 }
 
-/** Brettfeld (0 … 39) einer Figur auf der Laufbahn, sonst -1. */
+/** Board square (0 … 39) of a piece on the track, otherwise -1. */
 export function trackCell(g: LudoGame, id: string, pos: LudoPos): number {
   if (pos < 0 || pos >= TRACK_LEN) return -1;
   return (SEAT_START[seatOf(g, id)] + pos) % TRACK_LEN;
 }
 
-/** Frische Figuren: alle vier stehen in der Garage. */
+/** Fresh pieces: all four are in the garage. */
 export function freshPieces(): LudoPos[] {
   return Array.from({ length: PIECES }, () => HOME);
 }
 
-/** Hat der Spieler alle vier Figuren im Ziel? Dann spielt er nicht mehr mit. */
+/** Does the player have all four pieces home? Then they no longer play. */
 export function isDone(g: LudoGame, id: string): boolean {
   const mine = g.pieces[id] ?? [];
   return mine.length > 0 && mine.every((p) => p >= GOAL_BASE);
 }
 
-/** Alle Spieler, die noch unterwegs sind. */
+/** All players who are still on their way. */
 export function activePlayers(g: LudoGame): string[] {
   return g.order.filter((id) => !isDone(g, id));
 }
 
-/** Der Spieler, der nach `id` an der Reihe ist – Fertige werden übersprungen. */
+/** The player whose turn comes after `id` – finished players are skipped. */
 export function nextPlayer(g: LudoGame, id: string): string {
   const i = g.order.indexOf(id);
   const start = i < 0 ? 0 : i;
@@ -54,18 +54,18 @@ export function nextPlayer(g: LudoGame, id: string): string {
   return g.order[start] ?? id;
 }
 
-/** Liegt eine eigene Figur auf der Zielposition `to`? */
+/** Is one of the player's own pieces on the target position `to`? */
 function hasOwnPieceAt(g: LudoGame, id: string, to: LudoPos): boolean {
   const mine = g.pieces[id] ?? [];
   if (to < TRACK_LEN) {
     const cell = trackCell(g, id, to);
     return mine.some((p) => p >= 0 && p < TRACK_LEN && trackCell(g, id, p) === cell);
   }
-  // Zielhaus: exakt dieselbe Zielposition.
+  // Home column: exactly the same target position.
   return mine.some((p) => p === to);
 }
 
-/** Würde ein Zug auf `to` eine gegnerische Figur schlagen? (nur Laufbahn) */
+/** Would a move to `to` capture an opposing piece? (track only) */
 export function capturesAt(g: LudoGame, id: string, to: LudoPos): boolean {
   if (to >= TRACK_LEN || to < 0) return false;
   const cell = trackCell(g, id, to);
@@ -78,7 +78,7 @@ export function capturesAt(g: LudoGame, id: string, to: LudoPos): boolean {
   );
 }
 
-/** Alle legalen Züge des Spielers `id` mit Augenzahl `dice`. */
+/** All legal moves of player `id` with pip count `dice`. */
 export function computeMoves(g: LudoGame, id: string, dice: number): LudoMove[] {
   const moves: LudoMove[] = [];
   const mine = g.pieces[id] ?? [];
@@ -87,16 +87,16 @@ export function computeMoves(g: LudoGame, id: string, dice: number): LudoMove[] 
     const pos = mine[i];
 
     if (pos === HOME) {
-      // Aus der Garage nur mit einer 6 und auf das eigene Startfeld (pos 0).
+      // Out of the garage only with a 6 and onto the own start square (pos 0).
       if (dice !== 6) continue;
-      if (hasOwnPieceAt(g, id, 0)) continue; // eigenes Startfeld belegt
+      if (hasOwnPieceAt(g, id, 0)) continue; // own start square occupied
       moves.push({ pieceIndex: i, to: 0, captures: capturesAt(g, id, 0) });
       continue;
     }
 
     const to = pos + dice;
-    if (to > GOAL_BASE + GOAL_LEN - 1) continue; // über das Ziel hinaus → ungültig
-    if (hasOwnPieceAt(g, id, to)) continue; // eigene Figur blockiert
+    if (to > GOAL_BASE + GOAL_LEN - 1) continue; // beyond the goal → invalid
+    if (hasOwnPieceAt(g, id, to)) continue; // own piece blocks
 
     moves.push({ pieceIndex: i, to, captures: capturesAt(g, id, to) });
   }
@@ -104,10 +104,10 @@ export function computeMoves(g: LudoGame, id: string, dice: number): LudoMove[] 
 }
 
 /**
- * Darf der Spieler bis zu drei Mal würfeln? Das gilt, wenn er nur noch mit
- * einer 6 ziehen könnte: mindestens eine Figur steht in der Garage und mit
- * keiner Augenzahl 1–5 ist ein Zug möglich (z. B. die übrigen Figuren sitzen
- * fest im Ziel). Wie zu Spielbeginn, wenn alle Figuren in der Garage stehen.
+ * May the player roll up to three times? That applies if they could only move
+ * with a 6: at least one piece is in the garage and no pip count 1–5 allows a
+ * move (e.g. the other pieces are stuck in the home column). Just like at the
+ * start of the game, when all pieces are in the garage.
  */
 export function onlySixHelps(g: LudoGame, id: string): boolean {
   const hasGaragePiece = (g.pieces[id] ?? []).some((p) => p === HOME);
@@ -118,18 +118,18 @@ export function onlySixHelps(g: LudoGame, id: string): boolean {
   return true;
 }
 
-/** Wie weit ist ein Spieler insgesamt gekommen? (für die Restplätze) */
+/** How far has a player got in total? (for the remaining places) */
 function progress(g: LudoGame, id: string): number {
   return (g.pieces[id] ?? []).reduce((sum, p) => sum + (p < 0 ? 0 : p + 1), 0);
 }
 
 /**
- * Ist die Partie entschieden? Das ist der Fall, wenn nur noch einer unterwegs
- * ist – oder wenn nur noch Computer spielen würden. Niemand will zuschauen,
- * wie zwei Computer den dritten und vierten Platz ausspielen.
+ * Is the game decided? That is the case when only one player is still on
+ * their way – or when only computers would still be playing. Nobody wants to
+ * watch two computers play out third and fourth place.
  *
- * Die noch nicht fertigen Spieler werden dann nach ihrem Fortschritt an die
- * Rangliste angehängt.
+ * The players who have not finished are then appended to the ranking
+ * by their progress.
  */
 export function finishIfDecided(g: LudoGame): LudoGame {
   const active = activePlayers(g);
@@ -148,14 +148,14 @@ export function finishIfDecided(g: LudoGame): LudoGame {
   };
 }
 
-/** Setzt den Spieler am Zug: Würfel zurück, Wurfanzahl je nach Garage. */
+/** Sets the player on turn: reset the dice, number of rolls depending on the garage. */
 export function withTurn(g: LudoGame, playerId: string): LudoGame {
   const next: LudoGame = { ...g, currentTurn: playerId, dice: null };
   next.rollsLeft = onlySixHelps(next, playerId) ? 3 : 1;
   return next;
 }
 
-/** Speichert die gewürfelte Augenzahl – gezogen wird erst danach. */
+/** Stores the rolled pip count – the move only comes after that. */
 export function applyRoll(g: LudoGame, playerId: string, dice: number): LudoGame {
   return {
     ...g,
@@ -166,9 +166,9 @@ export function applyRoll(g: LudoGame, playerId: string, dice: number): LudoGame
 }
 
 /**
- * Bestätigt eine nicht setzbare Augenzahl. Eine 6 (oder ein weiterer Versuch
- * mit allen Figuren in der Garage) bringt einen neuen Wurf, sonst ist der
- * nächste Spieler dran.
+ * Confirms a pip count that cannot be used. A 6 (or another attempt with all
+ * pieces in the garage) gives a new roll, otherwise it is the next player's
+ * turn.
  */
 export function applyPass(g: LudoGame, playerId: string): LudoGame {
   const dice = g.dice;
@@ -176,10 +176,10 @@ export function applyPass(g: LudoGame, playerId: string): LudoGame {
 
   let next: LudoGame;
   if (dice === 6) {
-    // Eine 6 bringt immer einen neuen Wurf – auch wenn sie nicht setzbar war.
+    // A 6 always gives a new roll – even if it could not be used.
     next = { ...g, dice: null, rollsLeft: 1 };
   } else if (g.rollsLeft > 1 && onlySixHelps(g, playerId)) {
-    // Nur eine 6 könnte helfen → bis zu drei Versuche, eine 6 zu würfeln.
+    // Only a 6 could help → up to three attempts to roll a 6.
     next = { ...g, dice: null, rollsLeft: g.rollsLeft - 1 };
   } else {
     next = withTurn(g, nextPlayer(g, playerId));
@@ -187,14 +187,14 @@ export function applyPass(g: LudoGame, playerId: string): LudoGame {
   return { ...next, updatedAt: Date.now() };
 }
 
-/** Bewegt die gewählte Figur gemäß dem aktuellen Würfel. */
+/** Moves the selected piece according to the current die. */
 export function applyMove(g: LudoGame, playerId: string, move: LudoMove): LudoGame {
   const dice = g.dice ?? 0;
 
   const pieces: Record<string, LudoPos[]> = {};
   for (const id of g.order) pieces[id] = [...(g.pieces[id] ?? freshPieces())];
 
-  // Schlagen: alle gegnerischen Figuren auf dem Zielfeld gehen zurück in die Garage.
+  // Capturing: all opposing pieces on the target square go back to the garage.
   let captured = false;
   if (move.to < TRACK_LEN) {
     const targetCell = trackCell(g, playerId, move.to);
@@ -218,18 +218,18 @@ export function applyMove(g: LudoGame, playerId: string, move: LudoMove): LudoGa
     lastAction: { by: playerId, dice, captured, at: Date.now() },
   };
 
-  // Alle vier Figuren im Ziel: Platz sichern und aus dem Rennen nehmen.
+  // All four pieces home: secure the place and take them out of the race.
   const justFinished = pieces[playerId].every((p) => p >= GOAL_BASE);
   if (justFinished) {
     const ranking = [...moved.ranking, playerId];
     moved = { ...moved, ranking, winnerId: moved.winnerId ?? ranking[0] };
 
-    // Stehen die restlichen Plätze schon fest, ist die Partie vorbei.
+    // If the remaining places are already decided, the game is over.
     const decided = finishIfDecided(moved);
     if (decided.status === 'finished') return decided;
   }
 
-  // Eine 6 bringt einen weiteren Zug – aber nicht mehr, wenn man fertig ist.
+  // A 6 gives another move – but not anymore once you have finished.
   const again = dice === 6 && !justFinished;
   const next = withTurn(moved, again ? playerId : nextPlayer(moved, playerId));
   return { ...next, updatedAt: Date.now() };

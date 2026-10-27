@@ -74,7 +74,7 @@ export class ClimaChartComponent implements OnInit, OnDestroy {
         this.initializeChart();
         this.isDataLoaded = true;
 
-        // Chart nach dem Rendern aktualisieren
+        // Update the chart after rendering
         setTimeout(() => {
           if (this.chartDirective?.chart) {
             this.chartDirective.chart.resize();
@@ -114,10 +114,10 @@ export class ClimaChartComponent implements OnInit, OnDestroy {
   }
 
   private processClimateData(data: any): void {
-    // Objekt für monatliche Daten pro Jahr und Monat
+    // Object for monthly data per year and month
     const yearlyMonthlyData: { [year: number]: { temps: number[][], precips: number[][] } } = {};
 
-    // Daten nach Jahr und Monat gruppieren
+    // Group the data by year and month
     data.daily.time.forEach((date: string, index: number) => {
       const dateObj = new Date(date);
       const year = dateObj.getFullYear();
@@ -140,19 +140,19 @@ export class ClimaChartComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Für jeden Monat: Berechne monatliche Summen/Durchschnitte pro Jahr, dann Durchschnitt über alle Jahre
+    // For every month: compute monthly sums/averages per year, then the average over all years
     const monthlyTempAverages: number[][] = Array.from({ length: 12 }, () => []);
     const monthlyPrecipSums: number[][] = Array.from({ length: 12 }, () => []);
 
     Object.values(yearlyMonthlyData).forEach((yearData) => {
       for (let month = 0; month < 12; month++) {
-        // Temperatur: Durchschnitt der Tageswerte für diesen Monat in diesem Jahr
+        // Temperature: average of the daily values for this month in this year
         if (yearData.temps[month].length > 0) {
           const monthAvgTemp = yearData.temps[month].reduce((a, b) => a + b, 0) / yearData.temps[month].length;
           monthlyTempAverages[month].push(monthAvgTemp);
         }
 
-        // Niederschlag: Summe der Tageswerte für diesen Monat in diesem Jahr
+        // Precipitation: sum of the daily values for this month in this year
         if (yearData.precips[month].length > 0) {
           const monthTotalPrecip = yearData.precips[month].reduce((a, b) => a + b, 0);
           monthlyPrecipSums[month].push(monthTotalPrecip);
@@ -160,7 +160,7 @@ export class ClimaChartComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Durchschnitt über alle Jahre berechnen
+    // Compute the average over all years
     this.temperatureData = monthlyTempAverages.map((temps) => {
       if (temps.length === 0) return 0;
       const avg = temps.reduce((a, b) => a + b, 0) / temps.length;
@@ -173,7 +173,7 @@ export class ClimaChartComponent implements OnInit, OnDestroy {
       return Math.round(avg * 10) / 10;
     });
 
-    // Jahresstatistiken berechnen
+    // Compute the yearly statistics
     this.yearlyAvgTemperature = Math.round((this.temperatureData.reduce((a, b) => a + b, 0) / 12) * 10) / 10;
     this.yearlyTotalPrecipitation = Math.round(this.precipitationData.reduce((a, b) => a + b, 0) * 10) / 10;
   }

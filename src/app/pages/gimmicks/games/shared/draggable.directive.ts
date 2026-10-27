@@ -1,13 +1,13 @@
 import { Directive, ElementRef, OnDestroy, inject } from '@angular/core';
 
 /**
- * Aus der Whiteboard-App übernommen.
+ * Taken over from the whiteboard app.
  *
- * Macht ein Element mit Maus oder Finger verschiebbar (z. B. den Ergebnis-Dialog,
- * damit man ihn zur Seite schieben und den letzten Spielstand prüfen kann).
+ * Makes an element draggable with the mouse or a finger (e.g. the result dialog,
+ * so that you can push it aside and check the final game state).
  *
- * Klicks auf Buttons & Co. innerhalb des Elements lösen KEIN Verschieben aus,
- * damit die Knöpfe normal bedienbar bleiben.
+ * Clicks on buttons etc. inside the element do NOT start dragging,
+ * so that the buttons stay usable as normal.
  */
 @Directive({
   selector: '[appDraggable]',
@@ -30,7 +30,7 @@ export class DraggableDirective implements OnDestroy {
 
   private onDown = (e: PointerEvent): void => {
     const target = e.target as HTMLElement;
-    // Bedienelemente nicht zum Ziehen verwenden – nur den „leeren" Dialog greifen.
+    // Don't use controls for dragging – only grab the "empty" dialog.
     if (target.closest('button, a, input, select, textarea, label')) return;
     this.dragging = true;
     this.startX = e.clientX;

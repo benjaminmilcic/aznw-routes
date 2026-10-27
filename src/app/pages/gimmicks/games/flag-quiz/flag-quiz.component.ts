@@ -109,7 +109,7 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
     const randomIndex = Math.floor(Math.random() * countries.length);
     this.currentCountry.set(countries[randomIndex]);
 
-    // Übersetze den Ländernamen
+    // Translate the country name
     const countryName = this.currentCountry()?.name.common;
     if (countryName) {
       const translatedName = await this.translateCountryName(countryName);
@@ -122,7 +122,7 @@ export class FlagQuizComponent implements OnInit, OnDestroy {
     const targetLang = this.translate.currentLang || 'de';
     const sourceLang = 'en';
 
-    // Keine Übersetzung nötig wenn Zielsprache Englisch ist
+    // No translation needed if the target language is English
     if (targetLang === 'en') {
       return name;
     }

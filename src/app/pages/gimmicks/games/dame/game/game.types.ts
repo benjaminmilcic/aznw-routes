@@ -1,13 +1,13 @@
 export type DameStatus = 'waiting' | 'playing' | 'finished';
 
-// white = Gastgeber (Host), zieht nach oben (Zeile wird kleiner).
-// black = Gast / Computer, zieht nach unten (Zeile wird größer).
+// white = host, moves up (row gets smaller).
+// black = guest / computer, moves down (row gets larger).
 export type DameColor = 'white' | 'black';
 
-/** Spielart: gegen den Computer oder online gegen einen echten Mitspieler. */
+/** Game mode: against the computer or online against a real player. */
 export type DameMode = 'computer' | 'online';
 
-/** Spielstärke des Computers. */
+/** Difficulty of the computer. */
 export type DameLevel = 'easy' | 'medium' | 'hard';
 
 export interface DamePlayer {
@@ -22,28 +22,28 @@ export interface DameGame {
   status: DameStatus;
   hostId: string;
   /**
-   * Spielfeld als flaches Array der Länge 64 (Index = Zeile*8 + Spalte).
-   * Werte: '' leer, 'w' weißer Stein, 'W' weiße Dame, 'b'/'B' schwarz.
+   * Board as a flat array of length 64 (index = row*8 + column).
+   * Values: '' empty, 'w' white piece, 'W' white king, 'b'/'B' black.
    */
   board: string[];
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
-  /** Bei Mehrfachschlag: Feld, mit dem zwingend weitergeschlagen werden muss. */
+  /** On a multiple capture: square that must continue capturing. */
   continueFrom: number | null;
-  /** Reihenfolge der Spieler-Ids (order[0] = Host = weiß). */
+  /** Order of the player ids (order[0] = host = white). */
   order: string[];
   players: Record<string, DamePlayer>;
   winnerId: string | null;
-  /** Zuletzt gezogener Stein (zum Hervorheben) oder null. */
+  /** Last moved piece (for highlighting) or null. */
   lastMove: { from: number; to: number } | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;
 }
 
-/** Ein einzelner Zug: from → to, optional mit geschlagenem Feld. */
+/** A single move: from → to, optionally with the captured square. */
 export interface DameMove {
   from: number;
   to: number;

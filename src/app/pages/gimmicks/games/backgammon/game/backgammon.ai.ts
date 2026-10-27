@@ -1,19 +1,19 @@
 // =============================================================
-//  Computer-Gegner für Backgammon.
+//  Computer opponent for backgammon.
 // =============================================================
-// Der Würfel entscheidet ohnehin viel – der Computer wählt aus den
-// erlaubten Teilzügen (je nach Spielstärke) den besten aus.
+// The dice decide a lot anyway – the computer picks the best one from the
+// allowed partial moves (depending on the difficulty).
 //
-//   easy   – rein zufällig
-//   medium – meistens der beste Zug, manchmal ein zufälliger
-//   hard   – immer der bestbewertete komplette Zug (alle Würfel)
+//   easy   – purely random
+//   medium – mostly the best move, sometimes a random one
+//   hard   – always the best-rated complete move (all dice)
 // =============================================================
 import { anyMove, applyChecker, legalFor } from './backgammon.rules';
 import type { Bar, BgColor, BgGame, BgLevel, BgMove } from './game.types';
 
 const MAX_SEQUENCES = 1800;
 
-/** Wählt den nächsten Teilzug des Computers. */
+/** Picks the computer's next partial move. */
 export function pickMove(g: BgGame, playerId: string, level: BgLevel): BgMove | null {
   const color = g.players[playerId]?.color;
   if (!color) return null;
@@ -99,7 +99,7 @@ function applySequence(
   return state;
 }
 
-/** Je höher, desto besser für `color`. */
+/** The higher, the better for `color`. */
 function evaluate(
   board: number[],
   bar: Bar,

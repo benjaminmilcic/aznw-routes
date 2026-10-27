@@ -1,32 +1,32 @@
 /**
- * Titel und Beschreibung je Route.
+ * Title and description per route.
  *
- * Die Menge deckt sich bewusst mit src/sitemap.xml: nur oeffentlich
- * erreichbare, statische Seiten. Routen dahinter (Guards, Parameter-Routen,
- * /404) fallen im SeoService auf den Standardtext zurueck - fuer die Suche
- * sind sie ohnehin nicht relevant.
+ * The set deliberately matches src/sitemap.xml: only publicly
+ * reachable, static pages. Routes behind that (guards, parameter routes,
+ * /404) fall back to the default text in the SeoService - they are
+ * not relevant for search anyway.
  *
- * Die Titel kommen aus bereits vorhandenen Uebersetzungen (gimmicks.menu.*,
- * gimmicks.games.*), damit Seitenname und Menuepunkt nicht auseinanderlaufen.
- * Nur Eigennamen ohne Uebersetzung stehen als fester `title` drin.
+ * The titles come from existing translations (gimmicks.menu.*,
+ * gimmicks.games.*), so that page name and menu item don't diverge.
+ * Only proper names without a translation are in there as a fixed `title`.
  *
- * Beim Ergaenzen: der Pfad muss zu einer echten Route in app.routes.ts
- * gehoeren. Unbekannte Pfade liefern HTTP 200 mit der PageNotFoundComponent,
- * ein Tippfehler faellt hier also NICHT ueber den Statuscode auf.
+ * When adding: the path must belong to a real route in app.routes.ts.
+ * Unknown paths return HTTP 200 with the PageNotFoundComponent,
+ * so a typo does NOT show up here via the status code.
  */
 export interface SeoRoute {
-  /** Absoluter Pfad, exakt wie in der Sitemap. */
+  /** Absolute path, exactly as in the sitemap. */
   path: string;
-  /** i18n-Schluessel des Seitennamens. */
+  /** i18n key of the page name. */
   titleKey?: string;
-  /** Fester Seitenname, wenn es keine Uebersetzung gibt (Eigenname). */
+  /** Fixed page name if there is no translation (proper name). */
   title?: string;
-  /** Schluessel unterhalb von `seo.description`. */
+  /** Key below `seo.description`. */
   descriptionKey: string;
 }
 
 export const SEO_ROUTES: SeoRoute[] = [
-  // Startseite traegt den vollstaendigen Titel ohne Zusatz.
+  // The home page carries the full title without a suffix.
   { path: '/', descriptionKey: 'home' },
 
   { path: '/gimmicks', titleKey: 'gimmicks.menu.overview', descriptionKey: 'gimmicks' },

@@ -94,9 +94,9 @@ export class RainChartComponent implements OnInit, OnChanges {
                 : '';
             },
             color: 'lightgray',
-            maxRotation: 0, // Keine Rotation
-            minRotation: 0, // Keine Rotation
-            autoSkip: false, // Wichtig, sonst ignoriert er manchmal Labels
+            maxRotation: 0, // No rotation
+            minRotation: 0, // No rotation
+            autoSkip: false, // Important, otherwise it sometimes ignores labels
           },
         },
       },

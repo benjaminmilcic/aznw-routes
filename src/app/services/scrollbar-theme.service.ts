@@ -3,12 +3,12 @@ import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 /**
- * Faerbt die Scrollbalken passend zur aktuellen Seite.
+ * Colors the scrollbars to match the current page.
  *
- * Die Farbe steht als `data: { scrollbar: '...' }` an der Route (die tiefste
- * Route gewinnt, Kinder erben vom Elternteil) und landet als
- * `data-scrollbar` am <html>. Die Farbpaare selbst stehen in styles.scss.
- * Ohne Angabe bleiben die Scrollbalken im Browser-Standard.
+ * The color is set as `data: { scrollbar: '...' }` on the route (the deepest
+ * route wins, children inherit from their parent) and ends up as
+ * `data-scrollbar` on <html>. The color pairs themselves are in styles.scss.
+ * Without a value the scrollbars stay at the browser default.
  */
 @Injectable({ providedIn: 'root' })
 export class ScrollbarThemeService {

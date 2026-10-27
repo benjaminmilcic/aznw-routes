@@ -1,14 +1,14 @@
 // =============================================================
-//  Computer-Gegner für Dame.
+//  Computer opponent for checkers.
 // =============================================================
-//   easy   – rein zufällig
-//   medium – meistens der beste Zug, manchmal ein zufälliger
-//   hard   – immer der bestbewertete Zug
+//   easy   – purely random
+//   medium – mostly the best move, sometimes a random one
+//   hard   – always the best-rated move
 // =============================================================
 import { allCaptures, applyMove, captureMovesFrom, cellColor, isKing, legalMoves } from './dame.rules';
 import type { DameColor, DameGame, DameLevel, DameMove } from './game.types';
 
-/** Wählt den nächsten Zug des Computers. */
+/** Picks the computer's next move. */
 export function pickMove(g: DameGame, playerId: string, level: DameLevel): DameMove | null {
   const color = g.players[playerId]?.color;
   if (!color) return null;

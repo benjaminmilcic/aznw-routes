@@ -1,9 +1,9 @@
 export type MillStatus = 'waiting' | 'playing' | 'finished';
 
-/** Spielart: gegen den Computer oder online gegen einen echten Mitspieler. */
+/** Game mode: against the computer or online against a real player. */
 export type MillMode = 'computer' | 'online';
 
-/** Spielstärke des Computers. */
+/** Difficulty of the computer. */
 export type MillLevel = 'easy' | 'medium' | 'hard';
 
 export interface MillPlayer {
@@ -12,9 +12,9 @@ export interface MillPlayer {
   emoji: string;
 }
 
-/** Felder sind mit 0..23 nummeriert (drei ineinander liegende Quadrate). */
+/** Points are numbered 0..23 (three nested squares). */
 export const POINTS_COUNT = 24;
-/** Steine pro Spieler. */
+/** Pieces per player. */
 export const PIECES = 9;
 
 export interface MillGame {
@@ -22,37 +22,37 @@ export interface MillGame {
   status: MillStatus;
   hostId: string;
   players: Record<string, MillPlayer>;
-  /** Reihenfolge der Spieler-Ids (order[0] = Sitz 0, order[1] = Sitz 1). */
+  /** Order of the player ids (order[0] = seat 0, order[1] = seat 1). */
   order: string[];
-  /** 24 Felder: -1 leer, sonst Sitzplatz (0 oder 1) des Steins. */
+  /** 24 points: -1 empty, otherwise the seat (0 or 1) of the piece. */
   board: number[];
-  /** Wie viele Steine jeder Sitzplatz schon gesetzt hat (Setzphase). */
+  /** How many pieces each seat has already placed (placing phase). */
   placed: number[];
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
-  /** true: aktueller Spieler hat eine Mühle und muss einen Stein wegnehmen. */
+  /** true: the current player has a mill and must remove a piece. */
   removing: boolean;
   winnerId: string | null;
   lastAction: MillAction | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;
 }
 
-/** Beschreibt den letzten Zug für eine kurze Einblendung beim Gegner. */
+/** Describes the last move for a short overlay for the opponent. */
 export interface MillAction {
   by: string;
   type: 'place' | 'move' | 'remove';
-  /** Betroffenes Feld. */
+  /** Affected point. */
   at_field: number;
-  /** true, wenn dabei eine Mühle geschlossen wurde. */
+  /** true if a mill was closed in the process. */
   mill?: boolean;
   at: number;
 }
 
-/** Nachbarschaften je Feld (für Zugmöglichkeiten in der Zugphase). */
+/** Neighbors per point (for possible moves in the moving phase). */
 export const ADJACENCY: number[][] = [
   [1, 9], // 0
   [0, 2, 4], // 1
@@ -80,9 +80,9 @@ export const ADJACENCY: number[][] = [
   [14, 22], // 23
 ];
 
-/** Alle 16 Mühlen (Dreierreihen). */
+/** All 16 mills (rows of three). */
 export const MILLS: number[][] = [
-  // waagerecht
+  // horizontal
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -91,7 +91,7 @@ export const MILLS: number[][] = [
   [15, 16, 17],
   [18, 19, 20],
   [21, 22, 23],
-  // senkrecht
+  // vertical
   [0, 9, 21],
   [3, 10, 18],
   [6, 11, 15],

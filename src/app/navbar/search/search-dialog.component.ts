@@ -94,12 +94,12 @@ export class SearchDialogComponent implements OnChanges, OnDestroy {
       return;
     }
 
-    // Sofort lokale (lexikalische) Treffer zeigen, damit Tippen reaktiv wirkt …
+    // Show local (lexical) matches right away so typing feels responsive …
     const local = this.semantic.lexical(q).map((r) => this.toResult(r));
     if (local.length) this.applyResults(local);
     this.loading = true;
 
-    // … und kurz darauf die hybride (lexikalisch + semantische) Suche nachladen.
+    // … and shortly afterwards load the hybrid (lexical + semantic) search.
     this.debounceTimeout = setTimeout(() => this.runHybrid(q), this.debounceMs);
   }
 
@@ -108,14 +108,14 @@ export class SearchDialogComponent implements OnChanges, OnDestroy {
     this.semantic
       .search(q, { signal: this.abortController.signal })
       .then((ranked) => {
-        if (this.query.trim() !== q) return; // veraltete Anfrage verwerfen
+        if (this.query.trim() !== q) return; // discard outdated request
         this.loading = false;
         this.applyResults(ranked.map((r) => this.toResult(r)));
       })
       .catch((err) => {
         if (this.query.trim() !== q || err?.name === 'AbortError') return;
         this.loading = false;
-        // Bei Fehler die bereits gezeigten lexikalischen Treffer behalten.
+        // On error keep the lexical matches already shown.
         if (!this.flatResults.length) {
           this.applyResults(this.semantic.lexical(q).map((r) => this.toResult(r)));
         }
@@ -144,7 +144,7 @@ export class SearchDialogComponent implements OnChanges, OnDestroy {
       category,
       items,
     }));
-    // flatResults muss der Anzeige-Reihenfolge (gruppiert) entsprechen.
+    // flatResults must match the display order (grouped).
     this.flatResults = this.groupedResults.flatMap((g) => g.items);
     this.activeIndex = this.flatResults.length > 0 ? 0 : -1;
   }
@@ -229,7 +229,7 @@ export class SearchDialogComponent implements OnChanges, OnDestroy {
       .loadIndex()
       .then(() => {
         this.indexReady = true;
-        // Falls der Nutzer schon getippt hat, bevor der Index da war.
+        // In case the user already typed before the index was there.
         if (this.query.trim()) this.onSearch();
       })
       .catch((err) => console.warn('Such-Index konnte nicht geladen werden:', err));

@@ -13,7 +13,7 @@ interface PairOption {
   labelKey: string;
 }
 
-/** Startbildschirm: Spielart, Name, Tier, Kartenzahl und Spielstärke wählen. */
+/** Start screen: choose game mode, name, animal, number of cards and difficulty. */
 @Component({
   selector: 'app-memo-quiz-home',
   imports: [
@@ -45,7 +45,7 @@ export class MemoQuizHomeComponent implements OnInit {
   protected readonly name = signal('');
   protected readonly avatar = signal(CARD_MOTIFS[0].id);
   protected readonly joinCode = signal('');
-  /** Online: Startbildschirm zeigt entweder "Neues Spiel" oder "Beitreten". */
+  /** Online: the start screen shows either "New game" or "Join". */
   protected readonly showJoin = signal(false);
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class MemoQuizHomeComponent implements OnInit {
     return this.name().trim().length >= 1;
   }
 
-  /** Spiel gegen den Computer starten. */
+  /** Start a game against the computer. */
   protected start(): void {
     if (!this.nameValid()) return;
     this.svc.startComputerGame(this.name().trim(), this.avatar(), this.pairs(), this.level());
@@ -78,7 +78,7 @@ export class MemoQuizHomeComponent implements OnInit {
     try {
       await this.svc.createGame(this.name().trim(), this.avatar(), this.pairs());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 
@@ -87,7 +87,7 @@ export class MemoQuizHomeComponent implements OnInit {
     try {
       await this.svc.joinGame(this.joinCode(), this.name().trim(), this.avatar());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 }

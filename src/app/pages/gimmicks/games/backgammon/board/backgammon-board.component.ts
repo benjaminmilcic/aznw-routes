@@ -17,14 +17,14 @@ import type { BgColor, BgPlayer } from '../game/game.types';
 
 type Outcome = 'win' | 'lose';
 
-// Sichtbare Anordnung der 24 Punkte (Index ins board-Array).
-// Oben links → oben rechts, unten links → unten rechts.
+// Visible arrangement of the 24 points (index into the board array).
+// Top left → top right, bottom left → bottom right.
 const TOP_LEFT = [12, 13, 14, 15, 16, 17];
 const TOP_RIGHT = [18, 19, 20, 21, 22, 23];
 const BOTTOM_LEFT = [11, 10, 9, 8, 7, 6];
 const BOTTOM_RIGHT = [5, 4, 3, 2, 1, 0];
 
-// Augen-Muster für die Würfel (3×3-Raster, true = Punkt sichtbar).
+// Pip patterns for the dice (3×3 grid, true = pip visible).
 const PIPS: Record<number, number[]> = {
   1: [4],
   2: [0, 8],
@@ -34,7 +34,7 @@ const PIPS: Record<number, number[]> = {
   6: [0, 2, 3, 5, 6, 8],
 };
 
-/** Das Spielfeld mit Kopfzeile, Warte- und Ergebnis-Overlay. */
+/** The game board with header, waiting and result overlay. */
 @Component({
   selector: 'app-backgammon-board',
   imports: [NgTemplateOutlet, TranslateModule, DraggableDirective, SpeakOnClickDirective],
@@ -53,19 +53,19 @@ export class BackgammonBoardComponent implements OnDestroy {
   protected readonly bottomLeft = BOTTOM_LEFT;
   protected readonly bottomRight = BOTTOM_RIGHT;
 
-  /** Aktuell angetippter Stein als Startpunkt (-1 = Bar). */
+  /** Currently tapped checker as starting point (-1 = bar). */
   protected readonly selectedFrom = signal<number | null>(null);
 
   private effectsShown = false;
   private passTimer: ReturnType<typeof setInterval> | null = null;
 
-  /** Restsekunden, bis automatisch weitergegeben wird (0 = inaktiv). */
+  /** Seconds left until the turn is passed on automatically (0 = inactive). */
   protected readonly countdown = signal(0);
 
-  /** Felder, von denen aus gezogen werden darf. */
+  /** Points from which a move is allowed. */
   protected readonly sources = computed<Set<number>>(() => new Set(this.svc.legalSources()));
 
-  /** Mögliche Ziele für den gewählten Stein: Zielpunkt → Würfelwert. */
+  /** Possible targets for the selected checker: target point → die value. */
   protected readonly targets = computed<Map<number, number>>(() => {
     const f = this.selectedFrom();
     const m = new Map<number, number>();
@@ -75,9 +75,9 @@ export class BackgammonBoardComponent implements OnDestroy {
   });
 
   /**
-   * Anzeigename eines Spielers: selbst eingegebene Namen bleiben unverändert.
-   * NUR beim Computer-Gegner wird übersetzt, damit ein Sprachwechsel auch im
-   * laufenden Spiel greift (sein gespeicherter Name ist nur ein Rückfallwert).
+   * Display name of a player: names entered by players stay unchanged.
+   * ONLY the computer opponent is translated, so that a language change also
+   * applies in a running game (its stored name is only a fallback value).
    */
   protected displayName(p: BgPlayer | null | undefined): string {
     if (!p) return '';
@@ -158,12 +158,12 @@ export class BackgammonBoardComponent implements OnDestroy {
     return v > 0 ? 'white' : v < 0 ? 'black' : null;
   }
 
-  /** Bis zu 5 Steine zeichnen; der Rest wird als Zahl angezeigt. */
+  /** Draw up to 5 checkers; the rest is shown as a number. */
   protected discs(i: number): number[] {
     return Array.from({ length: Math.min(this.countAt(i), 5) }, (_, k) => k);
   }
 
-  /** Zahl für „mehr als 5 Steine", sonst 0. */
+  /** Number for "more than 5 checkers", otherwise 0. */
   protected overflow(i: number): number {
     const c = this.countAt(i);
     return c > 5 ? c : 0;

@@ -1,21 +1,21 @@
 // =============================================================
-//  Computer-Gegner für "Schiffe versenken".
+//  Computer opponent for "Battleship".
 // =============================================================
-// Den gibt es in der Whiteboard-App nicht – sie kennt nur den
-// Online-Modus. Der Computer spielt hier fair: Er kennt die
-// gegnerische Flotte NICHT. Er sieht nur das, was auch ein Mensch
-// sieht – die eigenen Schüsse (Treffer/Wasser) und welche Schiffe
-// dadurch versenkt wurden.
+// It does not exist in the whiteboard app – that one only knows the
+// online mode. The computer plays fair here: it does NOT know the
+// opponent's fleet. It only sees what a human would
+// see – its own shots (hit/water) and which ships were
+// sunk by them.
 //
-// Drei Spielstärken:
-//   easy   – schießt rein zufällig
-//   medium – "Suchen & Nachfassen": nach einem Treffer werden die
-//            Nachbarfelder abgeklopft, gesucht wird im Schachbrett-
-//            muster (kein Schiff ist kleiner als 2 Felder)
-//   hard   – zusätzlich eine Wahrscheinlichkeitskarte: Für jedes
-//            noch schwimmende Schiff wird gezählt, wie oft es über
-//            ein Feld liegen könnte. Beschossen wird das Feld mit
-//            den meisten Möglichkeiten.
+// Three difficulty levels:
+//   easy   – shoots purely at random
+//   medium – "hunt & target": after a hit the neighboring cells
+//            are tapped, the search uses a checkerboard
+//            pattern (no ship is smaller than 2 cells)
+//   hard   – additionally a probability map: for every ship
+//            still afloat it counts how often it could lie over
+//            a cell. The cell with the most possibilities
+//            is shot at.
 // =============================================================
 import { cellKey, inBounds, parseCell } from './board.utils';
 import { GRID_SIZE, type ShipsLevel, type ShotResult } from './ships.types';
@@ -23,13 +23,13 @@ import { GRID_SIZE, type ShipsLevel, type ShotResult } from './ships.types';
 type Shots = Record<string, ShotResult>;
 
 /**
- * Nächster Schuss des Computers.
+ * The computer's next shot.
  *
- * @param shots     Bisherige Schüsse des Computers ("x,y" -> hit/miss)
- * @param sunk      Felder von Schiffen, die bereits versenkt sind
- * @param remaining Größen der Schiffe, die noch schwimmen
- * @param level     Spielstärke
- * @returns         Zielfeld oder `null`, wenn nichts mehr frei ist
+ * @param shots     Previous shots of the computer ("x,y" -> hit/miss)
+ * @param sunk      Cells of ships that are already sunk
+ * @param remaining Sizes of the ships still afloat
+ * @param level     Difficulty
+ * @returns         Target cell or `null` if nothing is free anymore
  */
 export function bestShot(
   shots: Shots,
@@ -40,7 +40,7 @@ export function bestShot(
   const open = openCells(shots);
   if (open.length === 0) return null;
 
-  // Treffer, die zu einem noch nicht versenkten Schiff gehören.
+  // Hits that belong to a ship that has not been sunk yet.
   const activeHits = Object.keys(shots).filter((k) => shots[k] === 'hit' && !sunk.has(k));
 
   if (level !== 'easy' && activeHits.length > 0) {
@@ -57,8 +57,8 @@ export function bestShot(
       return parseCell(pickRandom(open));
 
     case 'medium': {
-      // Kleinstes Schiff bestimmt das Suchraster: Ein Schiff der Länge n
-      // wird garantiert von jedem n-ten Feld getroffen.
+      // The smallest ship determines the search grid: a ship of length n
+      // is guaranteed to be hit by every n-th cell.
       const step = Math.max(2, Math.min(...(remaining.length ? remaining : [2])));
       const parity = open.filter((k) => {
         const { x, y } = parseCell(k);
@@ -72,12 +72,12 @@ export function bestShot(
   }
 }
 
-// ---- Suchen & Nachfassen ------------------------------------------------
+// ---- Hunt & target ------------------------------------------------------
 
 /**
- * Felder, die nach einem Treffer sinnvoll sind: Liegen zwei Treffer in einer
- * Linie, wird diese Linie an beiden Enden verlängert (Schiffe sind gerade).
- * Sonst werden die vier Nachbarfelder abgeklopft.
+ * Cells that make sense after a hit: if two hits lie in a
+ * line, this line is extended at both ends (ships are straight).
+ * Otherwise the four neighboring cells are tapped.
  */
 function followUpTargets(activeHits: readonly string[], shots: Shots): string[] {
   const hitSet = new Set(activeHits);
@@ -93,8 +93,8 @@ function followUpTargets(activeHits: readonly string[], shots: Shots): string[] 
       [0, 1],
       [0, -1],
     ] as const) {
-      // Gehört das Nachbarfeld auch zu einem Treffer? Dann kennen wir die
-      // Richtung des Schiffs und verlängern die Reihe hinter dem Ende.
+      // Does the neighboring cell also belong to a hit? Then we know the
+      // direction of the ship and extend the row beyond its end.
       if (hitSet.has(cellKey(x + dx, y + dy))) {
         let nx = x - dx;
         let ny = y - dy;
@@ -109,15 +109,15 @@ function followUpTargets(activeHits: readonly string[], shots: Shots): string[] 
     }
   }
 
-  // Bekannte Richtung schlägt blindes Abklopfen.
+  // A known direction beats blind tapping.
   return unique(lineTargets.length > 0 ? lineTargets : neighbourTargets);
 }
 
-// ---- Wahrscheinlichkeitskarte -------------------------------------------
+// ---- Probability map ----------------------------------------------------
 
 /**
- * Wählt aus `candidates` das Feld, über das die meisten der noch
- * schwimmenden Schiffe passen könnten.
+ * Picks the cell from `candidates` over which most of the ships still
+ * afloat could fit.
  */
 function pickByDensity(
   candidates: readonly string[],
@@ -141,9 +141,9 @@ function pickByDensity(
 }
 
 /**
- * Zählt für jedes freie Feld, wie viele mögliche Schiffslagen darüber laufen.
- * Treffer, die noch zu keinem versenkten Schiff gehören, zählen als starker
- * Hinweis – Lagen durch solche Treffer werden höher gewichtet.
+ * Counts for every free cell how many possible ship positions run over it.
+ * Hits that do not belong to a sunk ship yet count as a strong
+ * hint – positions through such hits are weighted higher.
  */
 function densityMap(
   shots: Shots,
@@ -171,7 +171,7 @@ function densityMap(
               break;
             }
             const key = cellKey(cx, cy);
-            // Wasser und bereits versenkte Schiffe blockieren die Lage.
+            // Water and already sunk ships block the position.
             if (shots[key] === 'miss' || sunk.has(key)) {
               possible = false;
               break;
@@ -181,10 +181,10 @@ function densityMap(
           }
           if (!possible) continue;
 
-          // Lagen, die einen offenen Treffer erklären, sind viel wahrscheinlicher.
+          // Positions that explain an open hit are much more likely.
           const weight = 1 + hits * 8;
           for (const key of cells) {
-            if (shots[key]) continue; // schon beschossen -> kein Ziel
+            if (shots[key]) continue; // already shot at -> no target
             score.set(key, (score.get(key) ?? 0) + weight);
           }
         }
@@ -194,7 +194,7 @@ function densityMap(
   return score;
 }
 
-// ---- Kleinkram ----------------------------------------------------------
+// ---- Odds and ends ------------------------------------------------------
 
 function openCells(shots: Shots): string[] {
   const open: string[] = [];

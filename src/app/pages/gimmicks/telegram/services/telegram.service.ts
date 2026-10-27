@@ -108,8 +108,8 @@ export class TelegramService {
     this.clearSession();
   }
 
-  // Leert nur den lokalen Auth-State ohne einen HTTP-Call zu machen.
-  // Wird vom Interceptor aufgerufen, wenn der Server 401 zurückgibt.
+  // Only clears the local auth state without making an HTTP call.
+  // Called by the interceptor when the server returns 401.
   clearSession(): void {
     this.authenticated.set(false);
     this.currentUser.set(null);

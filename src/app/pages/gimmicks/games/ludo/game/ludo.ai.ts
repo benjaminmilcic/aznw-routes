@@ -1,12 +1,12 @@
 // =============================================================
-//  Computer-Gegner für "Mensch ärgere dich nicht".
+//  Computer opponent for "Ludo".
 // =============================================================
-// Der Würfel entscheidet ohnehin das meiste – der Computer wählt also nur
-// aus den erlaubten Zügen den (je nach Spielstärke) besten aus.
+// The dice decide most things anyway – so the computer only picks
+// the best one from the allowed moves (depending on the difficulty).
 //
-//   easy   – rein zufällig, macht Anfängerfehler
-//   medium – meistens der beste Zug, manchmal ein zufälliger
-//   hard   – immer der bestbewertete Zug (schlägt, rettet, geht ins Ziel)
+//   easy   – purely random, makes beginner mistakes
+//   medium – mostly the best move, sometimes a random one
+//   hard   – always the best-rated move (captures, rescues, goes home)
 // =============================================================
 import { trackCell } from './ludo.rules';
 import {
@@ -19,7 +19,7 @@ import {
   type LudoPos,
 } from './ludo.types';
 
-/** Wählt den Zug des Computers aus den erlaubten Zügen. */
+/** Picks the computer's move from the allowed moves. */
 export function bestMove(
   g: LudoGame,
   playerId: string,
@@ -31,7 +31,7 @@ export function bestMove(
 
   if (level === 'easy') return moves[Math.floor(Math.random() * moves.length)];
 
-  // "medium" greift ab und zu daneben, damit Kinder eine Chance haben.
+  // "medium" misses now and then, so that children have a chance.
   if (level === 'medium' && Math.random() < 0.35) {
     return moves[Math.floor(Math.random() * moves.length)];
   }
@@ -48,34 +48,34 @@ export function bestMove(
   return best;
 }
 
-/** Bewertet einen Zug – je höher, desto besser. */
+/** Rates a move – the higher, the better. */
 function rate(g: LudoGame, playerId: string, move: LudoMove): number {
   const from = (g.pieces[playerId] ?? [])[move.pieceIndex] ?? HOME;
   let score = 0;
 
-  // Einen Gegner rauswerfen ist fast immer das Beste.
+  // Knocking out an opponent is almost always the best.
   if (move.captures) score += 120;
 
-  // Ins Zielhaus einbiegen – je weiter hinein, desto besser.
+  // Turning into the home column – the further in, the better.
   if (move.to >= GOAL_BASE) score += 70 + (move.to - GOAL_BASE) * 6;
 
-  // Eine Figur aus der Garage holen bringt Druck aufs Brett.
+  // Bringing a piece out of the garage puts pressure on the board.
   if (from === HOME) score += 80;
 
-  // Eine bedrohte Figur in Sicherheit bringen …
+  // Bringing a threatened piece to safety …
   if (isThreatened(g, playerId, from)) score += 45;
-  // … aber nicht in die nächste Gefahr hinein.
+  // … but not into the next danger.
   if (isThreatened(g, playerId, move.to)) score -= 40;
 
-  // Sonst zählt der Fortschritt Richtung Ziel.
+  // Otherwise progress towards the goal counts.
   score += move.to * 0.5;
 
   return score;
 }
 
 /**
- * Steht die Figur auf einem Feld, das ein Gegner mit einem Wurf 1–6 erreicht?
- * Figuren in der Garage oder im Zielhaus sind sicher.
+ * Is the piece on a square that an opponent can reach with a roll of 1–6?
+ * Pieces in the garage or in the home column are safe.
  */
 function isThreatened(g: LudoGame, id: string, pos: LudoPos): boolean {
   if (pos < 0 || pos >= TRACK_LEN) return false;
@@ -86,8 +86,8 @@ function isThreatened(g: LudoGame, id: string, pos: LudoPos): boolean {
     for (const p of g.pieces[other] ?? []) {
       if (p < 0 || p >= TRACK_LEN) continue;
       const dist = (cell - trackCell(g, other, p) + TRACK_LEN) % TRACK_LEN;
-      // Der Gegner muss das Feld mit einem Wurf erreichen können, ohne dabei
-      // schon in sein eigenes Zielhaus einzubiegen.
+      // The opponent must be able to reach the square with one roll without
+      // already turning into their own home column.
       if (dist >= 1 && dist <= 6 && p + dist < TRACK_LEN) return true;
     }
   }

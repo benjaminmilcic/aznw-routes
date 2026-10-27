@@ -1,13 +1,13 @@
 export type BgStatus = 'waiting' | 'playing' | 'finished';
 
-// white = Gastgeber (Host), zieht von hohen zu niedrigen Feldern (Heimat 0–5).
-// black = Gast / Computer, zieht von niedrigen zu hohen Feldern (Heimat 18–23).
+// white = host, moves from high to low points (home 0–5).
+// black = guest / computer, moves from low to high points (home 18–23).
 export type BgColor = 'white' | 'black';
 
-/** Spielart: gegen den Computer oder online gegen einen echten Mitspieler. */
+/** Game mode: against the computer or online against a real player. */
 export type BgMode = 'computer' | 'online';
 
-/** Spielstärke des Computers. */
+/** Difficulty of the computer. */
 export type BgLevel = 'easy' | 'medium' | 'hard';
 
 export interface BgPlayer {
@@ -22,45 +22,45 @@ export interface BgGame {
   status: BgStatus;
   hostId: string;
   /**
-   * Spielfeld als flaches Array der Länge 24.
-   * Wert > 0  → so viele weiße Steine auf diesem Punkt.
-   * Wert < 0  → so viele schwarze Steine (Betrag) auf diesem Punkt.
-   * Wert = 0  → Punkt ist leer.
-   * Index 0 ist die rechte untere Ecke (weiße Heimat), Index 23 rechts oben.
+   * Board as a flat array of length 24.
+   * Value > 0  → that many white checkers on this point.
+   * Value < 0  → that many black checkers (absolute value) on this point.
+   * Value = 0  → point is empty.
+   * Index 0 is the bottom right corner (white home), index 23 top right.
    */
   board: number[];
-  /** Geschlagene Steine, die wieder eingewürfelt werden müssen. */
+  /** Hit checkers that have to be entered again. */
   barWhite: number;
   barBlack: number;
-  /** Bereits herausgespielte Steine (Ziel: 15). */
+  /** Checkers already borne off (goal: 15). */
   offWhite: number;
   offBlack: number;
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
-  /** Reihenfolge der Spieler-Ids (order[0] = Host = weiß). */
+  /** Order of the player ids (order[0] = host = white). */
   order: string[];
   players: Record<string, BgPlayer>;
-  /** Der aktuelle Wurf (zwei Würfel) – leer, solange noch nicht gewürfelt wurde. */
+  /** The current roll (two dice) – empty as long as nothing has been rolled. */
   dice: number[];
-  /** Noch nicht verbrauchte Würfelaugen (bei Pasch vier gleiche Werte). */
+  /** Pips not used yet (four equal values for doubles). */
   diceLeft: number[];
-  /** Hat der aktuelle Spieler in diesem Zug schon gewürfelt? */
+  /** Has the current player already rolled this turn? */
   rolled: boolean;
   winnerId: string | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;
 }
 
-/** Ein einzelner Teilzug eines Steins (für die Zug-Erzeugung). */
+/** A single partial move of a checker (for move generation). */
 export interface BgMove {
-  /** Quellpunkt 0–23 oder -1 für „von der Bar". */
+  /** Source point 0–23 or -1 for "from the bar". */
   from: number;
-  /** Zielpunkt 0–23 oder -1 für „herausspielen" (bear off). */
+  /** Target point 0–23 or -1 for "bear off". */
   to: number;
-  /** Verwendeter Würfelwert. */
+  /** Die value used. */
   die: number;
 }
 

@@ -88,10 +88,10 @@ export const appConfig: ApplicationConfig = {
     }),
 
     provideEffects([RecipeEffects]),
-    // Redux DevTools für Debugging (optional, aber sehr hilfreich!)
+    // Redux DevTools for debugging (optional, but very helpful!)
     provideStoreDevtools({
-      maxAge: 25, // Anzahl der gespeicherten States
-      logOnly: true, // Im Production-Modus auf true setzen
+      maxAge: 25, // Number of stored states
+      logOnly: true, // Set to true in production mode
     }),
   ],
 };

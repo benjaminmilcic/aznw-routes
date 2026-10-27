@@ -9,25 +9,25 @@ import type { ChessColor, ChessGame, ChessLevel, ChessMode, ChessPlayer } from '
 const PLAYER_ID_KEY = 'schach_player_id';
 const PLAYER_NAME_KEY = 'schach_player_name';
 const PLAYER_EMOJI_KEY = 'schach_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'schach_active_code';
 const CODE_ALPHABET = '0123456789';
 
-/** Feste Id des Computer-Gegners. */
+/** Fixed id of the computer opponent. */
 export const CPU_ID = 'cpu';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.chessGame';
 
 @Injectable({ providedIn: 'root' })
 export class SchachService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<ChessGame>({
     db,
@@ -40,16 +40,16 @@ export class SchachService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
-  /** Mitspieler, die nicht mehr verbunden sind. */
+  /** Players who are no longer connected. */
   readonly absent = this.channel.awayPlayers;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -59,8 +59,8 @@ export class SchachService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -122,9 +122,9 @@ export class SchachService {
   }
 
   /**
-   * Spiel gegen den Computer starten. Der Mensch (weiß) beginnt.
-   * Der gespeicherte Name des Computers ist nur ein Rückfallwert – angezeigt
-   * wird er übersetzt (siehe `displayName` im Board).
+   * Start a game against the computer. The human (white) starts.
+   * The stored name of the computer is only a fallback value – it is shown
+   * translated (see `displayName` in the board).
    */
   startComputerGame(name: string, emoji: string, level: ChessLevel): void {
     this.rememberProfile(name, emoji);
@@ -282,9 +282,9 @@ export class SchachService {
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });

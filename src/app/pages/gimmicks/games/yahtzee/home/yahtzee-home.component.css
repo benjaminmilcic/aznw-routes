@@ -73,7 +73,7 @@
   font-weight: 800;
 }
 
-/* ---- Spielerliste (am Gerät) -------------------------------------------- */
+/* ---- Player list (on the device) ---------------------------------------- */
 .seat {
   display: flex;
   align-items: center;
@@ -211,7 +211,7 @@
   box-shadow: inset 0 0 0 3px #b9d8ff;
 }
 
-/* Ion-Segment im hellen Karten-Look (wie bei den anderen Spielen). */
+/* Ion segment in the light card look (like in the other games). */
 ::ng-deep ion-segment.y-segment {
   --background: #eef4ff;
   border-radius: 0.8rem;

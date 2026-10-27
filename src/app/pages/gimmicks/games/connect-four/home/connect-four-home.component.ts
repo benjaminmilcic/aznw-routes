@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AVATARS, ConnectFourService } from '../game/connect-four.service';
 import type { C4Level, C4Mode } from '../game/game.types';
 
-/** Startbildschirm: Spielart wählen, Name/Zeichen festlegen, Spiel starten. */
+/** Start screen: choose the game mode, set name/symbol, start the game. */
 @Component({
   selector: 'app-connect-four-home',
   imports: [CommonModule, FormsModule, TranslateModule, IonSegment, IonSegmentButton, IonLabel],
@@ -24,7 +24,7 @@ export class ConnectFourHomeComponent implements OnInit {
   protected readonly name = signal('');
   protected readonly emoji = signal(AVATARS[0]);
   protected readonly joinCode = signal('');
-  /** Online: Startbildschirm zeigt entweder "Neues Spiel" oder "Beitreten". */
+  /** Online: the start screen shows either "New game" or "Join". */
   protected readonly showJoin = signal(false);
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class ConnectFourHomeComponent implements OnInit {
     return this.name().trim().length >= 1;
   }
 
-  /** Spiel gegen den Computer starten. */
+  /** Start a game against the computer. */
   protected start(): void {
     if (!this.nameValid()) return;
     this.svc.startComputerGame(this.name().trim(), this.emoji(), this.level());
@@ -58,7 +58,7 @@ export class ConnectFourHomeComponent implements OnInit {
     try {
       await this.svc.createGame(this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 
@@ -67,7 +67,7 @@ export class ConnectFourHomeComponent implements OnInit {
     try {
       await this.svc.joinGame(this.joinCode(), this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 }

@@ -18,25 +18,25 @@ import type { BgColor, BgGame, BgLevel, BgMode, BgMove, BgPlayer } from './game.
 const PLAYER_ID_KEY = 'bg_player_id';
 const PLAYER_NAME_KEY = 'bg_player_name';
 const PLAYER_EMOJI_KEY = 'bg_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'bg_active_code';
 const CODE_ALPHABET = '0123456789';
 
-/** Feste Id des Computer-Gegners. */
+/** Fixed id of the computer opponent. */
 export const CPU_ID = 'cpu';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.backgammonGame';
 
 @Injectable({ providedIn: 'root' })
 export class BackgammonService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<BgGame>({
     db,
@@ -49,16 +49,16 @@ export class BackgammonService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
-  /** Mitspieler, die nicht mehr verbunden sind. */
+  /** Players who are no longer connected. */
   readonly absent = this.channel.awayPlayers;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -68,8 +68,8 @@ export class BackgammonService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -77,21 +77,21 @@ export class BackgammonService {
     if (ok) this.mode.set('online');
     return ok;
   }
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<BgMode | null>(null);
-  /** Spielstärke des Computers. */
+  /** Difficulty of the computer. */
   readonly level = signal<BgLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
   readonly busy = signal(false);
-  /** Der Computer "überlegt" gerade (kurze Verzögerung, damit man den Zug sieht). */
+  /** The computer is "thinking" (short delay so that you can see the move). */
   readonly thinking = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<BgPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
   readonly opponent = computed<BgPlayer | null>(() => {
@@ -110,16 +110,16 @@ export class BackgammonService {
     return g ? g.players[g.currentTurn] ?? null : null;
   });
 
-  /** Farbe des Spielers an DIESEM Gerät. */
+  /** Color of the player on THIS device. */
   readonly myColor = computed<BgColor | null>(() => this.me()?.color ?? null);
 
-  /** Darf gerade gewürfelt werden? */
+  /** Is rolling the dice allowed right now? */
   readonly canRoll = computed<boolean>(() => {
     const g = this.game();
     return this.isMyTurn() && !!g && !g.rolled;
   });
 
-  /** Gewürfelt, aber kein Zug möglich → Zug muss weitergegeben werden. */
+  /** Rolled, but no move possible → the turn must be passed on. */
   readonly noMoves = computed<boolean>(() => {
     const g = this.game();
     if (!g || !this.isMyTurn() || !g.rolled || g.diceLeft.length === 0) return false;
@@ -128,7 +128,7 @@ export class BackgammonService {
     return !anyMove(g.board, { white: g.barWhite, black: g.barBlack }, color, g.diceLeft);
   });
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -152,12 +152,12 @@ export class BackgammonService {
     return id;
   }
 
-  // ---- Spiel gegen den Computer -------------------------------------------
+  // ---- Game against the computer ------------------------------------------
   /**
-   * Spiel gegen den Computer starten. Der Mensch (weiß) beginnt.
-   * Der gespeicherte Name des Computers ist nur ein Rückfallwert – angezeigt
-   * wird er übersetzt (siehe `displayName` im Board), damit ein Sprachwechsel
-   * im laufenden Spiel greift.
+   * Start a game against the computer. The human (white) starts.
+   * The stored name of the computer is only a fallback value – it is shown
+   * translated (see `displayName` in the board), so that a language change
+   * applies in the running game.
    */
   startComputerGame(name: string, emoji: string, level: BgLevel): void {
     this.rememberProfile(name, emoji);
@@ -195,7 +195,7 @@ export class BackgammonService {
     };
   }
 
-  // ---- Online-Spiel: erstellen / beitreten ---------------------------------
+  // ---- Online game: create / join ------------------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -284,8 +284,8 @@ export class BackgammonService {
     }
   }
 
-  // ---- Spielzüge -----------------------------------------------------------
-  /** Würfelt (nur der Spieler, der dran ist und noch nicht gewürfelt hat). */
+  // ---- Moves ---------------------------------------------------------------
+  /** Rolls the dice (only the player whose turn it is and who has not rolled yet). */
   roll(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || g.currentTurn !== this.playerId || g.rolled) return;
@@ -299,10 +299,10 @@ export class BackgammonService {
   }
 
   /**
-   * Führt einen einzelnen Stein-Zug aus.
-   * @param from Quellpunkt 0–23, oder -1 für „von der Bar".
-   * @param to   Zielpunkt 0–23, oder -1 für „herausspielen".
-   * @param die  Der dafür verwendete Würfelwert.
+   * Performs a single checker move.
+   * @param from Source point 0–23, or -1 for "from the bar".
+   * @param to   Target point 0–23, or -1 for "bear off".
+   * @param die  The die value used for it.
    */
   move(from: number, to: number, die: number): void {
     const g = this.game();
@@ -319,7 +319,7 @@ export class BackgammonService {
     this.maybeScheduleComputerTurn();
   }
 
-  /** Gibt den Zug weiter, wenn kein Zug möglich ist. */
+  /** Passes the turn on if no move is possible. */
   passTurn(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || g.currentTurn !== this.playerId) return;
@@ -339,7 +339,7 @@ export class BackgammonService {
     this.maybeScheduleComputerTurn();
   }
 
-  /** Neue Runde – der Verlierer der letzten Runde beginnt. */
+  /** New round – the loser of the last round starts. */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -360,12 +360,12 @@ export class BackgammonService {
     this.maybeScheduleComputerTurn();
   }
 
-  /** Laufendes Spiel verlassen und zurück zum Startbildschirm. */
+  /** Leave the running game and go back to the start screen. */
   leaveGame(): void {
     this.reset();
   }
 
-  // ---- Hilfen für die Oberfläche ------------------------------------------
+  // ---- Helpers for the UI -------------------------------------------------
   legalSources(): number[] {
     const g = this.game();
     if (!g) return [];
@@ -379,9 +379,9 @@ export class BackgammonService {
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -431,7 +431,7 @@ export class BackgammonService {
     }
   }
 
-  /** Ist der Computer dran, würfelt/zieht er nach kurzer Bedenkzeit. */
+  /** If it is the computer's turn, it rolls/moves after a short pause. */
   private maybeScheduleComputerTurn(): void {
     const g = this.game();
     if (this.mode() !== 'computer' || !g || g.status !== 'playing') return;
@@ -507,10 +507,10 @@ export class BackgammonService {
     }
   }
 
-  // ---- Online-Intern -------------------------------------------------------
+  // ---- Online internals ----------------------------------------------------
   /**
-   * Firebase speichert keine leeren Arrays/Null-Werte sauber – beim Einlesen
-   * ergänzen, damit die Oberfläche niemals auf "undefined" zugreift.
+   * Firebase does not store empty arrays/null values cleanly – fill them in
+   * when reading, so that the UI never accesses "undefined".
    */
   private normalize(g: BgGame): BgGame {
     return {

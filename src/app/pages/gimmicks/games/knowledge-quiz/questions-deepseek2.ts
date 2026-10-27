@@ -363,7 +363,7 @@ export const QUESTIONS: Question[] = [
       de: ['Gold', 'Sauerstoff', 'Eisen', 'Kohlenstoff'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 1, // Sauerstoff
+    correctAnswerIndex: 1, // Oxygen
     },
   {
     question: {
@@ -415,7 +415,7 @@ export const QUESTIONS: Question[] = [
       de: ['Ägypten', 'Marokko', 'Algerien', 'Alle genannten'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 3, // Alle genannten
+    correctAnswerIndex: 3, // All of the above
     },
   {
     question: {
@@ -428,7 +428,7 @@ export const QUESTIONS: Question[] = [
       de: ['Atlantischer Ozean', 'Indischer Ozean', 'Arktischer Ozean', 'Pazifischer Ozean'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 3, // Pazifischer Ozean
+    correctAnswerIndex: 3, // Pacific Ocean
     },
   {
     question: {
@@ -493,7 +493,7 @@ export const QUESTIONS: Question[] = [
       de: ['Griechen', 'Römer', 'Ägypter', 'Mesopotamier'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 2, // Ägypter
+    correctAnswerIndex: 2, // Egyptians
   },
 {
     question: {
@@ -597,7 +597,7 @@ export const QUESTIONS: Question[] = [
       de: ['Der Herr der Ringe', 'Die Chroniken von Narnia', 'Harry Potter und der Stein der Weisen', 'Der kleine Prinz'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 2, // Harry Potter und der Stein der Weisen
+    correctAnswerIndex: 2, // Harry Potter and the Philosopher's Stone
   },
   {
     question: {
@@ -623,7 +623,7 @@ export const QUESTIONS: Question[] = [
       de: ['Krieg und Frieden', 'Eine Geschichte aus zwei Städten', 'Stolz und Vorurteil', 'Moby Dick'],
       hr: ['', '', '', ''],
     },
-    correctAnswerIndex: 1, // Eine Geschichte aus zwei Städten
+    correctAnswerIndex: 1, // A Tale of Two Cities
   },
   {
     question: {

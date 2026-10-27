@@ -40,10 +40,10 @@ export class WeatherService {
     }
 
 
-    // Berechne die letzten 30 Jahre dynamisch
+    // Compute the last 30 years dynamically
     const today = new Date();
-    const endYear = today.getFullYear() - 1; // Vorheriges Jahr für vollständige Daten
-    const startYear = endYear - 29; // 30 Jahre (inkl. endYear)
+    const endYear = today.getFullYear() - 1; // Previous year for complete data
+    const startYear = endYear - 29; // 30 years (including endYear)
 
     const startDate = `${startYear}-01-01`;
     const endDate = `${endYear}-12-31`;

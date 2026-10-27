@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Recipe } from '../../recipes.model';
 import * as RecipeActions from '../actions/recipe.actions';
 
-// Interface für den Recipe State
+// Interface for the recipe state
 export interface RecipeState {
   recipes: Recipe[];
   search: boolean;
@@ -12,7 +12,7 @@ export interface RecipeState {
   savedRecipeId: number;
 }
 
-// Initial State - der Anfangszustand der App
+// Initial state - the starting state of the app
 export const initialState: RecipeState = {
   recipes: [
     // {
@@ -39,7 +39,7 @@ export const initialState: RecipeState = {
   savedRecipeId: 0,
 };
 
-// Reducer - definiert wie Actions den State verändern
+// Reducer - defines how actions change the state
 export const recipeReducer = createReducer(
   initialState,
 

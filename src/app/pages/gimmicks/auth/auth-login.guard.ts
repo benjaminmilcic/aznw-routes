@@ -28,12 +28,12 @@ export class AuthLoginGuard implements CanActivate {
       }),
       tap((isNotAuth) => {
         if (!isNotAuth) {
-          // Query-Parameter muessen die Umleitung ueberleben: Nach einer
-          // Stripe-Zahlung fuehrt die return_url hierher und traegt ?lang=..
-          // sowie payment_intent_client_secret. Die StripeComponent haengt
-          // an der Eltern-Route und wird erst NACH dieser Umleitung erzeugt -
-          // ohne Weitergabe stuende sie ohne Zahlungsdaten da.
-          // (Frueher uebernahm das die ParameterHashLocationStrategy.)
+          // Query parameters must survive the redirect: after a
+          // Stripe payment the return_url leads here and carries ?lang=..
+          // as well as payment_intent_client_secret. The StripeComponent hangs
+          // on the parent route and is only created AFTER this redirect -
+          // without passing them on it would have no payment data.
+          // (This used to be done by the ParameterHashLocationStrategy.)
           this.router.navigate(['/gimmicks/auth/main'], {
             queryParams: route.queryParams,
           });

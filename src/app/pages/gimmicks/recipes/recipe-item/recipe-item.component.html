@@ -14,12 +14,12 @@
   <div class="flex flex-wrap sm:flex-nowrap justify-center gap-8 mt-8">
     @if (r.imagePath) {
     <!--
-      Feste Masse, identisch zum Platzhalter im else-Zweig. Ohne sie zieht
-      Flexbox das Bild auf die Hoehe der Textspalte: der Container hat kein
-      items-*, also gilt align-items: stretch, und Tailwinds Preflight mit
-      seinem img { height: auto } ist in tailwind.config.js abgeschaltet.
-      object-cover beschneidet statt zu verzerren, falls imagePath einmal auf
-      ein nicht quadratisches Bild zeigt - das Feld ist eine freie URL.
+      Fixed size, identical to the placeholder in the else branch. Without it
+      flexbox stretches the image to the height of the text column: the container has no
+      items-*, so align-items: stretch applies, and Tailwind's preflight with
+      its img { height: auto } is switched off in tailwind.config.js.
+      object-cover crops instead of distorting, in case imagePath ever points to
+      a non-square image - the field is a free URL.
     -->
     <img
       [src]="r.imagePath"
@@ -70,7 +70,7 @@
     {{ r.preparation }}
   </div>
 
-  <!-- Sprach-Info
+  <!-- Language info
   @if(detectedLanguage() && detectedLanguage() !== 'unknown') {
   <div class="mt-4 text-sm text-gray-500 text-center">
     Erkannte Sprache: <strong>{{ getDetectedLanguageLabel() }}</strong>

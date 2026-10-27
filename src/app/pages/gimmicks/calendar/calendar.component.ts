@@ -69,7 +69,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.currentMonth = today.getMonth();
     this.loadOnThisDayEvents();
 
-    // Bei Sprachwechsel die Events neu laden
+    // Reload the events on language change
     this.langChangeSubscription = this.translateService.onLangChange.subscribe(
       () => {
         this.loadOnThisDayEvents();
@@ -85,7 +85,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     const currentLang = this.translateService.currentLang || 'en';
 
-    // Für Kroatisch: Lade Events auf Englisch und übersetze sie
+    // For Croatian: load events in English and translate them
     const apiLang = currentLang === 'hr' ? 'en' : currentLang;
     const apiUrl = `https://api.wikimedia.org/feed/v1/wikipedia/${apiLang}/onthisday/events/${month}/${day}`;
 
@@ -93,7 +93,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         const events = response.events?.slice(0, 5) || [];
 
-        // Wenn Kroatisch: Übersetze die Events
+        // If Croatian: translate the events
         if (currentLang === 'hr' && events.length > 0) {
           this.translateEvents(events).subscribe({
             next: (translatedEvents) => {
@@ -102,7 +102,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
               console.error('Error translating events:', error);
-              // Bei Fehler: Zeige englische Events
+              // On error: show English events
               this.onThisDayEvents = events;
               this.loadingEvents = false;
             },
@@ -137,29 +137,29 @@ export class CalendarComponent implements OnInit, OnDestroy {
       return of(text);
     }
 
-    const MAX_CHARS = 450; // Sicherheitspuffer unter dem 500-Zeichen-Limit
+    const MAX_CHARS = 450; // Safety margin below the 500-character limit
 
-    // Wenn Text kurz genug ist, direkt übersetzen
+    // If the text is short enough, translate it directly
     if (text.length <= MAX_CHARS) {
       return this.translateTextChunk(text, sourceLang, targetLang);
     }
 
-    // Text in Chunks aufteilen
+    // Split the text into chunks
     const chunks = this.splitTextIntoChunks(text, MAX_CHARS);
 
-    // Alle Chunks parallel übersetzen
+    // Translate all chunks in parallel
     const translations$ = chunks.map((chunk) =>
       this.translateTextChunk(chunk.text, sourceLang, targetLang)
     );
 
-    // Alle Übersetzungen zusammenfügen mit Original-Separatoren
+    // Join all translations with the original separators
     return forkJoin(translations$).pipe(
       map((translatedChunks) => {
         let result = '';
         translatedChunks.forEach((translated, idx) => {
           result += translated;
           if (idx < chunks.length - 1) {
-            // Verwende den Original-Separator
+            // Use the original separator
             result += chunks[idx].separator || ' ';
           }
         });
@@ -191,7 +191,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }),
       catchError((error) => {
         console.error('Translation API error:', error);
-        return of(text); // Bei Fehler: Original-Text zurückgeben
+        return of(text); // On error: return the original text
       })
     );
   }
@@ -204,47 +204,47 @@ export class CalendarComponent implements OnInit, OnDestroy {
     let currentChunk = '';
     let chunkSeparator = '';
 
-    // Splitte Text an allen Whitespace-Grenzen und behalte die Separatoren
+    // Split the text at all whitespace boundaries and keep the separators
     const parts = text.split(/(\s+)/);
 
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
 
-      // Überspringe leere Parts
+      // Skip empty parts
       if (!part) continue;
 
-      // Ist es ein Separator (Leerzeichen/Zeilenumbrüche)?
+      // Is it a separator (spaces/line breaks)?
       if (/^\s+$/.test(part)) {
-        // Füge Separator zum aktuellen Chunk hinzu
+        // Add the separator to the current chunk
         chunkSeparator += part;
         continue;
       }
 
-      // Es ist ein Textteil (Wort oder Phrase)
+      // It is a text part (word or phrase)
       const word = part;
 
-      // Prüfe ob das Wort in den aktuellen Chunk passt
+      // Check whether the word fits into the current chunk
       const wouldBeLength =
         currentChunk.length + chunkSeparator.length + word.length;
 
       if (wouldBeLength <= maxLength || !currentChunk) {
-        // Füge zum aktuellen Chunk hinzu
+        // Add to the current chunk
         currentChunk += chunkSeparator + word;
         chunkSeparator = '';
       } else {
-        // Chunk ist voll - speichere ihn mit dem gesammelten Separator
+        // Chunk is full - store it with the collected separator
         chunks.push({
           text: currentChunk,
           separator: chunkSeparator,
         });
 
-        // Starte neuen Chunk mit dem aktuellen Wort
+        // Start a new chunk with the current word
         currentChunk = word;
         chunkSeparator = '';
       }
     }
 
-    // Letzten Chunk hinzufügen
+    // Add the last chunk
     if (currentChunk) {
       chunks.push({
         text: currentChunk,

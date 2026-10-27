@@ -106,10 +106,10 @@
   font-size: 0.85rem;
 }
 
-/* Auf dem Desktop ist reichlich Platz – das Raster darf mitwachsen. Die
-   Fensterhöhe begrenzt es: Abgezogen sind Navigation und Spielauswahl (~8rem),
-   Überschrift, Knöpfe, Tipp und Abbrechen (~19rem). So bleibt alles sichtbar,
-   ohne zu scrollen (das Raster selbst ist quadratisch). */
+/* On the desktop there is plenty of room – the grid may grow. The
+   window height limits it: subtracted are navigation and game selection (~8rem),
+   heading, buttons, tip and cancel (~19rem). So everything stays visible
+   without scrolling (the grid itself is square). */
 @media (min-width: 768px) {
   .setup {
     max-width: min(90vw, calc(100vh - 27rem), 34rem);

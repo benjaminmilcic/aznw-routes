@@ -1,33 +1,33 @@
 // =============================================================
-//  Robuste Spiel-Synchronisation ueber die Realtime Database.
+//  Robust game synchronization via the Realtime Database.
 // =============================================================
-// Alle Online-Spiele (4 Gewinnt, Uno, Ludo, Dame, Schach, Backgammon, Muehle,
-// Yahtzee, Memo-Quiz) haengen an derselben Mechanik: ein onValue-Listener auf
-// dem Spielknoten + Schreibvorgaenge fuer die Zuege.
+// All online games (Connect Four, Uno, Ludo, Checkers, Chess, Backgammon, Mill,
+// Yahtzee, Memo quiz) rely on the same mechanism: an onValue listener on
+// the game node + writes for the moves.
 //
-// Diese Klasse buendelt das und behebt die Faelle, in denen eine Partie still
-// stehen blieb – beide Seiten warteten auf den Zug des anderen:
+// This class bundles that and fixes the cases in which a game silently
+// got stuck – both sides were waiting for the other's move:
 //
-//  1. KEIN PHANTOM-ZUG. Firebase wendet Schreibvorgaenge sofort lokal an
-//     ("latency compensation") – der eigene Zug sah also auch dann erledigt
-//     aus, wenn er das Geraet nie verlassen hat. Deshalb schreiben wir mit
-//     `applyLocally: false`: der Zug erscheint erst mit Server-Bestaetigung.
-//  2. KEIN UEBERSCHREIBEN DURCH ALTE ZUEGE. Jeder Zug laeuft als Transaktion
-//     und greift nur, wenn der Server noch auf der Revision (`rev`) steht, aus
-//     der der Zug berechnet wurde.
-//  3. LISTENER WIEDER AUFBAUEN. Firebase haengt einen abgebrochenen Listener
-//     NIE von allein wieder an (z. B. wenn der Auth-Token nicht erneuert werden
-//     konnte). Ohne eigenes Zutun bleibt so ein Client dauerhaft blind.
-//  4. ABGLEICH BEI RUECKKEHR. Handys kappen die Verbindung, sobald der
-//     Bildschirm ausgeht oder das Netz wechselt.
-//  5. SICHTBARKEIT. Verbindungsstatus und Fehler landen in Signalen (siehe
-//     shared/sync-status) und zusaetzlich als console.warn.
+//  1. NO PHANTOM MOVE. Firebase applies writes locally right away
+//     ("latency compensation") – so your own move looked done even
+//     if it never left the device. That's why we write with
+//     `applyLocally: false`: the move only appears with server confirmation.
+//  2. NO OVERWRITING BY OLD MOVES. Every move runs as a transaction
+//     and only applies if the server is still at the revision (`rev`) from
+//     which the move was computed.
+//  3. REBUILD LISTENERS. Firebase NEVER reattaches a cancelled listener
+//     by itself (e.g. if the auth token could not be renewed).
+//     Without our own intervention such a client stays blind for good.
+//  4. SYNC ON RETURN. Phones cut the connection as soon as the
+//     screen turns off or the network changes.
+//  5. VISIBILITY. Connection status and errors end up in signals (see
+//     shared/sync-status) and additionally as console.warn.
 //
-// WICHTIG: Dieses Projekt teilt sich Firebase-Projekt UND Datenpfade mit der
-// Whiteboard-App ("connect4/games" usw.) – eine Partie kann geraeteuebergreifend
-// zwischen beiden Apps laufen. Das `rev`-Feld und diese Transaktionen sind dort
-// identisch umgesetzt; beide Seiten muessen zusammenpassen, sonst greift der
-// Schutz aus Punkt 2 nicht.
+// IMPORTANT: This project shares the Firebase project AND data paths with the
+// whiteboard app ("connect4/games" etc.) – a game can run across devices
+// between both apps. The `rev` field and these transactions are implemented
+// identically there; both sides must match, otherwise the protection
+// from point 2 does not apply.
 // =============================================================
 import { computed, signal } from '@angular/core';
 import {
@@ -43,38 +43,38 @@ import {
   type Unsubscribe,
 } from 'firebase/database';
 
-/** Zeitgrenze fuer einen Zug – danach gilt er als nicht gespeichert. */
+/** Time limit for a move – after that it counts as not saved. */
 const WRITE_TIMEOUT = 10_000;
-/** Zeitgrenze fuer einen einzelnen Lesevorgang. */
+/** Time limit for a single read. */
 const READ_TIMEOUT = 10_000;
-/** Wartezeit vor dem ersten Neuaufbau eines abgebrochenen Listeners. */
+/** Wait time before the first rebuild of a cancelled listener. */
 const RETRY_MIN = 1_000;
-/** Obergrenze der Wartezeit zwischen zwei Versuchen. */
+/** Upper limit of the wait time between two attempts. */
 const RETRY_MAX = 30_000;
-/** Erst nach dieser Zeit ohne Verbindung wird der Hinweis eingeblendet. */
+/** The notice is only shown after this long without a connection. */
 const OFFLINE_GRACE = 2_500;
-/** Erst nach dieser Zeit wird "Zug wird gesendet" eingeblendet. */
+/** "Sending move" is only shown after this time. */
 const PENDING_HINT_AFTER = 800;
-/** Mehrere Abgleiche dicht hintereinander (Focus + Visibility) zusammenfassen. */
+/** Merge several syncs in quick succession (focus + visibility). */
 const RESYNC_THROTTLE = 1_500;
-/** Aelter als das wird ein gemerktes Spiel nicht mehr fortgesetzt. */
+/** A remembered game older than this is no longer resumed. */
 const RESUME_MAX_AGE = 12 * 60 * 60 * 1000;
-/** Takt fuer die Abwesenheits-Anzeige (nur lokal, kein Datenbankzugriff). */
+/** Interval for the absence display (local only, no database access). */
 const TICK_MS = 1_000;
 
 /**
- * Erst nach dieser Zeit darf ein abwesender Spieler uebersprungen werden.
+ * Only after this time may an absent player be skipped.
  *
- * Bewusst grosszuegig: niemand soll aus der Runde fliegen, weil er kurz aus dem
- * Zimmer gegangen ist oder das Handy einmal kurz das Netz gewechselt hat.
+ * Deliberately generous: nobody should be thrown out of the round because they
+ * briefly left the room or the phone switched networks for a moment.
  */
 export const ABSENT_GRACE_MS = 60_000;
 
 /**
- * Uebersetzungsschluessel der Sync-Meldungen.
+ * Translation keys of the sync messages.
  *
- * Wie ueberall in den Spielen hier liefern die Signale SCHLUESSEL, keine Texte –
- * die Oberflaeche uebersetzt mit `| translate`.
+ * As everywhere in the games here, the signals deliver KEYS, not texts –
+ * the UI translates with `| translate`.
  */
 export const SYNC_KEYS = {
   offline: 'gimmicks.games.sync.offline',
@@ -85,7 +85,7 @@ export const SYNC_KEYS = {
   timeout: 'gimmicks.games.sync.timeout',
 } as const;
 
-/** Verhindert ewiges Haengen, falls die Datenbank nicht antwortet. */
+/** Prevents hanging forever if the database does not respond. */
 export function withTimeout<T>(
   p: Promise<T>,
   ms = 12_000,
@@ -100,30 +100,30 @@ export function withTimeout<T>(
   }) as Promise<T>;
 }
 
-/** Das Minimum, das ein Spielzustand fuer diesen Kanal mitbringen muss. */
+/** The minimum a game state must bring along for this channel. */
 export interface SyncedGame {
   code: string;
-  /** Fortlaufende Revision – schuetzt vor dem Ueberschreiben durch alte Zuege. */
+  /** Running revision – protects against being overwritten by old moves. */
   rev?: number;
   updatedAt?: number;
-  /** Fuer die Abwesenheits-Anzeige – jedes Spiel hier hat eine Spielerliste. */
+  /** For the absence display – every game here has a player list. */
   players?: Record<string, { name?: string }>;
 }
 
-/** Ein Mitspieler, der gerade nicht verbunden ist. */
+/** A player who is currently not connected. */
 export interface AwayPlayer {
   id: string;
   name: string;
-  /** Sekunden seit dem Verschwinden. */
+  /** Seconds since they disappeared. */
   seconds: number;
 }
 
 /**
- * Ist dieses Geraet gerade mit der Datenbank verbunden?
+ * Is this device currently connected to the database?
  *
- * `at` ist eine SERVER-Zeit (serverTimestamp). Nie direkt mit Date.now()
- * vergleichen – die Uhr eines Handys kann daneben liegen. Dafuer gibt es
- * `awayMs()`, das den Versatz aus `.info/serverTimeOffset` einrechnet.
+ * `at` is a SERVER time (serverTimestamp). Never compare it directly with Date.now()
+ * – a phone's clock can be off. For that there is
+ * `awayMs()`, which takes the offset from `.info/serverTimeOffset` into account.
  */
 export interface PlayerPresence {
   online: boolean;
@@ -131,49 +131,49 @@ export interface PlayerPresence {
 }
 
 export interface GameChannelOptions<T extends SyncedGame> {
-  /** Datenbank der benannten Firebase-App (shared/firebase/firebase.ts). */
+  /** Database of the named Firebase app (shared/firebase/firebase.ts). */
   db: Database;
-  /** false, wenn keine gueltige databaseURL konfiguriert ist. */
+  /** false if no valid databaseURL is configured. */
   configured: boolean;
-  /** Anonyme Anmeldung – wird vor jedem Zugriff abgewartet. */
+  /** Anonymous sign-in – awaited before every access. */
   authReady: Promise<void>;
-  /** Pfad zu den Spielen, z. B. 'connect4/games'. */
+  /** Path to the games, e.g. 'connect4/games'. */
   basePath: string;
   /**
-   * Eigene Spieler-Id – fuer den Praesenz-Eintrag.
+   * Own player id – for the presence entry.
    *
-   * Absichtlich eine Funktion: der Kanal wird in manchen Services VOR dem
-   * playerId-Feld angelegt, ein direkter Wert waere dort noch undefined.
+   * Deliberately a function: in some services the channel is created BEFORE the
+   * playerId field, a direct value would still be undefined there.
    */
   playerId: () => string;
-  /** localStorage-Schluessel fuer das zuletzt geoeffnete Spiel. */
+  /** localStorage key for the last opened game. */
   activeKey: string;
-  /** Rohdaten auffuellen – die normalize() des jeweiligen Spiels. */
+  /** Fill in raw data – the normalize() of the respective game. */
   normalize: (raw: any) => T;
-  /** Darf dieses Spiel nach einem Neuladen fortgesetzt werden? */
+  /** May this game be resumed after a reload? */
   canResume: (game: T) => boolean;
-  /** Optional: laeuft nach jedem neuen Stand (z. B. Bestenliste schreiben). */
+  /** Optional: runs after every new state (e.g. writing the leaderboard). */
   onState?: (game: T | null) => void;
 }
 
 export class GameChannel<T extends SyncedGame> {
-  /** Aktueller Spielzustand (null = kein Spiel offen). */
+  /** Current game state (null = no game open). */
   readonly state = signal<T | null>(null);
-  /** Uebersetzungsschluessel einer Sync-Meldung, oder null. */
+  /** Translation key of a sync message, or null. */
   readonly error = signal<string | null>(null);
-  /** Verbindung zur Datenbank steht (aus `.info/connected`). */
+  /** Connection to the database is up (from `.info/connected`). */
   readonly online = signal(true);
-  /** Verbindung ist laenger als OFFLINE_GRACE weg – erst dann Hinweis zeigen. */
+  /** Connection has been gone longer than OFFLINE_GRACE – only then show the notice. */
   readonly offline = signal(false);
-  /** Ein Zug ist unterwegs und dauert auffaellig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = signal(false);
   /**
-   * Wer von den Mitspielern gerade verbunden ist. Liegt im Spielknoten selbst
-   * (`<code>/presence/<spielerId>`), kommt also mit jedem Snapshot mit – kein
-   * zweiter Listener und keine Aenderung an den Datenbank-Regeln noetig.
+   * Which of the players are currently connected. Lives in the game node itself
+   * (`<code>/presence/<playerId>`), so it comes with every snapshot – no
+   * second listener and no change to the database rules needed.
    */
   readonly presence = signal<Record<string, PlayerPresence>>({});
-  /** Tickt sekuendlich, solange ein Spiel offen ist – treibt die Abwesenheitsanzeige. */
+  /** Ticks every second while a game is open – drives the absence display. */
   readonly tick = signal(0);
 
   private code: string | null = null;
@@ -184,20 +184,20 @@ export class GameChannel<T extends SyncedGame> {
   private pendingTimer: ReturnType<typeof setTimeout> | null = null;
   private tickTimer: ReturnType<typeof setInterval> | null = null;
   private offsetUnsub: Unsubscribe | null = null;
-  /** Versatz zwischen lokaler Uhr und Server-Uhr in Millisekunden. */
+  /** Offset between the local clock and the server clock in milliseconds. */
   private serverOffset = 0;
   private retryDelay = RETRY_MIN;
   private lastResync = 0;
-  /** true, solange ein Zug auf die Bestaetigung des Servers wartet. */
+  /** true while a move is waiting for the server's confirmation. */
   private writing = false;
-  /** true, solange wir uns von einem Verbindungsproblem erholen. */
+  /** true while we are recovering from a connection problem. */
   private recovering = false;
   private wakeupsBound = false;
 
   constructor(private readonly opts: GameChannelOptions<T>) {}
 
-  // ---- Oeffnen / Schliessen ------------------------------------------------
-  /** Auf ein Spiel aufschalten und dauerhaft synchron halten. */
+  // ---- Open / close --------------------------------------------------------
+  /** Attach to a game and keep it in sync permanently. */
   open(code: string): void {
     if (!this.opts.configured) return;
     this.code = code;
@@ -205,9 +205,9 @@ export class GameChannel<T extends SyncedGame> {
     this.error.set(null);
     this.recovering = false;
     this.retryDelay = RETRY_MIN;
-    // Der Listener liefert den Stand sofort – der Abgleich, den die
-    // Verbindungsueberwachung beim ersten `connected` anstossen wuerde, waere
-    // doppelt. Deshalb die Sperre gleich setzen.
+    // The listener delivers the state right away – the sync that the
+    // connection monitoring would trigger on the first `connected` would be
+    // redundant. That's why the lock is set right away.
     this.lastResync = Date.now();
     this.watchConnection();
     this.bindWakeups();
@@ -216,12 +216,12 @@ export class GameChannel<T extends SyncedGame> {
   }
 
   /**
-   * Listener loesen und Zustand leeren.
+   * Detach the listeners and clear the state.
    *
-   * `forget: false` behaelt den gemerkten Spiel-Code – gedacht fuer das
-   * Verlassen der Seite (ngOnDestroy), damit `resume()` beim Zurueckkommen
-   * wieder in die laufende Partie findet. Beim bewussten Beenden durch den
-   * Spieler wird der Code vergessen (Standard).
+   * `forget: false` keeps the remembered game code – meant for
+   * leaving the page (ngOnDestroy), so that `resume()` finds its way back into the
+   * running game when coming back. When the player deliberately ends the game
+   * the code is forgotten (default).
    */
   close(opts: { forget?: boolean } = {}): void {
     const code = this.code;
@@ -229,9 +229,9 @@ export class GameChannel<T extends SyncedGame> {
     this.code = null;
     if (forget) this.forget();
 
-    // Den Mitspielern Bescheid geben, bevor die Listener fallen: beim bewussten
-    // Beenden verschwindet der Eintrag, beim blossen Aussetzen bleibt er als
-    // "nicht verbunden" stehen – damit die anderen den Unterschied sehen.
+    // Let the other players know before the listeners go away: when ending
+    // deliberately the entry disappears, when merely pausing it stays as
+    // "not connected" – so that the others can see the difference.
     if (code) void this.writePresence(code, forget ? 'gone' : 'away');
 
     this.clearTimers();
@@ -250,12 +250,12 @@ export class GameChannel<T extends SyncedGame> {
     this.presence.set({});
   }
 
-  // ---- Praesenz -----------------------------------------------------------
+  // ---- Presence -----------------------------------------------------------
   /**
-   * Wie lange ist dieser Spieler schon nicht mehr verbunden? 0 = verbunden oder
-   * unbekannt (z. B. eine aeltere Partie ohne Praesenz-Eintraege).
+   * How long has this player not been connected? 0 = connected or
+   * unknown (e.g. an older game without presence entries).
    *
-   * Liest `tick`, aktualisiert sich also sekuendlich von selbst.
+   * Reads `tick`, so it updates itself every second.
    */
   awayMs(playerId: string): number {
     this.tick();
@@ -264,15 +264,15 @@ export class GameChannel<T extends SyncedGame> {
     return Math.max(0, Date.now() + this.serverOffset - p.at);
   }
 
-  /** Ist dieser Spieler laenger als `graceMs` weg? */
+  /** Has this player been gone longer than `graceMs`? */
   isAway(playerId: string, graceMs: number): boolean {
     return this.awayMs(playerId) > graceMs;
   }
 
   /**
-   * Alle Mitspieler (ohne einen selbst), die gerade nicht verbunden sind.
-   * Aktualisiert sich sekuendlich. Im lokalen Spiel immer leer, weil der Kanal
-   * dann geschlossen ist und es keine Praesenz-Eintraege gibt.
+   * All players (except yourself) who are currently not connected.
+   * Updates every second. Always empty in a local game, because the channel
+   * is closed then and there are no presence entries.
    */
   readonly awayPlayers = computed<AwayPlayer[]>(() => {
     const players = this.state()?.players;
@@ -292,12 +292,12 @@ export class GameChannel<T extends SyncedGame> {
   }
 
   /**
-   * Meldet dieses Geraet als verbunden und hinterlegt beim Server, was passieren
-   * soll, wenn die Verbindung stirbt.
+   * Reports this device as connected and registers with the server what should
+   * happen when the connection dies.
    *
-   * `onDisconnect` ist der einzige Weg, der auch Tab-Schliessen, Absturz,
-   * Flugmodus und leeren Akku abdeckt: die Datenbank fuehrt den Schreibvorgang
-   * SERVERSEITIG aus. Muss nach jedem Neuverbinden erneut hinterlegt werden.
+   * `onDisconnect` is the only way that also covers closing the tab, crashes,
+   * airplane mode and an empty battery: the database performs the write
+   * SERVER-SIDE. Must be registered again after every reconnect.
    */
   private async announcePresence(code: string): Promise<void> {
     try {
@@ -324,15 +324,15 @@ export class GameChannel<T extends SyncedGame> {
     this.tickTimer = setInterval(() => this.tick.update((n) => n + 1), TICK_MS);
   }
 
-  /** Hinweis wegklicken. */
+  /** Dismiss the notice. */
   dismissError(): void {
     this.error.set(null);
   }
 
   /**
-   * Zurueck in die laufende Partie – nach einem Neuladen oder wenn die Seite
-   * zwischenzeitlich verlassen wurde. Liefert true, wenn ein fortsetzbares
-   * Spiel gefunden und geoeffnet wurde.
+   * Back into the running game – after a reload or when the page
+   * was left in the meantime. Returns true if a resumable
+   * game was found and opened.
    */
   async resume(): Promise<boolean> {
     if (!this.opts.configured || this.state()) return false;
@@ -358,24 +358,24 @@ export class GameChannel<T extends SyncedGame> {
     }
   }
 
-  // ---- Schreiben ----------------------------------------------------------
+  // ---- Write --------------------------------------------------------------
   /**
-   * Schreibt einen Zug. Der Patch enthaelt die zu aendernden Felder auf oberster
-   * Ebene des Spielknotens – genau wie vorher bei `update()`.
+   * Writes a move. The patch contains the fields to change at the top
+   * level of the game node – just like before with `update()`.
    *
-   * Angewendet wird er nur, wenn der Server noch auf der Revision steht, aus der
-   * der Zug berechnet wurde. Liefert false, wenn der Zug nicht durchkam; die
-   * Oberflaeche zeigt dann den Grund an.
+   * It is only applied if the server is still at the revision from which
+   * the move was computed. Returns false if the move did not get through; the
+   * UI then shows the reason.
    */
   async commit(patch: Record<string, unknown>): Promise<boolean> {
     const current = this.state();
     const code = this.code;
     if (!this.opts.configured || !code || !current) return false;
 
-    // Doppeltippen: der erste Zug ist noch unterwegs und die Oberflaeche hat
-    // sich noch nicht bewegt (applyLocally: false). Der zweite Aufruf waere auf
-    // demselben Stand berechnet und wuerde ohnehin verworfen – also gleich hier
-    // abbrechen, still und ohne Fehlermeldung.
+    // Double tap: the first move is still on its way and the UI has
+    // not moved yet (applyLocally: false). The second call would be computed
+    // on the same state and discarded anyway – so abort right
+    // here, silently and without an error message.
     if (this.writing) return false;
     this.writing = true;
     const expected = current.rev ?? 0;
@@ -387,13 +387,13 @@ export class GameChannel<T extends SyncedGame> {
         runTransaction(
           this.gameRef(code),
           (raw: any) => {
-            if (!raw) return undefined; // Spiel existiert nicht mehr → abbrechen
-            if ((raw.rev ?? 0) !== expected) return undefined; // veraltet → verwerfen
+            if (!raw) return undefined; // Game no longer exists → abort
+            if ((raw.rev ?? 0) !== expected) return undefined; // outdated → discard
             return { ...raw, ...patch, rev: expected + 1, updatedAt: Date.now() };
           },
-          // Entscheidend: ohne Server-Bestaetigung darf der eigene Zug NICHT
-          // angezeigt werden. Sonst sieht der Spieler ihn ausgefuehrt, waehrend
-          // der Gegner nie etwas erhaelt – und beide warten aufeinander.
+          // Crucial: without server confirmation your own move must NOT
+          // be shown. Otherwise the player sees it performed, while
+          // the opponent never receives anything – and both wait for each other.
           { applyLocally: false },
         ),
         WRITE_TIMEOUT,
@@ -419,8 +419,8 @@ export class GameChannel<T extends SyncedGame> {
     }
   }
 
-  // ---- Lesen / Abgleich ---------------------------------------------------
-  /** Holt den Stand vom Server und setzt den Listener frisch auf. */
+  // ---- Read / sync --------------------------------------------------------
+  /** Fetches the state from the server and sets up the listener fresh. */
   async resync(): Promise<void> {
     if (!this.opts.configured || !this.code) return;
     const now = Date.now();
@@ -431,31 +431,31 @@ export class GameChannel<T extends SyncedGame> {
     try {
       await this.opts.authReady;
       const snap = await withTimeout(get(this.gameRef(code)), READ_TIMEOUT);
-      if (this.code !== code) return; // zwischenzeitlich verlassen
+      if (this.code !== code) return; // left in the meantime
       this.apply(snap.val());
     } catch (e) {
       console.warn('[sync] Abgleich fehlgeschlagen:', e);
     }
-    // Den Listener in jedem Fall neu aufsetzen: ein still verstummter Listener
-    // wuerde von allein nie wieder Daten liefern.
+    // Set up the listener again in any case: a listener that went silent
+    // would never deliver data again by itself.
     if (this.code === code) this.attach();
   }
 
-  /** Abgleich ohne Drosselung – nach einem fehlgeschlagenen Zug. */
+  /** Sync without throttling – after a failed move. */
   private forceResync(): Promise<void> {
     this.lastResync = 0;
     return this.resync();
   }
 
-  // ---- Intern -------------------------------------------------------------
+  // ---- Internals ----------------------------------------------------------
   private gameRef(code: string) {
     return ref(this.opts.db, `${this.opts.basePath}/${code}`);
   }
 
-  /** Rohdaten uebernehmen: auffuellen, veroeffentlichen, Nachlauf ausloesen. */
+  /** Take over raw data: fill in, publish, trigger the follow-up. */
   private apply(raw: unknown): void {
-    // Die Praesenz haengt im Spielknoten und kommt mit jedem Snapshot mit.
-    // Sie wird VOR normalize() gelesen, das sie nicht kennt.
+    // The presence hangs in the game node and comes with every snapshot.
+    // It is read BEFORE normalize(), which does not know it.
     const presence = (raw as { presence?: Record<string, PlayerPresence> } | null)?.presence;
     this.presence.set(presence ?? {});
     const game = raw ? this.opts.normalize(raw) : null;
@@ -479,8 +479,8 @@ export class GameChannel<T extends SyncedGame> {
         this.apply(snap.val());
       },
       (err) => {
-        // Firebase bricht den Listener ab (z. B. PERMISSION_DENIED, wenn der
-        // Auth-Token nicht erneuert werden konnte) und haengt ihn NIE wieder an.
+        // Firebase cancels the listener (e.g. PERMISSION_DENIED if the
+        // auth token could not be renewed) and NEVER reattaches it.
         console.warn('[sync] Listener abgebrochen – Neuaufbau folgt:', err);
         this.dataUnsub = null;
         this.recovering = true;
@@ -500,7 +500,7 @@ export class GameChannel<T extends SyncedGame> {
     }, delay);
   }
 
-  /** Nach einem Verbindungsproblem: Hinweis wieder entfernen. */
+  /** After a connection problem: remove the notice again. */
   private recovered(): void {
     if (!this.recovering) return;
     this.recovering = false;
@@ -509,8 +509,8 @@ export class GameChannel<T extends SyncedGame> {
 
   private watchConnection(): void {
     if (!this.offsetUnsub) {
-      // Praesenz-Zeitstempel kommen vom Server; die Uhr des Geraets kann daneben
-      // liegen. Ohne diesen Versatz waere "seit wann weg" schlicht falsch.
+      // Presence timestamps come from the server; the device's clock can be
+      // off. Without this offset "gone since when" would simply be wrong.
       this.offsetUnsub = onValue(ref(this.opts.db, '.info/serverTimeOffset'), (snap) => {
         const v = snap.val();
         if (typeof v === 'number') this.serverOffset = v;
@@ -526,13 +526,13 @@ export class GameChannel<T extends SyncedGame> {
       }
       if (up) {
         this.offline.set(false);
-        // onDisconnect muss nach JEDEM Neuverbinden erneut hinterlegt werden.
+        // onDisconnect must be registered again after EVERY reconnect.
         const code = this.code;
         if (code) void this.announcePresence(code);
-        // Waehrend der Trennung verpasste Aenderungen nachholen.
+        // Catch up on changes missed during the disconnect.
         void this.resync();
       } else {
-        // Kurze Aussetzer nicht anzeigen – das SDK verbindet meist selbst neu.
+        // Don't show short dropouts – the SDK usually reconnects by itself.
         this.offlineTimer = setTimeout(() => this.offline.set(true), OFFLINE_GRACE);
       }
     });
@@ -586,7 +586,7 @@ export class GameChannel<T extends SyncedGame> {
     try {
       localStorage.setItem(this.opts.activeKey, code);
     } catch {
-      /* privater Modus o. Ae. – Fortsetzen ist dann eben nicht moeglich */
+      /* private mode or similar – resuming is simply not possible then */
     }
   }
 
@@ -602,7 +602,7 @@ export class GameChannel<T extends SyncedGame> {
     try {
       localStorage.removeItem(this.opts.activeKey);
     } catch {
-      /* ignorieren */
+      /* ignore */
     }
   }
 }

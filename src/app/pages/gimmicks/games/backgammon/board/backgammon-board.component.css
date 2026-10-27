@@ -16,7 +16,7 @@
   box-sizing: border-box;
 }
 
-/* Kopfzeile – kompakt und zentriert über dem Brett, wie bei den anderen Spielen */
+/* Header – compact and centered above the board, like in the other games */
 .bar {
   flex: 0 0 auto;
   width: 100%;
@@ -91,7 +91,7 @@
 .chip--white { background: radial-gradient(circle at 35% 30%, #fff, #d8d2c4); color: #5a4632; }
 .chip--black { background: radial-gradient(circle at 35% 30%, #6b6b78, #1f1f29); color: #fff; }
 
-/* Würfelleiste */
+/* Dice bar */
 .dice-strip {
   flex: 0 0 auto;
   display: flex;
@@ -140,7 +140,7 @@
   font-size: 0.85rem;
 }
 
-/* Spielbrett */
+/* Game board */
 .field-wrap {
   flex: 1 1 auto;
   min-height: 0;
@@ -174,7 +174,7 @@
   padding: 0.15rem;
 }
 
-/* Punkte (Dreiecke) */
+/* Points (triangles) */
 .point {
   position: relative;
   flex: 1 1 0;
@@ -252,7 +252,7 @@
   50% { transform: scale(1.2); opacity: 1; }
 }
 
-/* Bar & Heimat */
+/* Bar & home */
 .bar-zone {
   position: relative;
   flex: 1.1 1 0;

@@ -97,7 +97,7 @@ export class AddRecipeComponent {
         const idParam = params.get('id');
 
         if (!idParam) {
-          // Kein param
+          // No param
           this.recipeId.set(null);
           this.wrongId.set(true);
           return;
@@ -105,22 +105,22 @@ export class AddRecipeComponent {
 
         const id = Number(idParam);
         if (isNaN(id) || id <= 0) {
-          // Ungültige ID
+          // Invalid ID
           this.recipeId.set(null);
           this.wrongId.set(true);
           return;
         }
 
-        // Alles gut: Signal setzen
+        // All good: set the signal
         this.recipeId.set(id);
         this.wrongId.set(false);
 
-        // Recipe aus Store laden und in WritableSignal setzen
+        // Load the recipe from the store and put it into the WritableSignal
         const recipeSignal = toSignal(this.store.select(selectRecipeById(id)), {
           initialValue: null,
         });
 
-        // Effect: Recipe in WritableSignal setzen und Formular befüllen
+        // Effect: put the recipe into the WritableSignal and fill the form
         effect(() => {
           const recipe = recipeSignal();
           if (recipe) {
@@ -134,7 +134,7 @@ export class AddRecipeComponent {
 
             this.recipeImage.set(recipe.imagePath);
 
-            // Zutaten befüllen
+            // Fill in the ingredients
             this.ingredients.clear();
             recipe.ingredients.forEach((ingredient) => {
               this.ingredients.push(
@@ -183,9 +183,9 @@ export class AddRecipeComponent {
     event.preventDefault();
 
     if (isLast) {
-      // Wenn letztes Feld: neues Feld hinzufügen
+      // If it is the last field: add a new field
       this.onAddIngredient();
-      // Warten bis View aktualisiert ist, dann Focus setzen
+      // Wait until the view is updated, then set the focus
       setTimeout(() => {
         const inputs = this.ingredientInputs.toArray();
         if (inputs[currentIndex + 1]) {
@@ -193,7 +193,7 @@ export class AddRecipeComponent {
         }
       }, 0);
     } else {
-      // Zum nächsten Feld springen
+      // Jump to the next field
       const inputs = this.ingredientInputs.toArray();
       if (inputs[currentIndex + 1]) {
         inputs[currentIndex + 1].nativeElement.focus();
@@ -211,17 +211,17 @@ export class AddRecipeComponent {
     this.savedReady.set(false);
 
     if (this.recipeToUpdate()) {
-      // Update-Modus: Recipe aktualisieren
+      // Update mode: update the recipe
       const recipeId = this.recipeId();
       if (recipeId) {
         this.store.dispatch(updateRecipe({ id: recipeId, recipe: recipeData }));
       }
     } else {
-      // Add-Modus: Neues Recipe hinzufügen
+      // Add mode: add a new recipe
       this.store.dispatch(addRecipe({ recipe: recipeData }));
     }
 
-    // Warten bis loading false ist
+    // Wait until loading is false
     await firstValueFrom(this.isLoading$.pipe(filter((v) => !v)));
 
     setTimeout(() => {

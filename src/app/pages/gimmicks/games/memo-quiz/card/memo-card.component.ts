@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MotifComponent } from '../motif/motif.component';
 
-/** Eine Memory-Karte mit 3D-Umdreh-Animation. */
+/** A memory card with a 3D flip animation. */
 @Component({
   selector: 'app-memo-card',
   imports: [MotifComponent],
@@ -11,13 +11,13 @@ import { MotifComponent } from '../motif/motif.component';
 })
 export class MemoCardComponent {
   readonly motifId = input.required<string>();
-  /** Karte liegt offen (umgedreht oder bereits gefunden). */
+  /** The card is face up (turned over or already found). */
   readonly faceUp = input<boolean>(false);
-  /** Paar wurde bereits gefunden. */
+  /** The pair has already been found. */
   readonly matched = input<boolean>(false);
-  /** Ich habe dieses Paar gefunden (für die Farbmarkierung). */
+  /** I found this pair (for the color highlight). */
   readonly mine = input<boolean>(false);
-  /** Karte ist aktuell anklickbar. */
+  /** The card is currently clickable. */
   readonly clickable = input<boolean>(false);
 
   readonly flip = output<void>();

@@ -183,7 +183,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #dc2626; /* kräftiges Rot */
+  background: #dc2626; /* strong red */
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
   flex-shrink: 0;
 }
@@ -524,9 +524,9 @@ h1 em {
   white-space: nowrap;
 }
 
-/* Jede Kopie ist eine eigene Gruppe. Der Abstand zur naechsten Kopie steckt im
-   padding-right, damit alle 5 Gruppen exakt gleich breit sind (= je 20 % des
-   Tracks) und der Ruecksprung bei -80 % nahtlos ist. */
+/* Every copy is its own group. The gap to the next copy is in the
+   padding-right, so that all 5 groups are exactly the same width (= 20 % each of the
+   track) and the jump back at -80 % is seamless. */
 .marquee-group {
   display: flex;
   flex: 0 0 auto;

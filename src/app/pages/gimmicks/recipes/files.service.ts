@@ -16,7 +16,7 @@ export class FilesService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Konvertiert eine dataURL (base64) in ein File-Objekt
+   * Converts a dataURL (base64) into a File object
    */
   dataURLtoFile(dataUrl: string, filename: string): File {
     const arr = dataUrl.split(',');
@@ -31,7 +31,7 @@ export class FilesService {
   }
 
   /**
-   * Lädt ein Bild hoch und gibt den Dateinamen zurück
+   * Uploads an image and returns the file name
    */
   uploadImage(dataUrl: string): Observable<FileUploadResponse> {
     const file = this.dataURLtoFile(dataUrl, 'recipe-image.png');

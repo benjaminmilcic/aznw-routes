@@ -51,14 +51,14 @@ export class AnalyticsService {
   }
 
   /**
-   * Generiert oder lädt eine bestehende Session-ID
-   * Verwendet sessionStorage, damit jeder neue Tab/Window eine neue Session bekommt
+   * Generates or loads an existing session ID
+   * Uses sessionStorage, so that every new tab/window gets a new session
    */
   private getOrCreateSessionId(): string {
     let sessionId = sessionStorage.getItem(this.SESSION_ID_KEY);
 
     if (!sessionId) {
-      // Generiere UUID v4
+      // Generate UUID v4
       sessionId = this.generateUUID();
       sessionStorage.setItem(this.SESSION_ID_KEY, sessionId);
     }
@@ -67,7 +67,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Generiert eine UUID v4
+   * Generates a UUID v4
    */
   private generateUUID(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -78,7 +78,7 @@ export class AnalyticsService {
   }
 
   /**
-   * Sammelt verfügbare Besucherdaten
+   * Collects available visitor data
    */
   collectVisitorData(): VisitorData {
     const data: VisitorData = {
@@ -103,7 +103,7 @@ export class AnalyticsService {
       online: navigator.onLine,
     };
 
-    // Optional: Weitere Daten, falls verfügbar
+    // Optional: more data, if available
     if ('deviceMemory' in navigator) {
       data.deviceMemory = (navigator as any).deviceMemory;
     }
@@ -123,24 +123,24 @@ export class AnalyticsService {
   }
 
   /**
-   * Sendet die gesammelten Daten an die API
+   * Sends the collected data to the API
    */
   sendVisitorData(): void {
     const visitorData = this.collectVisitorData();
 
-    // HTTP POST an die Dummy-API
+    // HTTP POST to the dummy API
     this.http.post(this.ANALYTICS_API_URL, visitorData).subscribe({
       next: (response) => {
-        // Daten erfolgreich gesendet
+        // Data sent successfully
       },
       error: (error) => {
-        // Fehler werden stillschweigend ignoriert, damit die App normal weiterläuft
+        // Errors are silently ignored so that the app keeps running normally
       }
     });
   }
 
   /**
-   * Sendet PageView-Daten an die API
+   * Sends page view data to the API
    */
   private sendPageView(route: string, referrer?: string): void {
     const pageViewData: PageViewData = {
@@ -152,16 +152,16 @@ export class AnalyticsService {
 
     this.http.post(this.PAGE_VIEW_API_URL, pageViewData).subscribe({
       next: (response) => {
-        // PageView erfolgreich gesendet
+        // Page view sent successfully
       },
       error: (error) => {
-        // Fehler werden stillschweigend ignoriert
+        // Errors are silently ignored
       }
     });
   }
 
   /**
-   * Trackt einen PageView
+   * Tracks a page view
    */
   private trackPageView(url: string): void {
     const referrer = this.lastRoute || undefined;
@@ -170,14 +170,14 @@ export class AnalyticsService {
   }
 
   /**
-   * Initialisiert das Analytics-Tracking
-   * Sollte beim App-Start aufgerufen werden
+   * Initializes the analytics tracking
+   * Should be called on app start
    */
   initTracking(): void {
-    // Daten direkt beim Start senden
+    // Send data right at the start
     this.sendVisitorData();
 
-    // Router-Events abonnieren für PageView-Tracking
+    // Subscribe to router events for page view tracking
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {

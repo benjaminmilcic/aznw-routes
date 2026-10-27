@@ -7,15 +7,15 @@ import { filter } from 'rxjs';
 import { SEO_ROUTES, SeoRoute } from './seo-routes';
 
 /**
- * Setzt Titel, Beschreibung und Canonical-Adresse passend zur aktuellen Route.
+ * Sets title, description and canonical address to match the current route.
  *
- * Vor der Umstellung auf Pfad-Routing war nur die Startseite ueber die Suche
- * erreichbar, ein globaler Titel reichte also. Seit alle Unterseiten eigene
- * Adressen haben, wuerden sie sonst als Dubletten gewertet.
+ * Before switching to path routing only the home page was reachable via search,
+ * so a global title was enough. Now that all subpages have their own
+ * addresses, they would otherwise be treated as duplicates.
  *
- * Ohne SSR wirkt das nur bei Besuchern, die JavaScript ausfuehren - der
- * Googlebot tut das, die Linkvorschauen von Messengern in der Regel nicht.
- * Fuer die gilt weiterhin der statische Kopf aus index.html.
+ * Without SSR this only works for visitors who run JavaScript - the
+ * Googlebot does, the link previews of messengers usually don't.
+ * For those the static head from index.html still applies.
  */
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -28,7 +28,7 @@ export class SeoService {
   private readonly standardTitel = 'Benjamin Milčić - Full Stack Web Developer';
   private readonly domain = 'https://benjamin-milcic.dev';
 
-  /** Zuletzt aufgerufener Pfad, damit ein Sprachwechsel ihn erneut anwenden kann. */
+  /** Last visited path, so that a language change can apply it again. */
   private aktuellerPfad = '/';
 
   init(): void {
@@ -39,16 +39,16 @@ export class SeoService {
         this.anwenden();
       });
 
-    // Ohne das bliebe der Titel in der Sprache stehen, in der die Seite
-    // geladen wurde - der Fehler faellt beim ersten Laden nicht auf.
+    // Without this the title would stay in the language in which the page
+    // was loaded - the bug doesn't show on the first load.
     this.translate.onLangChange.subscribe(() => this.anwenden());
 
     this.anwenden();
   }
 
   /**
-   * Reduziert eine Router-URL auf den reinen Pfad: ohne Query, ohne Fragment
-   * und ohne benannte Outlets wie /(print:print/29.8.2026).
+   * Reduces a router URL to the plain path: without query, without fragment
+   * and without named outlets like /(print:print/29.8.2026).
    */
   private pfadAusUrl(url: string): string {
     const pfad = url.split('?')[0].split('#')[0].split('(')[0];
@@ -84,7 +84,7 @@ export class SeoService {
       ? this.translate.instant(eintrag.titleKey)
       : eintrag.title;
 
-    // Fehlt die Uebersetzung, liefert ngx-translate den Schluessel zurueck.
+    // If the translation is missing, ngx-translate returns the key.
     if (!name || name === eintrag.titleKey) {
       return this.standardTitel;
     }

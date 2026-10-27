@@ -1,6 +1,6 @@
-/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild über die Seite. Ohne eigene
-   Positionierung liegt dieses Overlay über Buttons und Figuren. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. Without its own
+   positioning this overlay lies on top of buttons and pieces. */
 :host {
   display: block;
   position: relative;
@@ -20,7 +20,7 @@
   box-sizing: border-box;
 }
 
-/* ---- Kopfzeile ---------------------------------------------------------- */
+/* ---- Header ------------------------------------------------------------- */
 .bar {
   flex: 0 0 auto;
   width: 100%;
@@ -32,8 +32,8 @@
   gap: 0.4rem 0.75rem;
 }
 
-/* Reichlich Abstand: der Chip des Spielers am Zug bekommt einen dicken
-   Rahmen und würde einen knappen Zwischenraum sonst auffressen. */
+/* Plenty of spacing: the chip of the player on turn gets a thick
+   border and would otherwise eat up a tight gap. */
 .players {
   display: flex;
   flex-wrap: wrap;
@@ -42,7 +42,7 @@
   gap: 0.4rem 0.9rem;
 }
 
-/* Die Farbe des Sitzplatzes steckt als --seat-color im Chip. */
+/* The seat color is set as --seat-color on the chip. */
 .player {
   display: flex;
   align-items: center;
@@ -59,7 +59,7 @@
   outline: 3px solid #fde047;
 }
 
-/* Wer im Ziel ist, tritt in den Hintergrund und zeigt seinen Platz. */
+/* Whoever has finished steps into the background and shows their place. */
 .player--done {
   opacity: 0.7;
 }
@@ -121,10 +121,10 @@
   transform: scale(0.95);
 }
 
-/* ---- Brett -------------------------------------------------------------- */
-/* Größen-Container: darüber kennt das Brett die WIRKLICH freie Fläche
-   (100cqw/100cqh) und bleibt dadurch immer quadratisch – auch wenn unten
-   ein Hinweistext auftaucht und die Fläche kurz flacher wird. */
+/* ---- Board -------------------------------------------------------------- */
+/* Size container: through it the board knows the REALLY free area
+   (100cqw/100cqh) and therefore always stays square – even when a notice
+   appears below and the area briefly gets flatter. */
 .board-wrap {
   flex: 1 1 0;
   min-height: 0;
@@ -135,8 +135,8 @@
   justify-content: center;
 }
 
-/* Eine einzige Kantenlänge für beide Seiten – nie „max-height" zusammen mit
-   einer festen Breite, sonst staucht das Brett statt zu schrumpfen. */
+/* One single edge length for both sides – never "max-height" together with
+   a fixed width, otherwise the board gets squashed instead of shrinking. */
 .board {
   width: min(100cqw, 100cqh, 32rem);
   height: auto;
@@ -192,7 +192,7 @@
   line-height: 1;
 }
 
-/* ---- Figuren ------------------------------------------------------------ */
+/* ---- Pieces ------------------------------------------------------------- */
 .token {
   position: absolute;
   inset: 8%;
@@ -221,9 +221,9 @@
   }
 }
 
-/* ---- Würfel / Steuerung ------------------------------------------------- */
-/* Die Höhe ist fest reserviert: der Hinweistext nach dem Würfeln soll das
-   Brett nicht kurzzeitig zusammenschieben. */
+/* ---- Dice / controls ---------------------------------------------------- */
+/* The height is reserved: the notice after rolling should not
+   briefly squeeze the board. */
 .control {
   flex: 0 0 auto;
   width: 100%;
@@ -250,14 +250,14 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Der Rand zeigt die Farbe des Spielers, der gerade würfelt. */
+/* The border shows the color of the player who is rolling. */
 .dice--rolled {
   background: #fde047;
   color: #713f12;
   box-shadow: 0 0 0 3px var(--seat-color, transparent), 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Nicht setzbare Augenzahl: rot, durchgestrichen, kurzes Wackeln. */
+/* Pip count that cannot be used: red, crossed out, a short wobble. */
 .dice--blocked {
   background: #fecaca;
   color: #b91c1c;
@@ -352,7 +352,7 @@
   margin: 0.25rem 0;
 }
 
-/* ---- Online-Lobby ------------------------------------------------------- */
+/* ---- Online lobby ------------------------------------------------------- */
 .lobby {
   list-style: none;
   margin: 0.5rem 0 0.75rem;
@@ -433,7 +433,7 @@
   color: #047857;
 }
 
-/* ---- Endstand ----------------------------------------------------------- */
+/* ---- Final standings ---------------------------------------------------- */
 .ranking-title {
   margin: 0 0 0.4rem;
   font-weight: 700;

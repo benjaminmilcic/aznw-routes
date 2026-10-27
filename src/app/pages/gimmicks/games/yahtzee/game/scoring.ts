@@ -1,5 +1,5 @@
-// Reine Yatzy-Wertungslogik – ohne Angular/Firebase, damit sie sowohl im
-// GameService als auch im Board verwendet werden kann.
+// Pure Yatzy scoring logic – without Angular/Firebase, so that it can be used in the
+// GameService as well as in the board.
 
 export type Category =
   | 'ones' | 'twos' | 'threes' | 'fours' | 'fives' | 'sixes'
@@ -35,7 +35,7 @@ export const DICE_COUNT = 5;
 
 export type ScoreMap = Partial<Record<Category, number>>;
 
-// Pip-Belegung im 3x3-Raster (Indizes 0..8, zeilenweise) je Würfelwert.
+// Pip layout in the 3x3 grid (indices 0..8, row by row) per die value.
 const PIPS: Record<number, number[]> = {
   1: [4],
   2: [0, 8],
@@ -73,7 +73,7 @@ function hasStraight(c: number[], len: number): boolean {
   return false;
 }
 
-/** Punktwert einer Kategorie für einen Würfelwurf. */
+/** Score of a category for a roll of the dice. */
 export function scoreFor(cat: Category, dice: number[]): number {
   const c = counts(dice);
   const s = sum(dice);

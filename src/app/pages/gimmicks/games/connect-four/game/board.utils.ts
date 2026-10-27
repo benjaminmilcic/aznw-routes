@@ -1,5 +1,5 @@
-// Reine Spielfeld-Hilfsfunktionen – ohne Angular, ohne Firebase.
-// Das Spielfeld ist ein flaches Array: Index = row * COLS + col, row 0 ist OBEN.
+// Pure board helper functions – without Angular, without Firebase.
+// The board is a flat array: index = row * COLS + col, row 0 is at the TOP.
 
 export const COLS = 7;
 export const ROWS = 6;
@@ -8,7 +8,7 @@ export function emptyBoard(): string[] {
   return Array.from({ length: ROWS * COLS }, () => '');
 }
 
-/** Index des Feldes, in dem ein Stein in dieser Spalte landen würde (-1 = Spalte voll). */
+/** Index of the cell where a disc in this column would land (-1 = column full). */
 export function dropIndex(board: string[], col: number): number {
   for (let r = ROWS - 1; r >= 0; r--) {
     const i = r * COLS + col;
@@ -17,11 +17,11 @@ export function dropIndex(board: string[], col: number): number {
   return -1;
 }
 
-/** Alle Spalten, in die noch geworfen werden darf. */
+/** All columns a disc may still be dropped into. */
 export function validCols(board: string[]): number[] {
   const cols: number[] = [];
   for (let c = 0; c < COLS; c++) {
-    if (!board[c]) cols.push(c); // oberste Zelle frei?
+    if (!board[c]) cols.push(c); // top cell free?
   }
   return cols;
 }
@@ -31,13 +31,13 @@ export function isBoardFull(board: string[]): boolean {
 }
 
 /**
- * Prüft, ob der Stein auf `lastIndex` vier in eine Reihe gebracht hat.
- * Liefert die Indizes der Gewinn-Felder (zum Hervorheben) oder null.
+ * Checks whether the disc at `lastIndex` made four in a row.
+ * Returns the indices of the winning cells (for highlighting) or null.
  */
 export function findWin(board: string[], lastIndex: number, player: string): number[] | null {
   const r0 = Math.floor(lastIndex / COLS);
   const c0 = lastIndex % COLS;
-  // Richtungen: waagrecht, senkrecht, beide Diagonalen.
+  // Directions: horizontal, vertical, both diagonals.
   const dirs = [
     [0, 1],
     [1, 0],
@@ -65,7 +65,7 @@ export function findWin(board: string[], lastIndex: number, player: string): num
   return null;
 }
 
-/** Schnelle Ja/Nein-Variante für die Suche des Computers. */
+/** Fast yes/no variant for the computer's search. */
 export function isWin(board: string[], lastIndex: number, player: string): boolean {
   return findWin(board, lastIndex, player) !== null;
 }

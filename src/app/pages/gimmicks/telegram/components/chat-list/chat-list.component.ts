@@ -82,7 +82,7 @@ export class ChatListComponent implements OnInit {
           return dialogs;
         }
 
-        // Deduplizierung: gleiche Message-ID ignorieren
+        // Deduplication: ignore the same message ID
         if (dialogs[idx].lastMessageId === newMsg.id) return dialogs;
 
         const updated = [...dialogs];
@@ -98,7 +98,7 @@ export class ChatListComponent implements OnInit {
               : updated[idx].unreadCount + 1,
         };
 
-        // Nach oben sortieren
+        // Sort to the top
         const [dialog] = updated.splice(idx, 1);
         updated.unshift(dialog);
         return updated;

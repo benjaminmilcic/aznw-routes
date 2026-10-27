@@ -13,7 +13,7 @@ export class CountriesWeatherMapComponent implements OnChanges {
   @Input() lat: number | undefined;
   @Input() lon: number | undefined;
   @Input() lang = 'en';
-  @Input() area: number | undefined; // Landesfläche in km²
+  @Input() area: number | undefined; // Land area in km²
 
   private readonly sanitizer = inject(DomSanitizer);
   private cacheBuster = Date.now();
@@ -42,17 +42,17 @@ export class CountriesWeatherMapComponent implements OnChanges {
   }
 
   private calculateZoom(): number {
-    // Zoom basierend auf Landesfläche berechnen
+    // Compute the zoom based on the land area
     if (!this.area || this.area <= 0) return 5;
 
-    if (this.area > 5000000) return 2; // Riesig: Russland, Kanada, USA, China
-    if (this.area > 2000000) return 3; // Sehr groß: Brasilien, Australien, Indien
-    if (this.area > 500000) return 4; // Groß: DR Kongo, Argentinien
-    if (this.area > 100000) return 5; // Mittel: Deutschland, Japan, Frankreich
-    if (this.area > 30000) return 6; // Klein: Niederlande, Belgien, Schweiz
-    if (this.area > 5000) return 7; // Sehr klein: Luxemburg, Zypern
-    if (this.area > 500) return 8; // Winzig: Malta, Andorra
-    return 9; // Mikrostaaten: Monaco, Vatikan, San Marino
+    if (this.area > 5000000) return 2; // Huge: Russia, Canada, USA, China
+    if (this.area > 2000000) return 3; // Very large: Brazil, Australia, India
+    if (this.area > 500000) return 4; // Large: DR Congo, Argentina
+    if (this.area > 100000) return 5; // Medium: Germany, Japan, France
+    if (this.area > 30000) return 6; // Small: Netherlands, Belgium, Switzerland
+    if (this.area > 5000) return 7; // Very small: Luxembourg, Cyprus
+    if (this.area > 500) return 8; // Tiny: Malta, Andorra
+    return 9; // Microstates: Monaco, Vatican, San Marino
   }
 
   private updateMapUrl(): void {
@@ -70,14 +70,14 @@ export class CountriesWeatherMapComponent implements OnChanges {
       return;
     }
 
-    // Windy hat einen Bug: Latitude 0 wird als "leer" interpretiert
-    // Workaround: kleinen Offset hinzufügen wenn lat genau 0 ist
+    // Windy has a bug: latitude 0 is interpreted as "empty"
+    // Workaround: add a small offset if lat is exactly 0
     let lat = this.lat;
     if (lat === 0) {
       lat = 0.1;
     }
 
-    // Windy embed URL mit dynamischem Zoom
+    // Windy embed URL with dynamic zoom
     const zoom = this.calculateZoom();
     const url =
       `https://embed.windy.com/embed.html` +

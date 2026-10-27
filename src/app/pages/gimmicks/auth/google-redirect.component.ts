@@ -22,9 +22,9 @@ export class GoogleRedirectComponent implements OnInit {
         this.authService.setUserFromToken(token);
         this.router.navigate(['/gimmicks/auth/main'], {
           queryParams: { from: 'googleLogin' },
-        }); // z.B. Hauptseite
+        }); // e.g. home page
       } else {
-        // Fehlerbehandlung
+        // Error handling
         alert('Google Login fehlgeschlagen');
       }
     });

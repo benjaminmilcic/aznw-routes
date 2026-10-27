@@ -70,11 +70,11 @@ export class RecipesComponent implements OnInit {
   todaysRecipeId = computed(() => {
     if (!this.recipes().length) return 0;
     const today = new Date();
-    const baseDate = new Date(2020, 0, 1); // Fixpunkt (kann beliebig sein)
+    const baseDate = new Date(2020, 0, 1); // Fixed point (can be anything)
     const diffDays = Math.floor(
       (today.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24)
     );
-    // Index wiederholt sich in Rezept-Länge
+    // Index repeats in recipe length
     const index = diffDays % this.recipes().length;
     return this.recipes()[index].id;
   });
@@ -117,20 +117,20 @@ export class RecipesComponent implements OnInit {
   }
 
   /**
-   * Markiert beim Betreten des Bereichs den Reiter zur aufgerufenen Adresse.
+   * When entering the section, marks the tab for the requested address.
    *
-   * Gelesen wird der Kindpfad aus dem Routen-Snapshot statt aus einem
-   * NavigationEnd: der Routenbaum steht schon fest, wenn diese Komponente
-   * gebaut wird, waehrend das Ereignis erst spaeter kommt.
+   * The child path is read from the route snapshot instead of a
+   * NavigationEnd: the route tree is already fixed when this component
+   * is built, while the event only comes later.
    *
-   * Und bewusst nur einmal beim Betreten: "Rezept des Tages" fuehrt auf
-   * /recipe/:id, die Suche bleibt auf /list - beide Zustaende stehen nicht in
-   * der Adresse und wuerden bei jeder weiteren Navigation ueberschrieben.
-   * Danach steuern die Klicks den Reiter allein.
+   * And deliberately only once on entering: "Recipe of the day" leads to
+   * /recipe/:id, the search stays on /list - neither state is in
+   * the address and both would be overwritten on every further navigation.
+   * After that the clicks control the tab alone.
    *
-   * Nur das Formular hat eine eigene Adresse; alles andere startet auf der
-   * Liste - auch ein direkt aufgerufenes einzelnes Rezept, das ja aus der
-   * Liste heraus geoeffnet worden waere.
+   * Only the form has its own address; everything else starts on the
+   * list - including a directly requested single recipe, which would have been
+   * opened from the list.
    */
   private applyMenuPointFromEntryRoute(): void {
     const childPath = this.route.snapshot.firstChild?.routeConfig?.path ?? '';

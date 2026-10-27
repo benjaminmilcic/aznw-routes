@@ -136,7 +136,7 @@
   box-shadow: inset 0 0 0 3px #b9d8ff;
 }
 
-/* Ion-Segment im hellen Karten-Look (wie bei "4 Gewinnt"). */
+/* Ion segment in the light card look (like in "Connect Four"). */
 ::ng-deep ion-segment.memo-segment {
   --background: #eef4ff;
   border-radius: 0.8rem;

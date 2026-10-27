@@ -2,10 +2,10 @@
   box-sizing: border-box;
 }
 
-// ===== PAGE BACKGROUND (identisch zum Weather-Gimmick) =====
-// Bewusst NICHT in Tailwind: mehrlagige radial/repeating-gradients als
-// Hintergrund-Komposition lassen sich nur sehr unleserlich als Utilities
-// ausdrücken. Der Rest der Komponente ist auf Tailwind umgestellt.
+// ===== PAGE BACKGROUND (identical to the weather gimmick) =====
+// Deliberately NOT in Tailwind: multi-layered radial/repeating gradients as a
+// background composition can only be expressed very unreadably as utilities.
+// The rest of the component has been switched to Tailwind.
 section {
   position: relative;
   min-height: 100%;

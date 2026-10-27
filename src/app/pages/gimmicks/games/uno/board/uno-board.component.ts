@@ -18,8 +18,8 @@ import { COLORS, type UnoCard, type UnoColor, type UnoPlayer } from '../game/uno
 type Outcome = 'win' | 'lose';
 
 /**
- * Der Spieltisch: Mitspieler oben, Stapel in der Mitte, eigene Karten unten.
- * Dazu die Overlays für Farbwahl, Lobby, Geräteübergabe und Spielende.
+ * The game table: players at the top, piles in the middle, own cards at the bottom.
+ * Plus the overlays for color choice, lobby, device handover and game over.
  */
 @Component({
   selector: 'app-uno-board',
@@ -35,18 +35,18 @@ export class UnoBoardComponent implements OnDestroy {
   private readonly toastr = inject(ToastrService);
   protected readonly game = this.svc.game;
 
-  /** Auswahlfarben für den Joker (Reihenfolge = Anzeige). */
+  /** Selectable colors for the wild card (order = display). */
   protected readonly pickColors: UnoColor[] = COLORS;
-  /** Id der gerade getippten Joker-Karte, für die eine Farbe gewählt wird. */
+  /** Id of the currently tapped wild card for which a color is being chosen. */
   protected readonly pendingWild = signal<string | null>(null);
 
   private effectsShown = false;
-  /** Zeitstempel des zuletzt gemeldeten Ausstiegs – verhindert alte Hinweise. */
+  /** Timestamp of the last reported exit – prevents old notices. */
   private lastLeftSeen: number | null = null;
 
   /**
-   * Anzeigename: NUR bei Computer-Gegnern wird übersetzt, damit ein
-   * Sprachwechsel auch im laufenden Spiel greift.
+   * Display name: ONLY computer opponents are translated, so that a
+   * language change also applies in a running game.
    */
   protected displayName(p: UnoPlayer | null | undefined): string {
     if (!p) return '';
@@ -65,23 +65,23 @@ export class UnoBoardComponent implements OnDestroy {
     return this.displayName(g.players[g.winnerId]);
   }
 
-  /** Name dessen, der am Gerät als Nächster übernehmen soll. */
+  /** Name of the person who should take over next on the device. */
   protected handOwnerName(): string {
     const g = this.game();
     if (!g) return '';
     return this.displayName(g.players[g.currentTurn]);
   }
 
-  /** Ergebnis aus Sicht des Spielers an DIESEM Gerät. */
+  /** Result from the point of view of the player on THIS device. */
   protected readonly outcome = computed<Outcome | null>(() => {
     const g = this.game();
     if (!g || g.status !== 'finished') return null;
-    // Am Gerät gewinnt immer jemand, der hier sitzt – außer der Computer.
+    // On the device, someone sitting here always wins – except the computer.
     if (this.svc.mode() === 'local') return g.players[g.winnerId ?? '']?.cpu ? 'lose' : 'win';
     return g.winnerId === this.svc.playerId ? 'win' : 'lose';
   });
 
-  /** Bin ich schon fertig, während die anderen weiterspielen? */
+  /** Am I already done while the others keep playing? */
   protected readonly myRank = computed<number>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing') return 0;
@@ -101,7 +101,7 @@ export class UnoBoardComponent implements OnDestroy {
       }
     });
 
-    // Hinweis, wenn online jemand die Runde verlässt.
+    // Notice when someone leaves the round online.
     effect(() => {
       const g = this.game();
       if (!g) {
@@ -110,7 +110,7 @@ export class UnoBoardComponent implements OnDestroy {
       }
       const at = g.lastLeft?.at ?? 0;
       if (this.lastLeftSeen === null) {
-        this.lastLeftSeen = at; // erster Blick auf dieses Spiel: nichts melden
+        this.lastLeftSeen = at; // first look at this game: report nothing
         return;
       }
       if (at > this.lastLeftSeen) {
@@ -122,10 +122,10 @@ export class UnoBoardComponent implements OnDestroy {
           {
             positionClass: 'toast-bottom-center',
             timeOut: 6000,
-            // Der Hinweis liegt über dem Spielfeld (bei Uno über der Hand).
-            // Ohne diese Klasse fängt er den ersten Klick ab: statt den Zug zu
-            // machen, schließt man nur den Hinweis und muss ein zweites Mal
-            // klicken. Siehe .game-notice in styles.scss.
+            // The notice lies above the board (in Uno above the hand).
+            // Without this class it catches the first click: instead of making
+            // the move, you only close the notice and have to click a second
+            // time. See .game-notice in styles.scss.
             toastClass: 'ngx-toastr game-notice',
             tapToDismiss: false,
           },
@@ -138,8 +138,8 @@ export class UnoBoardComponent implements OnDestroy {
     this.effects.stop();
   }
 
-  // ---- Kartendarstellung ---------------------------------------------------
-  /** Mittiger Text einer Karte. */
+  // ---- Card display --------------------------------------------------------
+  /** Center text of a card. */
   protected label(card: UnoCard): string {
     switch (card.value) {
       case 'skip':
@@ -157,7 +157,7 @@ export class UnoBoardComponent implements OnDestroy {
     }
   }
 
-  /** Kleinerer Eck-Text einer Karte (Zahl/Kürzel). */
+  /** Smaller corner text of a card (number/abbreviation). */
   protected corner(card: UnoCard): string {
     switch (card.value) {
       case 'skip':
@@ -175,11 +175,11 @@ export class UnoBoardComponent implements OnDestroy {
     }
   }
 
-  // ---- Aktionen ------------------------------------------------------------
+  // ---- Actions -------------------------------------------------------------
   protected onCardClick(card: UnoCard): void {
     if (!this.svc.playable(card)) return;
     if (card.color === 'w') {
-      this.pendingWild.set(card.id); // Farbwahl-Overlay öffnen
+      this.pendingWild.set(card.id); // Open the color choice overlay
       return;
     }
     this.svc.playCard(card.id);

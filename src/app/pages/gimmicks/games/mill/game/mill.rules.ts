@@ -37,7 +37,7 @@ export function isInMill(board: number[], field: number, seat: number): boolean 
   return MILLS.some((m) => m.includes(field) && m.every((x) => board[x] === seat));
 }
 
-/** Wegnehmbare Steine: zuerst solche außerhalb einer Mühle. */
+/** Removable pieces: first those outside a mill. */
 export function removable(board: number[], oppSeat: number): number[] {
   const opp: number[] = [];
   for (let i = 0; i < POINTS_COUNT; i++) if (board[i] === oppSeat) opp.push(i);

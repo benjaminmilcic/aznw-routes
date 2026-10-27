@@ -1,7 +1,7 @@
 /**
- * Eigene SVG-Kartenmotive (keine externen Bilder, keine Emojis).
- * Jedes Motiv hat eine eindeutige id, einen deutschen Namen und SVG-Markup.
- * Mit 12 Motiven sind bis zu 12 Paare (24 Karten) möglich.
+ * Custom SVG card motifs (no external images, no emojis).
+ * Each motif has a unique id, a German name and SVG markup.
+ * With 12 motifs up to 12 pairs (24 cards) are possible.
  */
 export interface CardMotif {
   id: string;
@@ -196,8 +196,8 @@ export const CARD_MOTIFS: CardMotif[] = [
 ];
 
 /**
- * Avatar für den Computer-Gegner. Bewusst NICHT Teil von CARD_MOTIFS,
- * damit er nie als Spielkarte auftaucht.
+ * Avatar for the computer opponent. Deliberately NOT part of CARD_MOTIFS,
+ * so that it never shows up as a playing card.
  */
 export const ROBOT_MOTIF: CardMotif = {
   id: 'robot',
@@ -216,5 +216,5 @@ export const ROBOT_MOTIF: CardMotif = {
     </svg>`,
 };
 
-/** Alle Motive inklusive Avatare – für die Anzeige (nicht für die Karten). */
+/** All motifs including avatars – for display (not for the cards). */
 export const ALL_MOTIFS: CardMotif[] = [...CARD_MOTIFS, ROBOT_MOTIF];

@@ -1,17 +1,17 @@
 // =============================================================
-//  Computer-Gegner für Yahtzee.
+//  Computer opponent for Yahtzee.
 // =============================================================
-// Zwei Entscheidungen pro Zug:
-//   1. Welche Würfel behalte ich? (chooseHolds)
-//   2. In welche Kategorie trage ich ein? (chooseCategory)
-// Bewusst als reine Funktionen – ohne Angular, ohne Zustand.
+// Two decisions per turn:
+//   1. Which dice do I keep? (chooseHolds)
+//   2. Which category do I fill in? (chooseCategory)
+// Deliberately as pure functions – without Angular, without state.
 import { CATEGORIES, DICE_COUNT, scoreFor, type Category, type ScoreMap } from './scoring';
 import type { YLevel } from './yahtzee.types';
 
 /**
- * Wie oft der Computer daneben greift: statt der besten Wahl behält er
- * zufällige Würfel bzw. trägt in eine zufällige freie Kategorie ein.
- * "Schwer" spielt immer nach Plan.
+ * How often the computer misses: instead of the best choice it keeps
+ * random dice or fills in a random free category.
+ * "Hard" always plays to plan.
  */
 const MISTAKE: Record<YLevel, number> = {
   easy: 0.45,
@@ -20,8 +20,8 @@ const MISTAKE: Record<YLevel, number> = {
 };
 
 /**
- * Reihenfolge, in der eine Kategorie geopfert wird, wenn gar nichts passt.
- * Vorne steht, was am wenigsten weh tut.
+ * Order in which a category is sacrificed when nothing fits at all.
+ * At the front is what hurts the least.
  */
 const SACRIFICE_ORDER: Category[] = [
   'ones',
@@ -39,14 +39,14 @@ const SACRIFICE_ORDER: Category[] = [
   'chance',
 ];
 
-/** Kategorien, die dieser Spieler noch frei hat. */
+/** Categories this player still has free. */
 export function openCategories(scores: ScoreMap): Category[] {
   return CATEGORIES.filter((c) => scores[c.key] == null).map((c) => c.key);
 }
 
 /**
- * Welche Würfel sollen liegen bleiben? Liefert ein Array mit `true` für jeden
- * Würfel, der behalten wird.
+ * Which dice should stay? Returns an array with `true` for every
+ * die that is kept.
  */
 export function chooseHolds(dice: number[], scores: ScoreMap, level: YLevel = 'hard'): boolean[] {
   if (Math.random() < MISTAKE[level]) return dice.map(() => Math.random() < 0.5);
@@ -54,7 +54,7 @@ export function chooseHolds(dice: number[], scores: ScoreMap, level: YLevel = 'h
   const open = openCategories(scores);
   const counts = countValues(dice);
 
-  // Fertige Kombinationen nicht mehr anfassen.
+  // Don't touch finished combinations anymore.
   const maxCount = Math.max(...counts.slice(1));
   if (maxCount >= 4 && (open.includes('yatzy') || open.includes('fourKind'))) {
     return holdValue(dice, counts.indexOf(maxCount));
@@ -62,7 +62,7 @@ export function chooseHolds(dice: number[], scores: ScoreMap, level: YLevel = 'h
   if (open.includes('largeStraight') && straightRun(counts) >= 5) return dice.map(() => true);
   if (open.includes('fullHouse') && isFullHouse(counts)) return dice.map(() => true);
 
-  // Vier zu einer Straße: die Sequenz behalten und auf die fünfte hoffen.
+  // Four of a straight: keep the sequence and hope for the fifth.
   if (open.includes('largeStraight') || open.includes('smallStraight')) {
     const run = longestRunValues(counts);
     if (run.length >= 4) {
@@ -77,7 +77,7 @@ export function chooseHolds(dice: number[], scores: ScoreMap, level: YLevel = 'h
     }
   }
 
-  // Standard: das häufigste Auge behalten (bei Gleichstand das höhere).
+  // Default: keep the most frequent pip (on a tie the higher one).
   if (maxCount >= 2) {
     let best = 0;
     for (let v = 1; v <= 6; v++) {
@@ -86,24 +86,24 @@ export function chooseHolds(dice: number[], scores: ScoreMap, level: YLevel = 'h
     return holdValue(dice, best);
   }
 
-  // Nichts Brauchbares: hohe Augen behalten, der Rest wird neu gewürfelt.
+  // Nothing useful: keep high pips, the rest is rolled again.
   return dice.map((v) => v >= 5);
 }
 
-/** Lohnt sich ein weiterer Wurf, oder ist die Hand schon gut genug? */
+/** Is another roll worth it, or is the hand already good enough? */
 export function shouldRollAgain(dice: number[], scores: ScoreMap): boolean {
   const open = openCategories(scores);
   const counts = countValues(dice);
   if (open.includes('yatzy') && counts.includes(5)) return false;
   if (open.includes('largeStraight') && straightRun(counts) >= 5) return false;
   if (open.includes('fullHouse') && isFullHouse(counts)) return false;
-  // Sonst: solange Würfe übrig sind, wird gewürfelt.
+  // Otherwise: roll as long as rolls are left.
   return chooseHolds(dice, scores).some((h) => !h);
 }
 
 /**
- * Beste offene Kategorie für diesen Wurf. Bringt keine Kategorie Punkte,
- * wird nach SACRIFICE_ORDER geopfert.
+ * Best open category for this roll. If no category scores points,
+ * a category is sacrificed according to SACRIFICE_ORDER.
  */
 export function chooseCategory(
   dice: number[],
@@ -129,8 +129,8 @@ export function chooseCategory(
 }
 
 /**
- * Kleiner Zuschlag für die obere Hälfte: drei gleiche Augen dort einzutragen
- * hält den 35-Punkte-Bonus in Reichweite.
+ * Small bonus for the upper half: filling in three of a kind there
+ * keeps the 35-point bonus within reach.
  */
 function bonusHint(cat: Category, dice: number[]): number {
   const upper: Partial<Record<Category, number>> = {
@@ -160,12 +160,12 @@ function isFullHouse(counts: number[]): boolean {
   return (counts.some((n) => n === 3) && counts.some((n) => n === 2)) || counts.some((n) => n === 5);
 }
 
-/** Länge der längsten Folge aufeinanderfolgender Augen. */
+/** Length of the longest run of consecutive pips. */
 function straightRun(counts: number[]): number {
   return longestRunValues(counts).length;
 }
 
-/** Die Augen der längsten zusammenhängenden Folge. */
+/** The pips of the longest consecutive run. */
 function longestRunValues(counts: number[]): number[] {
   let best: number[] = [];
   let run: number[] = [];

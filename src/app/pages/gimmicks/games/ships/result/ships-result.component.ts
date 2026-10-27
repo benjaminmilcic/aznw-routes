@@ -4,7 +4,7 @@ import { GameEffectsService } from '../../shared/effects/game-effects.service';
 import { ShipsService } from '../game/ships.service';
 import { CPU_ID, type ShipsPlayer } from '../game/ships.types';
 
-/** Ergebnis-Dialog mit Feuerwerk beim Sieg und sinkendem Schiff beim Verlieren. */
+/** Result dialog with fireworks on a win and a sinking ship on a loss. */
 @Component({
   selector: 'app-ships-result',
   imports: [TranslateModule],
@@ -23,7 +23,7 @@ export class ShipsResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Feuerwerk/Töne stoppen, wenn der Dialog verschwindet.
+    // Stop fireworks/sounds when the dialog disappears.
     this.effects.stop();
   }
 

@@ -32,42 +32,42 @@ import {
 const PLAYER_ID_KEY = 'ludo_player_id';
 const PLAYER_NAME_KEY = 'ludo_player_name';
 const PLAYER_EMOJI_KEY = 'ludo_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'ludo_active_code';
 const CODE_ALPHABET = '0123456789';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
-/** Zeichen der Computer-Gegner. */
+/** Symbols of the computer opponents. */
 export const CPU_EMOJI = '🤖';
 
 export { MAX_PLAYERS, MIN_PLAYERS } from './ludo.types';
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.ludoGame';
 
-/** Bedenkzeit des Computers, damit man Wurf und Zug mitverfolgen kann. */
+/** Thinking time of the computer, so that you can follow roll and move. */
 const CPU_ROLL_DELAY = 650;
 const CPU_MOVE_DELAY = 750;
 
 /**
- * "Mensch ärgere dich nicht" – aus der Whiteboard-App übernommen und wie
- * Pasch (Yahtzee) auf mehrere Mitspieler erweitert.
+ * "Mensch ärgere dich nicht" (Ludo) – taken over from the whiteboard app and,
+ * like Yahtzee, extended to several players.
  *
- * Zwei Spielarten:
- *  - "local"  … 2–4 Spieler am Gerät, beliebig viele davon Computer-Gegner
- *  - "online" … 2–4 Geräte über einen vierstelligen Spiel-Code
+ * Two game modes:
+ *  - "local"  … 2–4 players on the device, any number of them computer opponents
+ *  - "online" … 2–4 devices via a four-digit game code
  *
- * Der Online-Spielstand liegt in der Realtime Database unter
- * "ludo/games/<code>" – demselben Pfad, den auch die Whiteboard-App nutzt.
+ * The online game state lives in the Realtime Database under
+ * "ludo/games/<code>" – the same path the whiteboard app uses.
  */
 @Injectable({ providedIn: 'root' })
 export class LudoService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<LudoGame>({
     db,
@@ -80,14 +80,14 @@ export class LudoService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -97,8 +97,8 @@ export class LudoService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -107,14 +107,14 @@ export class LudoService {
     return ok;
   }
 
-  // ---- Abwesende Mitspieler ------------------------------------------------
-  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  // ---- Absent players ------------------------------------------------------
+  /** Players who are no longer connected – with seconds since they disappeared. */
   readonly absent = this.channel.awayPlayers;
 
   /**
-   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
-   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
-   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   * The absent player who is currently blocking the round: it is their turn and
+   * they have been gone longer than the grace period. Only then do we offer to skip –
+   * nobody should be thrown out because they briefly left the room.
    */
   readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
     const g = this.game();
@@ -125,8 +125,8 @@ export class LudoService {
   });
 
   /**
-   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
-   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   * Removes an absent player from the round so that it can go on.
+   * Deliberately triggered by the remaining players.
    */
   async skipAbsent(playerId: string): Promise<void> {
     const g = this.game();
@@ -134,11 +134,11 @@ export class LudoService {
     if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
     await this.removeFromOnlineGame(g, playerId);
   }
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<LudoMode | null>(null);
-  /** Spielstärke der Computer-Gegner. */
+  /** Difficulty of the computer opponents. */
   readonly level = signal<LudoLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
   readonly busy = signal(false);
 
@@ -146,11 +146,11 @@ export class LudoService {
 
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
-  /** Der Spieler an DIESEM Gerät (im lokalen Spiel der erste Mensch). */
+  // ---- Derived signals for the UI -----------------------------------------
+  /** The player on THIS device (in a local game the first human). */
   readonly me = computed<LudoPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
-  /** Alle Mitspieler in Zugreihenfolge. */
+  /** All players in turn order. */
   readonly players = computed<LudoPlayer[]>(() => {
     const g = this.game();
     if (!g) return [];
@@ -164,20 +164,20 @@ export class LudoService {
 
   readonly isHost = computed<boolean>(() => this.game()?.hostId === this.playerId);
 
-  /** Endstand: die schon fertigen Spieler in Platzreihenfolge. */
+  /** Final standings: the players who have already finished, in order of place. */
   readonly ranking = computed<LudoPlayer[]>(() => {
     const g = this.game();
     if (!g) return [];
     return g.ranking.map((id) => g.players[id]).filter((p): p is LudoPlayer => !!p);
   });
 
-  /** Hat dieser Spieler alle vier Figuren im Ziel? */
+  /** Does this player have all four pieces home? */
   done(id: string): boolean {
     const g = this.game();
     return !!g && isDone(g, id);
   }
 
-  /** Erreichter Platz (1-basiert), oder 0 solange der Spieler noch unterwegs ist. */
+  /** Place reached (1-based), or 0 while the player is still on their way. */
   rankOf(id: string): number {
     const g = this.game();
     if (!g) return 0;
@@ -185,12 +185,12 @@ export class LudoService {
     return i < 0 ? 0 : i + 1;
   }
 
-  /** Der Computer "überlegt" gerade. */
+  /** The computer is "thinking". */
   readonly thinking = computed<boolean>(
     () => this.game()?.status === 'playing' && !!this.currentPlayer()?.cpu,
   );
 
-  /** Darf an DIESEM Gerät gerade gewürfelt/gezogen werden? */
+  /** May a roll/move be made on THIS device right now? */
   readonly canAct = computed<boolean>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing') return false;
@@ -198,47 +198,47 @@ export class LudoService {
     return g.currentTurn === this.playerId;
   });
 
-  /** Die mit dem aktuellen Würfel legalen Züge des Spielers am Zug. */
+  /** The legal moves of the player on turn with the current die. */
   readonly legalMoves = computed<LudoMove[]>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing' || g.dice === null) return [];
     return computeMoves(g, g.currentTurn, g.dice);
   });
 
-  /** Es wurde schon gewürfelt und es darf jetzt eine Figur gezogen werden. */
+  /** The dice have been rolled and a piece may now be moved. */
   readonly mustMove = computed<boolean>(() => this.canAct() && this.legalMoves().length > 0);
 
-  /** Gewürfelt, aber kein Zug möglich – die Zahl wird angezeigt, dann ausgesetzt. */
+  /** Rolled, but no move possible – the number is shown, then the turn is skipped. */
   readonly noMove = computed<boolean>(() => {
     const g = this.game();
     return this.canAct() && !!g && g.dice !== null && this.legalMoves().length === 0;
   });
 
-  /** Führt das Bestätigen einer nicht setzbaren Zahl zu einem erneuten Wurf? */
+  /** Does confirming an unusable number lead to another roll? */
   readonly passRerolls = computed<boolean>(() => {
     const g = this.game();
     if (!g || g.dice === null) return false;
-    if (g.dice === 6) return true; // eine 6 bringt immer einen neuen Wurf
+    if (g.dice === 6) return true; // a 6 always gives a new roll
     return g.rollsLeft > 1 && onlySixHelps(g, g.currentTurn);
   });
 
-  /** Darf jetzt gewürfelt werden? */
+  /** May the dice be rolled now? */
   readonly canRoll = computed<boolean>(() => {
     const g = this.game();
     return this.canAct() && !!g && g.dice === null;
   });
 
-  /** Sitzplatz (0 … 3) eines Spielers – für Farbe und Brettgeometrie. */
+  /** Seat (0 … 3) of a player – for color and board geometry. */
   seatOf(g: LudoGame, id: string): number {
     return seatOf(g, id);
   }
 
-  /** Brettfeld (0 … 39) einer Figur auf der Laufbahn, sonst -1. */
+  /** Board square (0 … 39) of a piece on the track, otherwise -1. */
   trackCell(g: LudoGame, id: string, pos: LudoPos): number {
     return trackCell(g, id, pos);
   }
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -261,10 +261,10 @@ export class LudoService {
     return id;
   }
 
-  // ---- Spiel am Gerät (Menschen + Computer) --------------------------------
+  // ---- Game on the device (humans + computers) -----------------------------
   /**
-   * Startet ein Spiel an diesem Gerät. `seats` kommt aus dem Startbildschirm
-   * und enthält Menschen wie Computer in der gewünschten Reihenfolge.
+   * Starts a game on this device. `seats` comes from the start screen
+   * and contains humans and computers in the desired order.
    */
   startLocalGame(
     seats: { name: string; emoji: string; cpu: boolean }[],
@@ -280,8 +280,8 @@ export class LudoService {
     const order: string[] = [];
     let humanSeat = 0;
     for (const [i, seat] of seats.entries()) {
-      // Der erste Mensch bekommt die gespeicherte Spieler-Id, damit "ich"
-      // auf dem Brett hervorgehoben werden kann.
+      // The first human gets the stored player id, so that "me"
+      // can be highlighted on the board.
       const id = seat.cpu ? `cpu_${i}` : humanSeat++ === 0 ? this.playerId : `p_local_${i}`;
       players[id] = {
         id,
@@ -296,7 +296,7 @@ export class LudoService {
     this.maybeScheduleCpu();
   }
 
-  // ---- Online-Spiel: erstellen / beitreten / starten ------------------------
+  // ---- Online game: create / join / start -----------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -366,9 +366,9 @@ export class LudoService {
   }
 
   /**
-   * Der Gastgeber startet die Runde, sobald alle da sind. Erst jetzt stehen
-   * die Sitzplätze fest – zu zweit sitzt man sich gegenüber, zu dritt/viert
-   * werden die Ecken der Reihe nach vergeben.
+   * The host starts the round as soon as everyone is there. Only now are
+   * the seats fixed – with two players you sit opposite each other, with three/four
+   * the corners are assigned in turn.
    */
   async startOnlineGame(): Promise<void> {
     const g = this.game();
@@ -395,10 +395,10 @@ export class LudoService {
     }
   }
 
-  // ---- Spielzüge -----------------------------------------------------------
+  // ---- Moves ---------------------------------------------------------------
   /**
-   * Würfeln. Die Augenzahl wird immer gespeichert und angezeigt – auch wenn
-   * kein Zug möglich ist. Dann setzt der Spieler über `pass()` bewusst aus.
+   * Roll the dice. The pip count is always stored and shown – even if
+   * no move is possible. The player then deliberately skips via `pass()`.
    */
   roll(): void {
     const g = this.game();
@@ -408,9 +408,9 @@ export class LudoService {
   }
 
   /**
-   * Bestätigt eine nicht setzbare Augenzahl. Eine 6 (oder ein weiterer Versuch
-   * mit allen Figuren in der Garage) bringt einen neuen Wurf, sonst ist der
-   * nächste Spieler dran.
+   * Confirms a pip count that cannot be used. A 6 (or another attempt with all
+   * pieces in the garage) gives a new roll, otherwise it is the next player's
+   * turn.
    */
   pass(): void {
     const g = this.game();
@@ -418,7 +418,7 @@ export class LudoService {
     this.commit(applyPass(g, g.currentTurn));
   }
 
-  /** Bewegt die gewählte Figur gemäß dem aktuellen Würfel. */
+  /** Moves the selected piece according to the current die. */
   move(pieceIndex: number): void {
     const g = this.game();
     if (!g || !this.canAct() || g.dice === null) return;
@@ -427,7 +427,7 @@ export class LudoService {
     this.commit(applyMove(g, g.currentTurn, chosen));
   }
 
-  /** Neue Runde – der Gewinner fängt diesmal nicht an. */
+  /** New round – this time the winner does not start. */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -446,8 +446,8 @@ export class LudoService {
   }
 
   /**
-   * Laufendes Spiel verlassen. Online wird man dabei aus der Runde
-   * ausgetragen, damit die anderen ohne einen weiterspielen können.
+   * Leave the running game. Online you are removed from the round,
+   * so that the others can continue without you.
    */
   leaveGame(): void {
     const g = this.game();
@@ -458,15 +458,15 @@ export class LudoService {
   }
 
   /**
-   * Trägt einen Spieler aus der Online-Runde aus: seine Figuren kommen vom
-   * Brett, ggf. ist der Nächste dran, notfalls wechselt die Gastgeber-Rolle.
-   * Der letzte Aussteigende räumt das Spiel ganz weg.
+   * Removes a player from the online round: their pieces leave the
+   * board, the next player may be on turn, and if needed the host role changes.
+   * The last one to leave removes the game completely.
    *
-   * Die Sitzplätze der Verbleibenden bleiben, wie sie sind – sonst würden
-   * ihre Figuren mitten im Spiel auf andere Felder springen.
+   * The seats of the remaining players stay as they are – otherwise
+   * their pieces would jump to other squares in the middle of the game.
    *
-   * `who` ist normalerweise man selbst (Knopf „Spiel verlassen"), kann aber auch
-   * ein abwesender Mitspieler sein, den die Runde überspringt (siehe
+   * `who` is normally yourself (button "Leave game"), but can also be
+   * an absent player whom the round skips (see
    * `skipAbsent`).
    */
   private async removeFromOnlineGame(g: LudoGame, who: string): Promise<void> {
@@ -480,7 +480,7 @@ export class LudoService {
         return;
       }
 
-      // Figuren, Sitzplatz und Spielerdaten des Aussteigers fallen weg.
+      // Pieces, seat and player data of the leaving player are dropped.
       const players: Record<string, LudoPlayer> = {};
       const pieces: Record<string, LudoPos[]> = {};
       const seats: Record<string, number> = {};
@@ -494,7 +494,7 @@ export class LudoService {
       const rest: LudoGame = { ...g, players, pieces, seats, order: remaining, ranking };
       const hostId = g.hostId === who ? remaining[0] : g.hostId;
 
-      // Bleibt nur noch einer unterwegs, sind die Plätze damit verteilt.
+      // If only one player is still on their way, the places are thereby distributed.
       if (g.status === 'playing') {
         const decided = finishIfDecided(rest);
         if (decided.status === 'finished') {
@@ -516,7 +516,7 @@ export class LudoService {
         }
       }
 
-      // War der Ausgetragene gerade dran, rückt der Nächste nach – frischer Würfel.
+      // If the removed player was on turn, the next one moves up – fresh die.
       const wasHisTurn = g.currentTurn === who;
       const next = wasHisTurn ? withTurn(rest, this.playerAfter(who, g.order, rest)) : rest;
 
@@ -540,8 +540,8 @@ export class LudoService {
   }
 
   /**
-   * Der nächste Spieler nach `who` in der ursprünglichen Reihenfolge, der noch
-   * dabei und noch nicht im Ziel ist.
+   * The next player after `who` in the original order who is still
+   * in the game and not yet home.
    */
   private playerAfter(who: string, fullOrder: string[], rest: LudoGame): string {
     const start = fullOrder.indexOf(who);
@@ -553,9 +553,9 @@ export class LudoService {
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -567,8 +567,8 @@ export class LudoService {
     this.mode.set(null);
   }
 
-  // ---- Zustand schreiben ---------------------------------------------------
-  /** Übernimmt einen neuen Spielstand – lokal direkt, online über Firebase. */
+  // ---- Write state ---------------------------------------------------------
+  /** Takes over a new game state – locally directly, online via Firebase. */
   private commit(next: LudoGame): void {
     if (this.mode() === 'online') {
       void this.pushOnline(next);
@@ -596,8 +596,8 @@ export class LudoService {
     }
   }
 
-  // ---- Computer-Gegner -----------------------------------------------------
-  /** Ist ein Computer dran, würfelt und zieht er nach kurzer Bedenkzeit. */
+  // ---- Computer opponent ---------------------------------------------------
+  /** If a computer is on turn, it rolls and moves after a short pause. */
   private maybeScheduleCpu(): void {
     const g = this.game();
     if (this.mode() !== 'local' || !g || g.status !== 'playing') return;
@@ -610,7 +610,7 @@ export class LudoService {
     }, CPU_ROLL_DELAY);
   }
 
-  /** Schritt 1: der Computer würfelt – die Augenzahl bleibt kurz stehen. */
+  /** Step 1: the computer rolls – the pip count stays visible for a moment. */
   private cpuRoll(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || !g.players[g.currentTurn]?.cpu) return;
@@ -627,7 +627,7 @@ export class LudoService {
     }, CPU_MOVE_DELAY);
   }
 
-  /** Schritt 2: der Computer zieht – oder setzt aus, wenn nichts geht. */
+  /** Step 2: the computer moves – or skips if nothing works. */
   private cpuMove(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || !g.players[g.currentTurn]?.cpu || g.dice === null) return;
@@ -645,8 +645,8 @@ export class LudoService {
     this.cpuTimer = null;
   }
 
-  // ---- Intern --------------------------------------------------------------
-  /** Frischer Spielstand mit Sitzplätzen, leeren Garagen und erstem Zug. */
+  // ---- Internals -----------------------------------------------------------
+  /** Fresh game state with seats, empty garages and the first turn. */
   private freshGame(
     code: string,
     hostId: string,
@@ -676,7 +676,7 @@ export class LudoService {
     return withTurn(base, order[0]);
   }
 
-  /** Verteilt die Sitzplätze (Ecken) auf die Spieler in Zugreihenfolge. */
+  /** Assigns the seats (corners) to the players in turn order. */
   private assignSeats(order: string[]): Record<string, number> {
     const layout = SEAT_LAYOUT[order.length] ?? SEAT_LAYOUT[MAX_PLAYERS];
     const seats: Record<string, number> = {};
@@ -685,8 +685,8 @@ export class LudoService {
   }
 
   /**
-   * Firebase speichert keine leeren/teils gesetzten Arrays sauber – beim
-   * Einlesen auffüllen, damit die Oberfläche nie auf "undefined" zugreift.
+   * Firebase does not store empty/partially set arrays cleanly – fill them in
+   * when reading, so that the UI never accesses "undefined".
    */
   private normalize(g: LudoGame): LudoGame {
     const players = g.players ?? {};
@@ -709,7 +709,7 @@ export class LudoService {
       dice: g.dice ?? null,
       rollsLeft: g.rollsLeft ?? 1,
       winnerId: g.winnerId ?? null,
-      // Ausgestiegene Mitspieler fallen auch aus der Rangliste.
+      // Players who left are also dropped from the ranking.
       ranking: (g.ranking ?? []).filter((id) => order.includes(id)),
       lastAction: g.lastAction ?? null,
       lastLeft: g.lastLeft ?? null,

@@ -18,11 +18,11 @@ import { ShipsSetupComponent } from './setup/ships-setup.component';
 type View = 'home' | 'waiting' | 'setup' | 'waitOpponent' | 'battle' | 'finished';
 
 /**
- * "Schiffe versenken" – aus der Whiteboard-App übernommen.
+ * "Battleship" – taken over from the whiteboard app.
  *
- * Spielbar gegen den Computer (drei Spielstärken) oder online zu zweit
- * über einen vierstelligen Spiel-Code. Die komplette Ablaufsteuerung
- * steckt im ShipsService.
+ * Playable against the computer (three difficulty levels) or online by two players
+ * via a four-digit game code. The complete flow control
+ * lives in the ShipsService.
  */
 @Component({
   selector: 'app-ships',
@@ -64,7 +64,7 @@ export class ShipsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Beim Verlassen der Seite Firebase-Abo und Computer-Timer aufräumen.
+    // Clean up the Firebase subscription and the computer timer when leaving the page.
     this.svc.leaveGame();
   }
 }

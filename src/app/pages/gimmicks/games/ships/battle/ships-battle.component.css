@@ -92,21 +92,21 @@
   font-size: 0.78rem;
 }
 
-/* Auf dem Smartphone stehen beide Raster untereinander – sonst müsste man
-   scrollen. Die Höhe begrenzt die Breite, damit beide gleichzeitig passen. */
+/* On a smartphone both grids are stacked – otherwise you would have to
+   scroll. The height limits the width so that both fit at the same time. */
 @media (max-width: 767px) {
   .board-card {
     max-width: min(92vw, 32vh);
   }
 }
 
-/* Ab Tablet stehen die Raster nebeneinander und dürfen mitwachsen.
-   Begrenzt durch:
-     46vw                  – beide passen nebeneinander
-     calc(100vh - 18rem)   – Navigation, Spielauswahl, Zug-Anzeige und
-                             Kartenbeschriftung abgezogen, damit man nicht
-                             scrollen muss (das Raster ist quadratisch)
-     42rem                 – auf sehr großen Bildschirmen nicht ins Uferlose */
+/* From tablet size on the grids sit side by side and may grow.
+   Limited by:
+     46vw                  – both fit side by side
+     calc(100vh - 18rem)   – navigation, game selection, turn display and
+                             grid labels subtracted, so that you don't
+                             have to scroll (the grid is square)
+     42rem                 – not endless on very large screens */
 @media (min-width: 768px) {
   .board-card {
     max-width: min(46vw, calc(100vh - 18rem), 42rem);

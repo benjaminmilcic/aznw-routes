@@ -16,7 +16,7 @@ import type { C4Color, C4Player } from '../game/game.types';
 
 type Outcome = 'win' | 'lose' | 'tie';
 
-/** Das Spielfeld mit Kopfzeile, Warte- und Ergebnis-Overlay. */
+/** The game board with header, waiting and result overlay. */
 @Component({
   selector: 'app-connect-four-board',
   imports: [TranslateModule, DraggableDirective, SpeakOnClickDirective],
@@ -36,9 +36,9 @@ export class ConnectFourBoardComponent implements OnDestroy {
   private effectsShown = false;
 
   /**
-   * Anzeigename eines Spielers: selbst eingegebene Namen bleiben unverändert.
-   * NUR beim Computer-Gegner wird übersetzt, damit ein Sprachwechsel auch im
-   * laufenden Spiel greift (sein gespeicherter Name ist nur ein Rückfallwert).
+   * Display name of a player: names entered by players stay unchanged.
+   * ONLY the computer opponent is translated, so that a language change also
+   * applies in a running game (its stored name is only a fallback value).
    */
   protected displayName(p: C4Player | null | undefined): string {
     if (!p) return '';
@@ -47,12 +47,12 @@ export class ConnectFourBoardComponent implements OnDestroy {
       : p.name;
   }
 
-  /** Name des Spielers, der gerade am Zug ist. */
+  /** Name of the player whose turn it is. */
   protected currentName(): string {
     return this.displayName(this.svc.currentPlayer());
   }
 
-  /** Ergebnis aus Sicht des Spielers an DIESEM Gerät. */
+  /** Result from the point of view of the player on THIS device. */
   protected readonly outcome = computed<Outcome | null>(() => {
     const g = this.game();
     if (!g || g.status !== 'finished') return null;
@@ -60,7 +60,7 @@ export class ConnectFourBoardComponent implements OnDestroy {
     return g.winnerId === this.svc.playerId ? 'win' : 'lose';
   });
 
-  /** Name des Gewinners (für die Ergebnis-Meldung). */
+  /** Name of the winner (for the result message). */
   protected winnerName(): string {
     const g = this.game();
     if (!g || !g.winnerId || g.winnerId === 'tie') return '';
@@ -68,7 +68,7 @@ export class ConnectFourBoardComponent implements OnDestroy {
   }
 
   constructor() {
-    // Feuerwerk + Klang beim Sieg, "Wah-Wah" beim Verlieren, Glöckchen bei Remis.
+    // Fireworks + sound on a win, "wah-wah" on a loss, bells on a draw.
     effect(() => {
       const finished = this.game()?.status === 'finished';
       if (finished && !this.effectsShown) {
@@ -92,7 +92,7 @@ export class ConnectFourBoardComponent implements OnDestroy {
     return row * COLS + col;
   }
 
-  /** Farbe des Steins in diesem Feld (oder null, wenn leer). */
+  /** Color of the disc in this cell (or null if empty). */
   protected colorAt(row: number, col: number): C4Color | null {
     const g = this.game();
     const pid = g?.board[this.idx(row, col)];
@@ -114,11 +114,11 @@ export class ConnectFourBoardComponent implements OnDestroy {
     return this.game()?.lastMove === this.idx(row, col);
   }
 
-  /** Darf in diese Spalte geworfen werden? */
+  /** May a disc be dropped into this column? */
   protected canDrop(col: number): boolean {
     const g = this.game();
     if (!g || !this.svc.canPlay()) return false;
-    return !g.board[this.idx(0, col)]; // oberste Zelle frei?
+    return !g.board[this.idx(0, col)]; // top cell free?
   }
 
   protected drop(col: number): void {

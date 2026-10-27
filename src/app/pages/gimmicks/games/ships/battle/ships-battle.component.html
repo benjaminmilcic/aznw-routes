@@ -1,5 +1,5 @@
 <div class="battle">
-  <!-- Wer ist dran? (nach Spielende sagt das Ergebnis-Fenster Bescheid) -->
+  <!-- Whose turn is it? (after the game the result window tells) -->
   <div class="turn-row">
     @if (svc.game()?.status !== 'battle') {
     <span class="turn turn--waiting">
@@ -32,7 +32,7 @@
   </div>
 
   <div class="boards">
-    <!-- Gegnerisches Meer – hier wird geschossen -->
+    <!-- Opponent's sea – this is where you shoot -->
     <div class="board-card board-card--enemy">
       <h3 class="board-title">
         {{
@@ -53,7 +53,7 @@
       />
     </div>
 
-    <!-- Eigenes Meer -->
+    <!-- Own sea -->
     <div class="board-card">
       <h3 class="board-title">
         {{ svc.me()?.emoji }}

@@ -6,7 +6,7 @@
     <p class="error">{{ err | translate }}</p>
     }
 
-    <!-- Spielart -->
+    <!-- Game mode -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.connectFourGame.mode" | translate
@@ -46,7 +46,7 @@
       />
     </label>
 
-    <!-- Zeichen -->
+    <!-- Symbol -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.connectFourGame.chooseAvatar" | translate
@@ -66,7 +66,7 @@
     </div>
 
     @if (mode() === 'computer') {
-    <!-- ---------------- Gegen den Computer ---------------- -->
+    <!-- ---------------- Against the computer -------------- -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.connectFourGame.level" | translate
@@ -93,7 +93,7 @@
       {{ "gimmicks.games.connectFourGame.startGame" | translate }}
     </button>
     } @else {
-    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    <!-- ---------------- Online with game code ---------------- -->
     @if (!showJoin()) {
     <button
       type="button"

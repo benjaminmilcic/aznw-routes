@@ -1,6 +1,6 @@
 @if (game(); as g) {
 <div class="board-screen">
-  <!-- Kopfzeile: beide Spieler + wer dran ist -->
+  <!-- Header: both players + whose turn it is -->
   <header class="bar">
     <div class="players">
       <div class="player" [class.player--active]="g.currentTurn === svc.me()?.id">
@@ -51,7 +51,7 @@
     </button>
   </header>
 
-  <!-- Spielfeld: 7 anklickbare Spalten -->
+  <!-- Board: 7 clickable columns -->
   <main class="field-wrap">
     <div class="board" [class.board--locked]="!svc.canPlay()">
       @for (c of cols; track c) {
@@ -80,7 +80,7 @@
     </div>
   </main>
 
-  <!-- Warten auf Mitspieler (nur online) -->
+  <!-- Waiting for the other player (online only) -->
   @if (g.status === 'waiting') {
   <div class="overlay">
     <div class="panel">
@@ -95,10 +95,10 @@
   </div>
   }
 
-  <!-- Spielende -->
+  <!-- Game over -->
   @if (g.status === 'finished') {
   <div class="overlay">
-    <!-- Der Dialog lässt sich zur Seite schieben, um das Endergebnis zu sehen. -->
+    <!-- The dialog can be pushed aside to see the final result. -->
     <div
       class="panel"
       appDraggable

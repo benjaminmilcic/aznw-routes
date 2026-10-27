@@ -58,7 +58,7 @@ export class RecipeEffects {
           map((recipes) => RecipeActions.loadRecipesSuccess({ recipes })),
           catchError((error) => {
             console.error('API Error:', error);
-            // 👇 Hier wird die echte Fehlermeldung extrahiert:
+            // 👇 This is where the real error message is extracted:
             const message =
               error?.error?.message?.[this.translateService.currentLang] ||
               error?.message ||
@@ -70,21 +70,21 @@ export class RecipeEffects {
     )
   );
 
-  // Effect um Recipe zu speichern (mit Bild-Upload falls nötig)
+  // Effect to save a recipe (with image upload if needed)
   addRecipe$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipeActions.addRecipe),
       switchMap(({ recipe }) => {
-        // Prüfe ob Bild als dataURL vorhanden ist
+        // Check whether an image is present as a dataURL
         if (recipe.imagePath && recipe.imagePath.startsWith('data:')) {
           console.log('Effect: Uploading image first...');
 
-          // 1. Bild hochladen
+          // 1. Upload the image
           return this.filesService.uploadImage(recipe.imagePath).pipe(
             concatMap((uploadResponse) => {
               console.log('Effect: Image uploaded:', uploadResponse.file);
 
-              // 2. Recipe mit Datei-URL speichern
+              // 2. Save the recipe with the file URL
               const recipeWithFilePath = {
                 ...recipe,
                 imagePath: `${environment.recipes.filesUrl}/download/${uploadResponse.file}`,
@@ -112,7 +112,7 @@ export class RecipeEffects {
             })
           );
         } else {
-          // Kein Bild-Upload nötig, direkt speichern
+          // No image upload needed, save directly
           console.log('Effect: No image upload needed, saving recipe directly');
           return this.recipesService.addRecipe(recipe).pipe(
             map((savedRecipe) =>
@@ -140,7 +140,7 @@ export class RecipeEffects {
           map((recipes) => RecipeActions.deleteRecipeSuccess({ id })),
           catchError((error) => {
             console.error('API Error:', error);
-            // 👇 Hier wird die echte Fehlermeldung extrahiert:
+            // 👇 This is where the real error message is extracted:
             const message =
               error?.error?.message?.[this.translateService.currentLang] ||
               error?.message ||
@@ -152,21 +152,21 @@ export class RecipeEffects {
     )
   );
 
-  // Effect um Recipe zu aktualisieren (mit Bild-Upload falls nötig)
+  // Effect to update a recipe (with image upload if needed)
   updateRecipe$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipeActions.updateRecipe),
       switchMap(({ id, recipe }) => {
-        // Prüfe ob Bild als dataURL vorhanden ist
+        // Check whether an image is present as a dataURL
         if (recipe.imagePath && recipe.imagePath.startsWith('data:')) {
           console.log('Effect: Uploading image first...');
 
-          // 1. Bild hochladen
+          // 1. Upload the image
           return this.filesService.uploadImage(recipe.imagePath).pipe(
             concatMap((uploadResponse) => {
               console.log('Effect: Image uploaded:', uploadResponse.file);
 
-              // 2. Recipe mit Datei-URL aktualisieren
+              // 2. Update the recipe with the file URL
               const recipeWithFilePath = {
                 ...recipe,
                 imagePath: `${environment.recipes.filesUrl}/download/${uploadResponse.file}`,
@@ -194,7 +194,7 @@ export class RecipeEffects {
             })
           );
         } else {
-          // Kein Bild-Upload nötig, direkt aktualisieren
+          // No image upload needed, update directly
           console.log('Effect: No image upload needed, updating recipe directly');
           return this.recipesService.updateRecipe(id, recipe).pipe(
             map((updatedRecipe) =>

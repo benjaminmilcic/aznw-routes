@@ -6,11 +6,11 @@ import { LudoService } from './game/ludo.service';
 import { LudoHomeComponent } from './home/ludo-home.component';
 
 /**
- * "Mensch ärgere dich nicht" – aus der Whiteboard-App übernommen.
+ * "Mensch ärgere dich nicht" (Ludo) – taken over from the whiteboard app.
  *
- * Zeigt entweder den Startbildschirm oder das laufende Spiel. Gespielt wird
- * online zu zweit über einen vierstelligen Spiel-Code; die komplette
- * Ablaufsteuerung steckt im LudoService.
+ * Shows either the start screen or the running game. It is played
+ * online by two players via a four-digit game code; the complete
+ * flow control lives in the LudoService.
  */
 @Component({
   selector: 'app-ludo',
@@ -27,13 +27,13 @@ export class LudoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('ludo');
-    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
-    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    // Back into a running online game (reload, page change, or when
+    // Android discarded the tab) instead of the start screen.
     void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    // Beim Verlassen der Seite das Firebase-Abo aufräumen.
+    // Clean up the Firebase subscription when leaving the page.
     this.svc.suspend();
   }
 }

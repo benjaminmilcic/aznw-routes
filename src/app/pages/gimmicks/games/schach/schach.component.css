@@ -1,5 +1,5 @@
-/* Der Hintergrund kommt vom umgebenden Spiele-Layout (games.component) –
-   diese Komponente bleibt bewusst transparent. */
+/* The background comes from the surrounding games layout (games.component) –
+   this component deliberately stays transparent. */
 :host {
   display: block;
   position: relative;

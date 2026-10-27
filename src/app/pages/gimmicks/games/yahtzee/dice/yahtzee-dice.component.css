@@ -1,6 +1,6 @@
 :host {
   display: block;
-  /* Bewusst klein gehalten, damit unten viel Platz für den Zettel bleibt. */
+  /* Deliberately kept small, so that there is plenty of room for the sheet below. */
   --die: 2.2rem;
 }
 
@@ -10,8 +10,8 @@
   gap: 0.45rem;
 }
 
-/* Die Perspektive muss am direkten Elternteil des Würfels sitzen – sonst
-   flacht der Button den 3D-Raum ab und alle Seiten liegen übereinander. */
+/* The perspective must sit on the die's direct parent – otherwise
+   the button flattens the 3D space and all sides lie on top of each other. */
 .slot {
   width: var(--die);
   height: var(--die);
@@ -54,7 +54,7 @@
   backface-visibility: hidden;
 }
 
-/* Ein Würfel: alle sechs Seiten um die halbe Kantenlänge nach außen. */
+/* A die: all six sides moved outwards by half the edge length. */
 .face--1 {
   transform: translateZ(calc(var(--die) / 2));
 }
@@ -74,7 +74,7 @@
   transform: rotateY(90deg) translateZ(calc(var(--die) / 2));
 }
 
-/* Festgehaltene Würfel sind gelb – wie bisher. */
+/* Held dice are yellow – as before. */
 .slot--held .face {
   background: #fde047;
   box-shadow: inset 0 0 0 2px #d97706;

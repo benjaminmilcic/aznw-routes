@@ -25,7 +25,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService);
   private resizeObserver: ResizeObserver | null = null;
   private langChangeSub?: Subscription;
-  /** Breite, fuer die zuletzt gerechnet wurde – Hoehenaenderungen ignorieren. */
+  /** Width that was last calculated for – ignore height changes. */
   private lastWidth = -1;
 
   constructor() {
@@ -43,7 +43,7 @@ export class FooterComponent implements OnInit, OnDestroy {
         this.resizeObserver.observe(wrapper);
       }
 
-      // Erst mit der geladenen Monospace-Schrift stimmen die Umbrueche.
+      // The line breaks are only correct once the monospace font is loaded.
       document.fonts?.ready.then(() => this.updateMetaSeparators());
     });
   }
@@ -52,7 +52,7 @@ export class FooterComponent implements OnInit, OnDestroy {
     const now = new Date();
     this.currentYear.set(now.getFullYear().toString());
 
-    // Andere Sprache heisst andere Textlaenge und damit andere Umbrueche.
+    // Another language means another text length and therefore other line breaks.
     this.langChangeSub = this.translate.onLangChange.subscribe(() => {
       setTimeout(() => this.updateMetaSeparators());
     });
@@ -64,10 +64,10 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Blendet in der Meta-Zeile jeden Trennpunkt aus, an dem umbrochen wird, und
-   * erzwingt den Umbruch dort stattdessen per <br>. Ohne den erzwungenen Umbruch
-   * wuerde der naechste Eintrag durch den frei gewordenen Platz eine Zeile
-   * hochrutschen und stuende dann ohne Punkt neben seinem Vorgaenger.
+   * Hides every separator dot in the meta line where the line wraps, and
+   * forces the line break there with a <br> instead. Without the forced break
+   * the next entry would move up a line into the freed space
+   * and would then stand next to its predecessor without a dot.
    */
   private updateMetaSeparators(): void {
     const host = this.meta()?.nativeElement;
@@ -77,11 +77,11 @@ export class FooterComponent implements OnInit, OnDestroy {
     const gaps = Array.from(host.querySelectorAll<HTMLElement>('.meta-gap'));
     if (items.length < 2 || gaps.length < items.length - 1) return;
 
-    // Zuerst den natuerlichen Umbruch herstellen und komplett vermessen ...
+    // First establish the natural line breaks and measure them completely ...
     gaps.forEach((gap) => gap.classList.remove('is-break'));
     const tops = items.map((item) => item.offsetTop);
 
-    // ... danach erst die Punkte setzen, sonst verschiebt sich die Messung.
+    // ... only then set the dots, otherwise the measurement shifts.
     for (let i = 1; i < items.length; i++) {
       gaps[i - 1].classList.toggle('is-break', tops[i] > tops[i - 1]);
     }

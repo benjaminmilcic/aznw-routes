@@ -30,26 +30,26 @@ html {
   // scroll-padding-top: 70px;
 }
 
-// Scrollbalken je Seite: data-scrollbar setzt der ScrollbarThemeService aus den
-// Routendaten (app.routes.ts). Nur Farben, die Breite bleibt Browser-Standard.
-// scrollbar-color vererbt sich, innere Scroll-Container der Seite passen also mit.
-// Holz: Uebersicht, Wetter, KI-Bilder – wie der KI-Chat
+// Scrollbars per page: the ScrollbarThemeService sets data-scrollbar from the
+// route data (app.routes.ts). Colors only, the width stays the browser default.
+// scrollbar-color is inherited, so inner scroll containers of the page match too.
+// Wood: overview, weather, AI images – like the AI chat
 html[data-scrollbar="wood"] {
   scrollbar-color: rgba(251, 191, 36, 0.6) #2a1a0e;
 }
 
-// Blaues Wasser (bg-blue-900): die uebrigen Gimmicks und die Spiele
+// Blue water (bg-blue-900): the other gimmicks and the games
 html[data-scrollbar="water"] {
   scrollbar-color: rgba(147, 197, 253, 0.55) #172554;
 }
 
-// 404-Seite: Nachthimmel
+// 404 page: night sky
 html[data-scrollbar="night"] {
   scrollbar-color: rgba(96, 165, 250, 0.45) #000018;
 }
 
-// Dialoge, Menues und Auswahllisten liegen im Overlay ueber der Seite und
-// behalten ihre Standard-Scrollbalken
+// Dialogs, menus and select lists lie in the overlay above the page and
+// keep their default scrollbars
 .cdk-overlay-container {
   scrollbar-color: auto;
 }
@@ -491,9 +491,9 @@ ion-popover.rounded-popover {
   letter-spacing: .05em;
 }
 
-/* Switch-Farben passend zum Dark-Wood-Menü */
+/* Switch colors to match the dark wood menu */
 .dark-wood-menu .mat-mdc-slide-toggle {
-  /* Korrekte Angular Material Variablen (--mat-slide-toggle-*, nicht --mdc-switch-*) */
+  /* Correct Angular Material variables (--mat-slide-toggle-*, not --mdc-switch-*) */
   --mat-slide-toggle-selected-handle-color: #fde68a;
   --mat-slide-toggle-selected-hover-handle-color: #fef3c7;
   --mat-slide-toggle-selected-focus-handle-color: #fef3c7;
@@ -505,39 +505,39 @@ ion-popover.rounded-popover {
   --mat-slide-toggle-unselected-pressed-handle-color: #f5c98a;
 }
 
-/* Handle-Kreis aktiv — ::after (nicht ::before!) */
+/* Active handle circle — ::after (not ::before!) */
 .dark-wood-menu .mdc-switch--selected:enabled .mdc-switch__handle::after {
   background: #fde68a !important;
 }
 
-/* Checkmark-Icon grün */
+/* Checkmark icon green */
 .dark-wood-menu .mdc-switch--selected .mdc-switch__icon--on path {
   fill: #16a34a !important;
 }
 
-/* Inaktiver Track — MDC-Opacity-Default überschreiben */
+/* Inactive track — override the MDC opacity default */
 .dark-wood-menu .mdc-switch:not(.mdc-switch--selected) .mdc-switch__track::before {
   background: rgb(160, 100, 40) !important;
   opacity: 0.75 !important;
 }
 
-/* Aktiver Track — Kupfer-Ton */
+/* Active track — copper tone */
 .dark-wood-menu .mdc-switch.mdc-switch--selected .mdc-switch__track::after {
   background: #b87333 !important;
   opacity: 1 !important;
 }
 
 /* ---------------------------------------------------------------------------
-   Spiel-Hinweise ("X hat das Spiel verlassen")
+   Game notices ("X left the game")
    ---------------------------------------------------------------------------
-   Diese Toasts liegen unten mittig — bei Uno genau über der eigenen Hand, bei
-   Ludo über der Würfel-Leiste, bei Yahtzee über dem Block. Ein normaler Toast
-   ist klickbar (pointer-events: auto) und schließt sich beim Antippen. Damit
-   ging der erste Klick auf eine Karte für den Hinweis drauf und man musste ein
-   zweites Mal klicken.
+   These toasts sit at the bottom center — in Uno right above your own hand, in
+   Ludo above the dice bar, in Yahtzee above the score sheet. A normal toast
+   is clickable (pointer-events: auto) and closes when tapped. That way
+   the first click on a card was used up by the notice and you had to click
+   a second time.
 
-   Deshalb: durchklickbar machen. Der Hinweis verschwindet von allein.
-   Wird in ludo/uno/yahtzee als toastClass gesetzt.
+   Therefore: make it click-through. The notice disappears by itself.
+   Set as toastClass in ludo/uno/yahtzee.
 --------------------------------------------------------------------------- */
 .toast-container .ngx-toastr.game-notice {
   pointer-events: none;

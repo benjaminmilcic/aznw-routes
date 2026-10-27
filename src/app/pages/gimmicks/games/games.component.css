@@ -23,10 +23,10 @@ section:before {
   border-radius: 8px;
 }
 
-/* Spiele-Auswahl: zweispaltiges Menue, damit auch bei vielen Spielen
-   die Liste nicht zu lang wird */
+/* Game selection: two-column menu, so that the list doesn't get too long
+   even with many games */
 ::ng-deep .games-menu.mat-mdc-menu-panel {
-  /* Material-Hover/Focus-Layer aus, wir machen den Hover selbst */
+  /* Turn off Material's hover/focus layer, we do the hover ourselves */
   --mat-menu-item-hover-state-layer-color: transparent;
   --mat-menu-item-focus-state-layer-color: transparent;
   min-width: 0;
@@ -42,8 +42,8 @@ section:before {
 ::ng-deep .games-menu .mat-mdc-menu-content {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  /* Alle Zeilen so hoch wie die höchste: bricht ein langer Spielname um,
-     wachsen alle Einträge mit und die Kacheln bleiben gleich groß. */
+  /* All rows as high as the highest: if a long game name wraps,
+     all entries grow with it and the tiles stay the same size. */
   grid-auto-rows: 1fr;
   gap: 6px;
   padding: 10px;
@@ -62,7 +62,7 @@ section:before {
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
-  /* Lange Spielnamen dürfen umbrechen – der Eintrag wird dann höher. */
+  /* Long game names may wrap – the entry then gets taller. */
   height: auto;
   padding-top: 6px;
   padding-bottom: 6px;
@@ -87,7 +87,7 @@ section:before {
 ::ng-deep .games-menu .mat-mdc-menu-item:nth-child(10) { animation-delay: 0.29s; }
 ::ng-deep .games-menu .mat-mdc-menu-item:nth-child(n + 11) { animation-delay: 0.32s; }
 
-/* Glanz-Streifen, der beim Hover einmal durchlaeuft */
+/* Shine stripe that runs through once on hover */
 ::ng-deep .games-menu .mat-mdc-menu-item::after {
   content: "";
   position: absolute;
@@ -123,13 +123,13 @@ section:before {
   transform: translateY(0) scale(0.97);
 }
 
-/* Material umschließt den Inhalt – auch dort den Umbruch erlauben. */
+/* Material wraps the content – allow wrapping there as well. */
 ::ng-deep .games-menu .mat-mdc-menu-item .mat-mdc-menu-item-text,
 ::ng-deep .games-menu .mat-mdc-menu-item .mat-mdc-menu-item-text > div {
   white-space: normal;
   min-width: 0;
-  /* Auch ein langes Einzelwort ("Minesweeper") wird notfalls umbrochen,
-     statt am Rand der Kachel abgeschnitten zu werden. */
+  /* Even a long single word ("Minesweeper") is wrapped if necessary,
+     instead of being cut off at the edge of the tile. */
   overflow-wrap: break-word;
 }
 
@@ -143,7 +143,7 @@ section:before {
   transform: scale(1.18) rotate(-6deg);
 }
 
-/* aktuell gewaehltes Spiel */
+/* currently selected game */
 ::ng-deep .games-menu .mat-mdc-menu-item.router-link-active {
   border-color: rgba(253, 224, 71, 0.8);
   background: linear-gradient(145deg, #1e3a8a, #1d4ed8);
@@ -211,7 +211,7 @@ section:before {
   }
 }
 
-/* Label vor dem Auswahl-Button */
+/* Label in front of the selection button */
 .games-select-label {
   display: inline-flex;
   align-items: center;
@@ -240,20 +240,20 @@ section:before {
   animation: games-select-pulse 2s ease-out infinite;
 }
 
-/* Damit "max-width: 100%" am Knopf greift, darf die Zeile nicht über ihren
-   Inhalt hinauswachsen. */
+/* For "max-width: 100%" on the button to apply, the row must not grow
+   beyond its content. */
 .games-select-row {
   min-width: 0;
   max-width: 100%;
 }
 
-/* Auswahl-Button */
+/* Selection button */
 ::ng-deep .games-select-trigger.mat-mdc-raised-button {
   position: relative;
   overflow: hidden;
   min-height: 44px;
-  /* Die Höhe wächst mit: lange Spielnamen (z. B. "Mensch ärgere dich nicht")
-     brechen um, statt abgeschnitten zu werden. */
+  /* The height grows with it: long game names (e.g. "Mensch ärgere dich nicht")
+     wrap instead of being cut off. */
   height: auto;
   max-width: 100%;
   padding: 7px 18px;
@@ -274,7 +274,7 @@ section:before {
     filter 0.18s ease;
 }
 
-/* Material-eigenen Hover-Layer aus, wir machen den Hover selbst */
+/* Turn off Material's own hover layer, we do the hover ourselves */
 ::ng-deep .games-select-trigger .mat-mdc-button-persistent-ripple::before {
   background: transparent;
 }
@@ -316,7 +316,7 @@ section:before {
   transform: translateY(0) scale(0.97);
 }
 
-/* Icon und Pfeil bleiben einzeilig, nur der Name darf umbrechen. */
+/* Icon and arrow stay on one line, only the name may wrap. */
 ::ng-deep .games-select-trigger .games-select-content {
   max-width: 100%;
   min-width: 0;

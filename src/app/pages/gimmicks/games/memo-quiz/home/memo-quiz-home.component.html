@@ -6,7 +6,7 @@
     <p class="error">{{ err | translate }}</p>
     }
 
-    <!-- Spielart -->
+    <!-- Game mode -->
     <div class="field">
       <span class="field-label">{{ "gimmicks.games.memoQuizGame.mode" | translate }}</span>
       <ion-segment
@@ -38,7 +38,7 @@
       />
     </label>
 
-    <!-- Tier -->
+    <!-- Animal -->
     <div class="field">
       <span class="field-label">{{ "gimmicks.games.memoQuizGame.chooseAnimal" | translate }}</span>
       <div class="avatar-grid">
@@ -57,7 +57,7 @@
     </div>
 
     @if (!showJoin()) {
-    <!-- Kartenanzahl -->
+    <!-- Number of cards -->
     <div class="field">
       <span class="field-label">{{ "gimmicks.games.memoQuizGame.cardCount" | translate }}</span>
       <ion-segment [ngModel]="pairs()" (ngModelChange)="pairs.set($event)" mode="ios" class="memo-segment">
@@ -71,7 +71,7 @@
     }
 
     @if (mode() === 'computer') {
-    <!-- Spielstärke des Computers -->
+    <!-- Difficulty of the computer -->
     <div class="field">
       <span class="field-label">{{ "gimmicks.games.memoQuizGame.level" | translate }}</span>
       <ion-segment [ngModel]="level()" (ngModelChange)="level.set($event)" mode="ios" class="memo-segment">
@@ -91,7 +91,7 @@
       {{ "gimmicks.games.memoQuizGame.startGame" | translate }}
     </button>
     } @else {
-    <!-- Online mit Spiel-Code -->
+    <!-- Online with game code -->
     @if (!showJoin()) {
     <button
       type="button"

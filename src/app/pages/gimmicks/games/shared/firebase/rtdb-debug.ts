@@ -1,21 +1,21 @@
 // =============================================================
-//  Schaltbares Firebase-Protokoll fuer die Fehlersuche.
+//  Switchable Firebase log for debugging.
 // =============================================================
-// Auf einem fremden Geraet (z. B. dem Handy der Mitspielerin) laesst sich die
-// Browserkonsole nicht so leicht einsehen. Damit man das Verbindungsverhalten
-// der Realtime Database trotzdem nachvollziehen kann:
+// On someone else's device (e.g. the phone of a fellow player) the
+// browser console is not that easy to look at. So that you can still follow
+// the connection behavior of the Realtime Database:
 //
-//   ...?fbdebug=1   Protokoll einschalten (bleibt ueber Neuladen erhalten)
-//   ...?fbdebug=0   Protokoll wieder ausschalten
+//   ...?fbdebug=1   turn the log on (survives a reload)
+//   ...?fbdebug=0   turn the log off again
 //
-// Das Protokoll landet in der Browserkonsole. Am Handy laesst es sich per USB
-// von einem Rechner aus mitlesen: Chrome oeffnen → chrome://inspect.
+// The log ends up in the browser console. On a phone it can be read via USB
+// from a computer: open Chrome → chrome://inspect.
 // =============================================================
 import { enableLogging } from 'firebase/database';
 
 const FLAG_KEY = 'rtdb_debug';
 
-/** Liest den Schalter aus URL/localStorage und aktiviert ggf. das Protokoll. */
+/** Reads the switch from URL/localStorage and enables the log if needed. */
 export function enableRtdbDebugFromUrl(): void {
   try {
     const param = new URLSearchParams(location.search).get('fbdebug');
@@ -29,6 +29,6 @@ export function enableRtdbDebugFromUrl(): void {
       console.info('[sync] Firebase-Protokoll aktiv (mit ?fbdebug=0 abschalten).');
     }
   } catch {
-    /* kein localStorage (privater Modus) – dann eben kein Protokoll */
+    /* no localStorage (private mode) – then simply no log */
   }
 }

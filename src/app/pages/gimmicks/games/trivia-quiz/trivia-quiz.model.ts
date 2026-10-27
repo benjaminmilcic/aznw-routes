@@ -6,19 +6,19 @@ export interface TriviaAnswer {
   text: string;
 }
 
-/** Eine Frage, wie sie die API unter /trivia/questions liefert. */
+/** A question as the API delivers it under /trivia/questions. */
 export interface TriviaQuestion {
   id: number;
-  /** Ueber alle Sprachen hinweg dieselbe Frage. */
+  /** The same question across all languages. */
   questionNumber: number;
   language: QuestionLanguage;
   question: string;
   answers: TriviaAnswer[];
   correctAnswer: AnswerLetter;
-  /** Absaetze sind mit \n\n getrennt. */
+  /** Paragraphs are separated by \n\n. */
   explanation: string;
-  /** Pfad relativ zum Frontend, z. B. assets/quiz-illustrations/pinguin.svg */
+  /** Path relative to the frontend, e.g. assets/quiz-illustrations/pinguin.svg */
   image: string | null;
-  /** Themenbereich, wird als Chip ueber der Frage angezeigt. */
+  /** Topic, shown as a chip above the question. */
   category: string;
 }

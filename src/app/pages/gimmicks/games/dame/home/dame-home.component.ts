@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AVATARS, DameService } from '../game/dame.service';
 import type { DameLevel, DameMode } from '../game/game.types';
 
-/** Startbildschirm: Spielart wählen, Name/Zeichen festlegen, Spiel starten. */
+/** Start screen: choose the game mode, set name/symbol, start the game. */
 @Component({
   selector: 'app-dame-home',
   imports: [CommonModule, FormsModule, TranslateModule, IonSegment, IonSegmentButton, IonLabel],
@@ -56,7 +56,7 @@ export class DameHomeComponent implements OnInit {
     try {
       await this.svc.createGame(this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 
@@ -65,7 +65,7 @@ export class DameHomeComponent implements OnInit {
     try {
       await this.svc.joinGame(this.joinCode(), this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 }

@@ -2,17 +2,17 @@ import type { ScoreMap } from './scoring';
 
 export type YStatus = 'waiting' | 'playing' | 'finished';
 
-/** Spielart: am Gerät (mit Computer-Gegnern) oder online über einen Spiel-Code. */
+/** Game mode: on the device (with computer opponents) or online via a game code. */
 export type YMode = 'local' | 'online';
 
-/** Spielstärke der Computer-Gegner. */
+/** Difficulty of the computer opponents. */
 export type YLevel = 'easy' | 'medium' | 'hard';
 
 export interface YPlayer {
   id: string;
   name: string;
   emoji: string;
-  /** true = wird vom Computer gespielt (nur im Modus "local"). */
+  /** true = played by the computer (only in "local" mode). */
   cpu?: boolean;
 }
 
@@ -21,30 +21,30 @@ export interface YatzyGame {
   status: YStatus;
   hostId: string;
   players: Record<string, YPlayer>;
-  /** Reihenfolge der Spieler-Ids (Host zuerst). */
+  /** Order of the player ids (host first). */
   order: string[];
-  /** playerId, der gerade würfelt/wählt. */
+  /** playerId who is currently rolling/choosing. */
   currentTurn: string;
-  /** Gemeinsame Würfel (alle Geräte sehen denselben Wurf). */
+  /** Shared dice (all devices see the same roll). */
   dice: number[];
-  /** Welche Würfel sind festgehalten. */
+  /** Which dice are held. */
   held: boolean[];
-  /** Verbleibende Würfe in diesem Zug (0 … 3). */
+  /** Rolls left in this turn (0 … 3). */
   rollsLeft: number;
-  /** Wurde in diesem Zug schon mindestens einmal gewürfelt? */
+  /** Has the dice been rolled at least once in this turn? */
   rolledThisTurn: boolean;
   /**
-   * Zählt jeden Wurf hoch. Die Würfel-Komponente startet daran ihre
-   * Rollanimation – auch dann, wenn dieselbe Augenzahl noch einmal fällt.
+   * Counts up with every roll. The dice component starts its rolling
+   * animation on it – even if the same pip count comes up again.
    */
   rollCount: number;
-  /** Wertungstabelle je Spieler: nur eingetragene Kategorien sind gesetzt. */
+  /** Score table per player: only filled-in categories are set. */
   scores: Record<string, ScoreMap>;
-  winnerId: string | null; // playerId, 'tie' oder null
-  /** Zuletzt ausgestiegener Mitspieler – die anderen bekommen dazu einen Hinweis. */
+  winnerId: string | null; // playerId, 'tie' or null
+  /** Player who left last – the others get a notice about it. */
   lastLeft?: { name: string; at: number } | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;

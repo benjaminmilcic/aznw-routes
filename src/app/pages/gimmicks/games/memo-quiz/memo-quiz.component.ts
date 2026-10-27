@@ -6,9 +6,9 @@ import { GamesService } from '../games.service';
 import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
- * Memo-Quiz – zeigt entweder den Startbildschirm oder das laufende Spiel.
- * Die Spielarten (gegen den Computer, online über einen Spiel-Code) stecken
- * komplett im MemoQuizService.
+ * Memo quiz – shows either the start screen or the running game.
+ * The game modes (against the computer, online via a game code) live
+ * entirely in the MemoQuizService.
  */
 @Component({
   selector: 'app-memo-quiz',
@@ -25,13 +25,13 @@ export class MemoQuizComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('memo-quiz');
-    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
-    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    // Back into a running online game (reload, page change, or when
+    // Android discarded the tab) instead of the start screen.
     void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    // Beim Verlassen der Seite Firebase-Abo und Timer aufräumen.
+    // Clean up the Firebase subscription and timers when leaving the page.
     this.svc.suspend();
   }
 }

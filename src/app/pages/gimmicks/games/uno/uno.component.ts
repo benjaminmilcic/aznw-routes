@@ -6,12 +6,12 @@ import { UnoService } from './game/uno.service';
 import { UnoHomeComponent } from './home/uno-home.component';
 
 /**
- * UNO – aus der Whiteboard-App übernommen und wie Pasch auf mehrere
- * Mitspieler erweitert.
+ * UNO – taken over from the whiteboard app and, like Yahtzee, extended to several
+ * players.
  *
- * Zeigt entweder den Startbildschirm oder den laufenden Tisch. Gespielt wird
- * am Gerät (Menschen + Computer) oder online über einen vierstelligen
- * Spiel-Code; die Ablaufsteuerung steckt komplett im UnoService.
+ * Shows either the start screen or the running table. It is played
+ * on the device (humans + computers) or online via a four-digit
+ * game code; the flow control lives entirely in the UnoService.
  */
 @Component({
   selector: 'app-uno',
@@ -28,13 +28,13 @@ export class UnoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('uno');
-    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
-    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    // Back into a running online game (reload, page change, or when
+    // Android discarded the tab) instead of the start screen.
     void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    // Beim Verlassen der Seite Firebase-Abo und Computer-Timer aufräumen.
+    // Clean up the Firebase subscription and the computer timer when leaving the page.
     this.svc.suspend();
   }
 }

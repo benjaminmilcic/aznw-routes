@@ -55,7 +55,7 @@ export class SchachHomeComponent implements OnInit {
     try {
       await this.svc.createGame(this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 
@@ -64,7 +64,7 @@ export class SchachHomeComponent implements OnInit {
     try {
       await this.svc.joinGame(this.joinCode(), this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 }

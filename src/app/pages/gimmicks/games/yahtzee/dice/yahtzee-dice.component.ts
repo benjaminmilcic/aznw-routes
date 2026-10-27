@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { pips } from '../game/scoring';
 
-/** Ausrichtung des Würfels, damit die gewünschte Augenzahl nach vorne zeigt. */
+/** Orientation of the die so that the desired pip count faces forward. */
 const FACE_ROTATION: Record<number, { x: number; y: number }> = {
   1: { x: 0, y: 0 },
   2: { x: 0, y: 180 },
@@ -20,10 +20,10 @@ const FACE_ROTATION: Record<number, { x: number; y: number }> = {
 };
 
 /**
- * Die fünf Würfel als echte 3D-Würfel (aus der bisherigen Yahtzee-Variante
- * übernommen). Die Rollanimation entsteht dadurch, dass zur Zielausrichtung
- * volle Umdrehungen addiert werden – dadurch dreht sich der Würfel sichtbar
- * und landet trotzdem exakt auf der richtigen Seite.
+ * The five dice as real 3D dice (taken over from the previous Yahtzee variant).
+ * The rolling animation comes from adding full rotations to the target
+ * orientation – that way the die visibly spins
+ * and still lands exactly on the right side.
  */
 @Component({
   selector: 'app-yahtzee-dice',
@@ -34,21 +34,21 @@ const FACE_ROTATION: Record<number, { x: number; y: number }> = {
 export class YahtzeeDiceComponent {
   readonly values = input.required<number[]>();
   readonly held = input.required<boolean[]>();
-  /** Zählt jeden Wurf hoch – ändert sich der Wert, rollen die Würfel. */
+  /** Counts up with every roll – when the value changes, the dice roll. */
   readonly rollCount = input<number>(0);
-  /** Dürfen Würfel gerade festgehalten werden? */
+  /** May dice be held right now? */
   readonly clickable = input<boolean>(false);
 
   readonly toggle = output<number>();
 
-  /** Volle Umdrehungen je Würfel – nur die geworfenen zählen hoch. */
+  /** Full rotations per die – only the rolled ones count up. */
   private readonly spins = signal<number[]>([0, 0, 0, 0, 0]);
 
   constructor() {
     effect(() => {
-      this.rollCount(); // einzige Abhängigkeit: nur ein echter Wurf dreht die Würfel
-      // `held` bewusst ungetrackt lesen – sonst würde schon das Festhalten
-      // eines Würfels die Animation der übrigen auslösen.
+      this.rollCount(); // only dependency: only a real roll spins the dice
+      // read `held` deliberately untracked – otherwise holding a single
+      // die would already trigger the animation of the others.
       const held = untracked(() => this.held());
       this.spins.update((current) => current.map((s, i) => (held[i] ? s : s + 1)));
     });
@@ -61,8 +61,8 @@ export class YahtzeeDiceComponent {
   }
 
   /**
-   * Zielausrichtung plus volle Umdrehungen. Beide Winkel müssen Vielfache von
-   * 360° sein – sonst landet der Würfel verdreht auf der falschen Seite.
+   * Target orientation plus full rotations. Both angles must be multiples of
+   * 360° – otherwise the die lands twisted on the wrong side.
    */
   protected transformFor(index: number): string {
     const value = this.values()[index] ?? 1;

@@ -24,7 +24,7 @@ export class RecipePrintComponent implements OnInit {
 
   recipe: Observable<Recipe> = toObservable(this.recipeId).pipe(
     switchMap((id) => {
-      // Wenn wir bereits ein gecachtes Rezept haben, benutze das
+      // If we already have a cached recipe, use it
       if (this.cachedRecipe) {
         return new Observable<Recipe>((observer) => {
           observer.next(this.cachedRecipe!);
@@ -32,13 +32,13 @@ export class RecipePrintComponent implements OnInit {
         });
       }
 
-      // Prüfe ob eine temporäre übersetzte Version existiert
+      // Check whether a temporary translated version exists
       const tempRecipe = sessionStorage.getItem('recipe_print_temp');
 
       if (tempRecipe) {
         try {
           const parsed = JSON.parse(tempRecipe);
-          this.cachedRecipe = parsed; // Cache das Rezept
+          this.cachedRecipe = parsed; // Cache the recipe
           return new Observable<Recipe>((observer) => {
             observer.next(parsed);
             observer.complete();
@@ -47,7 +47,7 @@ export class RecipePrintComponent implements OnInit {
           console.error('Error parsing temp recipe:', e);
         }
       }
-      // Fallback: Hole aus Store
+      // Fallback: get it from the store
       return this.store.select(selectRecipeById(id));
     })
   );
@@ -88,11 +88,11 @@ export class RecipePrintComponent implements OnInit {
   }
 
   private checkAndPrint() {
-    // Nur drucken wenn: Recipe geladen UND (kein Bild vorhanden ODER Bild geladen)
+    // Only print if: recipe loaded AND (no image present OR image loaded)
     if (this.recipeLoaded() && (!this.hasImage() || this.imageLoaded())) {
       setTimeout(() => {
         window.print();
-        // Lösche das temp Rezept nach dem Drucken
+        // Delete the temp recipe after printing
         sessionStorage.removeItem('recipe_print_temp');
         this.router.navigate([{ outlets: { print: null } }]);
       }, 100);

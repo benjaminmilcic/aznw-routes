@@ -1,4 +1,4 @@
-<!-- Reihenfolge nach Dringlichkeit: keine Verbindung > Fehler > langsamer Zug. -->
+<!-- Order by urgency: no connection > error > slow move. -->
 @if (offline()) {
 <div
   role="status"
@@ -37,7 +37,7 @@
   </button>
 </div>
 } @else if (blocking()) {
-<!-- Wartet die Runde auf jemanden, der lange weg ist: Ausweg anbieten. -->
+<!-- If the round is waiting for someone who has been gone for long: offer a way out. -->
 <div
   role="alert"
   class="fixed top-2 left-1/2 -translate-x-1/2 z-50 max-w-[92vw]

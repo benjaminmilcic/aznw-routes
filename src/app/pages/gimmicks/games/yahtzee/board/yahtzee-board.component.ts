@@ -22,7 +22,7 @@ import type { YPlayer } from '../game/yahtzee.types';
 
 type Outcome = 'win' | 'lose' | 'tie';
 
-/** Spielfeld: Würfel, Wurf-Steuerung und die gemeinsame Punktetabelle. */
+/** Game board: dice, roll controls and the shared score sheet. */
 @Component({
   selector: 'app-yahtzee-board',
   imports: [TranslateModule, YahtzeeDiceComponent, DraggableDirective, SpeakOnClickDirective],
@@ -44,31 +44,31 @@ export class YahtzeeBoardComponent implements OnDestroy {
 
   protected readonly players = this.svc.players;
 
-  // ---- Scroll-Hinweise am Zettel ------------------------------------------
+  // ---- Scroll hints on the sheet ------------------------------------------
   private readonly sheetWrap = viewChild<ElementRef<HTMLDivElement>>('sheetWrap');
-  /** Ober-/unterhalb des sichtbaren Bereichs stehen noch Zeilen. */
+  /** There are more rows above/below the visible area. */
   protected readonly canScrollUp = signal(false);
   protected readonly canScrollDown = signal(false);
-  /** Links/rechts stehen noch weitere Spieler-Spalten. */
+  /** There are more player columns to the left/right. */
   protected readonly canScrollLeft = signal(false);
   protected readonly canScrollRight = signal(false);
-  /** Breite der festen Bezeichnungsspalte – der Links-Pfeil sitzt daneben. */
+  /** Width of the fixed label column – the left arrow sits next to it. */
   protected readonly labelWidth = signal(0);
   private resizeObserver: ResizeObserver | null = null;
-  /** Zeitstempel des zuletzt gemeldeten Ausstiegs – verhindert alte Hinweise. */
+  /** Timestamp of the last reported exit – prevents old notices. */
   private lastLeftSeen: number | null = null;
 
   protected readonly outcome = computed<Outcome | null>(() => {
     const g = this.game();
     if (!g || g.status !== 'finished') return null;
     if (g.winnerId === 'tie') return 'tie';
-    // Am Gerät gewinnt immer jemand, der hier sitzt.
+    // On the device, someone sitting here always wins.
     if (this.svc.mode() === 'local') return g.players[g.winnerId ?? '']?.cpu ? 'lose' : 'win';
     return g.winnerId === this.svc.playerId ? 'win' : 'lose';
   });
 
   constructor() {
-    // Feuerwerk + Klang beim Sieg, "Wah-Wah" beim Verlieren, Glöckchen bei Remis.
+    // Fireworks + sound on a win, "wah-wah" on a loss, bells on a draw.
     effect(() => {
       const finished = this.game()?.status === 'finished';
       if (finished && !this.effectsShown) {
@@ -83,21 +83,21 @@ export class YahtzeeBoardComponent implements OnDestroy {
       }
     });
 
-    // Nach jedem Eintrag kann sich die Tabellenhöhe ändern.
+    // The table height can change after every entry.
     effect(() => {
       this.game();
       queueMicrotask(() => this.updateScrollHints());
     });
 
-    // Wer dran ist, soll immer sichtbar sein – auch wenn viele Spalten
-    // nebeneinander stehen und seitlich gescrollt werden muss.
+    // Whoever is on turn should always be visible – even if many columns
+    // stand side by side and you have to scroll sideways.
     effect(() => {
       const current = this.game()?.currentTurn;
       if (!current) return;
       queueMicrotask(() => this.scrollPlayerIntoView(current));
     });
 
-    // Hinweis, wenn online jemand die Runde verlässt.
+    // Notice when someone leaves the round online.
     effect(() => {
       const g = this.game();
       if (!g) {
@@ -106,7 +106,7 @@ export class YahtzeeBoardComponent implements OnDestroy {
       }
       const at = g.lastLeft?.at ?? 0;
       if (this.lastLeftSeen === null) {
-        this.lastLeftSeen = at; // erster Blick auf dieses Spiel: nichts melden
+        this.lastLeftSeen = at; // first look at this game: report nothing
         return;
       }
       if (at > this.lastLeftSeen) {
@@ -118,10 +118,10 @@ export class YahtzeeBoardComponent implements OnDestroy {
           {
             positionClass: 'toast-bottom-center',
             timeOut: 6000,
-            // Der Hinweis liegt über dem Spielfeld (bei Uno über der Hand).
-            // Ohne diese Klasse fängt er den ersten Klick ab: statt den Zug zu
-            // machen, schließt man nur den Hinweis und muss ein zweites Mal
-            // klicken. Siehe .game-notice in styles.scss.
+            // The notice lies above the board (in Uno above the hand).
+            // Without this class it catches the first click: instead of making
+            // the move, you only close the notice and have to click a second
+            // time. See .game-notice in styles.scss.
             toastClass: 'ngx-toastr game-notice',
             tapToDismiss: false,
           },
@@ -144,7 +144,7 @@ export class YahtzeeBoardComponent implements OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  /** Prüft in alle vier Richtungen, ob noch etwas außerhalb des Sichtfelds liegt. */
+  /** Checks in all four directions whether something is still outside the view. */
   protected updateScrollHints(): void {
     const el = this.sheetWrap()?.nativeElement;
     if (!el) return;
@@ -157,22 +157,22 @@ export class YahtzeeBoardComponent implements OnDestroy {
     if (label) this.labelWidth.set(label.offsetWidth);
   }
 
-  /** Tippen auf den Hinweis scrollt ein Stück weiter. */
+  /** Tapping the hint scrolls a bit further. */
   protected scrollSheet(direction: 'up' | 'down'): void {
     const el = this.sheetWrap()?.nativeElement;
     if (el) el.scrollTop += direction === 'down' ? 160 : -160;
   }
 
-  /** Seitwärts blättern, wenn nicht alle Spieler-Spalten passen. */
+  /** Page sideways if not all player columns fit. */
   protected scrollSheetX(direction: 1 | -1): void {
     const el = this.sheetWrap()?.nativeElement;
     if (el) el.scrollLeft += direction * 120;
   }
 
   /**
-   * Schiebt die Spalte dieses Spielers ins Sichtfeld. Die feste
-   * Bezeichnungsspalte liegt darüber, deshalb beginnt der sichtbare Bereich
-   * erst hinter ihr.
+   * Moves this player's column into view. The fixed
+   * label column lies on top, that's why the visible area only starts
+   * behind it.
    */
   private scrollPlayerIntoView(playerId: string): void {
     const wrap = this.sheetWrap()?.nativeElement;
@@ -191,11 +191,11 @@ export class YahtzeeBoardComponent implements OnDestroy {
     }
   }
 
-  /** Computer-Namen folgen der eingestellten Sprache, echte Namen bleiben. */
+  /** Computer names follow the selected language, real names stay. */
   protected displayName(p: YPlayer | null | undefined): string {
     if (!p) return '';
     if (!p.cpu) return p.name;
-    // Gespeichert ist z. B. "Computer 2" – nur das Wort wird übersetzt.
+    // Stored is e.g. "Computer 2" – only the word is translated.
     const nr = p.name.replace(/\D+/g, '');
     const word = this.translate.instant('gimmicks.games.yahtzeeGame.computer');
     return nr ? `${word} ${nr}` : word;
@@ -211,7 +211,7 @@ export class YahtzeeBoardComponent implements OnDestroy {
     return this.displayName(g.players[g.winnerId]);
   }
 
-  // ---- Würfel --------------------------------------------------------------
+  // ---- Dice ----------------------------------------------------------------
   protected dice(): number[] {
     return this.game()?.dice ?? [1, 1, 1, 1, 1];
   }
@@ -236,7 +236,7 @@ export class YahtzeeBoardComponent implements OnDestroy {
     return this.svc.isMyTurn() && this.rollsLeft() > 0;
   }
 
-  // ---- Punktetabelle -------------------------------------------------------
+  // ---- Score sheet ---------------------------------------------------------
   protected scoresOf(playerId: string): ScoreMap {
     return this.game()?.scores[playerId] ?? {};
   }
@@ -253,13 +253,13 @@ export class YahtzeeBoardComponent implements OnDestroy {
     return this.game()?.currentTurn === playerId;
   }
 
-  /** Punkte, die dieser Wurf in der Kategorie bringen würde. */
+  /** Points this roll would score in the category. */
   protected potential(cat: Category): number {
     const g = this.game();
     return g ? scoreFor(cat, g.dice) : 0;
   }
 
-  /** Vorschau nur in der Spalte des Spielers, der gerade dran ist. */
+  /** Preview only in the column of the player whose turn it is. */
   protected showPotential(playerId: string, cat: Category): boolean {
     return (
       this.isCurrent(playerId) &&
@@ -273,7 +273,7 @@ export class YahtzeeBoardComponent implements OnDestroy {
     return this.showPotential(playerId, cat);
   }
 
-  // ---- Aktionen ------------------------------------------------------------
+  // ---- Actions -------------------------------------------------------------
   protected roll(): void {
     this.svc.roll();
   }

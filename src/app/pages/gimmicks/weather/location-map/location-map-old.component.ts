@@ -86,7 +86,7 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
       this.loadGasStations();
     }
 
-    // Bei Sprachwechsel POIs neu laden, damit Popups aktualisiert werden
+    // Reload the POIs on language change so that the popups are updated
     this.translateService.onLangChange.subscribe(() => {
       this.reloadAllMarkers();
     });
@@ -149,18 +149,18 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
   }
 
   onRestaurantRadiusChange(): void {
-    // Lösche vorherigen Timer
+    // Clear the previous timer
     if (this.restaurantDebounceTimer) {
       clearTimeout(this.restaurantDebounceTimer);
     }
 
-    // Wenn Input leer ist, Marker sofort entfernen
+    // If the input is empty, remove the markers right away
     if (!this.restaurantRadius || this.restaurantRadius <= 0) {
       this.clearRestaurantMarkers();
       return;
     }
 
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
+    // Set a new timer - the API is only called after 500ms without further input
     this.restaurantDebounceTimer = setTimeout(() => {
       if (this.showRestaurants && this.restaurantRadius > 0) {
         this.clearRestaurantMarkers();
@@ -170,18 +170,18 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
   }
 
   onSupermarketRadiusChange(): void {
-    // Lösche vorherigen Timer
+    // Clear the previous timer
     if (this.supermarketDebounceTimer) {
       clearTimeout(this.supermarketDebounceTimer);
     }
 
-    // Wenn Input leer ist, Marker sofort entfernen
+    // If the input is empty, remove the markers right away
     if (!this.supermarketRadius || this.supermarketRadius <= 0) {
       this.clearSupermarketMarkers();
       return;
     }
 
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
+    // Set a new timer - the API is only called after 500ms without further input
     this.supermarketDebounceTimer = setTimeout(() => {
       if (this.showSupermarkets && this.supermarketRadius > 0) {
         this.clearSupermarketMarkers();
@@ -191,18 +191,18 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
   }
 
   onGasStationRadiusChange(): void {
-    // Lösche vorherigen Timer
+    // Clear the previous timer
     if (this.gasStationDebounceTimer) {
       clearTimeout(this.gasStationDebounceTimer);
     }
 
-    // Wenn Input leer ist, Marker sofort entfernen
+    // If the input is empty, remove the markers right away
     if (!this.gasStationRadius || this.gasStationRadius <= 0) {
       this.clearGasStationMarkers();
       return;
     }
 
-    // Setze neuen Timer - API wird erst nach 500ms ohne weitere Eingabe aufgerufen
+    // Set a new timer - the API is only called after 500ms without further input
     this.gasStationDebounceTimer = setTimeout(() => {
       if (this.showGasStations && this.gasStationRadius > 0) {
         this.clearGasStationMarkers();
@@ -290,13 +290,13 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
 
     if (!props) return '';
 
-    // Öffnungszeiten
+    // Opening hours
     if (props.opening_hours) {
       html += `<br><b>${this.translateService.instant('gimmicks.weather.openingHours')}:</b><br>`;
       html += `<small>${this.translateWeekdays(props.opening_hours)}</small>`;
     }
 
-    // Telefon
+    // Phone
     if (props.contact?.phone) {
       html += `<br><b>${this.translateService.instant('gimmicks.weather.phone')}:</b> `;
       html += `<a href="tel:${props.contact.phone}">${props.contact.phone}</a>`;
@@ -313,7 +313,7 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
       html += `<br><b>Email:</b> <a href="mailto:${props.contact.email}">${props.contact.email}</a>`;
     }
 
-    // Rollstuhlzugang
+    // Wheelchair access
     if (props.wheelchair !== undefined) {
       const accessible = props.wheelchair === 'yes' || props.wheelchair === true;
       html += `<br>${accessible ? '♿' : '🚫'} ${this.translateService.instant('gimmicks.weather.wheelchair')}: `;
@@ -543,7 +543,7 @@ export class LocationMapOldComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Cleanup: Timer löschen
+    // Cleanup: clear the timer
     if (this.restaurantDebounceTimer) {
       clearTimeout(this.restaurantDebounceTimer);
     }

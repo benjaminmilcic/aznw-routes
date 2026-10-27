@@ -16,7 +16,7 @@
   box-sizing: border-box;
 }
 
-/* ---- Kopfzeile ---------------------------------------------------------- */
+/* ---- Header ------------------------------------------------------------- */
 .bar {
   flex: 0 0 auto;
   display: flex;
@@ -96,14 +96,14 @@
   transform: scale(0.95);
 }
 
-/* Spieler-Chip im Kopf (kleine Scheibe) */
+/* Player chip in the header (small disc) */
 .player .disc {
   width: 1.6rem;
   height: 1.6rem;
   font-size: 0.85rem;
 }
 
-/* ---- Spielfeld ---------------------------------------------------------- */
+/* ---- Board -------------------------------------------------------------- */
 .field-wrap {
   flex: 1 1 auto;
   min-height: 0;
@@ -112,11 +112,11 @@
   justify-content: center;
 }
 
-/* Die Breite richtet sich zusätzlich nach der verfügbaren Höhe: oben stehen
-   noch Navigationsleiste (~70px), Spiel-Auswahl (~68px) und die Kopfzeile
-   (auf dem Smartphone ggf. zweizeilig) – zusammen rund 15rem. Über das
-   Seitenverhältnis ergibt sich daraus die Höhe, ohne dass die Felder
-   verzerrt werden. */
+/* The width also depends on the available height: above it there are
+   the navigation bar (~70px), the game selection (~68px) and the header
+   (on a smartphone possibly two lines) – together about 15rem. The aspect
+   ratio then gives the height without the cells being
+   distorted. */
 .board {
   width: max(12rem, min(100%, 32rem, calc((100dvh - 15rem) * 7 / 6)));
   aspect-ratio: 7 / 6;
@@ -142,8 +142,8 @@
   transition: background 0.12s ease;
 }
 
-/* Hover-Highlight nur mit echtem Zeiger – auf Touch-Geräten bliebe :hover
-   sonst an der zuletzt angetippten Spalte "kleben". */
+/* Hover highlight only with a real pointer – on touch devices :hover
+   would otherwise "stick" to the last tapped column. */
 @media (hover: hover) and (pointer: fine) {
   .board:not(.board--locked) .column:not(:disabled):hover {
     background: rgba(255, 255, 255, 0.18);
@@ -188,7 +188,7 @@
   background: radial-gradient(circle at 35% 30%, #ffe784, #f5b50a);
 }
 
-/* zuletzt geworfener Stein "fällt" herein */
+/* last dropped disc "falls" in */
 .hole .disc--last {
   animation: c4-drop 0.35s cubic-bezier(0.34, 1.2, 0.5, 1);
 }
@@ -202,7 +202,7 @@
   }
 }
 
-/* Gewinn-Steine leuchten */
+/* Winning discs glow */
 .hole .disc--win {
   box-shadow: 0 0 0 4px #fff, 0 0 16px 5px #fff;
   animation: c4-pulse 0.8s ease-in-out infinite;
@@ -218,7 +218,7 @@
   }
 }
 
-/* ---- Overlays (Warten / Spielende) ------------------------------------- */
+/* ---- Overlays (waiting / game over) ------------------------------------ */
 .overlay {
   position: absolute;
   inset: 0;
@@ -352,7 +352,7 @@
   box-shadow: inset 0 0 0 3px #b9d8ff;
 }
 
-/* Etwas mehr Luft ab Tablet-Größe. */
+/* A bit more room from tablet size on. */
 @media (min-width: 768px) {
   .player-name {
     max-width: 8rem;

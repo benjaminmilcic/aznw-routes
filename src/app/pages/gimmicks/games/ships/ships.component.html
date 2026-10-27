@@ -1,11 +1,11 @@
 <div class="sea">
   @switch (view()) {
-  <!-- Startbildschirm: gegen Computer oder online -->
+  <!-- Start screen: against the computer or online -->
   @case ('home') {
   <app-ships-home />
   }
 
-  <!-- Online: auf den Mitspieler warten -->
+  <!-- Online: wait for the other player -->
   @case ('waiting') {
   <div class="panel">
     <div class="panel-emoji">⛵</div>
@@ -22,12 +22,12 @@
   </div>
   }
 
-  <!-- Flotte platzieren -->
+  <!-- Place the fleet -->
   @case ('setup') {
   <app-ships-setup />
   }
 
-  <!-- Online: eigene Flotte steht, der Mitspieler legt noch -->
+  <!-- Online: own fleet is placed, the other player is still placing -->
   @case ('waitOpponent') {
   <div class="panel">
     <div class="panel-emoji">⏳</div>
@@ -46,7 +46,7 @@
   </div>
   }
 
-  <!-- Kampf (die Raster bleiben am Ende sichtbar, das Ergebnis liegt darüber) -->
+  <!-- Battle (the grids stay visible at the end, the result lies on top) -->
   @case ('battle') {
   <app-ships-battle />
   }
@@ -56,7 +56,7 @@
   }
 </div>
 
-<!-- Ergebnis über dem Spielgeschehen – verschiebbar, um den Endstand zu prüfen -->
+<!-- Result above the game – draggable to check the final state -->
 @if (view() === 'finished') {
 <div class="overlay">
   <div class="overlay-inner" appDraggable>
@@ -65,7 +65,7 @@
 </div>
 }
 
-<!-- Bestätigung vor dem Abbrechen -->
+<!-- Confirmation before aborting -->
 @if (svc.confirmDialog(); as dialog) {
 <div class="overlay">
   <div class="panel panel--confirm">

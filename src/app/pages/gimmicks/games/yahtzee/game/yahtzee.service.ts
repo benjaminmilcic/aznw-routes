@@ -17,14 +17,14 @@ import type { YLevel, YMode, YPlayer, YatzyGame } from './yahtzee.types';
 const PLAYER_ID_KEY = 'yatzy_player_id';
 const PLAYER_NAME_KEY = 'yatzy_player_name';
 const PLAYER_EMOJI_KEY = 'yatzy_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'yatzy_active_code';
 const CODE_ALPHABET = '0123456789';
 
-/** So viele Spieler passen an einen Tisch (Tabelle bleibt lesbar). */
+/** This many players fit at one table (the table stays readable). */
 export const MAX_PLAYERS = 6;
 
-/** Bedenkzeiten des Computers, damit man seine Züge mitverfolgen kann. */
+/** Thinking times of the computer, so that you can follow its moves. */
 const CPU_ROLL_MS = 900;
 const CPU_HOLD_MS = 700;
 const CPU_CHOOSE_MS = 900;
@@ -32,16 +32,16 @@ const CPU_CHOOSE_MS = 900;
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 export const CPU_EMOJI = '🤖';
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.yahtzeeGame';
 
 @Injectable({ providedIn: 'root' })
 export class YahtzeeService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<YatzyGame>({
     db,
@@ -54,14 +54,14 @@ export class YahtzeeService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -71,8 +71,8 @@ export class YahtzeeService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -81,14 +81,14 @@ export class YahtzeeService {
     return ok;
   }
 
-  // ---- Abwesende Mitspieler ------------------------------------------------
-  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  // ---- Absent players ------------------------------------------------------
+  /** Players who are no longer connected – with seconds since they disappeared. */
   readonly absent = this.channel.awayPlayers;
 
   /**
-   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
-   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
-   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   * The absent player who is currently blocking the round: it is their turn and
+   * they have been gone longer than the grace period. Only then do we offer to skip –
+   * nobody should be thrown out because they briefly left the room.
    */
   readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
     const g = this.game();
@@ -99,8 +99,8 @@ export class YahtzeeService {
   });
 
   /**
-   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
-   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   * Removes an absent player from the round so that it can go on.
+   * Deliberately triggered by the remaining players.
    */
   async skipAbsent(playerId: string): Promise<void> {
     const g = this.game();
@@ -108,11 +108,11 @@ export class YahtzeeService {
     if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
     await this.removeFromOnlineGame(g, playerId);
   }
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<YMode | null>(null);
-  /** Spielstärke der Computer-Gegner. */
+  /** Difficulty of the computer opponents. */
   readonly level = signal<YLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
   readonly busy = signal(false);
 
@@ -120,7 +120,7 @@ export class YahtzeeService {
 
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<YPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
   readonly currentPlayer = computed<YPlayer | null>(() => {
@@ -128,18 +128,18 @@ export class YahtzeeService {
     return g ? g.players[g.currentTurn] ?? null : null;
   });
 
-  /** Alle Spieler in Zugreihenfolge. */
+  /** All players in turn order. */
   readonly players = computed<YPlayer[]>(() => {
     const g = this.game();
     return g ? g.order.map((id) => g.players[id]).filter(Boolean) : [];
   });
 
-  /** Der Computer ist am Zug (dann sind Würfel und Tabelle gesperrt). */
+  /** The computer is on turn (dice and table are locked then). */
   readonly thinking = computed<boolean>(() => !!this.currentPlayer()?.cpu);
 
   /**
-   * Bin ich dran? Am selben Gerät spielen alle Menschen abwechselnd –
-   * dort zählt nur, dass gerade kein Computer würfelt.
+   * Is it my turn? On the same device all humans play in turn –
+   * there it only matters that no computer is rolling right now.
    */
   readonly isMyTurn = computed<boolean>(() => {
     const g = this.game();
@@ -148,10 +148,10 @@ export class YahtzeeService {
     return g.currentTurn === this.playerId;
   });
 
-  /** Nur der Gastgeber darf ein Online-Spiel starten. */
+  /** Only the host may start an online game. */
   readonly isHost = computed<boolean>(() => this.game()?.hostId === this.playerId);
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -175,10 +175,10 @@ export class YahtzeeService {
     return id;
   }
 
-  // ---- Spiel am Gerät (Menschen + Computer) --------------------------------
+  // ---- Game on the device (humans + computers) -----------------------------
   /**
-   * Startet ein Spiel an diesem Gerät. `seats` kommt aus dem Startbildschirm
-   * und enthält Menschen wie Computer in der gewünschten Reihenfolge.
+   * Starts a game on this device. `seats` comes from the start screen
+   * and contains humans and computers in the desired order.
    */
   startLocalGame(
     seats: { name: string; emoji: string; cpu: boolean }[],
@@ -194,8 +194,8 @@ export class YahtzeeService {
     const order: string[] = [];
     let humanSeat = 0;
     for (const [i, seat] of seats.entries()) {
-      // Der erste Mensch bekommt die gespeicherte Spieler-Id, damit "ich"
-      // in der Tabelle hervorgehoben werden kann.
+      // The first human gets the stored player id, so that "me"
+      // can be highlighted in the table.
       const id = seat.cpu ? `cpu_${i}` : humanSeat++ === 0 ? this.playerId : `p_local_${i}`;
       players[id] = { id, name: seat.name.trim() || `Spieler ${i + 1}`, emoji: seat.emoji, cpu: seat.cpu };
       order.push(id);
@@ -205,7 +205,7 @@ export class YahtzeeService {
     this.maybeScheduleCpu();
   }
 
-  // ---- Online-Spiel: erstellen / beitreten / starten ------------------------
+  // ---- Online game: create / join / start -----------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -272,7 +272,7 @@ export class YahtzeeService {
     }
   }
 
-  /** Der Gastgeber startet die Runde, sobald alle da sind. */
+  /** The host starts the round as soon as everyone is there. */
   async startOnlineGame(): Promise<void> {
     const g = this.game();
     if (!g || !this.isHost() || g.order.length < 2) return;
@@ -287,8 +287,8 @@ export class YahtzeeService {
     }
   }
 
-  // ---- Spielzug ------------------------------------------------------------
-  /** Würfelt alle nicht festgehaltenen Würfel. */
+  // ---- Move ----------------------------------------------------------------
+  /** Rolls all dice that are not held. */
   roll(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || g.rollsLeft <= 0) return;
@@ -296,7 +296,7 @@ export class YahtzeeService {
     this.rollFor(g);
   }
 
-  /** Hält einen Würfel fest oder gibt ihn wieder frei. */
+  /** Holds a die or releases it again. */
   toggleHold(i: number): void {
     const g = this.game();
     if (!g || g.status !== 'playing') return;
@@ -307,7 +307,7 @@ export class YahtzeeService {
     );
   }
 
-  /** Trägt den aktuellen Wurf in eine Kategorie ein. */
+  /** Fills the current roll into a category. */
   choose(cat: Category): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || !g.rolledThisTurn) return;
@@ -316,7 +316,7 @@ export class YahtzeeService {
     this.chooseFor(g, cat);
   }
 
-  /** Neue Runde – wer zuletzt am wenigsten Punkte hatte, beginnt. */
+  /** New round – whoever had the fewest points last time starts. */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -352,8 +352,8 @@ export class YahtzeeService {
   }
 
   /**
-   * Laufendes Spiel verlassen. Online wird man dabei aus der Runde
-   * ausgetragen, damit die anderen ohne einen weiterspielen können.
+   * Leave the running game. Online you are removed from the round,
+   * so that the others can continue without you.
    */
   leaveGame(): void {
     const g = this.game();
@@ -364,9 +364,9 @@ export class YahtzeeService {
   }
 
   /**
-   * Trägt einen Spieler aus der Online-Runde aus: Spalte raus, ggf. der
-   * Nächste ist dran, notfalls wechselt die Gastgeber-Rolle. Der letzte
-   * Aussteigende räumt das Spiel ganz weg.
+   * Removes a player from the online round: column out, the next player
+   * may be on turn, and if needed the host role changes. The last one
+   * to leave removes the game completely.
    */
   private async removeFromOnlineGame(g: YatzyGame, who: string): Promise<void> {
     const path = `yatzy/games/${g.code}`;
@@ -393,7 +393,7 @@ export class YahtzeeService {
         order: remaining,
         currentTurn: wasHisTurn ? this.playerAfter(who, g, remaining) : g.currentTurn,
         hostId: g.hostId === who ? remaining[0] : g.hostId,
-        // War er gerade dran, beginnt der Nächste mit frischen Würfeln.
+        // If it was their turn, the next player starts with fresh dice.
         ...(wasHisTurn
           ? {
               dice: this.freshDice(),
@@ -411,7 +411,7 @@ export class YahtzeeService {
     }
   }
 
-  /** Der nächste verbliebene Spieler nach `who` in der ursprünglichen Reihenfolge. */
+  /** The next remaining player after `who` in the original order. */
   private playerAfter(who: string, g: YatzyGame, remaining: string[]): string {
     const start = g.order.indexOf(who);
     for (let step = 1; step <= g.order.length; step++) {
@@ -422,9 +422,9 @@ export class YahtzeeService {
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -436,10 +436,10 @@ export class YahtzeeService {
     this.mode.set(null);
   }
 
-  // ---- Zugausführung (lokal oder online) -----------------------------------
-  /** Darf an DIESEM Gerät gerade gehandelt werden? */
+  // ---- Move execution (local or online) ------------------------------------
+  /** May you act on THIS device right now? */
   private mayAct(g: YatzyGame): boolean {
-    if (this.mode() === 'local') return true; // Computer-Züge laufen intern
+    if (this.mode() === 'local') return true; // Computer moves run internally
     return g.currentTurn === this.playerId;
   }
 
@@ -500,7 +500,7 @@ export class YahtzeeService {
     this.maybeScheduleCpu();
   }
 
-  /** Schreibt eine Teiländerung – lokal ins Signal, online in die Datenbank. */
+  /** Writes a partial change – locally into the signal, online into the database. */
   private patch(g: YatzyGame, changes: Partial<YatzyGame>): void {
     if (this.mode() === 'online') {
       void this.channel.commit(changes).catch((e) =>
@@ -511,8 +511,8 @@ export class YahtzeeService {
     this.game.set({ ...g, ...changes });
   }
 
-  // ---- Computer-Gegner -----------------------------------------------------
-  /** Ist ein Computer am Zug, macht er nach kurzer Bedenkzeit seinen nächsten Schritt. */
+  // ---- Computer opponent ---------------------------------------------------
+  /** If a computer is on turn, it takes its next step after a short pause. */
   private maybeScheduleCpu(): void {
     const g = this.game();
     if (this.mode() !== 'local' || !g || g.status !== 'playing') return;
@@ -532,7 +532,7 @@ export class YahtzeeService {
     }, delay);
   }
 
-  /** Ein einzelner Schritt: würfeln, festhalten oder eintragen. */
+  /** A single step: roll, hold or fill in. */
   private cpuStep(): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || !g.players[g.currentTurn]?.cpu) return;
@@ -545,7 +545,7 @@ export class YahtzeeService {
 
     if (g.rollsLeft > 0 && shouldRollAgain(g.dice, scores)) {
       const holds = chooseHolds(g.dice, scores, this.level());
-      // Erst die Auswahl zeigen, im nächsten Schritt würfeln.
+      // Show the selection first, roll in the next step.
       if (holds.some((h, i) => h !== g.held[i])) {
         this.applyHolds(g, holds);
         return;
@@ -562,8 +562,8 @@ export class YahtzeeService {
     this.cpuTimer = null;
   }
 
-  // ---- Online-Intern -------------------------------------------------------
-  /** Firebase liefert leere Arrays/Objekte/Nullwerte unzuverlässig – auffüllen. */
+  // ---- Online internals ----------------------------------------------------
+  /** Firebase delivers empty arrays/objects/null values unreliably – fill them in. */
   private normalize(g: YatzyGame): YatzyGame {
     const order = g.order ?? [];
     const scores: Record<string, ScoreMap> = {};
@@ -584,7 +584,7 @@ export class YahtzeeService {
     };
   }
 
-  // ---- Hilfsfunktionen -----------------------------------------------------
+  // ---- Helper functions ----------------------------------------------------
   private freshGame(
     code: string,
     hostId: string,
@@ -654,7 +654,7 @@ export class YahtzeeService {
     return s;
   }
 
-  /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
+  /** Aborts early with a clear message if Firebase is not set up. */
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
   }

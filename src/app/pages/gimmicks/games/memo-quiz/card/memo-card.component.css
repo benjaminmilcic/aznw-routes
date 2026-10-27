@@ -37,14 +37,14 @@
   display: block;
 }
 
-/* Gefundene Paare treten optisch zurück. */
+/* Found pairs visually step back. */
 .card-scene.is-matched {
   opacity: 0.7;
   transform: scale(0.96);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* ---- 3D-Umgebung für den Karten-Flip ------------------------------------ */
+/* ---- 3D environment for the card flip ----------------------------------- */
 .card-scene {
   perspective: 1000px;
 }

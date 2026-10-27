@@ -39,7 +39,7 @@ export class ImagegenComponent {
   private readonly apiUrl = environment.imagegen.apiUrl.replace(/\/+$/, '');
   private readonly maxRetries = 2;
 
-  // ===== Zustand (Signals) =====
+  // ===== State (signals) =====
   readonly prompt = signal('');
   readonly model = signal<ImageModel>('flux');
   readonly seed = signal(this.randomSeed());
@@ -53,10 +53,10 @@ export class ImagegenComponent {
   readonly current = signal<GeneratedImage | null>(null);
   readonly history = signal<GeneratedImage[]>([]);
 
-  // Einspaltiges Layout (≤860px): dann keine vh-Höhenbegrenzung, volle Breite.
+  // Single-column layout (≤860px): then no vh height limit, full width.
   private readonly narrow = signal(window.innerWidth <= 860);
 
-  // ===== Konstanten =====
+  // ===== Constants =====
   readonly models: { key: ImageModel; labelKey: string }[] = [
     { key: 'flux', labelKey: 'gimmicks.imagegen.modelFlux' },
     { key: 'sdxl', labelKey: 'gimmicks.imagegen.modelSdxl' },
@@ -68,7 +68,7 @@ export class ImagegenComponent {
     { key: 'portrait', labelKey: 'gimmicks.imagegen.ratioPortrait', width: 720, height: 1280 },
   ];
 
-  // Beispiel-Prompts für den "Überraschung"-Button
+  // Example prompts for the "Surprise me" button
   private readonly examplePromptKeys = [
     'gimmicks.imagegen.example1',
     'gimmicks.imagegen.example2',
@@ -86,18 +86,18 @@ export class ImagegenComponent {
     'gimmicks.imagegen.example14',
   ];
 
-  // ===== Abgeleitete Werte (computed) =====
+  // ===== Derived values (computed) =====
   readonly selectedRatio = computed<AspectRatio>(() => {
     if (this.model() === 'flux') {
-      return this.ratios[0]; // flux-schnell liefert immer 1024x1024
+      return this.ratios[0]; // flux-schnell always delivers 1024x1024
     }
     return this.ratios.find((r) => r.key === this.ratioKey()) ?? this.ratios[0];
   });
 
   /**
-   * Begrenzt im zweispaltigen Layout die Breite so, dass die Höhe (= Breite /
-   * Seitenverhältnis) höchstens ~60vh wird – passt so auf niedrige Displays.
-   * Im einspaltigen Layout (≤860px) keine Begrenzung -> volle Spaltenbreite.
+   * In the two-column layout, limits the width so that the height (= width /
+   * aspect ratio) becomes at most ~60vh – that way it fits on low displays.
+   * In the single-column layout (≤860px) no limit -> full column width.
    */
   readonly canvasMaxWidth = computed<string | null>(() => {
     if (this.narrow()) {
@@ -107,7 +107,7 @@ export class ImagegenComponent {
     return `${(r.width / r.height) * 60}vh`;
   });
 
-  /** "Variation" nur sinnvoll bei SDXL mit freiem Seed. */
+  /** "Variation" only makes sense with SDXL and a free seed. */
   readonly showVariation = computed(
     () => this.model() === 'sdxl' && !this.lockSeed()
   );
@@ -162,10 +162,10 @@ export class ImagegenComponent {
   }
 
   /**
-   * Generiert das Bild genau EINMAL und behält die Bytes als Blob (Object-URL).
-   * Anzeige, Download und "in neuem Tab" nutzen denselben Blob – so wird das Bild
-   * nicht bei jeder Aktion neu erzeugt (und sieht z. B. bei Flux ohne Seed nicht
-   * jedes Mal anders aus) und es wird nur einmal Workers-AI-Quota verbraucht.
+   * Generates the image exactly ONCE and keeps the bytes as a blob (object URL).
+   * Display, download and "in new tab" use the same blob – so the image is
+   * not regenerated on every action (and e.g. with Flux without a seed does not
+   * look different every time) and Workers AI quota is only used once.
    */
   private async runGeneration(meta: GeneratedImage) {
     this.error.set(false);
@@ -209,10 +209,10 @@ export class ImagegenComponent {
         this.current.set(meta);
         this.history.update((h) => [meta, ...h].slice(0, 8));
         this.retrying.set(false);
-        this.currentImageUrl.set(meta.url); // (load) blendet das Bild ein
+        this.currentImageUrl.set(meta.url); // (load) fades the image in
         return;
       } catch {
-        // nächster Versuch
+        // next attempt
       }
     }
     this.loading.set(false);
@@ -239,7 +239,7 @@ export class ImagegenComponent {
     this.retrying.set(false);
     this.loading.set(false);
     this.current.set(image);
-    this.currentImageUrl.set(image.url); // Blob liegt bereits vor – sofort anzeigen
+    this.currentImageUrl.set(image.url); // Blob is already available – show it right away
   }
 
   download() {

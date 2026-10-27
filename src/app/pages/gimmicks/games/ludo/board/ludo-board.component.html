@@ -1,6 +1,6 @@
 @if (game(); as g) {
 <div class="board-screen">
-  <!-- Kopfzeile: alle Mitspieler, wer dran ist, Spiel beenden -->
+  <!-- Header: all players, whose turn it is, end game -->
   <header class="bar">
     <div class="players">
       @for (p of svc.players(); track p.id) {
@@ -14,7 +14,7 @@
         <span class="player-name" [speakOnClick]="displayName(p)">{{
           displayName(p)
         }}</span>
-        <!-- Wer im Ziel ist, trägt seinen Platz -->
+        <!-- Whoever has finished shows their place -->
         @if (svc.rankOf(p.id); as rank) {
         <span class="player-rank">{{ rank }}.</span>
         }
@@ -51,7 +51,7 @@
     </button>
   </header>
 
-  <!-- Spielbrett -->
+  <!-- Game board -->
   <main class="board-wrap">
     <div class="board">
       @for (cell of cells; track cell.row * 11 + cell.col) {
@@ -81,7 +81,7 @@
     </div>
   </main>
 
-  <!-- Würfel + Aktion -->
+  <!-- Dice + action -->
   <footer class="control">
     <div
       class="dice"
@@ -119,7 +119,7 @@
     }
   </footer>
 
-  <!-- Online-Lobby: auf die Mitspieler warten -->
+  <!-- Online lobby: wait for the other players -->
   @if (g.status === 'waiting') {
   <div class="overlay">
     <div class="panel">
@@ -167,7 +167,7 @@
   </div>
   }
 
-  <!-- Spielende -->
+  <!-- Game over -->
   @if (g.status === 'finished') {
   <div class="overlay">
     <div
@@ -186,7 +186,7 @@
         {{ "gimmicks.games.ludoGame.won" | translate : { name: winnerName() } }}
       </h2>
 
-      <!-- Endstand: wer nach dem Sieger ins Ziel kam -->
+      <!-- Final standings: who finished after the winner -->
       @if (svc.ranking().length > 1) {
       <p class="ranking-title">
         {{ "gimmicks.games.ludoGame.ranking" | translate }}

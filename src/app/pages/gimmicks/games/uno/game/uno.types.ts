@@ -1,30 +1,30 @@
 export type UnoStatus = 'waiting' | 'playing' | 'finished';
 
-/** Spielart: am Gerät (mit Computer-Gegnern) oder online über einen Spiel-Code. */
+/** Game mode: on the device (with computer opponents) or online via a game code. */
 export type UnoMode = 'local' | 'online';
 
-/** Spielstärke der Computer-Gegner. */
+/** Difficulty of the computer opponents. */
 export type UnoLevel = 'easy' | 'medium' | 'hard';
 
-/** Spielbare Kartenfarben + 'w' für Joker (Wild). */
+/** Playable card colors + 'w' for wild. */
 export type UnoColor = 'r' | 'y' | 'g' | 'b';
 export type UnoCardColor = UnoColor | 'w';
 
 /**
- * Kartenwert:
- *  - '0' … '9'  Zahlenkarten
- *  - 'skip'     Aussetzen (der Nächste kommt nicht dran)
- *  - 'rev'      Richtungswechsel (bei zwei Aktiven wie Aussetzen)
- *  - 'd2'       Zieh Zwei (der Nächste zieht 2 und setzt aus)
- *  - 'wild'     Farbwahl-Joker
- *  - 'd4'       Zieh-Vier-Joker (der Nächste zieht 4 und setzt aus)
+ * Card value:
+ *  - '0' … '9'  number cards
+ *  - 'skip'     skip (the next player misses their turn)
+ *  - 'rev'      reverse (with two active players like skip)
+ *  - 'd2'       draw two (the next player draws 2 and misses their turn)
+ *  - 'wild'     wild color choice
+ *  - 'd4'       wild draw four (the next player draws 4 and misses their turn)
  */
 export type UnoValue =
   | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
   | 'skip' | 'rev' | 'd2' | 'wild' | 'd4';
 
 export interface UnoCard {
-  /** Innerhalb eines Spiels eindeutige Id (Karten kommen doppelt vor). */
+  /** Id unique within a game (cards occur twice). */
   id: string;
   color: UnoCardColor;
   value: UnoValue;
@@ -34,19 +34,19 @@ export interface UnoPlayer {
   id: string;
   name: string;
   emoji: string;
-  /** true = wird vom Computer gespielt (nur im Modus "local"). */
+  /** true = played by the computer (only in "local" mode). */
   cpu?: boolean;
 }
 
-/** Beschreibt den letzten Zug, damit die anderen sehen, was passiert ist. */
+/** Describes the last move so that the others see what happened. */
 export interface UnoAction {
-  /** Wer den Zug gemacht hat. */
+  /** Who made the move. */
   by: string;
-  /** 'play' = Karte gelegt, 'draw' = Karte gezogen. */
+  /** 'play' = card played, 'draw' = card drawn. */
   type: 'play' | 'draw';
-  /** Gelegte Karte (nur bei type === 'play'). */
+  /** Played card (only for type === 'play'). */
   card?: UnoCard;
-  /** Wie viele Karten der Nächste ziehen musste (d2/d4). */
+  /** How many cards the next player had to draw (d2/d4). */
   forced?: number;
   at: number;
 }
@@ -56,41 +56,41 @@ export interface UnoGame {
   status: UnoStatus;
   hostId: string;
   players: Record<string, UnoPlayer>;
-  /** Sitzreihenfolge der Spieler-Ids. */
+  /** Seating order of the player ids. */
   order: string[];
-  /** Handkarten je Spieler. */
+  /** Hand cards per player. */
   hands: Record<string, UnoCard[]>;
-  /** Verdeckter Nachziehstapel (oberste Karte = letztes Element). */
+  /** Face-down draw pile (top card = last element). */
   drawPile: UnoCard[];
-  /** Offener Ablagestapel (oberste Karte = letztes Element). */
+  /** Face-up discard pile (top card = last element). */
   discardPile: UnoCard[];
-  /** Aktuell geforderte Farbe (löst Joker auf). */
+  /** Currently required color (resolves wild cards). */
   currentColor: UnoColor;
-  /** Spielrichtung: 1 = der Reihe nach, -1 = rückwärts (nach "Richtungswechsel"). */
+  /** Direction of play: 1 = in order, -1 = backwards (after a "reverse"). */
   direction: 1 | -1;
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
   winnerId: string | null;
   /**
-   * Spieler-Ids in der Reihenfolge, in der sie ihre Karten losgeworden sind –
-   * ranking[0] ist der Sieger. Wer drinsteht, wird übersprungen.
+   * Player ids in the order in which they got rid of their cards –
+   * ranking[0] is the winner. Whoever is listed here is skipped.
    */
   ranking: string[];
-  /** Letzter Spielzug (für die kurze Hinweis-Einblendung), oder null. */
+  /** Last move (for the short notice overlay), or null. */
   lastAction: UnoAction | null;
-  /** Zuletzt ausgestiegener Mitspieler – die anderen bekommen dazu einen Hinweis. */
+  /** Player who left last – the others get a notice about it. */
   lastLeft?: { name: string; at: number } | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;
 }
 
-/** Karten auf der Hand zu Spielbeginn. */
+/** Cards in the hand at the start of the game. */
 export const START_HAND = 7;
 
-/** UNO spielt sich zu zweit bis zu sechst gut. */
+/** UNO plays well with two to six players. */
 export const MAX_PLAYERS = 6;
 export const MIN_PLAYERS = 2;
 

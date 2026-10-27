@@ -19,7 +19,7 @@ type Outcome = 'win' | 'lose' | 'tie';
 
 const COLS_BY_PAIRS: Record<number, number> = { 6: 4, 10: 5, 12: 6 };
 
-/** Das Spielfeld mit Kopfzeile, Warte- und Ergebnis-Overlay. */
+/** The game board with header, waiting and result overlay. */
 @Component({
   selector: 'app-memo-quiz-board',
   imports: [
@@ -41,14 +41,14 @@ export class MemoQuizBoardComponent implements OnDestroy {
 
   private effectsShown = false;
 
-  /** Spaltenzahl passend zur Kartenmenge. */
+  /** Number of columns matching the number of cards. */
   protected readonly cols = computed<number>(() => {
     const g = this.game();
     if (!g) return 4;
     return COLS_BY_PAIRS[g.pairs] ?? Math.ceil(Math.sqrt(g.board.length * 1.6));
   });
 
-  /** Seitenverhältnis des Rasters (für die Größenberechnung im CSS). */
+  /** Aspect ratio of the grid (for the size calculation in the CSS). */
   protected readonly ratio = computed<number>(() => {
     const g = this.game();
     if (!g) return 1;
@@ -56,7 +56,7 @@ export class MemoQuizBoardComponent implements OnDestroy {
     return cols / Math.ceil(g.board.length / cols);
   });
 
-  /** Ergebnis aus Sicht des Spielers an DIESEM Gerät. */
+  /** Result from the point of view of the player on THIS device. */
   protected readonly outcome = computed<Outcome | null>(() => {
     const g = this.game();
     if (!g || g.status !== 'finished') return null;
@@ -65,7 +65,7 @@ export class MemoQuizBoardComponent implements OnDestroy {
   });
 
   constructor() {
-    // Feuerwerk + Klang beim Sieg, "Wah-Wah" beim Verlieren, Glöckchen bei Remis.
+    // Fireworks + sound on a win, "wah-wah" on a loss, bells on a draw.
     effect(() => {
       const finished = this.game()?.status === 'finished';
       if (finished && !this.effectsShown) {
@@ -86,9 +86,9 @@ export class MemoQuizBoardComponent implements OnDestroy {
   }
 
   /**
-   * Anzeigename eines Spielers: selbst eingegebene Namen bleiben unverändert.
-   * NUR beim Computer-Gegner wird übersetzt, damit ein Sprachwechsel auch im
-   * laufenden Spiel greift (sein gespeicherter Name ist nur ein Rückfallwert).
+   * Display name of a player: names entered by players stay unchanged.
+   * ONLY the computer opponent is translated, so that a language change also
+   * applies in a running game (its stored name is only a fallback value).
    */
   protected displayName(p: MemoPlayer | null | undefined): string {
     if (!p) return '';
@@ -97,12 +97,12 @@ export class MemoQuizBoardComponent implements OnDestroy {
       : p.name;
   }
 
-  /** Name des Spielers, der gerade am Zug ist. */
+  /** Name of the player whose turn it is. */
   protected currentName(): string {
     return this.displayName(this.svc.currentPlayer());
   }
 
-  /** Name des Gewinners (für die Ergebnis-Meldung). */
+  /** Name of the winner (for the result message). */
   protected winnerName(): string {
     const g = this.game();
     if (!g || !g.winnerId || g.winnerId === 'tie') return '';

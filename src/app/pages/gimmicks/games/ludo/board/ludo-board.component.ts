@@ -16,7 +16,7 @@ import { GOAL_BASE, SEAT_START, TRACK_LEN, type LudoPlayer } from '../game/ludo.
 
 type Outcome = 'win' | 'lose';
 
-/** Die 40 Felder der gemeinsamen Laufbahn als [Zeile, Spalte] im 11×11-Raster. */
+/** The 40 squares of the shared track as [row, column] in the 11×11 grid. */
 const TRACK: [number, number][] = [
   [4, 0], [4, 1], [4, 2], [4, 3], [4, 4],
   [3, 4], [2, 4], [1, 4], [0, 4],
@@ -32,23 +32,23 @@ const TRACK: [number, number][] = [
   [5, 0],
 ];
 
-/** Vier Zielfelder je Sitzplatz (führen zur Mitte). */
+/** Four goal squares per seat (leading to the center). */
 const GOAL: [number, number][][] = [
-  [[5, 1], [5, 2], [5, 3], [5, 4]], // Sitz 0 – links
-  [[1, 5], [2, 5], [3, 5], [4, 5]], // Sitz 1 – oben
-  [[5, 9], [5, 8], [5, 7], [5, 6]], // Sitz 2 – rechts
-  [[9, 5], [8, 5], [7, 5], [6, 5]], // Sitz 3 – unten
+  [[5, 1], [5, 2], [5, 3], [5, 4]], // Seat 0 – left
+  [[1, 5], [2, 5], [3, 5], [4, 5]], // Seat 1 – top
+  [[5, 9], [5, 8], [5, 7], [5, 6]], // Seat 2 – right
+  [[9, 5], [8, 5], [7, 5], [6, 5]], // Seat 3 – bottom
 ];
 
-/** Vier Garagenplätze je Sitzplatz (die Ecken des Bretts). */
+/** Four garage spots per seat (the corners of the board). */
 const GARAGE: [number, number][][] = [
-  [[0, 0], [1, 0], [0, 1], [1, 1]], // Sitz 0 – oben links
-  [[0, 9], [0, 10], [1, 9], [1, 10]], // Sitz 1 – oben rechts
-  [[9, 9], [10, 9], [9, 10], [10, 10]], // Sitz 2 – unten rechts
-  [[9, 0], [10, 0], [9, 1], [10, 1]], // Sitz 3 – unten links
+  [[0, 0], [1, 0], [0, 1], [1, 1]], // Seat 0 – top left
+  [[0, 9], [0, 10], [1, 9], [1, 10]], // Seat 1 – top right
+  [[9, 9], [10, 9], [9, 10], [10, 10]], // Seat 2 – bottom right
+  [[9, 0], [10, 0], [9, 1], [10, 1]], // Seat 3 – bottom left
 ];
 
-/** Farbe je Sitzplatz: rot, orange, blau, violett. */
+/** Color per seat: red, orange, blue, violet. */
 const SEAT_COLORS = ['#dc2626', '#f59e0b', '#2563eb', '#9333ea'];
 
 interface Cell {
@@ -56,9 +56,9 @@ interface Cell {
   col: number;
   /** 'track' | 'goal' | 'home' | 'center' | 'void' */
   kind: 'track' | 'goal' | 'home' | 'center' | 'void';
-  /** Sitz, dessen Farbe das Feld trägt (Start/Ziel/Garage), sonst -1. */
+  /** Seat whose color the square carries (start/goal/garage), otherwise -1. */
   seat: number;
-  /** true für ein Startfeld auf der Laufbahn. */
+  /** true for a start square on the track. */
   start: boolean;
 }
 
@@ -72,8 +72,8 @@ interface Token {
 }
 
 /**
- * Das laufende Spiel: 11×11-Brett, Würfel und die Overlays für die
- * Online-Lobby bzw. das Spielende.
+ * The running game: 11×11 board, dice and the overlays for the
+ * online lobby and the end of the game.
  */
 @Component({
   selector: 'app-ludo-board',
@@ -89,16 +89,16 @@ export class LudoBoardComponent implements OnDestroy {
   private readonly toastr = inject(ToastrService);
   protected readonly game = this.svc.game;
 
-  /** Statisches 11×11-Brettmodell (Feldarten). */
+  /** Static 11×11 board model (square types). */
   protected readonly cells: Cell[] = this.buildCells();
 
   private effectsShown = false;
-  /** Zeitstempel des zuletzt gemeldeten Ausstiegs – verhindert alte Hinweise. */
+  /** Timestamp of the last reported exit – prevents old notices. */
   private lastLeftSeen: number | null = null;
 
   /**
-   * Anzeigename: NUR bei Computer-Gegnern wird übersetzt, damit ein
-   * Sprachwechsel auch im laufenden Spiel greift.
+   * Display name: ONLY computer opponents are translated, so that a
+   * language change also applies in a running game.
    */
   protected displayName(p: LudoPlayer | null | undefined): string {
     if (!p) return '';
@@ -107,7 +107,7 @@ export class LudoBoardComponent implements OnDestroy {
     return `${this.translate.instant('gimmicks.games.ludoGame.computer')} ${nr}`.trim();
   }
 
-  /** Name des Spielers, der gerade am Zug ist. */
+  /** Name of the player whose turn it is. */
   protected currentName(): string {
     return this.displayName(this.svc.currentPlayer());
   }
@@ -118,25 +118,25 @@ export class LudoBoardComponent implements OnDestroy {
     return this.displayName(g.players[g.winnerId]);
   }
 
-  /** Farbe eines Spielers – richtet sich nach seinem Sitzplatz. */
+  /** Color of a player – depends on their seat. */
   protected colorOf(id: string): string {
     const g = this.game();
     if (!g) return SEAT_COLORS[0];
     return SEAT_COLORS[this.svc.seatOf(g, id)] ?? '#475569';
   }
 
-  /** Ergebnis aus Sicht des Spielers an DIESEM Gerät. */
+  /** Result from the point of view of the player on THIS device. */
   protected readonly outcome = computed<Outcome | null>(() => {
     const g = this.game();
     if (!g || g.status !== 'finished') return null;
-    // Am Gerät gewinnt immer jemand, der hier sitzt – außer der Computer.
+    // On the device, someone sitting here always wins – except the computer.
     if (this.svc.mode() === 'local') return g.players[g.winnerId ?? '']?.cpu ? 'lose' : 'win';
     return g.winnerId === this.svc.playerId ? 'win' : 'lose';
   });
 
   /**
-   * Bin ich schon im Ziel, während die anderen noch spielen? Dann steht
-   * unten mein Platz statt der Würfel-Aufforderung.
+   * Have I already finished while the others are still playing? Then my
+   * place is shown below instead of the prompt to roll.
    */
   protected readonly myRank = computed<number>(() => {
     const g = this.game();
@@ -144,7 +144,7 @@ export class LudoBoardComponent implements OnDestroy {
     return this.svc.rankOf(this.svc.playerId);
   });
 
-  /** Map "row,col" → Figuren auf diesem Feld. */
+  /** Map "row,col" → pieces on this square. */
   protected readonly tokenMap = computed<Map<string, Token[]>>(() => {
     const g = this.game();
     const map = new Map<string, Token[]>();
@@ -199,7 +199,7 @@ export class LudoBoardComponent implements OnDestroy {
       }
     });
 
-    // Hinweis, wenn online jemand die Runde verlässt.
+    // Notice when someone leaves the round online.
     effect(() => {
       const g = this.game();
       if (!g) {
@@ -208,7 +208,7 @@ export class LudoBoardComponent implements OnDestroy {
       }
       const at = g.lastLeft?.at ?? 0;
       if (this.lastLeftSeen === null) {
-        this.lastLeftSeen = at; // erster Blick auf dieses Spiel: nichts melden
+        this.lastLeftSeen = at; // first look at this game: report nothing
         return;
       }
       if (at > this.lastLeftSeen) {
@@ -220,10 +220,10 @@ export class LudoBoardComponent implements OnDestroy {
           {
             positionClass: 'toast-bottom-center',
             timeOut: 6000,
-            // Der Hinweis liegt über dem Spielfeld (bei Uno über der Hand).
-            // Ohne diese Klasse fängt er den ersten Klick ab: statt den Zug zu
-            // machen, schließt man nur den Hinweis und muss ein zweites Mal
-            // klicken. Siehe .game-notice in styles.scss.
+            // The notice lies above the board (in Uno above the hand).
+            // Without this class it catches the first click: instead of making
+            // the move, you only close the notice and have to click a second
+            // time. See .game-notice in styles.scss.
             toastClass: 'ngx-toastr game-notice',
             tapToDismiss: false,
           },
@@ -240,7 +240,7 @@ export class LudoBoardComponent implements OnDestroy {
     return this.tokenMap().get(cell.row + ',' + cell.col) ?? [];
   }
 
-  // ---- Aktionen ------------------------------------------------------------
+  // ---- Actions -------------------------------------------------------------
   protected roll(): void {
     this.svc.roll();
   }
@@ -267,7 +267,7 @@ export class LudoBoardComponent implements OnDestroy {
     this.svc.leaveGame();
   }
 
-  // ---- Brettmodell ---------------------------------------------------------
+  // ---- Board model ---------------------------------------------------------
   private buildCells(): Cell[] {
     const kind: Cell['kind'][][] = Array.from({ length: 11 }, () =>
       Array.from({ length: 11 }, () => 'void' as Cell['kind']),
@@ -302,7 +302,7 @@ export class LudoBoardComponent implements OnDestroy {
     return cells;
   }
 
-  /** Farbe eines Feldes nach Sitzplatz (für die CSS-Variable). */
+  /** Color of a square by seat (for the CSS variable). */
   protected seatColor(seat: number): string | null {
     return seat >= 0 ? SEAT_COLORS[seat] ?? null : null;
   }

@@ -9,17 +9,17 @@ if (environment.production) {
 }
 
 /**
- * Bis August 2026 lief die Seite mit Hash-Routing. Lesezeichen, alte
- * Google-Treffer und externe Links haben deshalb die Form
- * https://benjamin-milcic.dev/#/gimmicks/map - ohne diese Umschreibung
- * wuerden sie auf der Startseite bzw. ueber den knownFragmentGuard auf
- * /404 landen. Muss vor dem Bootstrap laufen.
+ * Until August 2026 the site ran with hash routing. Bookmarks, old
+ * Google results and external links therefore have the form
+ * https://benjamin-milcic.dev/#/gimmicks/map - without this rewrite
+ * they would end up on the home page or, via the knownFragmentGuard, on
+ * /404. Must run before the bootstrap.
  *
- * Bewusst history.replaceState statt location.replace: die Adresse wird nur
- * im Browser korrigiert, es geht KEIN zweiter Request an den Server. Damit
- * ist eine Umleitungsschleife ausgeschlossen, egal was der Server bei einer
- * fehlenden Datei ausliefert - andernfalls koennte /#/kaputt.jpg zwischen
- * Server-404 und dieser Funktion hin- und herpendeln.
+ * Deliberately history.replaceState instead of location.replace: the address is only
+ * corrected in the browser, NO second request goes to the server. That
+ * rules out a redirect loop, no matter what the server delivers for a
+ * missing file - otherwise /#/kaputt.jpg could bounce back and forth between
+ * the server 404 and this function.
  */
 function rewriteLegacyHashUrl(): void {
   const hash = window.location.hash;
@@ -27,18 +27,18 @@ function rewriteLegacyHashUrl(): void {
     return;
   }
 
-  // Bei Hash-Routing konnten Query-Parameter vor ODER hinter dem Hash
-  // stehen. Bringt der Hash-Teil schon welche mit, gelten die.
+  // With hash routing, query parameters could be before OR after the hash.
+  // If the hash part already brings some, those apply.
   const path = hash.slice(1);
   const target = path.includes('?') ? path : path + window.location.search;
 
   window.history.replaceState(null, '', target);
 }
 
-// Vor enableRtdbDebugFromUrl(), weil das ?fbdebug aus location.search liest.
+// Before enableRtdbDebugFromUrl(), because that reads ?fbdebug from location.search.
 rewriteLegacyHashUrl();
 
-// Muss vor dem ersten Datenbankzugriff laufen (siehe rtdb-debug.ts).
+// Must run before the first database access (see rtdb-debug.ts).
 enableRtdbDebugFromUrl();
 
 bootstrapApplication(AppComponent, appConfig).catch((err) =>

@@ -8,35 +8,35 @@ import type { MemoCard, MemoGame, MemoLevel, MemoMode, MemoPlayer } from './memo
 const PLAYER_ID_KEY = 'memo_player_id';
 const PLAYER_NAME_KEY = 'memo_player_name';
 const PLAYER_AVATAR_KEY = 'memo_player_avatar';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'memo_active_code';
 const CODE_ALPHABET = '0123456789';
 
-/** Wie lange ein Fehlversuch offen liegen bleibt. */
+/** How long a failed attempt stays face up. */
 const MISMATCH_MS = 1300;
-/** Bedenkzeit des Computers vor jeder aufgedeckten Karte. */
+/** Thinking time of the computer before each revealed card. */
 const CPU_DELAY_MS = 850;
 
-/** Feste Id des Computer-Gegners. */
+/** Fixed id of the computer opponent. */
 export const CPU_ID = 'cpu';
 
-/** Wie zuverlässig sich der Computer eine gesehene Karte merkt. */
+/** How reliably the computer remembers a card it has seen. */
 const RECALL: Record<MemoLevel, number> = {
   easy: 0.35,
   medium: 0.7,
   hard: 1,
 };
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.memoQuizGame';
 
 @Injectable({ providedIn: 'root' })
 export class MemoQuizService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<MemoGame>({
     db,
@@ -49,16 +49,16 @@ export class MemoQuizService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
-  /** Mitspieler, die nicht mehr verbunden sind. */
+  /** Players who are no longer connected. */
   readonly absent = this.channel.awayPlayers;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -68,8 +68,8 @@ export class MemoQuizService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -77,11 +77,11 @@ export class MemoQuizService {
     if (ok) this.mode.set('online');
     return ok;
   }
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<MemoMode | null>(null);
-  /** Gedächtnis-Stärke des Computers. */
+  /** Memory strength of the computer. */
   readonly level = signal<MemoLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
   readonly busy = signal(false);
 
@@ -90,10 +90,10 @@ export class MemoQuizService {
   private mismatchTimer: ReturnType<typeof setTimeout> | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  /** Was der Computer von den bereits gesehenen Karten behalten hat. */
+  /** What the computer has kept from the cards already seen. */
   private readonly cpuMemory = new Map<number, string>();
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<MemoPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
   readonly opponent = computed<MemoPlayer | null>(() => {
@@ -107,13 +107,13 @@ export class MemoQuizService {
     return g ? g.players[g.currentTurn] ?? null : null;
   });
 
-  /** Der Computer überlegt gerade (dann sind die Karten gesperrt). */
+  /** The computer is thinking (the cards are locked then). */
   readonly thinking = computed<boolean>(() => {
     const g = this.game();
     return this.mode() === 'computer' && !!g && g.status === 'playing' && g.currentTurn === CPU_ID;
   });
 
-  /** Darf an DIESEM Gerät gerade eine Karte umgedreht werden? */
+  /** May a card be turned over on THIS device right now? */
   readonly canFlip = computed<boolean>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing') return false;
@@ -121,7 +121,7 @@ export class MemoQuizService {
     return g.currentTurn === this.playerId;
   });
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -145,11 +145,11 @@ export class MemoQuizService {
     return id;
   }
 
-  // ---- Spiel gegen den Computer -------------------------------------------
+  // ---- Game against the computer ------------------------------------------
   /**
-   * Spiel gegen den Computer starten. Der Mensch beginnt.
-   * Der gespeicherte Name des Computers ist nur ein Rückfallwert – angezeigt
-   * wird er übersetzt, damit ein Sprachwechsel im laufenden Spiel greift.
+   * Start a game against the computer. The human starts.
+   * The stored name of the computer is only a fallback value – it is shown
+   * translated, so that a language change applies in the running game.
    */
   startComputerGame(name: string, avatar: string, pairs: number, level: MemoLevel): void {
     this.rememberProfile(name, avatar);
@@ -177,7 +177,7 @@ export class MemoQuizService {
     });
   }
 
-  // ---- Online-Spiel: erstellen / beitreten ---------------------------------
+  // ---- Online game: create / join ------------------------------------------
   async createGame(name: string, avatar: string, pairs: number): Promise<string> {
     this.rememberProfile(name, avatar);
     this.reset();
@@ -240,7 +240,7 @@ export class MemoQuizService {
         };
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
-        state.currentTurn = state.order[0]; // Host beginnt
+        state.currentTurn = state.order[0]; // Host starts
         state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
         await withTimeout(set(ref(db, `memory/games/${code}`), state));
@@ -255,8 +255,8 @@ export class MemoQuizService {
     }
   }
 
-  // ---- Spielzug ------------------------------------------------------------
-  /** Deckt die Karte an dieser Position auf. */
+  // ---- Move ----------------------------------------------------------------
+  /** Reveals the card at this position. */
   flip(index: number): void {
     if (!this.canFlip()) return;
     if (this.mode() === 'online') {
@@ -266,7 +266,7 @@ export class MemoQuizService {
     this.flipLocal(index, this.playerId);
   }
 
-  /** Neue Runde – der Verlierer beginnt (bei Gleichstand der Host). */
+  /** New round – the loser starts (the host in case of a draw). */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -301,15 +301,15 @@ export class MemoQuizService {
     this.maybeScheduleCpu();
   }
 
-  /** Laufendes Spiel verlassen und zurück zum Startbildschirm. */
+  /** Leave the running game and go back to the start screen. */
   leaveGame(): void {
     this.reset();
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -329,7 +329,7 @@ export class MemoQuizService {
     this.cpuTimer = null;
   }
 
-  // ---- Zug-Logik (Computer-Spiel, komplett lokal) --------------------------
+  // ---- Move logic (computer game, completely local) ------------------------
   private flipLocal(index: number, playerId: string): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || g.resolving) return;
@@ -348,7 +348,7 @@ export class MemoQuizService {
 
     const [a, b] = flipped;
     if (g.board[a].motifId === g.board[b].motifId) {
-      // Paar gefunden: Punkt für den Spieler, er darf weitermachen.
+      // Pair found: point for the player, they may continue.
       const board = g.board.map((c, i) => (i === a || i === b ? { ...c, matchedBy: playerId } : c));
       const players = { ...g.players };
       players[playerId] = { ...players[playerId], score: players[playerId].score + 1 };
@@ -369,7 +369,7 @@ export class MemoQuizService {
       return;
     }
 
-    // Kein Paar: beide Karten kurz zeigen, dann umdrehen – der andere ist dran.
+    // No pair: show both cards briefly, then turn them over – it is the other player's turn.
     this.game.set({ ...g, flipped, resolving: true, updatedAt: Date.now() });
     const next = this.nextPlayer(g);
     this.mismatchTimer = setTimeout(() => {
@@ -387,14 +387,14 @@ export class MemoQuizService {
     }, MISMATCH_MS);
   }
 
-  // ---- Computer-Gegner -----------------------------------------------------
-  /** Der Computer merkt sich eine aufgedeckte Karte – je nach Stärke zuverlässig. */
+  // ---- Computer opponent ---------------------------------------------------
+  /** The computer remembers a revealed card – reliably depending on its strength. */
   private rememberCard(index: number, motifId: string): void {
     if (this.mode() !== 'computer') return;
     if (Math.random() < RECALL[this.level()]) this.cpuMemory.set(index, motifId);
   }
 
-  /** Ist der Computer dran, deckt er nach kurzer Bedenkzeit die nächste Karte auf. */
+  /** If it is the computer's turn, it reveals the next card after a short pause. */
   private maybeScheduleCpu(): void {
     const g = this.game();
     if (this.mode() !== 'computer' || !g || g.status !== 'playing' || g.resolving) return;
@@ -412,12 +412,12 @@ export class MemoQuizService {
     }, CPU_DELAY_MS);
   }
 
-  /** Erste Karte: bekanntes Paar spielen, sonst eine unbekannte Karte aufdecken. */
+  /** First card: play a known pair, otherwise reveal an unknown card. */
   private cpuFirstPick(g: MemoGame): number | null {
     const open = this.openIndices(g);
     if (open.length === 0) return null;
 
-    // Kennt der Computer bereits zwei gleiche Karten?
+    // Does the computer already know two matching cards?
     const byMotif = new Map<string, number[]>();
     for (const i of open) {
       const motif = this.cpuMemory.get(i);
@@ -430,13 +430,13 @@ export class MemoQuizService {
       if (list.length >= 2) return list[0];
     }
 
-    // Sonst lieber etwas Neues aufdecken – das bringt Wissen für später.
+    // Otherwise rather reveal something new – that gives knowledge for later.
     const unknown = open.filter((i) => !this.cpuMemory.has(i));
     const pool = unknown.length > 0 ? unknown : open;
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  /** Zweite Karte: passende bekannte Karte, sonst eine unbekannte. */
+  /** Second card: matching known card, otherwise an unknown one. */
   private cpuSecondPick(g: MemoGame): number | null {
     const first = g.flipped[0];
     const motif = g.board[first].motifId;
@@ -451,7 +451,7 @@ export class MemoQuizService {
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  /** Alle noch nicht gefundenen und nicht offenen Karten. */
+  /** All cards that have not been found yet and are not face up. */
   private openIndices(g: MemoGame): number[] {
     const out: number[] = [];
     g.board.forEach((c, i) => {
@@ -460,7 +460,7 @@ export class MemoQuizService {
     return out;
   }
 
-  // ---- Zug-Logik (Online) --------------------------------------------------
+  // ---- Move logic (online) -------------------------------------------------
   private async flipOnline(index: number): Promise<void> {
     const g = this.game();
     if (!g) return;
@@ -496,7 +496,7 @@ export class MemoQuizService {
         return;
       }
 
-      // Kein Paar: kurz zeigen, dann ist der Mitspieler dran.
+      // No pair: show briefly, then it is the other player's turn.
       await this.channel.commit({ flipped, resolving: true, updatedAt: Date.now() });
       const next = this.nextPlayer(g);
       this.mismatchTimer = setTimeout(() => {
@@ -509,11 +509,11 @@ export class MemoQuizService {
   }
 
   /**
-   * Dreht die beiden nicht passenden Karten zurück und gibt ab.
+   * Turns the two non-matching cards back over and passes the turn.
    *
-   * Dieser Schreibvorgang kommt zeitversetzt – geht er verloren, bliebe das
-   * Spiel für BEIDE mit `resolving: true` stehen (niemand darf dann tippen).
-   * Deshalb wird er einmal wiederholt, bevor der Hinweisbalken übernimmt.
+   * This write happens with a delay – if it gets lost, the game would be
+   * stuck for BOTH with `resolving: true` (nobody may tap then).
+   * That's why it is repeated once before the notice bar takes over.
    */
   private async unflipOnline(next: string, retry = true): Promise<void> {
     const ok = await this.channel.commit({
@@ -530,8 +530,8 @@ export class MemoQuizService {
   }
 
   /**
-   * Firebase speichert keine leeren Arrays/Null-Werte sauber – beim Einlesen
-   * ergänzen, damit die Oberfläche niemals auf "undefined" zugreift.
+   * Firebase does not store empty arrays/null values cleanly – fill them in
+   * when reading, so that the UI never accesses "undefined".
    */
   private normalize(g: MemoGame): MemoGame {
     return {
@@ -546,7 +546,7 @@ export class MemoQuizService {
     };
   }
 
-  // ---- Hilfsfunktionen -----------------------------------------------------
+  // ---- Helper functions ----------------------------------------------------
   private computeWinner(players: Record<string, MemoPlayer>): string {
     const list = Object.values(players);
     const top = Math.max(...list.map((p) => p.score));
@@ -595,7 +595,7 @@ export class MemoQuizService {
     return s;
   }
 
-  /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
+  /** Aborts early with a clear message if Firebase is not set up. */
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
   }

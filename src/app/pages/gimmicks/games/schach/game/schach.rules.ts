@@ -10,7 +10,7 @@ const DIAG: Dir[] = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
 const ORTHO: Dir[] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 const AROUND: Dir[] = [...DIAG, ...ORTHO];
 
-/** Startaufstellung: Schwarz oben, Weiß unten. */
+/** Starting position: black at the top, white at the bottom. */
 export function startBoard(): string[] {
   const b = new Array<string>(64).fill('');
   const back = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
@@ -124,7 +124,7 @@ function scanHit(board: string[], r: number, c: number, dr: number, dc: number, 
   return false;
 }
 
-/** Wird das Feld sq von Figuren der Farbe byColor angegriffen? */
+/** Is the square sq attacked by pieces of the color byColor? */
 export function isAttacked(board: string[], sq: number, byColor: ChessColor): boolean {
   const r = Math.floor(sq / 8);
   const c = sq % 8;
@@ -319,8 +319,8 @@ function nextPlayer(g: ChessGame): string {
 }
 
 /**
- * Führt einen Zug aus. Gibt null zurück, wenn der Zug nicht erlaubt ist.
- * `winnerId === 'draw'` bedeutet Patt.
+ * Performs a move. Returns null if the move is not allowed.
+ * `winnerId === 'draw'` means stalemate.
  */
 export function applyMove(g: ChessGame, from: number, to: number, playerId: string): ChessGame | null {
   if (g.status !== 'playing' || g.currentTurn !== playerId) return null;

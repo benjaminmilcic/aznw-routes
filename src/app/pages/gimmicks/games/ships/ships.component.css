@@ -1,6 +1,6 @@
-/* "relative" ist wichtig: Das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild über die Seite. Ohne eigene
-   Positionierung liegt dieses Overlay über Buttons und Eingabefeldern. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. Without its own
+   positioning this overlay lies on top of buttons and input fields. */
 :host {
   display: block;
   position: relative;
@@ -8,9 +8,9 @@
   min-height: 0;
 }
 
-/* Bewusst KEIN Flex-Container: Als Flex-Item würde der Spielbereich auf seine
-   Inhaltsbreite zusammenschrumpfen, und die Raster blieben auf großen
-   Bildschirmen winzig. Die Kinder zentrieren sich selbst (margin: auto). */
+/* Deliberately NO flex container: as a flex item the game area would shrink
+   to its content width, and the grids would stay tiny on large
+   screens. The children center themselves (margin: auto). */
 .sea {
   display: block;
   width: 100%;
@@ -94,7 +94,7 @@
   box-shadow: 0 2px 0 #9f1239;
 }
 
-/* Overlays für Ergebnis und Rückfrage */
+/* Overlays for result and confirmation */
 .overlay {
   position: fixed;
   inset: 0;

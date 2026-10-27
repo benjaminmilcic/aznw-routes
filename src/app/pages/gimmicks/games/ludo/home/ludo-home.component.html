@@ -6,7 +6,7 @@
     <p class="error">{{ err | translate }}</p>
     }
 
-    <!-- Spielart -->
+    <!-- Game mode -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.ludoGame.mode" | translate
@@ -31,7 +31,7 @@
     </div>
 
     @if (mode() === 'local') {
-    <!-- ---------------- Am Gerät: Mitspieler zusammenstellen ---------------- -->
+    <!-- ---------------- On the device: put together the players ------------- -->
     <div class="field">
       <span class="field-label">{{
         "gimmicks.games.ludoGame.players" | translate
@@ -126,7 +126,7 @@
       {{ "gimmicks.games.ludoGame.startGame" | translate }}
     </button>
     } @else {
-    <!-- ---------------- Online mit Spiel-Code ---------------- -->
+    <!-- ---------------- Online with game code ---------------- -->
     <label class="field">
       <span class="field-label">{{
         "gimmicks.games.ludoGame.nameLabel" | translate

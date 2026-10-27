@@ -92,19 +92,19 @@ export class AppComponent implements OnInit, OnDestroy {
         this.reloadGoogleMapsScript(lang);
       }
     });
-    // Setzt Titel, Beschreibung und Canonical je Route und bei Sprachwechsel.
+    // Sets title, description and canonical per route and on language change.
     this.seoService.init();
-    // Scrollbalken in der Farbe der jeweiligen Seite
+    // Scrollbars in the color of the current page
     this.scrollbarThemeService.init();
     this.authService.autoLogin();
 
-    // Analytics-Tracking beim App-Start initialisieren
+    // Initialize analytics tracking on app start
     if (environment.production) {
       this.analyticsService.initTracking();
     }
 
-    // Ladeanimation erst ausblenden, wenn die erste Route fertig geladen ist
-    // (inkl. Lazy-Chunk des HomeComponent)
+    // Hide the loading animation only once the first route has finished loading
+    // (including the lazy chunk of the HomeComponent)
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const loader = document.getElementById('appLoader');
     if (loader) {
       loader.classList.add('loaded');
-      // Element nach der Fade-Out-Animation komplett entfernen
+      // Remove the element completely after the fade-out animation
       setTimeout(() => {
         loader.remove();
       }, 500);

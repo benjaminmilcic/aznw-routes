@@ -1,10 +1,10 @@
 // =============================================================
-//  Computer-Gegner für UNO.
+//  Computer opponent for UNO.
 // =============================================================
-//   easy   – legt irgendeine passende Karte, wählt die Farbe zufällig
-//   medium – meistens der beste Zug, manchmal ein zufälliger
-//   hard   – spart Joker auf, greift an, wenn jemand kurz vor UNO steht,
-//            und wählt die Farbe, von der er selbst am meisten hat
+//   easy   – plays any matching card, picks the color at random
+//   medium – mostly the best move, sometimes a random one
+//   hard   – saves wild cards, attacks when someone is close to UNO,
+//            and picks the color it has the most of itself
 // =============================================================
 import { isPlayable, nextPlayer, topCard } from './uno.rules';
 import {
@@ -15,13 +15,13 @@ import {
   type UnoLevel,
 } from './uno.types';
 
-/** Was der Computer tun will: eine Karte legen (ggf. mit Farbe) oder ziehen. */
+/** What the computer wants to do: play a card (with a color if needed) or draw. */
 export interface UnoDecision {
   cardId: string;
   color?: UnoColor;
 }
 
-/** Wählt den Zug des Computers – null bedeutet "ich muss ziehen". */
+/** Picks the computer's move – null means "I have to draw". */
 export function bestMove(g: UnoGame, playerId: string, level: UnoLevel): UnoDecision | null {
   const hand = g.hands[playerId] ?? [];
   const top = topCard(g);
@@ -33,7 +33,7 @@ export function bestMove(g: UnoGame, playerId: string, level: UnoLevel): UnoDeci
     return withColor(card, hand, playerId, g, 'easy');
   }
 
-  // "medium" greift ab und zu daneben, damit Kinder eine Chance haben.
+  // "medium" misses now and then, so that children have a chance.
   if (level === 'medium' && Math.random() < 0.35) {
     const card = playable[Math.floor(Math.random() * playable.length)];
     return withColor(card, hand, playerId, g, level);
@@ -51,16 +51,16 @@ export function bestMove(g: UnoGame, playerId: string, level: UnoLevel): UnoDeci
   return withColor(best, hand, playerId, g, level);
 }
 
-/** Bewertet eine Karte – je höher, desto lieber wird sie gelegt. */
+/** Rates a card – the higher, the more likely it is played. */
 function rate(card: UnoCard, g: UnoGame, playerId: string): number {
   const victim = nextPlayer(g, playerId);
   const victimCards = g.hands[victim]?.length ?? 99;
-  // Steht der Nächste kurz vor dem Sieg, lohnt sich ein Angriff besonders.
+  // If the next player is close to winning, an attack is especially worthwhile.
   const pressure = victimCards <= 2 ? 40 : 0;
 
   switch (card.value) {
     case 'd4':
-      // Der stärkste Angriff – aber als Joker wertvoll, deshalb nicht zuerst.
+      // The strongest attack – but valuable as a wild card, so not first.
       return 30 + pressure;
     case 'd2':
       return 45 + pressure;
@@ -69,17 +69,17 @@ function rate(card: UnoCard, g: UnoGame, playerId: string): number {
     case 'rev':
       return 35 + pressure;
     case 'wild':
-      // Joker aufsparen, solange etwas anderes geht.
+      // Save wild cards as long as something else works.
       return 10;
     default: {
-      // Zahlenkarten zuerst – hohe Karten zuerst, damit sie nicht liegen bleiben.
+      // Number cards first – high cards first, so that they don't get stuck.
       const n = Number(card.value);
       return 50 + (Number.isFinite(n) ? n : 0);
     }
   }
 }
 
-/** Ergänzt bei Jokern die Wunschfarbe. */
+/** Adds the desired color for wild cards. */
 function withColor(
   card: UnoCard,
   hand: UnoCard[],
@@ -93,7 +93,7 @@ function withColor(
     return { cardId: card.id, color: COLORS[Math.floor(Math.random() * COLORS.length)] };
   }
 
-  // Die Farbe wählen, von der noch die meisten eigenen Karten übrig sind.
+  // Pick the color of which the most own cards are left.
   const counts = new Map<UnoColor, number>(COLORS.map((c) => [c, 0]));
   for (const c of hand) {
     if (c.id === card.id || c.color === 'w') continue;

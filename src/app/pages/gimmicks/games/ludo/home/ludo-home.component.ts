@@ -12,7 +12,7 @@ interface Seat {
   cpu: boolean;
 }
 
-/** Startbildschirm: Spielart wählen, Mitspieler zusammenstellen oder Code eingeben. */
+/** Start screen: choose the game mode, put together the players or enter a code. */
 @Component({
   selector: 'app-ludo-home',
   imports: [CommonModule, FormsModule, TranslateModule, IonSegment, IonSegmentButton, IonLabel],
@@ -29,9 +29,9 @@ export class LudoHomeComponent implements OnInit {
 
   protected readonly mode = signal<LudoMode>('local');
   protected readonly level = signal<LudoLevel>('medium');
-  /** Mitspieler am Gerät – Menschen wie Computer, in Zugreihenfolge. */
+  /** Players on the device – humans and computers, in turn order. */
   protected readonly seats = signal<Seat[]>([]);
-  /** Online: eigener Name und eigenes Zeichen. */
+  /** Online: own name and own symbol. */
   protected readonly name = signal('');
   protected readonly emoji = signal(AVATARS[0]);
   protected readonly joinCode = signal('');
@@ -42,7 +42,7 @@ export class LudoHomeComponent implements OnInit {
     const savedEmoji = this.svc.savedEmoji;
     this.name.set(saved);
     if (savedEmoji && AVATARS.includes(savedEmoji)) this.emoji.set(savedEmoji);
-    // Voreinstellung am Gerät: du gegen einen Computer.
+    // Default on the device: you against one computer.
     this.seats.set([
       { name: saved, emoji: this.emoji(), cpu: false },
       { name: this.cpuName(1), emoji: CPU_EMOJI, cpu: true },
@@ -64,7 +64,7 @@ export class LudoHomeComponent implements OnInit {
     this.joinCode.set(value.replace(/\D/g, '').slice(0, 4));
   }
 
-  // ---- Mitspieler am Gerät -------------------------------------------------
+  // ---- Players on the device -----------------------------------------------
   protected addHuman(): void {
     if (this.seats().length >= this.maxPlayers) return;
     this.seats.update((s) => [...s, { name: '', emoji: this.freeEmoji(s), cpu: false }]);
@@ -86,7 +86,7 @@ export class LudoHomeComponent implements OnInit {
     this.seats.update((s) => s.map((seat, i) => (i === index ? { ...seat, name: value } : seat)));
   }
 
-  /** Klick auf das Zeichen schaltet zum nächsten freien Tier weiter. */
+  /** Clicking the symbol switches to the next free animal. */
   protected cycleEmoji(index: number): void {
     this.seats.update((s) => {
       const taken = s.filter((_, i) => i !== index).map((x) => x.emoji);
@@ -106,13 +106,13 @@ export class LudoHomeComponent implements OnInit {
     return AVATARS.find((a) => !taken.includes(a)) ?? AVATARS[0];
   }
 
-  /** Mindestens zwei Mitspieler und mindestens ein Mensch. */
+  /** At least two players and at least one human. */
   protected canStartLocal(): boolean {
     const s = this.seats();
     return s.length >= 2 && s.some((x) => !x.cpu);
   }
 
-  /** Die Spielstärke ist nur interessant, wenn ein Computer mitspielt. */
+  /** The difficulty only matters if a computer plays along. */
   protected hasComputer(): boolean {
     return this.seats().some((s) => s.cpu);
   }
@@ -138,7 +138,7 @@ export class LudoHomeComponent implements OnInit {
     try {
       await this.svc.createGame(this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 
@@ -147,7 +147,7 @@ export class LudoHomeComponent implements OnInit {
     try {
       await this.svc.joinGame(this.joinCode(), this.name().trim(), this.emoji());
     } catch {
-      /* Fehler wird über svc.error angezeigt. */
+      /* The error is shown via svc.error. */
     }
   }
 }

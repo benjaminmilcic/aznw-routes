@@ -1,8 +1,8 @@
 // =============================================================
-//  UNO-Regeln als reine Funktionen.
+//  UNO rules as pure functions.
 // =============================================================
-// Bewusst ohne Angular/Firebase: derselbe Code entscheidet über die Züge
-// am Gerät, im Online-Spiel und beim Computer-Gegner.
+// Deliberately without Angular/Firebase: the same code decides on the moves
+// on the device, in the online game and for the computer opponent.
 // =============================================================
 import {
   COLORS,
@@ -14,33 +14,33 @@ import {
   type UnoValue,
 } from './uno.types';
 
-/** Oberste Karte des Ablagestapels. */
+/** Top card of the discard pile. */
 export function topCard(g: UnoGame): UnoCard | null {
   const pile = g.discardPile;
   return pile && pile.length ? pile[pile.length - 1] : null;
 }
 
-/** Darf diese Karte auf die oberste Ablage (mit aktueller Farbe) gelegt werden? */
+/** May this card be played on the top discard (with the current color)? */
 export function isPlayable(card: UnoCard, top: UnoCard | null, currentColor: UnoColor): boolean {
-  if (card.color === 'w') return true; // Joker passt immer
+  if (card.color === 'w') return true; // Wild card always fits
   if (card.color === currentColor) return true;
   if (top && card.value === top.value) return true;
   return false;
 }
 
-/** Ist dieser Spieler seine Karten schon losgeworden? */
+/** Has this player already got rid of their cards? */
 export function isDone(g: UnoGame, id: string): boolean {
   return (g.hands[id]?.length ?? 0) === 0;
 }
 
-/** Alle Spieler, die noch Karten auf der Hand haben. */
+/** All players who still have cards in their hand. */
 export function activePlayers(g: UnoGame): string[] {
   return g.order.filter((id) => !isDone(g, id));
 }
 
 /**
- * Der nächste Spieler in der aktuellen Richtung – wer schon fertig ist oder
- * `skipped` Plätze weiter liegt, wird übersprungen.
+ * The next player in the current direction – whoever is already done or
+ * lies `skipped` places further is skipped.
  */
 export function nextPlayer(g: UnoGame, from: string, steps = 1): string {
   const n = g.order.length;
@@ -55,7 +55,7 @@ export function nextPlayer(g: UnoGame, from: string, steps = 1): string {
   return g.order[index] ?? from;
 }
 
-// ---- Kartenstapel ---------------------------------------------------------
+// ---- Card piles -----------------------------------------------------------
 function isNumber(v: UnoValue): boolean {
   return v.length === 1 && v >= '0' && v <= '9';
 }
@@ -69,7 +69,7 @@ export function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-/** Baut ein vollständiges Blatt: 108 Karten wie im Original. */
+/** Builds a complete deck: 108 cards like in the original. */
 export function buildDeck(): UnoCard[] {
   const deck: UnoCard[] = [];
   const actions: UnoValue[] = ['skip', 'rev', 'd2'];
@@ -96,7 +96,7 @@ export function buildDeck(): UnoCard[] {
   return deck;
 }
 
-/** Mischt den Ablagestapel (ohne oberste Karte) zurück in den Nachziehstapel. */
+/** Shuffles the discard pile (without the top card) back into the draw pile. */
 function reshuffle(drawPile: UnoCard[], discardPile: UnoCard[]): void {
   if (discardPile.length <= 1) return;
   const top = discardPile.pop()!;
@@ -105,17 +105,17 @@ function reshuffle(drawPile: UnoCard[], discardPile: UnoCard[]): void {
   discardPile.push(top);
 }
 
-/** Zieht n Karten in `hand` und mischt bei Bedarf den Ablagestapel nach. */
+/** Draws n cards into `hand` and reshuffles the discard pile if needed. */
 function drawInto(hand: UnoCard[], drawPile: UnoCard[], discardPile: UnoCard[], n: number): void {
   for (let i = 0; i < n; i++) {
     if (drawPile.length === 0) reshuffle(drawPile, discardPile);
     const c = drawPile.pop();
-    if (!c) break; // beide Stapel leer – nichts mehr zu ziehen
+    if (!c) break; // both piles empty – nothing left to draw
     hand.push(c);
   }
 }
 
-/** Teilt für eine neue Runde aus und legt die Startkarte. */
+/** Deals for a new round and places the starting card. */
 export function dealNewRound(g: UnoGame, starter: string): UnoGame {
   const deck = shuffle(buildDeck());
   const hands: Record<string, UnoCard[]> = {};
@@ -126,7 +126,7 @@ export function dealNewRound(g: UnoGame, starter: string): UnoGame {
       if (c) hands[id].push(c);
     }
   }
-  // Startkarte: erste reine Zahlenkarte (keine Aktion/Joker) verwenden.
+  // Starting card: use the first plain number card (no action/wild).
   let startIdx = deck.findIndex((c) => c.color !== 'w' && isNumber(c.value));
   if (startIdx < 0) startIdx = deck.length - 1;
   const [start] = deck.splice(startIdx, 1);
@@ -147,14 +147,14 @@ export function dealNewRound(g: UnoGame, starter: string): UnoGame {
   };
 }
 
-// ---- Spielende ------------------------------------------------------------
+// ---- Game over ------------------------------------------------------------
 /**
- * Ist die Partie entschieden? Das ist der Fall, wenn nur noch einer Karten
- * hat – oder wenn nur noch Computer weiterspielen würden. Niemand will
- * zuschauen, wie zwei Computer die letzten Plätze ausspielen.
+ * Is the game decided? That is the case when only one player still has cards
+ * – or when only computers would keep playing. Nobody wants to
+ * watch two computers play out the last places.
  *
- * Die noch nicht fertigen Spieler werden nach ihrer Kartenzahl (weniger =
- * besser) an die Rangliste angehängt.
+ * The players who have not finished are appended to the ranking by their
+ * number of cards (fewer = better).
  */
 export function finishIfDecided(g: UnoGame): UnoGame {
   const active = activePlayers(g);
@@ -174,10 +174,10 @@ export function finishIfDecided(g: UnoGame): UnoGame {
   };
 }
 
-// ---- Züge -----------------------------------------------------------------
+// ---- Moves ----------------------------------------------------------------
 /**
- * Legt eine Handkarte ab. Bei Jokern muss `chosenColor` gesetzt sein.
- * Gibt null zurück, wenn der Zug nicht erlaubt ist.
+ * Plays a card from the hand. For wild cards `chosenColor` must be set.
+ * Returns null if the move is not allowed.
  */
 export function applyPlay(
   g: UnoGame,
@@ -202,21 +202,21 @@ export function applyPlay(
   const discardPile = [...g.discardPile, card];
   const currentColor: UnoColor = isWild ? (chosenColor as UnoColor) : (card.color as UnoColor);
 
-  // Richtungswechsel wirkt bei nur zwei Aktiven wie "Aussetzen".
+  // With only two active players a reverse acts like a "skip".
   let direction = g.direction;
   const activeBefore = activePlayers(g).length;
   if (card.value === 'rev' && activeBefore > 2) direction = (direction * -1) as 1 | -1;
 
   let next: UnoGame = { ...g, hands, drawPile, discardPile, currentColor, direction };
 
-  // Karten los: Platz sichern.
+  // Cards gone: secure the place.
   const justFinished = hand.length === 0;
   if (justFinished) {
     const ranking = [...next.ranking, playerId];
     next = { ...next, ranking, winnerId: next.winnerId ?? ranking[0] };
   }
 
-  // Wirkung auf den Nächsten (Ziehen trifft immer den, der jetzt drankäme).
+  // Effect on the next player (drawing always hits the one whose turn it would be now).
   let forced = 0;
   if (card.value === 'd2') forced = 2;
   else if (card.value === 'd4') forced = 4;
@@ -233,11 +233,11 @@ export function applyPlay(
     lastAction: { by: playerId, type: 'play', card, forced, at: Date.now() },
   };
 
-  // Steht das Ergebnis fest, ist die Partie hier zu Ende.
+  // If the result is decided, the game ends here.
   const decided = finishIfDecided(next);
   if (decided.status === 'finished') return { ...decided, updatedAt: Date.now() };
 
-  // Aussetzen/Zieh-Karten überspringen den Nächsten, "rev" zu zweit ebenso.
+  // Skip/draw cards skip the next player, "rev" with two players as well.
   const skipsOne =
     card.value === 'skip' ||
     forced > 0 ||
@@ -250,7 +250,7 @@ export function applyPlay(
   return { ...next, currentTurn, updatedAt: Date.now() };
 }
 
-/** Zieht eine Karte vom Nachziehstapel. Danach ist der Nächste dran. */
+/** Draws a card from the draw pile. Afterwards it is the next player's turn. */
 export function applyDraw(g: UnoGame, playerId: string): UnoGame | null {
   if (g.status !== 'playing' || g.currentTurn !== playerId) return null;
 

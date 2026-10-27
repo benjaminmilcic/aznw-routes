@@ -123,11 +123,11 @@ hr {
   text-transform: uppercase;
   margin-top: 18px;
   text-align: center;
-  /* Zeilenfluss statt Flex: nur so kann ein <br> den Umbruch erzwingen. */
+  /* Line flow instead of flex: only that way can a <br> force the line break. */
   line-height: 2.1;
 }
 
-/* Ein Eintrag bleibt immer zusammen, umbrochen wird nur zwischen Eintraegen. */
+/* An entry always stays together, wrapping only happens between entries. */
 .footer-meta .meta-item {
   white-space: nowrap;
 }
@@ -137,8 +137,8 @@ hr {
 }
 
 /*
- * Umbricht die Zeile zwischen zwei Eintraegen, setzt die Komponente
- * .is-break: der Punkt entfaellt, das <br> uebernimmt den Umbruch.
+ * Wraps the line between two entries, the component sets
+ * .is-break: the dot is dropped, the <br> takes over the line break.
  */
 .footer-meta .meta-break {
   display: none;

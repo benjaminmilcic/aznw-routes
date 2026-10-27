@@ -29,8 +29,8 @@ export const selectAllRecipesSummary = createSelector(
 );
 
 /**
- * Entfernt Akzente aus einem String
- * Beispiel: 'Ćevapčići' => 'Cevapcici'
+ * Removes accents from a string
+ * Example: 'Ćevapčići' => 'Cevapcici'
  */
 const removeAccents = (str: string): string => {
   return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
@@ -52,8 +52,8 @@ export const selectFilteredRecipesSummary = createSelector(
         const titleLower = recipe.title.toLocaleLowerCase();
         const titleWithoutAccents = removeAccents(titleLower);
 
-        // Exakte Suche: Suche immer im Original-Titel
-        // UND zusätzlich im Titel ohne Akzente (damit "c" auch "Ćevapčići" findet)
+        // Exact search: always search in the original title
+        // AND additionally in the title without accents (so that "c" also finds "Ćevapčići")
         return (
           titleLower.includes(searchTerm.toLocaleLowerCase()) ||
           titleWithoutAccents.includes(searchTerm.toLocaleLowerCase())

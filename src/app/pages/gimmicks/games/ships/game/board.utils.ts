@@ -1,5 +1,5 @@
 // =============================================================
-//  Hilfsfunktionen rund um das Spielfeld von "Schiffe versenken".
+//  Helper functions around the board of "Battleship".
 // =============================================================
 import {
   FLEET,
@@ -10,12 +10,12 @@ import {
   type ShotResult,
 } from './ships.types';
 
-/** Feld-Schlüssel im Format "x,y". */
+/** Cell key in the format "x,y". */
 export function cellKey(x: number, y: number): string {
   return `${x},${y}`;
 }
 
-/** Zerlegt "x,y" wieder in Zahlen. */
+/** Splits "x,y" back into numbers. */
 export function parseCell(key: string): { x: number; y: number } {
   const [x, y] = key.split(',').map(Number);
   return { x, y };
@@ -26,8 +26,8 @@ export function inBounds(x: number, y: number): boolean {
 }
 
 /**
- * Felder für ein Schiff ab (x,y) – oder `null`, wenn es nicht passt
- * (über den Rand hinaus oder auf ein belegtes Feld).
+ * Cells for a ship starting at (x,y) – or `null` if it does not fit
+ * (beyond the edge or on an occupied cell).
  */
 export function cellsFor(
   x: number,
@@ -48,7 +48,7 @@ export function cellsFor(
   return cells;
 }
 
-/** Verteilt die komplette Flotte zufällig auf dem Feld. */
+/** Distributes the complete fleet randomly on the board. */
 export function randomFleet(): PlacedShip[] {
   const occupied = new Set<string>();
   const ships: PlacedShip[] = [];
@@ -68,7 +68,7 @@ export function randomFleet(): PlacedShip[] {
   return ships;
 }
 
-/** Baut das Raster für die Anzeige – `stateFor` entscheidet je Feld. */
+/** Builds the grid for display – `stateFor` decides per cell. */
 export function buildGrid(stateFor: (key: string) => CellView['state']): CellView[][] {
   const grid: CellView[][] = [];
   for (let y = 0; y < GRID_SIZE; y++) {
@@ -79,7 +79,7 @@ export function buildGrid(stateFor: (key: string) => CellView['state']): CellVie
   return grid;
 }
 
-/** Alle Felder von Schiffen, die komplett getroffen (= versenkt) sind. */
+/** All cells of ships that are completely hit (= sunk). */
 export function sunkCells(
   fleet: readonly PlacedShip[],
   shots: Record<string, ShotResult>,
@@ -93,7 +93,7 @@ export function sunkCells(
   return set;
 }
 
-/** Anzahl versenkter Schiffe. */
+/** Number of sunk ships. */
 export function countSunk(
   fleet: readonly PlacedShip[],
   shots: Record<string, ShotResult>,
@@ -101,7 +101,7 @@ export function countSunk(
   return fleet.filter((s) => s.cells.every((c) => shots[c] === 'hit')).length;
 }
 
-/** Größen der Schiffe, die noch nicht versenkt sind. */
+/** Sizes of the ships that have not been sunk yet. */
 export function remainingSizes(
   fleet: readonly PlacedShip[],
   shots: Record<string, ShotResult>,
@@ -109,7 +109,7 @@ export function remainingSizes(
   return fleet.filter((s) => !s.cells.every((c) => shots[c] === 'hit')).map((s) => s.size);
 }
 
-/** Ist die komplette Flotte versenkt? */
+/** Is the complete fleet sunk? */
 export function fleetDestroyed(
   fleet: readonly PlacedShip[],
   shots: Record<string, ShotResult>,

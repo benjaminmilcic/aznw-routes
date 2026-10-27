@@ -11,7 +11,7 @@ import {
   type ShotResult,
 } from '../game/ships.types';
 
-/** Kampf-Phase: links das gegnerische Meer (dort wird geschossen), rechts das eigene. */
+/** Battle phase: on the left the opponent's sea (where you shoot), on the right your own. */
 @Component({
   selector: 'app-ships-battle',
   imports: [ShipsBoardComponent, TranslateModule],
@@ -52,7 +52,7 @@ export class ShipsBattleComponent {
     () => this.myFleet().length - countSunk(this.myFleet(), this.enemyShots()),
   );
 
-  /** Gegnerisches Meer: Nur die eigenen Treffer/Fehlschüsse sind sichtbar. */
+  /** Opponent's sea: only your own hits/misses are visible. */
   protected readonly enemyRows = computed<CellView[][]>(() => {
     const shots = this.myShots();
     const sunk = sunkCells(this.enemyFleet(), shots);
@@ -64,7 +64,7 @@ export class ShipsBattleComponent {
     });
   });
 
-  /** Eigenes Meer: die eigenen Schiffe plus die Schüsse des Gegners. */
+  /** Own sea: your own ships plus the opponent's shots. */
   protected readonly myRows = computed<CellView[][]>(() => {
     const shots = this.enemyShots();
     const fleet = this.myFleet();
@@ -79,8 +79,8 @@ export class ShipsBattleComponent {
   });
 
   /**
-   * Anzeigename: selbst eingegebene Namen bleiben unverändert, nur der
-   * Computer wird übersetzt (damit ein Sprachwechsel im Spiel greift).
+   * Display name: names entered by players stay unchanged, only the
+   * computer is translated (so that a language change applies in the game).
    */
   protected displayName(p: ShipsPlayer | null | undefined): string {
     if (!p) return '';

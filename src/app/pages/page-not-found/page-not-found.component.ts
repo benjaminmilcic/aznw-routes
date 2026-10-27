@@ -14,7 +14,7 @@ export class PageNotFoundComponent {
   private router = inject(Router);
 
   goBack(): void {
-    // Kein Verlauf innerhalb der App (z.B. Direkteinstieg per Link) -> Startseite
+    // No history within the app (e.g. direct entry via a link) -> home page
     if (window.history.length > 1) {
       this.location.back();
     } else {

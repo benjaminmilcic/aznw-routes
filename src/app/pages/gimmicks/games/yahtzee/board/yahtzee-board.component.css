@@ -1,5 +1,5 @@
-/* "relative" ist wichtig: das Spiele-Layout legt mit section:before ein
-   absolut positioniertes Hintergrundbild über die Seite. */
+/* "relative" is important: the games layout places an absolutely positioned
+   background image over the page with section:before. */
 :host {
   display: block;
   position: relative;
@@ -19,7 +19,7 @@
   box-sizing: border-box;
 }
 
-/* ---- Kopfzeile ---------------------------------------------------------- */
+/* ---- Header ------------------------------------------------------------- */
 .bar {
   flex: 0 0 auto;
   display: flex;
@@ -59,7 +59,7 @@
   transform: scale(0.95);
 }
 
-/* ---- Würfelbereich ------------------------------------------------------ */
+/* ---- Dice area ---------------------------------------------------------- */
 .dice-area {
   flex: 0 0 auto;
   display: flex;
@@ -104,8 +104,8 @@
   text-shadow: 0 1px 3px rgba(8, 24, 66, 0.6);
 }
 
-/* ---- Punktetabelle ------------------------------------------------------ */
-/* Umschlag für den Zettel: trägt die Scroll-Hinweise an den Rändern. */
+/* ---- Score sheet -------------------------------------------------------- */
+/* Wrapper for the sheet: carries the scroll hints at the edges. */
 .sheet-outer {
   position: relative;
   flex: 1 1 auto;
@@ -124,14 +124,14 @@
   border-radius: 0.9rem;
   box-shadow: 0 8px 20px rgba(8, 24, 66, 0.3);
   scrollbar-width: thin;
-  /* Bewusst KEIN scroll-behavior: smooth – damit verschluckt Chrome
-     programmatische Scrolls (z. B. zur Spalte des aktiven Spielers)
-     zeitweise komplett. Lieber direkt springen als gar nicht scrollen. */
+  /* Deliberately NO scroll-behavior: smooth – with it Chrome at times
+     swallows programmatic scrolls (e.g. to the active player's column)
+     completely. Better to jump directly than not to scroll at all. */
 }
 
-/* ---- "Da geht es noch weiter"-Hinweise ---------------------------------- */
-/* Kleine Pillen an den Rändern – sie verdecken möglichst wenig vom Zettel
-   und erscheinen nur, solange es in diese Richtung wirklich weitergeht. */
+/* ---- "There is more" hints ---------------------------------------------- */
+/* Small pills at the edges – they cover as little of the sheet as possible
+   and only appear while there really is more in that direction. */
 .scroll-pill {
   position: absolute;
   z-index: 6;
@@ -162,8 +162,8 @@
   translate: -50% 0;
 }
 
-/* Der Links-Pfeil steht nicht am Rand, sondern direkt neben der festen
-   Bezeichnungsspalte – dort verdeckt er keine Kategorienamen. */
+/* The left arrow is not at the edge, but right next to the fixed
+   label column – there it does not cover any category names. */
 .scroll-pill--left {
   left: calc(var(--label-w, 0px) + 0.25rem);
   top: 50%;
@@ -264,7 +264,7 @@
   padding: 0.2rem 0.35rem;
 }
 
-/* Erste Spalte bleibt beim seitlichen Scrollen stehen. */
+/* The first column stays in place when scrolling sideways. */
 .lbl {
   position: sticky;
   left: 0;
@@ -305,7 +305,7 @@ thead .lbl {
 .pname {
   display: block;
   max-width: 5rem;
-  margin: 0 auto; /* Name mittig unter dem Zeichen */
+  margin: 0 auto; /* Name centered below the symbol */
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -324,7 +324,7 @@ thead .lbl {
   background: #fffdf3;
 }
 
-/* Anklickbare Vorschau: was dieser Wurf hier bringen würde. */
+/* Clickable preview: what this roll would score here. */
 .cell--pick {
   cursor: pointer;
   background: #dcfce7;

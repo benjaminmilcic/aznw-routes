@@ -26,37 +26,37 @@ const PLAYER_NAME_KEY = 'ships_player_name';
 const PLAYER_EMOJI_KEY = 'ships_player_emoji';
 const CODE_ALPHABET = '0123456789';
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.shipsGame';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
 /**
- * "Schiffe versenken" – aus der Whiteboard-App übernommen und um einen
- * Computer-Gegner erweitert.
+ * "Battleship" – taken over from the whiteboard app and extended by a
+ * computer opponent.
  *
- * Gegen den Computer läuft alles lokal im Browser. Online liegt der
- * Spielstand in Firestore unter "games/<code>" – im selben Format wie in
- * der Whiteboard-App, sodass eine Partie auch zwischen beiden Apps
- * gespielt werden kann.
+ * Against the computer everything runs locally in the browser. Online the
+ * game state lives in Firestore under "games/<code>" – in the same format as in
+ * the whiteboard app, so that a game can also be played between both
+ * apps.
  */
 @Injectable({ providedIn: 'root' })
 export class ShipsService {
-  /** Aktueller Spielstand (lokal oder aus Firestore). */
+  /** Current game state (local or from Firestore). */
   readonly game = signal<ShipsGame | null>(null);
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<ShipsMode | null>(null);
-  /** Spielstärke des Computers. */
+  /** Difficulty of the computer. */
   readonly level = signal<ShipsLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = signal<string | null>(null);
   readonly busy = signal(false);
-  /** Der Computer "überlegt" gerade (kurze Verzögerung, damit man den Zug sieht). */
+  /** The computer is "thinking" (short delay so that you can see the move). */
   readonly thinking = signal(false);
 
   readonly playerId = this.loadPlayerId();
 
-  /** Kindgerechter Bestätigungs-Dialog statt window.confirm. */
+  /** Child-friendly confirmation dialog instead of window.confirm. */
   readonly confirmDialog = signal<{
     emoji: string;
     titleKey: string;
@@ -69,7 +69,7 @@ export class ShipsService {
   private gameUnsub: Unsubscribe | null = null;
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<ShipsPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
   readonly opponentId = computed<string | null>(() => {
@@ -91,7 +91,7 @@ export class ShipsService {
 
   readonly amWinner = computed<boolean>(() => this.game()?.winner === this.playerId);
 
-  // ---- Spieler-Profil (gemerkt im localStorage) ---------------------------
+  // ---- Player profile (remembered in localStorage) ------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -115,10 +115,10 @@ export class ShipsService {
     return id;
   }
 
-  // ---- Spiel gegen den Computer -------------------------------------------
+  // ---- Game against the computer ------------------------------------------
   /**
-   * Startet ein Spiel gegen den Computer. Seine Flotte steht sofort (zufällig),
-   * der Mensch platziert seine eigene und beginnt danach.
+   * Starts a game against the computer. Its fleet is placed immediately (randomly),
+   * the human places their own and starts afterwards.
    */
   startComputerGame(name: string, emoji: string, level: ShipsLevel): void {
     this.rememberProfile(name, emoji);
@@ -132,8 +132,8 @@ export class ShipsService {
       emoji,
       ready: false,
     };
-    // Der angezeigte Name des Computers wird übersetzt (siehe Komponenten),
-    // dieser Wert ist nur der Rückfallwert.
+    // The computer's displayed name is translated (see components),
+    // this value is only the fallback.
     const cpu: ShipsPlayer = { id: CPU_ID, name: 'Computer', emoji: '🤖', ready: true };
 
     this.game.set({
@@ -150,7 +150,7 @@ export class ShipsService {
     });
   }
 
-  // ---- Online-Spiel: erstellen / beitreten --------------------------------
+  // ---- Online game: create / join -----------------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -216,7 +216,7 @@ export class ShipsService {
           if (!current.exists()) throw new Error(`${T}.errors.notFound`);
           const g = this.normalize(current.data() as ShipsGame);
 
-          // Schon Teil des Spiels? Dann nur wieder verbinden.
+          // Already part of the game? Then just reconnect.
           if (g.players[this.playerId]) return;
           if (g.guestId || g.status !== 'waiting') {
             full = true;
@@ -240,8 +240,8 @@ export class ShipsService {
     }
   }
 
-  // ---- Flotte abschicken ---------------------------------------------------
-  /** Platzierte Schiffe abgeben. Sind beide fertig, beginnt der Kampf. */
+  // ---- Submit fleet --------------------------------------------------------
+  /** Submit the placed ships. When both are done, the battle begins. */
   submitFleet(ships: PlacedShip[]): void {
     const g = this.game();
     if (!g || g.status !== 'setup') return;
@@ -263,7 +263,7 @@ export class ShipsService {
       return;
     }
 
-    // Gegen den Computer: Seine Flotte steht schon, es geht sofort los.
+    // Against the computer: its fleet is already placed, it starts right away.
     this.game.set({
       ...g,
       status: 'battle',
@@ -276,7 +276,7 @@ export class ShipsService {
     });
   }
 
-  // ---- Schießen ------------------------------------------------------------
+  // ---- Shooting ------------------------------------------------------------
   shoot(x: number, y: number): void {
     const g = this.game();
     if (!g || g.status !== 'battle' || g.turn !== this.playerId || this.thinking()) return;
@@ -293,8 +293,8 @@ export class ShipsService {
   }
 
   /**
-   * Wendet einen Schuss an (verändert das übergebene Objekt) und gibt es
-   * zurück – oder `null`, wenn der Schuss nicht erlaubt war.
+   * Applies a shot (modifies the given object) and returns it
+   * – or `null` if the shot was not allowed.
    */
   private applyShot(g: ShipsGame, shooterId: string, x: number, y: number): ShipsGame | null {
     if (g.status !== 'battle' || g.turn !== shooterId) return null;
@@ -304,7 +304,7 @@ export class ShipsService {
 
     const key = cellKey(x, y);
     const shots = { ...(g.shots[shooterId] ?? {}) };
-    if (shots[key]) return null; // dieses Feld wurde schon beschossen
+    if (shots[key]) return null; // this cell has already been shot at
 
     const targetFleet = g.fleets[targetId] ?? [];
     const isHit = targetFleet.some((ship) => ship.cells.includes(key));
@@ -316,15 +316,15 @@ export class ShipsService {
       g.winner = shooterId;
       g.turn = null;
     } else if (isHit && EXTRA_TURN_ON_HIT) {
-      g.turn = shooterId; // Treffer -> nochmal
+      g.turn = shooterId; // hit -> again
     } else {
       g.turn = targetId;
     }
     return g;
   }
 
-  // ---- Zug des Computers ---------------------------------------------------
-  /** Ist der Computer dran, schießt er nach kurzer Bedenkzeit. */
+  // ---- Computer's turn -----------------------------------------------------
+  /** If it is the computer's turn, it shoots after a short pause. */
   private maybeScheduleComputerShot(): void {
     const g = this.game();
     if (this.mode() !== 'computer' || !g || g.status !== 'battle' || g.turn !== CPU_ID) {
@@ -359,7 +359,7 @@ export class ShipsService {
       this.thinking.set(false);
       if (!next) return;
       this.game.set(next);
-      // Nach einem Treffer darf der Computer nochmal.
+      // After a hit the computer may shoot again.
       this.maybeScheduleComputerShot();
     }, 750);
   }
@@ -371,8 +371,8 @@ export class ShipsService {
     }
   }
 
-  // ---- Nochmal spielen / verlassen -----------------------------------------
-  /** Neue Runde mit denselben Mitspielern – die Flotten werden neu gelegt. */
+  // ---- Play again / leave --------------------------------------------------
+  /** New round with the same players – the fleets are placed again. */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -408,12 +408,12 @@ export class ShipsService {
     });
   }
 
-  /** Laufendes Spiel verlassen und zurück zum Startbildschirm. */
+  /** Leave the running game and go back to the start screen. */
   leaveGame(): void {
     this.reset();
   }
 
-  /** Fragt vor dem Abbrechen nach (statt window.confirm). */
+  /** Asks before aborting (instead of window.confirm). */
   askLeave(): void {
     this.confirmDialog.set({
       emoji: '🚪',
@@ -446,7 +446,7 @@ export class ShipsService {
     this.mode.set(null);
   }
 
-  // ---- Online-Intern -------------------------------------------------------
+  // ---- Online internals ----------------------------------------------------
   private ref(code: string) {
     return doc(firestoreDb, 'games', code);
   }
@@ -462,7 +462,7 @@ export class ShipsService {
     );
   }
 
-  /** Liest, verändert und schreibt den Spielstand in einem Rutsch. */
+  /** Reads, changes and writes the game state in one go. */
   private async transact(
     code: string,
     change: (state: ShipsGame) => ShipsGame,
@@ -480,7 +480,7 @@ export class ShipsService {
     }
   }
 
-  /** Fehlende Felder ergänzen, damit die Oberfläche nie auf "undefined" trifft. */
+  /** Fill in missing fields so that the UI never hits "undefined". */
   private normalize(g: ShipsGame): ShipsGame {
     const fleets: Record<string, PlacedShip[]> = {};
     for (const [id, ships] of Object.entries(g.fleets ?? {})) {
@@ -501,7 +501,7 @@ export class ShipsService {
     };
   }
 
-  /** Flache Kopie für die lokale Zug-Berechnung. */
+  /** Shallow copy for the local move calculation. */
   private clone(g: ShipsGame): ShipsGame {
     return {
       ...g,
@@ -528,12 +528,12 @@ export class ShipsService {
     return s;
   }
 
-  /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
+  /** Aborts early with a clear message if Firebase is not set up. */
   private assertConfig(): void {
     if (!firestoreConfigured) throw new Error(`${T}.errors.notConfigured`);
   }
 
-  /** Verhindert ewiges Hängen, falls die Datenbank nicht antwortet. */
+  /** Prevents hanging forever if the database does not respond. */
   private withTimeout<R>(p: Promise<R>, ms = 12000): Promise<R> {
     return Promise.race([
       p,

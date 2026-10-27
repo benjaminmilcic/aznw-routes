@@ -3,15 +3,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import type { AwayPlayer } from '../firebase/game-channel';
 
 /**
- * Zeigt an, wenn die Verbindung zum Spiel nicht steht oder ein Zug nicht
- * gespeichert werden konnte.
+ * Shows when the connection to the game is down or a move could not
+ * be saved.
  *
- * Vorher war so etwas nirgends sichtbar: die Fehlermeldung der Spiele wurde
- * ausschliesslich auf dem Startbildschirm gerendert. Wer schon im Spiel war,
- * bekam von einem Verbindungsverlust nichts mit – das Brett blieb einfach
- * stehen und beide Spieler warteten aufeinander.
+ * Before, nothing like this was visible anywhere: the games' error message was
+ * rendered only on the start screen. Whoever was already in the game
+ * noticed nothing of a lost connection – the board simply stayed
+ * put and both players waited for each other.
  *
- * `error` ist – wie ueberall in den Spielen hier – ein Uebersetzungsschluessel.
+ * `error` is – as everywhere in the games here – a translation key.
  */
 @Component({
   selector: 'app-sync-status',
@@ -20,21 +20,21 @@ import type { AwayPlayer } from '../firebase/game-channel';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SyncStatusComponent {
-  /** Verbindung ist laenger weg (kurze Aussetzer werden nicht gemeldet). */
+  /** The connection has been gone for a while (short dropouts are not reported). */
   readonly offline = input(false);
-  /** Uebersetzungsschluessel der Meldung, oder null. */
+  /** Translation key of the message, or null. */
   readonly error = input<string | null>(null);
-  /** Ein Zug ist unterwegs und dauert auffaellig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = input(false);
-  /** Mitspieler, die gerade nicht verbunden sind. */
+  /** Players who are currently not connected. */
   readonly away = input<AwayPlayer[]>([]);
   /**
-   * Der abwesende Spieler, auf den die Runde wartet – erst nach der Karenzzeit
-   * gesetzt. Nur dann bieten wir das Ueberspringen an.
+   * The absent player the round is waiting for – only set after the grace
+   * period. Only then do we offer to skip.
    */
   readonly blocking = input<AwayPlayer | null>(null);
 
-  /** Namen der Abwesenden, fertig fuer die Meldung. */
+  /** Names of the absent players, ready for the message. */
   protected readonly awayNames = computed(() =>
     this.away()
       .map((p) => p.name)
@@ -42,10 +42,10 @@ export class SyncStatusComponent {
       .join(', '),
   );
 
-  /** Hinweis wegklicken. */
+  /** Dismiss the notice. */
   readonly dismissed = output<void>();
-  /** Stand neu vom Server holen. */
+  /** Fetch the state from the server again. */
   readonly retried = output<void>();
-  /** Abwesenden Spieler aus der Runde nehmen. */
+  /** Remove the absent player from the round. */
   readonly skipped = output<string>();
 }

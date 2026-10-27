@@ -5,7 +5,7 @@ export interface Question {
 }
 
 export const QUESTIONS: Question[] = [
-  // Frage 1
+  // Question 1
   {
     question: {
       en: 'How many planets are in our solar system?',
@@ -17,9 +17,9 @@ export const QUESTIONS: Question[] = [
       de: ['7', '8', '9', '10'],
       hr: ['7', '8', '9', '10'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "8" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "8" (index 1)
   },
-  // Frage 2
+  // Question 2
   {
     question: {
       en: 'Who developed the theory of relativity?',
@@ -46,9 +46,9 @@ export const QUESTIONS: Question[] = [
         'Galileo Galilei',
       ],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Albert Einstein" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Albert Einstein" (index 1)
   },
-  // Frage 3
+  // Question 3
   {
     question: {
       en: 'Which is the largest country in the world by area?',
@@ -60,9 +60,9 @@ export const QUESTIONS: Question[] = [
       de: ['China', 'USA', 'Russland', 'Kanada'],
       hr: ['Kina', 'SAD', 'Rusija', 'Kanada'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Russia" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Russia" (index 2)
   },
-  // Frage 4
+  // Question 4
   {
     question: {
       en: 'Which company developed the Android operating system?',
@@ -74,9 +74,9 @@ export const QUESTIONS: Question[] = [
       de: ['Apple', 'Microsoft', 'Google', 'Samsung'],
       hr: ['Apple', 'Microsoft', 'Google', 'Samsung'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Google" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Google" (index 2)
   },
-  // Frage 5
+  // Question 5
   {
     question: {
       en: "What does the abbreviation 'HTML' stand for?",
@@ -103,9 +103,9 @@ export const QUESTIONS: Question[] = [
         'Hyper Text Machine Language',
       ],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Hyper Text Markup Language" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Hyper Text Markup Language" (index 2)
   },
-  // Frage 6
+  // Question 6
   {
     question: {
       en: 'In which year did World War II end?',
@@ -117,9 +117,9 @@ export const QUESTIONS: Question[] = [
       de: ['1943', '1945', '1950', '1939'],
       hr: ['1943', '1945', '1950', '1939'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "1945" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "1945" (index 1)
   },
-  // Frage 7
+  // Question 7
   {
     question: {
       en: "Which element has the chemical symbol 'O'?",
@@ -131,9 +131,9 @@ export const QUESTIONS: Question[] = [
       de: ['Gold', 'Sauerstoff', 'Kohlenstoff', 'Eisen'],
       hr: ['Zlato', 'Kisik', 'Ugljik', 'Željezo'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Oxygen" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Oxygen" (index 1)
   },
-  // Frage 8
+  // Question 8
   {
     question: {
       en: "Who played the lead role in 'Titanic'?",
@@ -145,9 +145,9 @@ export const QUESTIONS: Question[] = [
       de: ['Brad Pitt', 'Leonardo DiCaprio', 'Tom Cruise', 'Johnny Depp'],
       hr: ['Brad Pitt', 'Leonardo DiCaprio', 'Tom Cruise', 'Johnny Depp'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Leonardo DiCaprio" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Leonardo DiCaprio" (index 1)
   },
-  // Frage 9
+  // Question 9
   {
     question: {
       en: 'In which sport is a puck used?',
@@ -159,9 +159,9 @@ export const QUESTIONS: Question[] = [
       de: ['Fußball', 'Eishockey', 'Basketball', 'Tennis'],
       hr: ['Nogomet', 'Hokej na ledu', 'Košarka', 'Tenis'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Ice Hockey" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Ice Hockey" (index 1)
   },
-  // Frage 10
+  // Question 10
   {
     question: {
       en: 'What is the square root of 64?',
@@ -173,9 +173,9 @@ export const QUESTIONS: Question[] = [
       de: ['6', '8', '10', '12'],
       hr: ['6', '8', '10', '12'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "8" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "8" (index 1)
   },
-  // Frage 11
+  // Question 11
   {
     question: {
       en: 'Which planet is known as the Red Planet?',
@@ -187,9 +187,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
       hr: ['Venera', 'Mars', 'Jupiter', 'Saturn'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Mars" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Mars" (index 1)
   },
-  // Frage 12
+  // Question 12
   {
     question: {
       en: "Who wrote 'Romeo and Juliet'?",
@@ -216,9 +216,9 @@ export const QUESTIONS: Question[] = [
         'Jane Austen',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "William Shakespeare" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "William Shakespeare" (index 0)
   },
-  // Frage 13
+  // Question 13
   {
     question: {
       en: 'What is the capital of France?',
@@ -230,9 +230,9 @@ export const QUESTIONS: Question[] = [
       de: ['Berlin', 'Madrid', 'Paris', 'Rom'],
       hr: ['Berlin', 'Madrid', 'Pariz', 'Rim'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Paris" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Paris" (index 2)
   },
-  // Frage 14
+  // Question 14
   {
     question: {
       en: "Which gas is most abundant in the Earth's atmosphere?",
@@ -244,9 +244,9 @@ export const QUESTIONS: Question[] = [
       de: ['Sauerstoff', 'Kohlenstoffdioxid', 'Stickstoff', 'Wasserstoff'],
       hr: ['Kisik', 'Ugljični dioksid', 'Dušik', 'Vodik'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Nitrogen" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Nitrogen" (index 2)
   },
-  // Frage 15
+  // Question 15
   {
     question: {
       en: 'What is the largest mammal in the world?',
@@ -258,9 +258,9 @@ export const QUESTIONS: Question[] = [
       de: ['Elefant', 'Blauwal', 'Giraffe', 'Nilpferd'],
       hr: ['Slon', 'Plavi kit', 'Žirafa', 'Nilski konj'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Blue Whale" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Blue Whale" (index 1)
   },
-  // Frage 16
+  // Question 16
   {
     question: {
       en: 'What is the smallest prime number?',
@@ -272,9 +272,9 @@ export const QUESTIONS: Question[] = [
       de: ['1', '2', '3', '5'],
       hr: ['1', '2', '3', '5'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "2" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "2" (index 1)
   },
-  // Frage 17
+  // Question 17
   {
     question: {
       en: 'Who painted the Mona Lisa?',
@@ -301,9 +301,9 @@ export const QUESTIONS: Question[] = [
         'Claude Monet',
       ],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Leonardo da Vinci" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Leonardo da Vinci" (index 2)
   },
-  // Frage 18
+  // Question 18
   {
     question: {
       en: 'Which country has the most population?',
@@ -315,9 +315,9 @@ export const QUESTIONS: Question[] = [
       de: ['Indien', 'USA', 'China', 'Russland'],
       hr: ['Indija', 'SAD', 'Kina', 'Rusija'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "China" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "China" (index 2)
   },
-  // Frage 19
+  // Question 19
   {
     question: {
       en: 'What is the fastest land animal?',
@@ -329,9 +329,9 @@ export const QUESTIONS: Question[] = [
       de: ['Gepard', 'Löwe', 'Pferd', 'Antilope'],
       hr: ['Gepard', 'Lav', 'Konj', 'Antilopa'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Cheetah" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Cheetah" (index 0)
   },
-  // Frage 20
+  // Question 20
   {
     question: {
       en: 'Which ocean is the largest?',
@@ -348,9 +348,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Atlantski ocean', 'Indijski ocean', 'Arktički ocean', 'Tihi ocean'],
     },
-    correctAnswerIndex: 3, // Die richtige Antwort ist "Pacific Ocean" (Index 3)
+    correctAnswerIndex: 3, // The correct answer is "Pacific Ocean" (index 3)
   },
-  // Frage 21
+  // Question 21
   {
     question: {
       en: 'What is the chemical symbol for gold?',
@@ -362,9 +362,9 @@ export const QUESTIONS: Question[] = [
       de: ['Au', 'Ag', 'Fe', 'Cu'],
       hr: ['Au', 'Ag', 'Fe', 'Cu'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Au" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Au" (index 0)
   },
-  // Frage 22
+  // Question 22
   {
     question: {
       en: 'Which country is known as the Land of the Rising Sun?',
@@ -376,9 +376,9 @@ export const QUESTIONS: Question[] = [
       de: ['China', 'Japan', 'Südkorea', 'Thailand'],
       hr: ['Kina', 'Japan', 'Južna Koreja', 'Tajland'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Japan" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Japan" (index 1)
   },
-  // Frage 23
+  // Question 23
   {
     question: {
       en: "Who wrote '1984'?",
@@ -390,9 +390,9 @@ export const QUESTIONS: Question[] = [
       de: ['George Orwell', 'Aldous Huxley', 'Ray Bradbury', 'J.R.R. Tolkien'],
       hr: ['George Orwell', 'Aldous Huxley', 'Ray Bradbury', 'J.R.R. Tolkien'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "George Orwell" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "George Orwell" (index 0)
   },
-  // Frage 24
+  // Question 24
   {
     question: {
       en: 'What is the largest desert in the world?',
@@ -404,9 +404,9 @@ export const QUESTIONS: Question[] = [
       de: ['Sahara', 'Arabische Wüste', 'Gobi-Wüste', 'Antarktis'],
       hr: ['Sahara', 'Arapska pustinja', 'Gobi pustinja', 'Antarktika'],
     },
-    correctAnswerIndex: 3, // Die richtige Antwort ist "Antarctica" (Index 3)
+    correctAnswerIndex: 3, // The correct answer is "Antarctica" (index 3)
   },
-  // Frage 25
+  // Question 25
   {
     question: {
       en: 'Which planet is closest to the Sun?',
@@ -418,9 +418,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Merkur', 'Erde', 'Mars'],
       hr: ['Venera', 'Merkur', 'Zemlja', 'Mars'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Mercury" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Mercury" (index 1)
   },
-  // Frage 26
+  // Question 26
   {
     question: {
       en: 'What is the capital of Australia?',
@@ -432,9 +432,9 @@ export const QUESTIONS: Question[] = [
       de: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'],
       hr: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Canberra" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Canberra" (index 2)
   },
-  // Frage 27
+  // Question 27
   {
     question: {
       en: "Which element has the chemical symbol 'Na'?",
@@ -446,9 +446,9 @@ export const QUESTIONS: Question[] = [
       de: ['Natrium', 'Nickel', 'Stickstoff', 'Neon'],
       hr: ['Natrij', 'Nikal', 'Dušik', 'Neon'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Sodium" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Sodium" (index 0)
   },
-  // Frage 28
+  // Question 28
   {
     question: {
       en: 'Who discovered penicillin?',
@@ -460,9 +460,9 @@ export const QUESTIONS: Question[] = [
       de: ['Alexander Fleming', 'Louis Pasteur', 'Marie Curie', 'Isaac Newton'],
       hr: ['Alexander Fleming', 'Louis Pasteur', 'Marie Curie', 'Isaac Newton'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Alexander Fleming" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Alexander Fleming" (index 0)
   },
-  // Frage 29
+  // Question 29
   {
     question: {
       en: 'What is the largest ocean on Earth?',
@@ -479,9 +479,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Atlantski ocean', 'Indijski ocean', 'Arktički ocean', 'Tihi ocean'],
     },
-    correctAnswerIndex: 3, // Die richtige Antwort ist "Pacific Ocean" (Index 3)
+    correctAnswerIndex: 3, // The correct answer is "Pacific Ocean" (index 3)
   },
-  // Frage 30
+  // Question 30
   {
     question: {
       en: 'Which country is famous for inventing pizza?',
@@ -493,9 +493,9 @@ export const QUESTIONS: Question[] = [
       de: ['Frankreich', 'Italien', 'Spanien', 'Griechenland'],
       hr: ['Francuska', 'Italija', 'Španjolska', 'Grčka'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Italy" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Italy" (index 1)
   },
-  // Frage 31
+  // Question 31
   {
     question: {
       en: 'What is the smallest bone in the human body?',
@@ -507,9 +507,9 @@ export const QUESTIONS: Question[] = [
       de: ['Femur', 'Steigbügel', 'Schienbein', 'Speiche'],
       hr: ['Butna kost', 'Stremen', 'Potkoljenica', 'Palčana kost'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Stapes" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Stapes" (index 1)
   },
-  // Frage 32
+  // Question 32
   {
     question: {
       en: 'Which language is the most widely spoken in the world?',
@@ -521,9 +521,9 @@ export const QUESTIONS: Question[] = [
       de: ['Englisch', 'Mandarin-Chinesisch', 'Spanisch', 'Hindi'],
       hr: ['Engleski', 'Mandarinski kineski', 'Španjolski', 'Hindi'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Mandarin Chinese" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Mandarin Chinese" (index 1)
   },
-  // Frage 33
+  // Question 33
   {
     question: {
       en: 'What is the capital of Canada?',
@@ -535,9 +535,9 @@ export const QUESTIONS: Question[] = [
       de: ['Toronto', 'Vancouver', 'Ottawa', 'Montreal'],
       hr: ['Toronto', 'Vancouver', 'Ottawa', 'Montreal'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Ottawa" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Ottawa" (index 2)
   },
-  // Frage 34
+  // Question 34
   {
     question: {
       en: "Which animal is known as the 'King of the Jungle'?",
@@ -549,9 +549,9 @@ export const QUESTIONS: Question[] = [
       de: ['Tiger', 'Löwe', 'Elefant', 'Gorilla'],
       hr: ['Tigar', 'Lav', 'Slon', 'Gorila'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Lion" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Lion" (index 1)
   },
-  // Frage 35
+  // Question 35
   {
     question: {
       en: 'What is the largest bird in the world?',
@@ -563,9 +563,9 @@ export const QUESTIONS: Question[] = [
       de: ['Adler', 'Strauß', 'Albatros', 'Pinguin'],
       hr: ['Orao', 'Noj', 'Albatros', 'Pingvin'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Ostrich" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Ostrich" (index 1)
   },
-  // Frage 36
+  // Question 36
   {
     question: {
       en: 'Which country is famous for the Great Wall?',
@@ -577,9 +577,9 @@ export const QUESTIONS: Question[] = [
       de: ['Japan', 'China', 'Indien', 'Mongolei'],
       hr: ['Japan', 'Kina', 'Indija', 'Mongolija'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "China" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "China" (index 1)
   },
-  // Frage 37
+  // Question 37
   {
     question: {
       en: 'What is the largest island in the world?',
@@ -591,9 +591,9 @@ export const QUESTIONS: Question[] = [
       de: ['Grönland', 'Australien', 'Borneo', 'Madagaskar'],
       hr: ['Grenland', 'Australija', 'Borneo', 'Madagaskar'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Greenland" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Greenland" (index 0)
   },
-  // Frage 38
+  // Question 38
   {
     question: {
       en: 'Which planet has the most moons?',
@@ -605,9 +605,9 @@ export const QUESTIONS: Question[] = [
       de: ['Jupiter', 'Saturn', 'Uranus', 'Neptun'],
       hr: ['Jupiter', 'Saturn', 'Uran', 'Neptun'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Saturn" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Saturn" (index 1)
   },
-  // Frage 39
+  // Question 39
   {
     question: {
       en: 'What is the capital of Brazil?',
@@ -619,9 +619,9 @@ export const QUESTIONS: Question[] = [
       de: ['Rio de Janeiro', 'São Paulo', 'Brasília', 'Salvador'],
       hr: ['Rio de Janeiro', 'São Paulo', 'Brasília', 'Salvador'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Brasília" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Brasília" (index 2)
   },
-  // Frage 40
+  // Question 40
   {
     question: {
       en: 'Which animal is known for its black and white stripes?',
@@ -633,9 +633,9 @@ export const QUESTIONS: Question[] = [
       de: ['Zebra', 'Tiger', 'Giraffe', 'Panda'],
       hr: ['Zebra', 'Tigar', 'Žirafa', 'Panda'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Zebra" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Zebra" (index 0)
   },
-  // Frage 41
+  // Question 41
   {
     question: {
       en: 'What is the chemical symbol for silver?',
@@ -647,9 +647,9 @@ export const QUESTIONS: Question[] = [
       de: ['Ag', 'Au', 'Si', 'Sr'],
       hr: ['Ag', 'Au', 'Si', 'Sr'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Ag" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Ag" (index 0)
   },
-  // Frage 42
+  // Question 42
   {
     question: {
       en: 'Which country is known as the Land of the Midnight Sun?',
@@ -661,9 +661,9 @@ export const QUESTIONS: Question[] = [
       de: ['Norwegen', 'Schweden', 'Finnland', 'Island'],
       hr: ['Norveška', 'Švedska', 'Finska', 'Island'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Norway" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Norway" (index 0)
   },
-  // Frage 43
+  // Question 43
   {
     question: {
       en: "Who wrote 'The Great Gatsby'?",
@@ -690,9 +690,9 @@ export const QUESTIONS: Question[] = [
         'John Steinbeck',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "F. Scott Fitzgerald" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "F. Scott Fitzgerald" (index 0)
   },
-  // Frage 44
+  // Question 44
   {
     question: {
       en: 'What is the largest lake in the world?',
@@ -709,9 +709,9 @@ export const QUESTIONS: Question[] = [
         'Bajkalsko jezero',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Caspian Sea" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Caspian Sea" (index 0)
   },
-  // Frage 45
+  // Question 45
   {
     question: {
       en: 'Which planet is known for its rings?',
@@ -723,9 +723,9 @@ export const QUESTIONS: Question[] = [
       de: ['Jupiter', 'Saturn', 'Uranus', 'Neptun'],
       hr: ['Jupiter', 'Saturn', 'Uran', 'Neptun'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Saturn" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Saturn" (index 1)
   },
-  // Frage 46
+  // Question 46
   {
     question: {
       en: 'What is the capital of Spain?',
@@ -737,9 +737,9 @@ export const QUESTIONS: Question[] = [
       de: ['Barcelona', 'Madrid', 'Valencia', 'Sevilla'],
       hr: ['Barcelona', 'Madrid', 'Valencia', 'Sevilla'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Madrid" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Madrid" (index 1)
   },
-  // Frage 47
+  // Question 47
   {
     question: {
       en: "Which element has the chemical symbol 'K'?",
@@ -751,9 +751,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kalium', 'Phosphor', 'Krypton', 'Kryptonit'],
       hr: ['Kalij', 'Fosfor', 'Kripton', 'Kriptonit'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Potassium" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Potassium" (index 0)
   },
-  // Frage 48
+  // Question 48
   {
     question: {
       en: 'Who invented the telephone?',
@@ -780,9 +780,9 @@ export const QUESTIONS: Question[] = [
         'Guglielmo Marconi',
       ],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Alexander Graham Bell" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Alexander Graham Bell" (index 1)
   },
-  // Frage 49
+  // Question 49
   {
     question: {
       en: 'What is the smallest continent by land area?',
@@ -794,9 +794,9 @@ export const QUESTIONS: Question[] = [
       de: ['Europa', 'Australien', 'Antarktis', 'Südamerika'],
       hr: ['Europa', 'Australija', 'Antarktika', 'Južna Amerika'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Australia" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Australia" (index 1)
   },
-  // Frage 50
+  // Question 50
   {
     question: {
       en: 'Which country is famous for the Eiffel Tower?',
@@ -808,9 +808,9 @@ export const QUESTIONS: Question[] = [
       de: ['Deutschland', 'Frankreich', 'Italien', 'Spanien'],
       hr: ['Njemačka', 'Francuska', 'Italija', 'Španjolska'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "France" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "France" (index 1)
   },
-  // Frage 51
+  // Question 51
   {
     question: {
       en: 'What is the longest river in the world?',
@@ -822,9 +822,9 @@ export const QUESTIONS: Question[] = [
       de: ['Amazonas', 'Nil', 'Jangtse', 'Mississippi'],
       hr: ['Amazonka', 'Nil', 'Jangce', 'Misisipi'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Nile River" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Nile River" (index 1)
   },
-  // Frage 52
+  // Question 52
   {
     question: {
       en: 'Which language is spoken in Brazil?',
@@ -836,9 +836,9 @@ export const QUESTIONS: Question[] = [
       de: ['Spanisch', 'Portugiesisch', 'Französisch', 'Englisch'],
       hr: ['Španjolski', 'Portugalski', 'Francuski', 'Engleski'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Portuguese" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Portuguese" (index 1)
   },
-  // Frage 53
+  // Question 53
   {
     question: {
       en: 'What is the capital of Japan?',
@@ -850,9 +850,9 @@ export const QUESTIONS: Question[] = [
       de: ['Osaka', 'Kyoto', 'Tokio', 'Hiroshima'],
       hr: ['Osaka', 'Kyoto', 'Tokio', 'Hirošima'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Tokyo" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Tokyo" (index 2)
   },
-  // Frage 54
+  // Question 54
   {
     question: {
       en: "Which animal is known as the 'Ship of the Desert'?",
@@ -864,9 +864,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kamel', 'Elefant', 'Känguru', 'Giraffe'],
       hr: ['Deva', 'Slon', 'Klokan', 'Žirafa'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Camel" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Camel" (index 0)
   },
-  // Frage 55
+  // Question 55
   {
     question: {
       en: 'What is the largest species of shark?',
@@ -888,9 +888,9 @@ export const QUESTIONS: Question[] = [
         'Čekićar',
       ],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Whale Shark" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Whale Shark" (index 1)
   },
-  // Frage 56
+  // Question 56
   {
     question: {
       en: 'Which country is famous for the pyramids?',
@@ -902,9 +902,9 @@ export const QUESTIONS: Question[] = [
       de: ['Mexiko', 'Ägypten', 'Peru', 'Sudan'],
       hr: ['Meksiko', 'Egipat', 'Peru', 'Sudan'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Egypt" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Egypt" (index 1)
   },
-  // Frage 57
+  // Question 57
   {
     question: {
       en: 'What is the largest species of bear?',
@@ -921,9 +921,9 @@ export const QUESTIONS: Question[] = [
         'Panda medvjed',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Polar Bear" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Polar Bear" (index 0)
   },
-  // Frage 58
+  // Question 58
   {
     question: {
       en: 'Which country is known for the Taj Mahal?',
@@ -935,9 +935,9 @@ export const QUESTIONS: Question[] = [
       de: ['Indien', 'Pakistan', 'Bangladesch', 'Nepal'],
       hr: ['Indija', 'Pakistan', 'Bangladeš', 'Nepal'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "India" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "India" (index 0)
   },
-  // Frage 59
+  // Question 59
   {
     question: {
       en: 'What is the capital of South Africa?',
@@ -949,9 +949,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kapstadt', 'Pretoria', 'Johannesburg', 'Durban'],
       hr: ['Cape Town', 'Pretoria', 'Johannesburg', 'Durban'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Pretoria" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Pretoria" (index 1)
   },
-  // Frage 60
+  // Question 60
   {
     question: {
       en: "Which animal is known as the 'King of the Beasts'?",
@@ -963,9 +963,9 @@ export const QUESTIONS: Question[] = [
       de: ['Tiger', 'Löwe', 'Elefant', 'Gorilla'],
       hr: ['Tigar', 'Lav', 'Slon', 'Gorila'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Lion" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Lion" (index 1)
   },
-  // Frage 61
+  // Question 61
   {
     question: {
       en: 'What is the chemical symbol for iron?',
@@ -977,9 +977,9 @@ export const QUESTIONS: Question[] = [
       de: ['Fe', 'Ir', 'In', 'I'],
       hr: ['Fe', 'Ir', 'In', 'I'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Fe" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Fe" (index 0)
   },
-  // Frage 62
+  // Question 62
   {
     question: {
       en: 'Which country is known as the Land of the Thunder Dragon?',
@@ -991,9 +991,9 @@ export const QUESTIONS: Question[] = [
       de: ['Nepal', 'Bhutan', 'Tibet', 'Mongolei'],
       hr: ['Nepal', 'Butan', 'Tibet', 'Mongolija'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Bhutan" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Bhutan" (index 1)
   },
-  // Frage 63
+  // Question 63
   {
     question: {
       en: "Who wrote 'Pride and Prejudice'?",
@@ -1005,9 +1005,9 @@ export const QUESTIONS: Question[] = [
       de: ['Jane Austen', 'Charlotte Brontë', 'Emily Brontë', 'Virginia Woolf'],
       hr: ['Jane Austen', 'Charlotte Brontë', 'Emily Brontë', 'Virginia Woolf'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Jane Austen" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Jane Austen" (index 0)
   },
-  // Frage 64
+  // Question 64
   {
     question: {
       en: 'What is the largest coral reef system in the world?',
@@ -1034,9 +1034,9 @@ export const QUESTIONS: Question[] = [
         'Koraljni greben Crvenog mora',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Great Barrier Reef" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Great Barrier Reef" (index 0)
   },
-  // Frage 65
+  // Question 65
   {
     question: {
       en: "Which planet is known as the 'Morning Star'?",
@@ -1048,9 +1048,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Merkur', 'Mars', 'Jupiter'],
       hr: ['Venera', 'Merkur', 'Mars', 'Jupiter'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Venus" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Venus" (index 0)
   },
-  // Frage 66
+  // Question 66
   {
     question: {
       en: 'What is the capital of Argentina?',
@@ -1062,9 +1062,9 @@ export const QUESTIONS: Question[] = [
       de: ['Buenos Aires', 'Santiago', 'Lima', 'Montevideo'],
       hr: ['Buenos Aires', 'Santiago', 'Lima', 'Montevideo'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Buenos Aires" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Buenos Aires" (index 0)
   },
-  // Frage 67
+  // Question 67
   {
     question: {
       en: "Which element has the chemical symbol 'Pb'?",
@@ -1076,9 +1076,9 @@ export const QUESTIONS: Question[] = [
       de: ['Blei', 'Platin', 'Phosphor', 'Kalium'],
       hr: ['Olovo', 'Platina', 'Fosfor', 'Kalij'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Lead" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Lead" (index 0)
   },
-  // Frage 68
+  // Question 68
   {
     question: {
       en: 'Who invented the light bulb?',
@@ -1105,9 +1105,9 @@ export const QUESTIONS: Question[] = [
         'Alexander Graham Bell',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Thomas Edison" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Thomas Edison" (index 0)
   },
-  // Frage 69
+  // Question 69
   {
     question: {
       en: 'What is the largest species of penguin?',
@@ -1129,9 +1129,9 @@ export const QUESTIONS: Question[] = [
         'Gentoo pingvin',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Emperor Penguin" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Emperor Penguin" (index 0)
   },
-  // Frage 70
+  // Question 70
   {
     question: {
       en: 'Which country is famous for the Colosseum?',
@@ -1143,9 +1143,9 @@ export const QUESTIONS: Question[] = [
       de: ['Griechenland', 'Italien', 'Frankreich', 'Spanien'],
       hr: ['Grčka', 'Italija', 'Francuska', 'Španjolska'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Italy" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Italy" (index 1)
   },
-  // Frage 71
+  // Question 71
   {
     question: {
       en: 'What is the longest mountain range in the world?',
@@ -1157,9 +1157,9 @@ export const QUESTIONS: Question[] = [
       de: ['Anden', 'Himalaya', 'Rocky Mountains', 'Alpen'],
       hr: ['Ande', 'Himalaja', 'Stjenjaci', 'Alpe'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Andes" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Andes" (index 0)
   },
-  // Frage 72
+  // Question 72
   {
     question: {
       en: 'Which language is spoken in Switzerland?',
@@ -1171,9 +1171,9 @@ export const QUESTIONS: Question[] = [
       de: ['Deutsch', 'Französisch', 'Italienisch', 'Alle oben genannten'],
       hr: ['Njemački', 'Francuski', 'Talijanski', 'Svi navedeni'],
     },
-    correctAnswerIndex: 3, // Die richtige Antwort ist "All of the above" (Index 3)
+    correctAnswerIndex: 3, // The correct answer is "All of the above" (index 3)
   },
-  // Frage 73
+  // Question 73
   {
     question: {
       en: 'What is the capital of South Korea?',
@@ -1185,9 +1185,9 @@ export const QUESTIONS: Question[] = [
       de: ['Seoul', 'Busan', 'Incheon', 'Daegu'],
       hr: ['Seul', 'Busan', 'Incheon', 'Daegu'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Seoul" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Seoul" (index 0)
   },
-  // Frage 74
+  // Question 74
   {
     question: {
       en: "Which animal is known as the 'King of the Arctic'?",
@@ -1199,9 +1199,9 @@ export const QUESTIONS: Question[] = [
       de: ['Eisbär', 'Polarfuchs', 'Walross', 'Narwal'],
       hr: ['Polarni medvjed', 'Polarna lisica', 'Morž', 'Narval'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Polar Bear" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Polar Bear" (index 0)
   },
-  // Frage 75
+  // Question 75
   {
     question: {
       en: 'What is the largest species of turtle?',
@@ -1223,9 +1223,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Kožnata kornjača', 'Zelena kornjača', 'Glavata kornjača', 'Kareta'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Leatherback Turtle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Leatherback Turtle" (index 0)
   },
-  // Frage 76
+  // Question 76
   {
     question: {
       en: 'Which country is famous for the Machu Picchu?',
@@ -1237,9 +1237,9 @@ export const QUESTIONS: Question[] = [
       de: ['Peru', 'Bolivien', 'Chile', 'Ecuador'],
       hr: ['Peru', 'Bolivija', 'Čile', 'Ekvador'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Peru" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Peru" (index 0)
   },
-  // Frage 77
+  // Question 77
   {
     question: {
       en: 'What is the largest species of whale?',
@@ -1251,9 +1251,9 @@ export const QUESTIONS: Question[] = [
       de: ['Blauwal', 'Buckelwal', 'Pottwal', 'Schwertwal'],
       hr: ['Plavi kit', 'Grbavi kit', 'Ulješura', 'Kit ubojica'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Blue Whale" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Blue Whale" (index 0)
   },
-  // Frage 78
+  // Question 78
   {
     question: {
       en: 'Which country is known for the Angkor Wat?',
@@ -1265,9 +1265,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kambodscha', 'Thailand', 'Vietnam', 'Laos'],
       hr: ['Kambodža', 'Tajland', 'Vijetnam', 'Laos'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Cambodia" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Cambodia" (index 0)
   },
-  // Frage 79
+  // Question 79
   {
     question: {
       en: 'What is the capital of New Zealand?',
@@ -1279,9 +1279,9 @@ export const QUESTIONS: Question[] = [
       de: ['Auckland', 'Wellington', 'Christchurch', 'Hamilton'],
       hr: ['Auckland', 'Wellington', 'Christchurch', 'Hamilton'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Wellington" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Wellington" (index 1)
   },
-  // Frage 80
+  // Question 80
   {
     question: {
       en: "Which animal is known as the 'King of the Birds'?",
@@ -1293,9 +1293,9 @@ export const QUESTIONS: Question[] = [
       de: ['Adler', 'Pfau', 'Albatros', 'Falke'],
       hr: ['Orao', 'Paun', 'Albatros', 'Sokol'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Eagle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Eagle" (index 0)
   },
-  // Frage 81
+  // Question 81
   {
     question: {
       en: 'What is the chemical symbol for carbon?',
@@ -1307,9 +1307,9 @@ export const QUESTIONS: Question[] = [
       de: ['C', 'Co', 'Ca', 'Cu'],
       hr: ['C', 'Co', 'Ca', 'Cu'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "C" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "C" (index 0)
   },
-  // Frage 82
+  // Question 82
   {
     question: {
       en: 'Which country is known as the Land of the Rising Sun?',
@@ -1321,9 +1321,9 @@ export const QUESTIONS: Question[] = [
       de: ['China', 'Japan', 'Südkorea', 'Thailand'],
       hr: ['Kina', 'Japan', 'Južna Koreja', 'Tajland'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Japan" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Japan" (index 1)
   },
-  // Frage 83
+  // Question 83
   {
     question: {
       en: "Who wrote 'The Catcher in the Rye'?",
@@ -1350,9 +1350,9 @@ export const QUESTIONS: Question[] = [
         'F. Scott Fitzgerald',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "J.D. Salinger" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "J.D. Salinger" (index 0)
   },
-  // Frage 84
+  // Question 84
   {
     question: {
       en: 'What is the largest desert in Asia?',
@@ -1369,9 +1369,9 @@ export const QUESTIONS: Question[] = [
         'Karakum pustinja',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Gobi Desert" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Gobi Desert" (index 0)
   },
-  // Frage 85
+  // Question 85
   {
     question: {
       en: "Which planet is known as the 'Red Planet'?",
@@ -1383,9 +1383,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
       hr: ['Venera', 'Mars', 'Jupiter', 'Saturn'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Mars" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Mars" (index 1)
   },
-  // Frage 86
+  // Question 86
   {
     question: {
       en: 'What is the capital of Egypt?',
@@ -1397,9 +1397,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kairo', 'Alexandria', 'Luxor', 'Gizeh'],
       hr: ['Kairo', 'Aleksandrija', 'Luksor', 'Giza'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Cairo" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Cairo" (index 0)
   },
-  // Frage 87
+  // Question 87
   {
     question: {
       en: "Which element has the chemical symbol 'Ag'?",
@@ -1411,9 +1411,9 @@ export const QUESTIONS: Question[] = [
       de: ['Silber', 'Gold', 'Aluminium', 'Argon'],
       hr: ['Srebro', 'Zlato', 'Aluminij', 'Argon'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Silver" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Silver" (index 0)
   },
-  // Frage 88
+  // Question 88
   {
     question: {
       en: 'Who discovered gravity?',
@@ -1440,9 +1440,9 @@ export const QUESTIONS: Question[] = [
         'Nikola Tesla',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Isaac Newton" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Isaac Newton" (index 0)
   },
-  // Frage 89
+  // Question 89
   {
     question: {
       en: 'What is the largest species of shark?',
@@ -1464,9 +1464,9 @@ export const QUESTIONS: Question[] = [
         'Čekićar',
       ],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Whale Shark" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Whale Shark" (index 1)
   },
-  // Frage 90
+  // Question 90
   {
     question: {
       en: 'Which country is famous for the Great Wall?',
@@ -1478,9 +1478,9 @@ export const QUESTIONS: Question[] = [
       de: ['Japan', 'China', 'Indien', 'Mongolei'],
       hr: ['Japan', 'Kina', 'Indija', 'Mongolija'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "China" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "China" (index 1)
   },
-  // Frage 91
+  // Question 91
   {
     question: {
       en: 'What is the longest river in Europe?',
@@ -1492,9 +1492,9 @@ export const QUESTIONS: Question[] = [
       de: ['Donau', 'Wolga', 'Rhein', 'Themse'],
       hr: ['Dunav', 'Volga', 'Rajna', 'Temza'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Volga" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Volga" (index 1)
   },
-  // Frage 92
+  // Question 92
   {
     question: {
       en: 'Which language is spoken in Brazil?',
@@ -1506,9 +1506,9 @@ export const QUESTIONS: Question[] = [
       de: ['Spanisch', 'Portugiesisch', 'Französisch', 'Englisch'],
       hr: ['Španjolski', 'Portugalski', 'Francuski', 'Engleski'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Portuguese" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Portuguese" (index 1)
   },
-  // Frage 93
+  // Question 93
   {
     question: {
       en: 'What is the capital of Japan?',
@@ -1520,9 +1520,9 @@ export const QUESTIONS: Question[] = [
       de: ['Osaka', 'Kyoto', 'Tokio', 'Hiroshima'],
       hr: ['Osaka', 'Kyoto', 'Tokio', 'Hirošima'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Tokyo" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Tokyo" (index 2)
   },
-  // Frage 94
+  // Question 94
   {
     question: {
       en: "Which animal is known as the 'Ship of the Desert'?",
@@ -1534,9 +1534,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kamel', 'Elefant', 'Känguru', 'Giraffe'],
       hr: ['Deva', 'Slon', 'Klokan', 'Žirafa'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Camel" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Camel" (index 0)
   },
-  // Frage 95
+  // Question 95
   {
     question: {
       en: 'What is the largest species of turtle?',
@@ -1558,9 +1558,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Kožnata kornjača', 'Zelena kornjača', 'Glavata kornjača', 'Kareta'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Leatherback Turtle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Leatherback Turtle" (index 0)
   },
-  // Frage 96
+  // Question 96
   {
     question: {
       en: 'Which country is famous for the pyramids?',
@@ -1572,9 +1572,9 @@ export const QUESTIONS: Question[] = [
       de: ['Mexiko', 'Ägypten', 'Peru', 'Sudan'],
       hr: ['Meksiko', 'Egipat', 'Peru', 'Sudan'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Egypt" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Egypt" (index 1)
   },
-  // Frage 97
+  // Question 97
   {
     question: {
       en: 'What is the largest species of bear?',
@@ -1591,9 +1591,9 @@ export const QUESTIONS: Question[] = [
         'Panda medvjed',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Polar Bear" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Polar Bear" (index 0)
   },
-  // Frage 98
+  // Question 98
   {
     question: {
       en: 'Which country is known for the Taj Mahal?',
@@ -1605,9 +1605,9 @@ export const QUESTIONS: Question[] = [
       de: ['Indien', 'Pakistan', 'Bangladesch', 'Nepal'],
       hr: ['Indija', 'Pakistan', 'Bangladeš', 'Nepal'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "India" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "India" (index 0)
   },
-  // Frage 99
+  // Question 99
   {
     question: {
       en: 'What is the capital of South Africa?',
@@ -1619,9 +1619,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kapstadt', 'Pretoria', 'Johannesburg', 'Durban'],
       hr: ['Cape Town', 'Pretoria', 'Johannesburg', 'Durban'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Pretoria" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Pretoria" (index 1)
   },
-  // Frage 100
+  // Question 100
   {
     question: {
       en: "Which animal is known as the 'King of the Beasts'?",
@@ -1633,9 +1633,9 @@ export const QUESTIONS: Question[] = [
       de: ['Tiger', 'Löwe', 'Elefant', 'Gorilla'],
       hr: ['Tigar', 'Lav', 'Slon', 'Gorila'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Lion" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Lion" (index 1)
   },
-  // Frage 101
+  // Question 101
   {
     question: {
       en: 'What is the chemical symbol for helium?',
@@ -1647,9 +1647,9 @@ export const QUESTIONS: Question[] = [
       de: ['He', 'H', 'Li', 'Be'],
       hr: ['He', 'H', 'Li', 'Be'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "He" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "He" (index 0)
   },
-  // Frage 102
+  // Question 102
   {
     question: {
       en: 'Which country is known as the Land of the Long White Cloud?',
@@ -1661,9 +1661,9 @@ export const QUESTIONS: Question[] = [
       de: ['Australien', 'Neuseeland', 'Fidschi', 'Samoa'],
       hr: ['Australija', 'Novi Zeland', 'Fidži', 'Samoa'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "New Zealand" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "New Zealand" (index 1)
   },
-  // Frage 103
+  // Question 103
   {
     question: {
       en: "Who wrote 'To Kill a Mockingbird'?",
@@ -1675,9 +1675,9 @@ export const QUESTIONS: Question[] = [
       de: ['Harper Lee', 'Mark Twain', 'John Steinbeck', 'F. Scott Fitzgerald'],
       hr: ['Harper Lee', 'Mark Twain', 'John Steinbeck', 'F. Scott Fitzgerald'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Harper Lee" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Harper Lee" (index 0)
   },
-  // Frage 104
+  // Question 104
   {
     question: {
       en: 'What is the largest island in the Mediterranean Sea?',
@@ -1689,9 +1689,9 @@ export const QUESTIONS: Question[] = [
       de: ['Sizilien', 'Sardinien', 'Zypern', 'Kreta'],
       hr: ['Sicilija', 'Sardinija', 'Cipar', 'Kreta'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Sicily" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Sicily" (index 0)
   },
-  // Frage 105
+  // Question 105
   {
     question: {
       en: "Which planet is known as the 'Evening Star'?",
@@ -1703,9 +1703,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Merkur', 'Mars', 'Jupiter'],
       hr: ['Venera', 'Merkur', 'Mars', 'Jupiter'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Venus" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Venus" (index 0)
   },
-  // Frage 106
+  // Question 106
   {
     question: {
       en: 'What is the capital of Greece?',
@@ -1717,9 +1717,9 @@ export const QUESTIONS: Question[] = [
       de: ['Athen', 'Thessaloniki', 'Patras', 'Heraklion'],
       hr: ['Atena', 'Solun', 'Patra', 'Iraklion'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Athens" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Athens" (index 0)
   },
-  // Frage 107
+  // Question 107
   {
     question: {
       en: "Which element has the chemical symbol 'Fe'?",
@@ -1731,9 +1731,9 @@ export const QUESTIONS: Question[] = [
       de: ['Eisen', 'Fluor', 'Francium', 'Fermium'],
       hr: ['Željezo', 'Fluor', 'Francij', 'Fermij'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Iron" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Iron" (index 0)
   },
-  // Frage 108
+  // Question 108
   {
     question: {
       en: 'Who invented the printing press?',
@@ -1760,9 +1760,9 @@ export const QUESTIONS: Question[] = [
         'Galileo Galilei',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Johannes Gutenberg" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Johannes Gutenberg" (index 0)
   },
-  // Frage 109
+  // Question 109
   {
     question: {
       en: 'What is the largest species of penguin?',
@@ -1784,9 +1784,9 @@ export const QUESTIONS: Question[] = [
         'Gentoo pingvin',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Emperor Penguin" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Emperor Penguin" (index 0)
   },
-  // Frage 110
+  // Question 110
   {
     question: {
       en: 'Which country is famous for the Colosseum?',
@@ -1798,9 +1798,9 @@ export const QUESTIONS: Question[] = [
       de: ['Griechenland', 'Italien', 'Frankreich', 'Spanien'],
       hr: ['Grčka', 'Italija', 'Francuska', 'Španjolska'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Italy" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Italy" (index 1)
   },
-  // Frage 111
+  // Question 111
   {
     question: {
       en: 'What is the longest mountain range in South America?',
@@ -1812,9 +1812,9 @@ export const QUESTIONS: Question[] = [
       de: ['Anden', 'Rocky Mountains', 'Himalaya', 'Alpen'],
       hr: ['Ande', 'Stjenjaci', 'Himalaja', 'Alpe'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Andes" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Andes" (index 0)
   },
-  // Frage 112
+  // Question 112
   {
     question: {
       en: 'Which language is spoken in Switzerland?',
@@ -1826,9 +1826,9 @@ export const QUESTIONS: Question[] = [
       de: ['Deutsch', 'Französisch', 'Italienisch', 'Alle oben genannten'],
       hr: ['Njemački', 'Francuski', 'Talijanski', 'Svi navedeni'],
     },
-    correctAnswerIndex: 3, // Die richtige Antwort ist "All of the above" (Index 3)
+    correctAnswerIndex: 3, // The correct answer is "All of the above" (index 3)
   },
-  // Frage 113
+  // Question 113
   {
     question: {
       en: 'What is the capital of South Korea?',
@@ -1840,9 +1840,9 @@ export const QUESTIONS: Question[] = [
       de: ['Seoul', 'Busan', 'Incheon', 'Daegu'],
       hr: ['Seul', 'Busan', 'Incheon', 'Daegu'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Seoul" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Seoul" (index 0)
   },
-  // Frage 114
+  // Question 114
   {
     question: {
       en: "Which animal is known as the 'King of the Arctic'?",
@@ -1854,9 +1854,9 @@ export const QUESTIONS: Question[] = [
       de: ['Eisbär', 'Polarfuchs', 'Walross', 'Narwal'],
       hr: ['Polarni medvjed', 'Polarna lisica', 'Morž', 'Narval'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Polar Bear" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Polar Bear" (index 0)
   },
-  // Frage 115
+  // Question 115
   {
     question: {
       en: 'What is the largest species of turtle?',
@@ -1878,9 +1878,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Kožnata kornjača', 'Zelena kornjača', 'Glavata kornjača', 'Kareta'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Leatherback Turtle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Leatherback Turtle" (index 0)
   },
-  // Frage 116
+  // Question 116
   {
     question: {
       en: 'Which country is famous for the Machu Picchu?',
@@ -1892,9 +1892,9 @@ export const QUESTIONS: Question[] = [
       de: ['Peru', 'Bolivien', 'Chile', 'Ecuador'],
       hr: ['Peru', 'Bolivija', 'Čile', 'Ekvador'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Peru" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Peru" (index 0)
   },
-  // Frage 117
+  // Question 117
   {
     question: {
       en: 'What is the largest species of whale?',
@@ -1906,9 +1906,9 @@ export const QUESTIONS: Question[] = [
       de: ['Blauwal', 'Buckelwal', 'Pottwal', 'Schwertwal'],
       hr: ['Plavi kit', 'Grbavi kit', 'Ulješura', 'Kit ubojica'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Blue Whale" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Blue Whale" (index 0)
   },
-  // Frage 118
+  // Question 118
   {
     question: {
       en: 'Which country is known for the Angkor Wat?',
@@ -1920,9 +1920,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kambodscha', 'Thailand', 'Vietnam', 'Laos'],
       hr: ['Kambodža', 'Tajland', 'Vijetnam', 'Laos'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Cambodia" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Cambodia" (index 0)
   },
-  // Frage 119
+  // Question 119
   {
     question: {
       en: 'What is the capital of New Zealand?',
@@ -1934,9 +1934,9 @@ export const QUESTIONS: Question[] = [
       de: ['Auckland', 'Wellington', 'Christchurch', 'Hamilton'],
       hr: ['Auckland', 'Wellington', 'Christchurch', 'Hamilton'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Wellington" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Wellington" (index 1)
   },
-  // Frage 120
+  // Question 120
   {
     question: {
       en: "Which animal is known as the 'King of the Birds'?",
@@ -1948,9 +1948,9 @@ export const QUESTIONS: Question[] = [
       de: ['Adler', 'Pfau', 'Albatros', 'Falke'],
       hr: ['Orao', 'Paun', 'Albatros', 'Sokol'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Eagle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Eagle" (index 0)
   },
-  // Frage 121
+  // Question 121
   {
     question: {
       en: 'What is the chemical symbol for potassium?',
@@ -1962,9 +1962,9 @@ export const QUESTIONS: Question[] = [
       de: ['K', 'P', 'Ka', 'Ko'],
       hr: ['K', 'P', 'Ka', 'Ko'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "K" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "K" (index 0)
   },
-  // Frage 122
+  // Question 122
   {
     question: {
       en: 'Which country is known as the Land of the Rising Sun?',
@@ -1976,9 +1976,9 @@ export const QUESTIONS: Question[] = [
       de: ['China', 'Japan', 'Südkorea', 'Thailand'],
       hr: ['Kina', 'Japan', 'Južna Koreja', 'Tajland'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Japan" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Japan" (index 1)
   },
-  // Frage 123
+  // Question 123
   {
     question: {
       en: "Who wrote 'The Odyssey'?",
@@ -1990,9 +1990,9 @@ export const QUESTIONS: Question[] = [
       de: ['Homer', 'Vergil', 'Sophokles', 'Platon'],
       hr: ['Homer', 'Vergilije', 'Sofoklo', 'Platon'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Homer" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Homer" (index 0)
   },
-  // Frage 124
+  // Question 124
   {
     question: {
       en: 'What is the largest desert in Africa?',
@@ -2004,9 +2004,9 @@ export const QUESTIONS: Question[] = [
       de: ['Sahara', 'Kalahari', 'Namib', 'Arabische Wüste'],
       hr: ['Sahara', 'Kalahari', 'Namib', 'Arapska pustinja'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Sahara" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Sahara" (index 0)
   },
-  // Frage 125
+  // Question 125
   {
     question: {
       en: "Which planet is known as the 'Morning Star'?",
@@ -2018,9 +2018,9 @@ export const QUESTIONS: Question[] = [
       de: ['Venus', 'Merkur', 'Mars', 'Jupiter'],
       hr: ['Venera', 'Merkur', 'Mars', 'Jupiter'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Venus" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Venus" (index 0)
   },
-  // Frage 126
+  // Question 126
   {
     question: {
       en: 'What is the capital of Italy?',
@@ -2032,9 +2032,9 @@ export const QUESTIONS: Question[] = [
       de: ['Rom', 'Mailand', 'Venedig', 'Florenz'],
       hr: ['Rim', 'Milano', 'Venecija', 'Firence'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Rome" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Rome" (index 0)
   },
-  // Frage 127
+  // Question 127
   {
     question: {
       en: "Which element has the chemical symbol 'Na'?",
@@ -2046,9 +2046,9 @@ export const QUESTIONS: Question[] = [
       de: ['Natrium', 'Nickel', 'Stickstoff', 'Neon'],
       hr: ['Natrij', 'Nikal', 'Dušik', 'Neon'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Sodium" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Sodium" (index 0)
   },
-  // Frage 128
+  // Question 128
   {
     question: {
       en: 'Who discovered penicillin?',
@@ -2060,9 +2060,9 @@ export const QUESTIONS: Question[] = [
       de: ['Alexander Fleming', 'Louis Pasteur', 'Marie Curie', 'Isaac Newton'],
       hr: ['Alexander Fleming', 'Louis Pasteur', 'Marie Curie', 'Isaac Newton'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Alexander Fleming" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Alexander Fleming" (index 0)
   },
-  // Frage 129
+  // Question 129
   {
     question: {
       en: 'What is the largest species of penguin?',
@@ -2084,9 +2084,9 @@ export const QUESTIONS: Question[] = [
         'Gentoo pingvin',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Emperor Penguin" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Emperor Penguin" (index 0)
   },
-  // Frage 130
+  // Question 130
   {
     question: {
       en: 'Which country is famous for the Colosseum?',
@@ -2098,9 +2098,9 @@ export const QUESTIONS: Question[] = [
       de: ['Griechenland', 'Italien', 'Frankreich', 'Spanien'],
       hr: ['Grčka', 'Italija', 'Francuska', 'Španjolska'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Italy" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Italy" (index 1)
   },
-  // Frage 131
+  // Question 131
   {
     question: {
       en: 'What is the longest river in Europe?',
@@ -2112,9 +2112,9 @@ export const QUESTIONS: Question[] = [
       de: ['Donau', 'Wolga', 'Rhein', 'Themse'],
       hr: ['Dunav', 'Volga', 'Rajna', 'Temza'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Volga" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Volga" (index 1)
   },
-  // Frage 132
+  // Question 132
   {
     question: {
       en: 'Which language is spoken in Brazil?',
@@ -2126,9 +2126,9 @@ export const QUESTIONS: Question[] = [
       de: ['Spanisch', 'Portugiesisch', 'Französisch', 'Englisch'],
       hr: ['Španjolski', 'Portugalski', 'Francuski', 'Engleski'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Portuguese" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Portuguese" (index 1)
   },
-  // Frage 133
+  // Question 133
   {
     question: {
       en: 'What is the capital of Japan?',
@@ -2140,9 +2140,9 @@ export const QUESTIONS: Question[] = [
       de: ['Osaka', 'Kyoto', 'Tokio', 'Hiroshima'],
       hr: ['Osaka', 'Kyoto', 'Tokio', 'Hirošima'],
     },
-    correctAnswerIndex: 2, // Die richtige Antwort ist "Tokyo" (Index 2)
+    correctAnswerIndex: 2, // The correct answer is "Tokyo" (index 2)
   },
-  // Frage 134
+  // Question 134
   {
     question: {
       en: "Which animal is known as the 'Ship of the Desert'?",
@@ -2154,9 +2154,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kamel', 'Elefant', 'Känguru', 'Giraffe'],
       hr: ['Deva', 'Slon', 'Klokan', 'Žirafa'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Camel" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Camel" (index 0)
   },
-  // Frage 135
+  // Question 135
   {
     question: {
       en: 'What is the largest species of turtle?',
@@ -2178,9 +2178,9 @@ export const QUESTIONS: Question[] = [
       ],
       hr: ['Kožnata kornjača', 'Zelena kornjača', 'Glavata kornjača', 'Kareta'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Leatherback Turtle" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Leatherback Turtle" (index 0)
   },
-  // Frage 136
+  // Question 136
   {
     question: {
       en: 'Which country is famous for the pyramids?',
@@ -2192,9 +2192,9 @@ export const QUESTIONS: Question[] = [
       de: ['Mexiko', 'Ägypten', 'Peru', 'Sudan'],
       hr: ['Meksiko', 'Egipat', 'Peru', 'Sudan'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Egypt" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Egypt" (index 1)
   },
-  // Frage 137
+  // Question 137
   {
     question: {
       en: 'What is the largest species of bear?',
@@ -2211,9 +2211,9 @@ export const QUESTIONS: Question[] = [
         'Panda medvjed',
       ],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "Polar Bear" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "Polar Bear" (index 0)
   },
-  // Frage 138
+  // Question 138
   {
     question: {
       en: 'Which country is known for the Taj Mahal?',
@@ -2225,9 +2225,9 @@ export const QUESTIONS: Question[] = [
       de: ['Indien', 'Pakistan', 'Bangladesch', 'Nepal'],
       hr: ['Indija', 'Pakistan', 'Bangladeš', 'Nepal'],
     },
-    correctAnswerIndex: 0, // Die richtige Antwort ist "India" (Index 0)
+    correctAnswerIndex: 0, // The correct answer is "India" (index 0)
   },
-  // Frage 139
+  // Question 139
   {
     question: {
       en: 'What is the capital of South Africa?',
@@ -2239,9 +2239,9 @@ export const QUESTIONS: Question[] = [
       de: ['Kapstadt', 'Pretoria', 'Johannesburg', 'Durban'],
       hr: ['Cape Town', 'Pretoria', 'Johannesburg', 'Durban'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Pretoria" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Pretoria" (index 1)
   },
-  // Frage 140
+  // Question 140
   {
     question: {
       en: "Which animal is known as the 'King of the Beasts'?",
@@ -2253,7 +2253,7 @@ export const QUESTIONS: Question[] = [
       de: ['Tiger', 'Löwe', 'Elefant', 'Gorilla'],
       hr: ['Tigar', 'Lav', 'Slon', 'Gorila'],
     },
-    correctAnswerIndex: 1, // Die richtige Antwort ist "Lion" (Index 1)
+    correctAnswerIndex: 1, // The correct answer is "Lion" (index 1)
   },
 ];
 

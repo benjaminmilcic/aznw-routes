@@ -1,6 +1,6 @@
 @if (game(); as g) {
 <div class="board-screen">
-  <!-- Kopfzeile: alle Mitspieler mit Kartenzahl, wer dran ist, Spiel beenden -->
+  <!-- Header: all players with number of cards, whose turn it is, end game -->
   <header class="bar">
     <div class="players">
       @for (p of svc.players(); track p.id) {
@@ -50,7 +50,7 @@
     </button>
   </header>
 
-  <!-- Tischmitte: Ziehstapel · Ablage · aktive Farbe · Spielrichtung -->
+  <!-- Table center: draw pile · discard pile · active color · direction of play -->
   <main class="table">
     <button
       type="button"
@@ -75,7 +75,7 @@
       </div>
       }
       <div class="color-dot color-dot--{{ g.currentColor }}" aria-hidden="true"></div>
-      <!-- Spielrichtung: bei mehr als zwei Mitspielern hilfreich -->
+      <!-- Direction of play: helpful with more than two players -->
       @if (svc.players().length > 2) {
       <div
         class="direction"
@@ -87,9 +87,9 @@
     </div>
   </main>
 
-  <!-- Karten unten: online meine, am Gerät die des Spielers am Zug.
-       Solange weitergereicht wird, bleiben sie ungerendert – überdecken
-       allein würde nicht reichen, man sähe sie am Rand des Dialogs. -->
+  <!-- Cards at the bottom: online mine, on the device those of the player on turn.
+       While the device is being handed over they stay unrendered – covering
+       them alone would not be enough, you would see them at the edge of the dialog. -->
   <footer class="hand-wrap">
     <div class="hand-label">
       @if (svc.handHidden()) {
@@ -120,8 +120,8 @@
     </div>
   </footer>
 
-  <!-- Joker-Farbwahl: oben angedockt und verschiebbar, damit die eigene
-       Hand beim Auswählen sichtbar bleibt. -->
+  <!-- Wild color choice: docked at the top and draggable, so that your own
+       hand stays visible while choosing. -->
   @if (pendingWild()) {
   <div class="overlay overlay--wild" (click)="cancelWild()">
     <div class="panel color-panel" appDraggable (click)="$event.stopPropagation()">
@@ -145,7 +145,7 @@
   </div>
   }
 
-  <!-- Am Gerät: verdeckt weiterreichen, damit niemand fremde Karten sieht -->
+  <!-- On the device: hand over face down, so that nobody sees someone else's cards -->
   @if (svc.handHidden()) {
   <div class="overlay">
     <div class="panel">
@@ -166,7 +166,7 @@
   </div>
   }
 
-  <!-- Online-Lobby: auf die Mitspieler warten -->
+  <!-- Online lobby: wait for the other players -->
   @if (g.status === 'waiting') {
   <div class="overlay">
     <div class="panel">
@@ -214,7 +214,7 @@
   </div>
   }
 
-  <!-- Spielende -->
+  <!-- Game over -->
   @if (g.status === 'finished') {
   <div class="overlay">
     <div
@@ -233,7 +233,7 @@
         {{ "gimmicks.games.unoGame.won" | translate : { name: winnerName() } }}
       </h2>
 
-      <!-- Endstand: wer nach dem Sieger seine Karten losgeworden ist -->
+      <!-- Final standings: who got rid of their cards after the winner -->
       @if (svc.ranking().length > 1) {
       <p class="ranking-title">
         {{ "gimmicks.games.unoGame.ranking" | translate }}

@@ -1,15 +1,15 @@
 :host {
   display: block;
-  /* Sicherheitsnetz: kein weisser Grund, falls doch mal gescrollt wird */
+  /* Safety net: no white background in case it does get scrolled */
   background: #000018;
 }
 
 /* ============ SECTION ============ */
 .nf {
   position: relative;
-  /* Kein margin-top fuer die Navbar: der Margin wuerde durch app-root nach
-     aussen kollabieren und sich zur Body-Hoehe addieren -> Scrollbalken.
-     Der Platz kommt deshalb ueber das padding. */
+  /* No margin-top for the navbar: the margin would collapse outwards through
+     app-root and add to the body height -> scrollbar.
+     That's why the space comes from the padding. */
   min-height: 100vh;
   min-height: 100dvh;
   padding: calc(70px + clamp(40px, 7vw, 90px)) 20px clamp(56px, 8vw, 100px);
@@ -139,8 +139,8 @@
 
 /* ============ 404 ============ */
 .code {
-  /* eigene Zeile, aber nur so breit wie die Ziffern,
-     damit der Verlauf exakt ueber "404" liegt */
+  /* own line, but only as wide as the digits,
+     so that the gradient lies exactly over "404" */
   display: block;
   width: fit-content;
   margin: 0 auto 14px;
@@ -262,7 +262,7 @@ h1 {
   transform: translateY(1px) scale(0.98);
 }
 
-/* ============ BILD ============ */
+/* ============ IMAGE ============ */
 .nf-figure {
   display: flex;
   justify-content: center;
@@ -302,7 +302,7 @@ h1 {
   object-fit: cover;
 }
 
-/* Lichtschimmer, der langsam über das Bild wandert */
+/* Shimmer of light that slowly moves across the image */
 .frame .sweep {
   position: absolute;
   inset: 0;

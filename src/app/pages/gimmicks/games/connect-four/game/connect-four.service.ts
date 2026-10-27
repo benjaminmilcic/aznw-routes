@@ -9,16 +9,16 @@ import type { C4Color, C4Game, C4Level, C4Mode, C4Player } from './game.types';
 const PLAYER_ID_KEY = 'c4_player_id';
 const PLAYER_NAME_KEY = 'c4_player_name';
 const PLAYER_EMOJI_KEY = 'c4_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'c4_active_code';
 const CODE_ALPHABET = '0123456789';
 
-/** Feste Id des Computer-Gegners. */
+/** Fixed id of the computer opponent. */
 export const CPU_ID = 'cpu';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.connectFourGame';
 
 @Injectable({ providedIn: 'root' })
@@ -26,10 +26,10 @@ export class ConnectFourService {
   readonly playerId = this.loadPlayerId();
 
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – `state` dient dann als
-   * ganz normales lokales Signal.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – `state` then serves as a
+   * completely normal local signal.
    */
   private readonly channel = new GameChannel<C4Game>({
     db,
@@ -42,28 +42,28 @@ export class ConnectFourService {
     canResume: (g) => !!g.players[this.playerId] && g.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
-  /** Mitspieler, die nicht mehr verbunden sind. */
+  /** Players who are no longer connected. */
   readonly absent = this.channel.awayPlayers;
 
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<C4Mode | null>(null);
-  /** Spielstärke des Computers. */
+  /** Difficulty of the computer. */
   readonly level = signal<C4Level>('medium');
   readonly busy = signal(false);
-  /** Der Computer "überlegt" gerade (kurze Verzögerung, damit man den Zug sieht). */
+  /** The computer is "thinking" (short delay so that you can see the move). */
   readonly thinking = signal(false);
 
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -73,8 +73,8 @@ export class ConnectFourService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -83,7 +83,7 @@ export class ConnectFourService {
     return ok;
   }
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<C4Player | null>(() => this.game()?.players[this.playerId] ?? null);
 
   readonly opponent = computed<C4Player | null>(() => {
@@ -97,7 +97,7 @@ export class ConnectFourService {
     return g ? g.players[g.currentTurn] ?? null : null;
   });
 
-  /** Darf an DIESEM Gerät gerade geworfen werden? */
+  /** May a disc be dropped on THIS device right now? */
   readonly canPlay = computed<boolean>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing') return false;
@@ -105,10 +105,10 @@ export class ConnectFourService {
     return g.currentTurn === this.playerId;
   });
 
-  /** Nur im Online-Modus relevant: Warte ich auf den Mitspieler? */
+  /** Only relevant in online mode: am I waiting for the other player? */
   readonly waitingForOpponent = computed<boolean>(() => this.game()?.status === 'waiting');
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -132,12 +132,12 @@ export class ConnectFourService {
     return id;
   }
 
-  // ---- Spiel gegen den Computer -------------------------------------------
+  // ---- Game against the computer ------------------------------------------
   /**
-   * Spiel gegen den Computer starten. Der Mensch beginnt.
-   * Der gespeicherte Name des Computers ist nur ein Rückfallwert – angezeigt
-   * wird er übersetzt (siehe `displayName` im Board), damit ein Sprachwechsel
-   * im laufenden Spiel greift.
+   * Start a game against the computer. The human starts.
+   * The stored name of the computer is only a fallback value – it is shown
+   * translated (see `displayName` in the board), so that a language change
+   * applies in the running game.
    */
   startComputerGame(name: string, emoji: string, level: C4Level): void {
     this.rememberProfile(name, emoji);
@@ -172,7 +172,7 @@ export class ConnectFourService {
     };
   }
 
-  // ---- Online-Spiel: erstellen / beitreten ---------------------------------
+  // ---- Online game: create / join ------------------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -233,7 +233,7 @@ export class ConnectFourService {
       if (!state.players[this.playerId]) {
         if (Object.keys(state.players).length >= 2) throw new Error(`${T}.errors.full`);
 
-        // freie Farbe wählen (Host ist rot → Gast ist gelb)
+        // pick a free color (host is red → guest is yellow)
         const taken = Object.values(state.players).map((p) => p.color);
         const color: C4Color = taken.includes('red') ? 'yellow' : 'red';
         state.players[this.playerId] = {
@@ -244,7 +244,7 @@ export class ConnectFourService {
         };
         state.order = [...state.order, this.playerId];
         state.status = 'playing';
-        state.currentTurn = state.order[0]; // Host beginnt
+        state.currentTurn = state.order[0]; // Host starts
         state.rev = (state.rev ?? 0) + 1;
         state.updatedAt = Date.now();
         await withTimeout(set(ref(db, `connect4/games/${code}`), state));
@@ -259,8 +259,8 @@ export class ConnectFourService {
     }
   }
 
-  // ---- Spielzug ------------------------------------------------------------
-  /** Wirft einen Stein in die angegebene Spalte (0 … COLS-1). */
+  // ---- Move ----------------------------------------------------------------
+  /** Drops a disc into the given column (0 … COLS-1). */
   drop(col: number): void {
     const g = this.game();
     if (!g || g.status !== 'playing' || !this.canPlay()) return;
@@ -278,7 +278,7 @@ export class ConnectFourService {
     this.maybeScheduleComputerMove();
   }
 
-  /** Neue Runde – der Verlierer beginnt (bei Gleichstand der Host). */
+  /** New round – the loser starts (the host in case of a draw). */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -307,17 +307,17 @@ export class ConnectFourService {
   }
 
   /**
-   * Laufendes Spiel bewusst verlassen (Knopf im Spiel) – der gemerkte Code wird
-   * vergessen, ein Zurückkommen führt also auf den Startbildschirm.
+   * Deliberately leave the running game (button in the game) – the remembered code is
+   * forgotten, so coming back leads to the start screen.
    */
   leaveGame(): void {
     this.reset();
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der Code
-   * aber behalten: beim Zurückkommen findet `resume()` die laufende Partie
-   * wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the code
+   * is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -330,11 +330,11 @@ export class ConnectFourService {
     this.mode.set(null);
   }
 
-  // ---- Zug-Logik -----------------------------------------------------------
-  /** Wendet einen Zug auf eine Kopie des Spielstands an (null = ungültig). */
+  // ---- Move logic ----------------------------------------------------------
+  /** Applies a move to a copy of the game state (null = invalid). */
   private applyMove(g: C4Game, col: number, playerId: string): C4Game | null {
     const target = dropIndex(g.board, col);
-    if (target < 0) return null; // Spalte ist voll
+    if (target < 0) return null; // Column is full
 
     const board = [...g.board];
     board[target] = playerId;
@@ -357,7 +357,7 @@ export class ConnectFourService {
   private async dropOnline(g: C4Game, col: number, playerId: string): Promise<void> {
     const next = this.applyMove(g, col, playerId);
     if (!next) return;
-    // commit() meldet Fehler selbst über `error` – kein try/catch nötig.
+    // commit() reports errors itself via `error` – no try/catch needed.
     await this.channel.commit({
       board: next.board,
       lastMove: next.lastMove,
@@ -368,7 +368,7 @@ export class ConnectFourService {
     });
   }
 
-  /** Ist der Computer dran, zieht er nach kurzer Bedenkzeit. */
+  /** If it is the computer's turn, it moves after a short pause. */
   private maybeScheduleComputerMove(): void {
     const g = this.game();
     if (this.mode() !== 'computer' || !g || g.status !== 'playing') return;
@@ -403,10 +403,10 @@ export class ConnectFourService {
     return g.order[(i + 1) % g.order.length];
   }
 
-  // ---- Online-Intern -------------------------------------------------------
+  // ---- Online internals ----------------------------------------------------
   /**
-   * Firebase speichert keine leeren Arrays/Null-Werte sauber – beim Einlesen
-   * ergänzen, damit die Oberfläche niemals auf "undefined" zugreift.
+   * Firebase does not store empty arrays/null values cleanly – fill them in
+   * when reading, so that the UI never accesses "undefined".
    */
   private normalize(g: C4Game): C4Game {
     const cols = g.cols || COLS;
@@ -442,7 +442,7 @@ export class ConnectFourService {
     return s;
   }
 
-  /** Bricht früh mit klarer Meldung ab, wenn Firebase nicht eingerichtet ist. */
+  /** Aborts early with a clear message if Firebase is not set up. */
   private assertConfig(): void {
     if (!databaseConfigured) throw new Error(`${T}.errors.notConfigured`);
   }

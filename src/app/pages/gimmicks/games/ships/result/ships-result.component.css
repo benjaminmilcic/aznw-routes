@@ -35,7 +35,7 @@
   font-size: 0.95rem;
 }
 
-/* ---- Sinkendes Schiff ---- */
+/* ---- Sinking ship -------- */
 .sinking {
   position: relative;
   width: 8rem;
@@ -85,7 +85,7 @@
   animation: ships-waves 2.4s ease-in-out infinite;
 }
 
-/* ---- Knöpfe ---- */
+/* ---- Buttons --- */
 .btn {
   width: 100%;
   border: 0;

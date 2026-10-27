@@ -6,9 +6,9 @@ import { GamesService } from '../games.service';
 import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
- * Yahtzee – zeigt entweder den Startbildschirm oder das laufende Spiel.
- * Die Spielarten (am Gerät mit Computer-Gegnern, online über einen Spiel-Code)
- * stecken komplett im YahtzeeService.
+ * Yahtzee – shows either the start screen or the running game.
+ * The game modes (on the device with computer opponents, online via a game code)
+ * live entirely in the YahtzeeService.
  */
 @Component({
   selector: 'app-yahtzee',
@@ -25,13 +25,13 @@ export class YahtzeeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('yahtzee');
-    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
-    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    // Back into a running online game (reload, page change, or when
+    // Android discarded the tab) instead of the start screen.
     void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    // Beim Verlassen der Seite Firebase-Abo und Computer-Timer aufräumen.
+    // Clean up the Firebase subscription and the computer timer when leaving the page.
     this.svc.suspend();
   }
 }

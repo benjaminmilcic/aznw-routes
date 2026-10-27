@@ -1,20 +1,20 @@
 // =============================================================
-//  Firebase-Konfiguration für die Online-Spiele (4 Gewinnt, Backgammon, …).
+//  Firebase configuration for the online games (Connect Four, Backgammon, …).
 // =============================================================
-// Diese Werte sind KEINE Geheimnisse – eine Web-Firebase-Config landet
-// ohnehin im Browser-Bundle und darf öffentlich sein. Deshalb stehen sie
-// hier direkt im Quelltext und nicht in der .env.
+// These values are NOT secrets – a web Firebase config ends up in the
+// browser bundle anyway and may be public. That's why they are
+// right here in the source code and not in the .env.
 //
-// Der Schutz kommt über die Datenbank-Regeln des Firebase-Projekts
-// (Pfad "connect4" ist nur für angemeldete Clients les-/schreibbar) und
-// die anonyme Anmeldung in firebase.ts.
+// Protection comes from the database rules of the Firebase project
+// (path "connect4" is only readable/writable for signed-in clients) and
+// the anonymous sign-in in firebase.ts.
 //
-// Projekt: "whiteboard-32486" – dasselbe Projekt, das auch die Whiteboard-App
-// nutzt. Beide Apps teilen sich den Datenpfad "connect4/games", ein Spiel kann
-// also auch geräteübergreifend zwischen beiden Apps gespielt werden.
+// Project: "whiteboard-32486" – the same project the whiteboard app
+// uses. Both apps share the data path "connect4/games", so a game can
+// even be played across devices between both apps.
 //
-// Die Werte stammen aus der Firebase-Konsole:
-//   Projekt-Einstellungen (Zahnrad) → "Meine Apps" → Web-App </> → "Konfiguration".
+// The values come from the Firebase console:
+//   Project settings (gear) → "Your apps" → Web app </> → "Config".
 // =============================================================
 export const firebaseConfig = {
   apiKey: 'AIzaSyBY_UOdWb45qbnm8QWyoGqryVJhccGw3Hs',

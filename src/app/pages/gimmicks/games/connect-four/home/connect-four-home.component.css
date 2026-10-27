@@ -142,7 +142,7 @@
   box-shadow: inset 0 0 0 3px #b9d8ff;
 }
 
-/* Ion-Segment im hellen Karten-Look (die App nutzt es auch in anderen Spielen). */
+/* Ion segment in the light card look (the app also uses it in other games). */
 ::ng-deep ion-segment.c4-segment {
   --background: #eef4ff;
   border-radius: 0.8rem;

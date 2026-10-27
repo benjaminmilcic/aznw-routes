@@ -32,16 +32,16 @@ export class RecipesService {
   private readonly CACHE_KEY_PREFIX = 'recipe_translation_';
   private readonly CACHE_EXPIRY_DAYS = 30;
 
-  // Mapping von franc ISO 639-3 zu ISO 639-1 (MyMemory API)
-  // Hinweis: Südslawische Sprachen sind sehr ähnlich und werden oft verwechselt
+  // Mapping from franc ISO 639-3 to ISO 639-1 (MyMemory API)
+  // Note: South Slavic languages are very similar and often confused
   private readonly langMap: { [key: string]: SupportedLanguage } = {
     deu: 'de',
     eng: 'en',
     hrv: 'hr',
-    srp: 'hr', // Serbisch -> als Kroatisch behandeln (ähnliche Sprachen)
-    bos: 'hr', // Bosnisch -> als Kroatisch behandeln
-    hbs: 'hr', // Serbokroatisch -> als Kroatisch behandeln
-    slv: 'hr', // Slowenisch -> als Kroatisch behandeln (südslawische Sprache)
+    srp: 'hr', // Serbian -> treat as Croatian (similar languages)
+    bos: 'hr', // Bosnian -> treat as Croatian
+    hbs: 'hr', // Serbo-Croatian -> treat as Croatian
+    slv: 'hr', // Slovenian -> treat as Croatian (South Slavic language)
   };
 
   constructor(private http: HttpClient) {}
@@ -68,9 +68,9 @@ export class RecipesService {
   }
 
   /**
-   * Erkennt die Sprache eines Textes
-   * @param text Der zu analysierende Text
-   * @returns Sprach-Code (de, en, hr) oder 'unknown'
+   * Detects the language of a text
+   * @param text The text to analyze
+   * @returns Language code (de, en, hr) or 'unknown'
    */
   detectLanguage(text: string): SupportedLanguage | 'unknown' {
     if (!text || text.trim().length < 10) {
@@ -84,7 +84,7 @@ export class RecipesService {
         return 'unknown';
       }
 
-      const detectedLang = detected[0][0]; // ISO 639-3 Code (z.B. 'deu')
+      const detectedLang = detected[0][0]; // ISO 639-3 code (e.g. 'deu')
       const mappedLang = this.langMap[detectedLang];
 
       return mappedLang || 'unknown';
@@ -95,22 +95,22 @@ export class RecipesService {
   }
 
   /**
-   * Übersetzt ein Rezept in die Zielsprache
-   * @param recipe Das zu übersetzende Rezept
-   * @param targetLang Zielsprache (de, en, hr)
-   * @returns Observable mit übersetztem Rezept
+   * Translates a recipe into the target language
+   * @param recipe The recipe to translate
+   * @param targetLang Target language (de, en, hr)
+   * @returns Observable with the translated recipe
    */
   translateRecipe(
     recipe: Recipe,
     targetLang: SupportedLanguage
   ): Observable<TranslatedRecipe> {
-    // Prüfe Cache
+    // Check the cache
     const cached = this.getCachedTranslation(recipe.id, targetLang);
     if (cached) {
       return of(cached);
     }
 
-    // Erkenne Ausgangssprache
+    // Detect the source language
     const sourceLang = this.detectLanguage(recipe.preparation);
 
     if (sourceLang === 'unknown') {
@@ -123,7 +123,7 @@ export class RecipesService {
     }
 
     if (sourceLang === targetLang) {
-      // Keine Übersetzung nötig
+      // No translation needed
       return of({
         ...recipe,
         detectedLanguage: sourceLang,
@@ -131,7 +131,7 @@ export class RecipesService {
       });
     }
 
-    // Übersetze alle Felder parallel
+    // Translate all fields in parallel
     const title$ = this.translateText(recipe.title, sourceLang, targetLang);
     const preparation$ = this.translateText(
       recipe.preparation,
@@ -139,7 +139,7 @@ export class RecipesService {
       targetLang
     );
 
-    // Übersetze alle Zutaten
+    // Translate all ingredients
     const ingredients$ = forkJoin(
       recipe.ingredients.map((ingredient) =>
         this.translateText(ingredient, sourceLang, targetLang)
@@ -161,12 +161,12 @@ export class RecipesService {
           targetLanguage: targetLang,
         };
 
-        // Speichere in Cache
+        // Store in the cache
         this.cacheTranslation(recipe.id, targetLang, translatedRecipe);
 
         return translatedRecipe;
       })
-      // ❌ Entfernt: catchError wird entfernt damit Fehler zur Component durchgereicht werden
+      // ❌ Removed: catchError is removed so that errors are passed through to the component
       // catchError((error) => {
       //   console.error('Translation error:', error);
       //   return of({
@@ -179,11 +179,11 @@ export class RecipesService {
   }
 
   /**
-   * Übersetzt einen einzelnen Text mit MyMemory API
-   * @param text Zu übersetzender Text
-   * @param sourceLang Ausgangssprache
-   * @param targetLang Zielsprache
-   * @returns Observable mit übersetztem Text
+   * Translates a single text with the MyMemory API
+   * @param text Text to translate
+   * @param sourceLang Source language
+   * @param targetLang Target language
+   * @returns Observable with the translated text
    */
   private translateText(
     text: string,
@@ -194,29 +194,29 @@ export class RecipesService {
       return of(text);
     }
 
-    const MAX_CHARS = 450; // Sicherheitspuffer unter dem 500-Zeichen-Limit
+    const MAX_CHARS = 450; // Safety margin below the 500-character limit
 
-    // Wenn Text kurz genug ist, direkt übersetzen
+    // If the text is short enough, translate it directly
     if (text.length <= MAX_CHARS) {
       return this.translateTextChunk(text, sourceLang, targetLang);
     }
 
-    // Text in Chunks aufteilen
+    // Split the text into chunks
     const chunks = this.splitTextIntoChunks(text, MAX_CHARS);
 
-    // Alle Chunks parallel übersetzen
+    // Translate all chunks in parallel
     const translations$ = chunks.map((chunk) =>
       this.translateTextChunk(chunk.text, sourceLang, targetLang)
     );
 
-    // Alle Übersetzungen zusammenfügen mit Original-Separatoren
+    // Join all translations with the original separators
     return forkJoin(translations$).pipe(
       map((translatedChunks) => {
         let result = '';
         translatedChunks.forEach((translated, idx) => {
           result += translated;
           if (idx < chunks.length - 1) {
-            // Verwende den Original-Separator (kann \n oder Leerzeichen sein)
+            // Use the original separator (can be \n or a space)
             result += chunks[idx].separator || ' ';
           }
         });
@@ -226,10 +226,10 @@ export class RecipesService {
   }
 
   /**
-   * Teilt einen Text in Chunks auf, die an Satzgrenzen getrennt werden
-   * @param text Der zu teilende Text
-   * @param maxLength Maximale Länge pro Chunk
-   * @returns Array von Objekten mit Text-Chunks und nachfolgendem Separator
+   * Splits a text into chunks that are separated at sentence boundaries
+   * @param text The text to split
+   * @param maxLength Maximum length per chunk
+   * @returns Array of objects with text chunks and the following separator
    */
   private splitTextIntoChunks(
     text: string,
@@ -239,47 +239,47 @@ export class RecipesService {
     let currentChunk = '';
     let chunkSeparator = '';
 
-    // Splitte Text an allen Whitespace-Grenzen und behalte die Separatoren
+    // Split the text at all whitespace boundaries and keep the separators
     const parts = text.split(/(\s+)/);
 
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
 
-      // Überspringe leere Parts
+      // Skip empty parts
       if (!part) continue;
 
-      // Ist es ein Separator (Leerzeichen/Zeilenumbrüche)?
+      // Is it a separator (spaces/line breaks)?
       if (/^\s+$/.test(part)) {
-        // Füge Separator zum aktuellen Chunk hinzu
+        // Add the separator to the current chunk
         chunkSeparator += part;
         continue;
       }
 
-      // Es ist ein Textteil (Wort oder Phrase)
+      // It is a text part (word or phrase)
       const word = part;
 
-      // Prüfe ob das Wort in den aktuellen Chunk passt
+      // Check whether the word fits into the current chunk
       const wouldBeLength =
         currentChunk.length + chunkSeparator.length + word.length;
 
       if (wouldBeLength <= maxLength || !currentChunk) {
-        // Füge zum aktuellen Chunk hinzu
+        // Add to the current chunk
         currentChunk += chunkSeparator + word;
         chunkSeparator = '';
       } else {
-        // Chunk ist voll - speichere ihn mit dem gesammelten Separator
+        // Chunk is full - store it with the collected separator
         chunks.push({
           text: currentChunk,
           separator: chunkSeparator,
         });
 
-        // Starte neuen Chunk mit dem aktuellen Wort
+        // Start a new chunk with the current word
         currentChunk = word;
         chunkSeparator = '';
       }
     }
 
-    // Letzten Chunk hinzufügen
+    // Add the last chunk
     if (currentChunk) {
       chunks.push({
         text: currentChunk,
@@ -291,18 +291,18 @@ export class RecipesService {
   }
 
   /**
-   * Übersetzt einen einzelnen Text-Chunk mit MyMemory API
-   * @param text Zu übersetzender Text-Chunk
-   * @param sourceLang Ausgangssprache
-   * @param targetLang Zielsprache
-   * @returns Observable mit übersetztem Text
+   * Translates a single text chunk with the MyMemory API
+   * @param text Text chunk to translate
+   * @param sourceLang Source language
+   * @param targetLang Target language
+   * @returns Observable with the translated text
    */
   private translateTextChunk(
     text: string,
     sourceLang: string,
     targetLang: string
   ): Observable<string> {
-    // MyMemory API verwendet GET mit Query-Parametern
+    // The MyMemory API uses GET with query parameters
     const langPair = `${sourceLang}|${targetLang}`;
     const email = this.environment.recipes.translationEmail || '';
     const url = `${this.MYMEMORY_API}?q=${encodeURIComponent(
@@ -314,10 +314,10 @@ export class RecipesService {
         if (response.responseStatus === 200) {
           return response.responseData.translatedText;
         } else if (response.responseStatus === 403) {
-          // Rate Limit erreicht
+          // Rate limit reached
           throw new Error('TRANSLATION_RATE_LIMIT_EXCEEDED');
         } else if (response.responseStatus === 429) {
-          // Zu viele Anfragen
+          // Too many requests
           throw new Error('TRANSLATION_TOO_MANY_REQUESTS');
         } else {
           console.warn('Translation API warning:', response.responseDetails);
@@ -327,24 +327,24 @@ export class RecipesService {
       catchError((error) => {
         console.error('Translation API error:', error);
 
-        // Spezifische Fehler weiterleiten
+        // Pass on specific errors
         if (error.message?.startsWith('TRANSLATION_')) {
           throw error;
         }
 
-        // Netzwerkfehler
+        // Network error
         if (error.status === 0) {
           throw new Error('TRANSLATION_NETWORK_ERROR');
         }
 
-        // Sonstige Fehler
+        // Other errors
         throw new Error('TRANSLATION_UNKNOWN_ERROR');
       })
     );
   }
 
   /**
-   * Holt übersetztes Rezept aus dem Cache
+   * Gets a translated recipe from the cache
    */
   private getCachedTranslation(
     recipeId: number,
@@ -375,7 +375,7 @@ export class RecipesService {
   }
 
   /**
-   * Speichert übersetztes Rezept im Cache
+   * Stores a translated recipe in the cache
    */
   private cacheTranslation(
     recipeId: number,
@@ -395,7 +395,7 @@ export class RecipesService {
   }
 
   /**
-   * Löscht alle Translation-Caches
+   * Clears all translation caches
    */
   clearTranslationCache(): void {
     try {

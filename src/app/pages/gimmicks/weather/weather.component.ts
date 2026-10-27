@@ -101,7 +101,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   filteredCities: any[] = [];
   isLoading = false;
   allCountries: { code: string; name: string }[] = [];
-  selectedCountry = 'any'; // default: weltweit
+  selectedCountry = 'any'; // default: worldwide
   countryFilterCtrl = new FormControl('');
   filteredCountries = [...this.allCountries];
   private _onDestroy = new Subject<void>();
@@ -135,7 +135,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     countries.registerLocale(hr);
     this.cityCtrl.valueChanges
       .pipe(
-        debounceTime(300), // Warte bis Tipp-Pause
+        debounceTime(300), // Wait for a typing pause
         tap(() => (this.isLoading = true)),
         switchMap((value) =>
           this.fetchCities(value, this.translateService.currentLang).pipe(
@@ -436,7 +436,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.hourlyForecast = null;
     this.showDisplay = false;
     this.error = '';
-    const input: any = this.cityCtrl.value; // Typ explizit als any
+    const input: any = this.cityCtrl.value; // Type explicitly as any
     const cityName = typeof input === 'string' ? input : input?.display_name;
 
     if (!cityName || !cityName.trim()) {
@@ -491,9 +491,9 @@ export class WeatherComponent implements OnInit, OnDestroy {
   }
 
   handleClimaChartError(errorMessage: string) {
-    // Prüfe ob diese Fehlermeldung bereits existiert
+    // Check whether this error message already exists
     if (this.error && this.error.includes(errorMessage)) {
-      return; // Fehler bereits vorhanden, nicht doppelt hinzufügen
+      return; // Error already present, don't add it twice
     }
 
     if (this.error) {
@@ -508,7 +508,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Hole die Übersetzungen in allen drei Sprachen
+    // Get the translations in all three languages
     const languages = ['de', 'en', 'hr'];
     const translatedMessages: string[] = [];
 
@@ -526,17 +526,17 @@ export class WeatherComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Entferne die Fehlermeldung in allen Sprachen aus dem error-String
+    // Remove the error message in all languages from the error string
     translatedMessages.forEach(message => {
-      // Entferne sowohl mit führendem <br> als auch ohne
+      // Remove both with a leading <br> and without
       this.error = this.error.replace('<br>' + message, '');
       this.error = this.error.replace(message, '');
     });
 
-    // Bereinige übriggebliebene <br> Tags am Anfang
+    // Clean up leftover <br> tags at the beginning
     this.error = this.error.replace(/^(<br>)+/, '');
 
-    // Wenn der error-String leer ist, setze ihn auf null
+    // If the error string is empty, set it to null
     if (this.error.trim() === '' || this.error === '<br>') {
       this.error = '';
     }
@@ -604,7 +604,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
 
     return Object.entries(result).map(([day, hours]: any) => ({
       day,
-      hours: hours.sort((a: any, b: any) => a.hour - b.hour), // sortiere nach Uhrzeit
+      hours: hours.sort((a: any, b: any) => a.hour - b.hour), // sort by time
     }));
   }
 

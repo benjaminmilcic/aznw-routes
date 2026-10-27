@@ -1,46 +1,46 @@
 export type LudoStatus = 'waiting' | 'playing' | 'finished';
 
-/** Spielart: am Gerät (mit Computer-Gegnern) oder online über einen Spiel-Code. */
+/** Game mode: on the device (with computer opponents) or online via a game code. */
 export type LudoMode = 'local' | 'online';
 
-/** Spielstärke der Computer-Gegner. */
+/** Difficulty of the computer opponents. */
 export type LudoLevel = 'easy' | 'medium' | 'hard';
 
 export interface LudoPlayer {
   id: string;
   name: string;
   emoji: string;
-  /** true = wird vom Computer gespielt (nur im Modus "local"). */
+  /** true = played by the computer (only in "local" mode). */
   cpu?: boolean;
 }
 
 /**
- * Position einer Figur, kodiert als eine Zahl:
- *  - -1        in der „Garage" (Startfeld-Hof), noch nicht im Spiel
- *  - 0 … 39    auf der gemeinsamen Laufbahn, als *relativer* Fortschritt
- *              ab dem eigenen Startfeld (Brettfeld = (startIndex + pos) % 40)
- *  - 40 … 43   im eigenen Zielhaus (pos - 40 = Zielfeld 0 … 3)
+ * Position of a piece, encoded as a number:
+ *  - -1        in the "garage" (start yard), not in play yet
+ *  - 0 … 39    on the shared track, as *relative* progress
+ *              from the own start square (board square = (startIndex + pos) % 40)
+ *  - 40 … 43   in the own home column (pos - 40 = goal square 0 … 3)
  *
- * Eine Figur ist „fertig", sobald pos >= 40.
+ * A piece is "finished" as soon as pos >= 40.
  */
 export type LudoPos = number;
 
 export const HOME: LudoPos = -1;
-export const GOAL_BASE = 40; // pos 40..43 = Zielfelder 0..3
-export const TRACK_LEN = 40; // Felder auf der gemeinsamen Laufbahn
-export const GOAL_LEN = 4; // Zielfelder pro Spieler
-export const PIECES = 4; // Figuren pro Spieler
+export const GOAL_BASE = 40; // pos 40..43 = goal squares 0..3
+export const TRACK_LEN = 40; // Squares on the shared track
+export const GOAL_LEN = 4; // Goal squares per player
+export const PIECES = 4; // Pieces per player
 
-/** Mehr als vier Ecken hat das Brett nicht. */
+/** The board has no more than four corners. */
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 2;
 
-/** Startfeld-Index auf der Laufbahn je Sitzplatz (0 = links, dann im Uhrzeigersinn). */
+/** Start square index on the track per seat (0 = left, then clockwise). */
 export const SEAT_START: number[] = [0, 10, 20, 30];
 
 /**
- * Welche Sitzplätze bei welcher Spielerzahl benutzt werden. Zu zweit sitzt
- * man sich gegenüber (Sitz 0 und 2), damit der Weg für beide gleich lang wirkt.
+ * Which seats are used for which number of players. With two players you sit
+ * opposite each other (seats 0 and 2), so that the way seems equally long for both.
  */
 export const SEAT_LAYOUT: Record<number, number[]> = {
   2: [0, 2],
@@ -48,13 +48,13 @@ export const SEAT_LAYOUT: Record<number, number[]> = {
   4: [0, 1, 2, 3],
 };
 
-/** Beschreibt den letzten Zug für eine kurze Einblendung bei den Mitspielern. */
+/** Describes the last move for a short overlay for the other players. */
 export interface LudoAction {
-  /** Wer gewürfelt/gezogen hat. */
+  /** Who rolled/moved. */
   by: string;
-  /** Gewürfelte Augenzahl. */
+  /** Rolled pip count. */
   dice: number;
-  /** true, wenn dieser Wurf eine gegnerische Figur geschlagen hat. */
+  /** true if this roll captured an opposing piece. */
   captured?: boolean;
   at: number;
 }
@@ -64,39 +64,39 @@ export interface LudoGame {
   status: LudoStatus;
   hostId: string;
   players: Record<string, LudoPlayer>;
-  /** Zugreihenfolge der Spieler-Ids (nach Sitzplatz sortiert). */
+  /** Turn order of the player ids (sorted by seat). */
   order: string[];
-  /** Sitzplatz (0 … 3) je Spieler – bestimmt Farbe, Start, Garage und Ziel. */
+  /** Seat (0 … 3) per player – determines color, start, garage and goal. */
   seats: Record<string, number>;
-  /** Figur-Positionen je Spieler (immer 4 Einträge). */
+  /** Piece positions per player (always 4 entries). */
   pieces: Record<string, LudoPos[]>;
-  /** playerId, der gerade dran ist. */
+  /** playerId whose turn it is. */
   currentTurn: string;
-  /** Zuletzt gewürfelte Augenzahl; null = es muss erst gewürfelt werden. */
+  /** Last rolled pip count; null = the dice must be rolled first. */
   dice: number | null;
-  /** Wie viele Würfe der aktuelle Spieler in dieser Phase noch hat. */
+  /** How many rolls the current player still has in this phase. */
   rollsLeft: number;
   winnerId: string | null;
   /**
-   * Spieler-Ids in der Reihenfolge, in der sie alle vier Figuren ins Ziel
-   * gebracht haben – ranking[0] ist der Sieger, ranking[1] der Zweite …
-   * Wer drinsteht, wird beim Weiterspielen übersprungen.
+   * Player ids in the order in which they brought all four pieces home –
+   * ranking[0] is the winner, ranking[1] the second …
+   * Whoever is listed here is skipped when play continues.
    */
   ranking: string[];
   lastAction: LudoAction | null;
-  /** Zuletzt ausgestiegener Mitspieler – die anderen bekommen dazu einen Hinweis. */
+  /** Player who left last – the others get a notice about it. */
   lastLeft?: { name: string; at: number } | null;
-  /** Fortlaufende Revision – verhindert, dass ein verspäteter Zug einen neueren
-   *  Stand überschreibt (siehe shared/firebase/game-channel.ts). */
+  /** Running revision – prevents a delayed move from overwriting a newer
+   *  state (see shared/firebase/game-channel.ts). */
   rev: number;
   createdAt: number;
   updatedAt: number;
 }
 
-/** Ein möglicher Zug: Figur `pieceIndex` landet auf `to`. */
+/** A possible move: piece `pieceIndex` lands on `to`. */
 export interface LudoMove {
   pieceIndex: number;
   to: LudoPos;
-  /** true, wenn dabei eine gegnerische Figur geschlagen wird. */
+  /** true if an opposing piece is captured in the process. */
   captures: boolean;
 }

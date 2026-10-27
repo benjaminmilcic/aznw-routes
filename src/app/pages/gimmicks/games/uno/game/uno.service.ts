@@ -26,41 +26,41 @@ import {
 const PLAYER_ID_KEY = 'uno_player_id';
 const PLAYER_NAME_KEY = 'uno_player_name';
 const PLAYER_EMOJI_KEY = 'uno_player_emoji';
-/** Zuletzt geöffnetes Online-Spiel – für die Rückkehr auf die Seite. */
+/** Last opened online game – for returning to the page. */
 const ACTIVE_CODE_KEY = 'uno_active_code';
 const CODE_ALPHABET = '0123456789';
 
 export const AVATARS = ['🦄', '🐙', '🦈', '🐱', '🦖', '🐬', '🦊', '🐸', '🐧', '🦁'];
 
-/** Zeichen der Computer-Gegner. */
+/** Symbols of the computer opponents. */
 export const CPU_EMOJI = '🤖';
 
-/** Basis der Übersetzungsschlüssel – die Fehler-Signale liefern Schlüssel, keine Texte. */
+/** Base of the translation keys – the error signals deliver keys, not texts. */
 const T = 'gimmicks.games.unoGame';
 
-/** Bedenkzeit des Computers, damit man den Zug mitverfolgen kann. */
+/** Thinking time of the computer, so that you can follow the move. */
 const CPU_DELAY = 900;
 
 export { MAX_PLAYERS, MIN_PLAYERS } from './uno.types';
 
 /**
- * UNO – aus der Whiteboard-App übernommen und wie Pasch (Yahtzee) auf
- * mehrere Mitspieler erweitert.
+ * UNO – taken over from the whiteboard app and, like Yahtzee, extended to
+ * several players.
  *
- * Zwei Spielarten:
- *  - "local"  … 2–6 Spieler am Gerät, beliebig viele davon Computer-Gegner
- *  - "online" … 2–6 Geräte über einen vierstelligen Spiel-Code
+ * Two game modes:
+ *  - "local"  … 2–6 players on the device, any number of them computer opponents
+ *  - "online" … 2–6 devices via a four-digit game code
  *
- * Der Online-Spielstand liegt in der Realtime Database unter
- * "uno/games/<code>" – demselben Pfad, den auch die Whiteboard-App nutzt.
+ * The online game state lives in the Realtime Database under
+ * "uno/games/<code>" – the same path the whiteboard app uses.
  */
 @Injectable({ providedIn: 'root' })
 export class UnoService {
   /**
-   * Verbindung zum Spielknoten im Online-Modus: hält den Zustand aktuell, baut
-   * abgebrochene Listener neu auf und schreibt Züge nur mit Server-Bestätigung.
-   * Im Computer-Modus bleibt der Kanal geschlossen – das Signal dient dann als
-   * ganz normaler lokaler Zustand.
+   * Connection to the game node in online mode: keeps the state up to date,
+   * rebuilds broken listeners and writes moves only with server confirmation.
+   * In computer mode the channel stays closed – the signal then serves as
+   * a completely normal local state.
    */
   private readonly channel = new GameChannel<UnoGame>({
     db,
@@ -73,14 +73,14 @@ export class UnoService {
     canResume: (game) => !!game.players[this.playerId] && game.status !== 'finished',
   });
 
-  /** Aktueller Spielzustand (lokal oder aus der Realtime Database). */
+  /** Current game state (local or from the Realtime Database). */
   readonly game = this.channel.state;
-  /** Verbindung ist länger weg – die Oberfläche zeigt einen Hinweis. */
+  /** The connection has been gone for a while – the UI shows a notice. */
   readonly offline = this.channel.offline;
-  /** Ein Zug ist unterwegs und dauert auffällig lange. */
+  /** A move is on its way and is taking noticeably long. */
   readonly pending = this.channel.pending;
 
-  /** Stand von Hand neu vom Server holen (Knopf im Hinweisbalken). */
+  /** Fetch the state from the server again by hand (button in the notice bar). */
   resync(): Promise<void> {
     return this.channel.resync();
   }
@@ -90,8 +90,8 @@ export class UnoService {
   }
 
   /**
-   * Zurück in eine laufende Online-Partie – nach einem Neuladen oder wenn die
-   * Seite zwischenzeitlich verlassen wurde.
+   * Back into a running online game – after a reload or when the page
+   * was left in the meantime.
    */
   async resume(): Promise<boolean> {
     if (this.game()) return false;
@@ -100,14 +100,14 @@ export class UnoService {
     return ok;
   }
 
-  // ---- Abwesende Mitspieler ------------------------------------------------
-  /** Mitspieler, die nicht mehr verbunden sind – mit Sekunden seit dem Verschwinden. */
+  // ---- Absent players ------------------------------------------------------
+  /** Players who are no longer connected – with seconds since they disappeared. */
   readonly absent = this.channel.awayPlayers;
 
   /**
-   * Der abwesende Spieler, der die Runde gerade blockiert: er ist am Zug und
-   * länger als die Karenzzeit weg. Erst dann bieten wir das Überspringen an –
-   * niemand soll rausfliegen, weil er kurz aus dem Zimmer gegangen ist.
+   * The absent player who is currently blocking the round: it is their turn and
+   * they have been gone longer than the grace period. Only then do we offer to skip –
+   * nobody should be thrown out because they briefly left the room.
    */
   readonly blockingAbsent = computed<{ id: string; name: string; seconds: number } | null>(() => {
     const g = this.game();
@@ -118,8 +118,8 @@ export class UnoService {
   });
 
   /**
-   * Trägt einen abwesenden Spieler aus der Runde aus, damit es weitergeht.
-   * Wird von den verbleibenden Spielern bewusst ausgelöst.
+   * Removes an absent player from the round so that it can go on.
+   * Deliberately triggered by the remaining players.
    */
   async skipAbsent(playerId: string): Promise<void> {
     const g = this.game();
@@ -127,17 +127,17 @@ export class UnoService {
     if (this.channel.awayMs(playerId) < ABSENT_GRACE_MS) return;
     await this.removeFromOnlineGame(g, playerId);
   }
-  /** Gewählte Spielart – null bedeutet: Startbildschirm. */
+  /** Selected game mode – null means: start screen. */
   readonly mode = signal<UnoMode | null>(null);
-  /** Spielstärke der Computer-Gegner. */
+  /** Difficulty of the computer opponents. */
   readonly level = signal<UnoLevel>('medium');
-  /** Übersetzungsschlüssel oder Klartext einer Fehlermeldung. */
+  /** Translation key or plain text of an error message. */
   readonly error = this.channel.error;
   readonly busy = signal(false);
 
   /**
-   * Am Gerät mit mehreren Menschen: erst wenn der Nächste bestätigt, werden
-   * seine Karten aufgedeckt. Sonst sieht er die Hand seines Vorgängers.
+   * On the device with several humans: only when the next player confirms are
+   * their cards revealed. Otherwise they would see the hand of the previous player.
    */
   readonly handHidden = signal(false);
 
@@ -145,10 +145,10 @@ export class UnoService {
 
   private cpuTimer: ReturnType<typeof setTimeout> | null = null;
 
-  // ---- Abgeleitete Signale für die Oberfläche -----------------------------
+  // ---- Derived signals for the UI -----------------------------------------
   readonly me = computed<UnoPlayer | null>(() => this.game()?.players[this.playerId] ?? null);
 
-  /** Alle Mitspieler in Sitzreihenfolge. */
+  /** All players in seating order. */
   readonly players = computed<UnoPlayer[]>(() => {
     const g = this.game();
     if (!g) return [];
@@ -167,14 +167,14 @@ export class UnoService {
     return g ? topCard(g) : null;
   });
 
-  /** Der Computer "überlegt" gerade. */
+  /** The computer is "thinking". */
   readonly thinking = computed<boolean>(
     () => this.game()?.status === 'playing' && !!this.currentPlayer()?.cpu,
   );
 
   /**
-   * Wessen Karten liegen gerade auf diesem Gerät offen? Online sind das immer
-   * meine, am Gerät die des Menschen, der gerade dran ist.
+   * Whose cards are currently face up on this device? Online they are always
+   * mine, on the device those of the human whose turn it is.
    */
   readonly handOwner = computed<string>(() => {
     const g = this.game();
@@ -186,7 +186,7 @@ export class UnoService {
 
   readonly hand = computed<UnoCard[]>(() => this.game()?.hands[this.handOwner()] ?? []);
 
-  /** Darf an DIESEM Gerät gerade gespielt werden? */
+  /** May you play on THIS device right now? */
   readonly canAct = computed<boolean>(() => {
     const g = this.game();
     if (!g || g.status !== 'playing' || this.handHidden()) return false;
@@ -194,7 +194,7 @@ export class UnoService {
     return g.currentTurn === this.playerId;
   });
 
-  /** Hat der Spieler am Zug überhaupt eine spielbare Karte? */
+  /** Does the player on turn have any playable card at all? */
   readonly hasPlayable = computed<boolean>(() => {
     const g = this.game();
     if (!g || !this.canAct()) return false;
@@ -202,25 +202,25 @@ export class UnoService {
     return (g.hands[g.currentTurn] ?? []).some((c) => isPlayable(c, top, g.currentColor));
   });
 
-  /** Endstand: die schon fertigen Spieler in Platzreihenfolge. */
+  /** Final standings: the players who have already finished, in order of place. */
   readonly ranking = computed<UnoPlayer[]>(() => {
     const g = this.game();
     if (!g) return [];
     return g.ranking.map((id) => g.players[id]).filter((p): p is UnoPlayer => !!p);
   });
 
-  /** Kartenzahl eines Spielers. */
+  /** Number of cards of a player. */
   cardCount(id: string): number {
     return this.game()?.hands[id]?.length ?? 0;
   }
 
-  /** Ist dieser Spieler seine Karten schon losgeworden? */
+  /** Has this player already got rid of their cards? */
   done(id: string): boolean {
     const g = this.game();
     return !!g && isDone(g, id);
   }
 
-  /** Erreichter Platz (1-basiert), oder 0 solange der Spieler noch spielt. */
+  /** Place reached (1-based), or 0 while the player is still playing. */
   rankOf(id: string): number {
     const g = this.game();
     if (!g) return 0;
@@ -228,14 +228,14 @@ export class UnoService {
     return i < 0 ? 0 : i + 1;
   }
 
-  /** Kann diese Karte gerade gelegt werden? */
+  /** Can this card be played right now? */
   playable(card: UnoCard): boolean {
     const g = this.game();
     if (!g || !this.canAct()) return false;
     return isPlayable(card, this.topCard(), g.currentColor);
   }
 
-  // ---- Spieler-Identität ---------------------------------------------------
+  // ---- Player identity -----------------------------------------------------
   get savedName(): string {
     return localStorage.getItem(PLAYER_NAME_KEY) ?? '';
   }
@@ -258,18 +258,18 @@ export class UnoService {
     return id;
   }
 
-  /** Merkt sich, wessen Karten am Gerät zuletzt offen lagen. */
+  /** Remembers whose cards were last face up on the device. */
   private lastHuman = this.playerId;
   private lastHumanTurn(): string {
     return this.lastHuman;
   }
 
-  /** Spielen am Gerät mehrere Menschen mit? Dann wird verdeckt weitergereicht. */
+  /** Are several humans playing on the device? Then the device is handed over face down. */
   private manyHumans(g: UnoGame): boolean {
     return g.order.filter((id) => !g.players[id]?.cpu).length > 1;
   }
 
-  // ---- Spiel am Gerät (Menschen + Computer) --------------------------------
+  // ---- Game on the device (humans + computers) -----------------------------
   startLocalGame(
     seats: { name: string; emoji: string; cpu: boolean }[],
     level: UnoLevel = 'medium',
@@ -284,7 +284,7 @@ export class UnoService {
     const order: string[] = [];
     let humanSeat = 0;
     for (const [i, seat] of seats.entries()) {
-      // Der erste Mensch bekommt die gespeicherte Spieler-Id.
+      // The first human gets the stored player id.
       const id = seat.cpu ? `cpu_${i}` : humanSeat++ === 0 ? this.playerId : `p_local_${i}`;
       players[id] = {
         id,
@@ -302,7 +302,7 @@ export class UnoService {
     this.maybeScheduleCpu();
   }
 
-  // ---- Online-Spiel: erstellen / beitreten / starten ------------------------
+  // ---- Online game: create / join / start -----------------------------------
   async createGame(name: string, emoji: string): Promise<string> {
     this.rememberProfile(name, emoji);
     this.reset();
@@ -369,7 +369,7 @@ export class UnoService {
     }
   }
 
-  /** Der Gastgeber startet die Runde, sobald alle da sind. */
+  /** The host starts the round as soon as everyone is there. */
   async startOnlineGame(): Promise<void> {
     const g = this.game();
     if (!g || !this.isHost() || g.order.length < MIN_PLAYERS) return;
@@ -393,8 +393,8 @@ export class UnoService {
     }
   }
 
-  // ---- Spielzüge -----------------------------------------------------------
-  /** Legt eine Karte ab. Joker brauchen eine Wunschfarbe. */
+  // ---- Moves ---------------------------------------------------------------
+  /** Plays a card. Wild cards need a desired color. */
   playCard(cardId: string, chosenColor?: UnoColor): boolean {
     const g = this.game();
     if (!g || !this.canAct()) return false;
@@ -404,7 +404,7 @@ export class UnoService {
     return true;
   }
 
-  /** Zieht eine Karte – danach ist der Nächste dran. */
+  /** Draws a card – afterwards it is the next player's turn. */
   drawCard(): void {
     const g = this.game();
     if (!g || !this.canAct()) return;
@@ -412,12 +412,12 @@ export class UnoService {
     if (next) this.commit(next);
   }
 
-  /** Am Gerät: der Nächste hat das Gerät übernommen und deckt seine Karten auf. */
+  /** On the device: the next player has taken over the device and reveals their cards. */
   revealHand(): void {
     this.handHidden.set(false);
   }
 
-  /** Neue Runde – der Gewinner fängt diesmal nicht an. */
+  /** New round – this time the winner does not start. */
   playAgain(): void {
     const g = this.game();
     if (!g) return;
@@ -428,8 +428,8 @@ export class UnoService {
   }
 
   /**
-   * Laufendes Spiel verlassen. Online wird man dabei aus der Runde
-   * ausgetragen, damit die anderen ohne einen weiterspielen können.
+   * Leave the running game. Online you are removed from the round,
+   * so that the others can continue without you.
    */
   leaveGame(): void {
     const g = this.game();
@@ -440,9 +440,9 @@ export class UnoService {
   }
 
   /**
-   * Trägt einen Spieler aus der Online-Runde aus: seine Karten wandern
-   * zurück in den Nachziehstapel, ggf. ist der Nächste dran, notfalls
-   * wechselt die Gastgeber-Rolle. Der letzte Aussteigende räumt das Spiel weg.
+   * Removes a player from the online round: their cards go
+   * back into the draw pile, the next player may be on turn, and if needed
+   * the host role changes. The last one to leave removes the game.
    */
   private async removeFromOnlineGame(g: UnoGame, who: string): Promise<void> {
     const path = `uno/games/${g.code}`;
@@ -461,7 +461,7 @@ export class UnoService {
         players[id] = g.players[id];
         hands[id] = g.hands[id] ?? [];
       }
-      // Die abgegebenen Karten kommen zurück unter den Nachziehstapel.
+      // The cards handed in go back under the draw pile.
       const drawPile = [...(g.hands[who] ?? []), ...g.drawPile];
       const ranking = g.ranking.filter((id) => remaining.includes(id));
       const rest: UnoGame = { ...g, players, hands, drawPile, order: remaining, ranking };
@@ -487,7 +487,7 @@ export class UnoService {
         }
       }
 
-      // War der Ausgetragene gerade dran, rückt der Nächste nach.
+      // If the removed player was on turn, the next one moves up.
       const wasHisTurn = g.currentTurn === who;
       const currentTurn = wasHisTurn ? this.playerAfter(who, g.order, rest) : g.currentTurn;
 
@@ -509,8 +509,8 @@ export class UnoService {
   }
 
   /**
-   * Der nächste Spieler nach `who` in der ursprünglichen Reihenfolge, der noch
-   * dabei ist und noch Karten hat.
+   * The next player after `who` in the original order who is still
+   * in the game and still has cards.
    */
   private playerAfter(who: string, fullOrder: string[], rest: UnoGame): string {
     const start = fullOrder.indexOf(who);
@@ -522,9 +522,9 @@ export class UnoService {
   }
 
   /**
-   * Die Seite wird verlassen (ngOnDestroy). Listener werden gelöst, der
-   * Spiel-Code aber behalten: beim Zurückkommen findet `resume()` die laufende
-   * Partie wieder. Vorher endete jedes Verlassen der Seite das Online-Spiel.
+   * The page is left (ngOnDestroy). Listeners are detached, but the game
+   * code is kept: when coming back, `resume()` finds the running game
+   * again. Previously, every time the page was left the online game ended.
    */
   suspend(): void {
     this.reset({ forget: false });
@@ -537,15 +537,15 @@ export class UnoService {
     this.mode.set(null);
   }
 
-  // ---- Zustand schreiben ---------------------------------------------------
-  /** Übernimmt einen neuen Spielstand – lokal direkt, online über Firebase. */
+  // ---- Write state ---------------------------------------------------------
+  /** Takes over a new game state – locally directly, online via Firebase. */
   private commit(next: UnoGame): void {
     if (this.mode() === 'online') {
       void this.pushOnline(next);
       return;
     }
 
-    // Am Gerät: wechselt der Zug zu einem anderen Menschen, erst verdecken.
+    // On the device: if the turn passes to another human, cover first.
     const current = next.players[next.currentTurn];
     if (next.status === 'playing' && current && !current.cpu) {
       if (this.manyHumans(next) && current.id !== this.lastHuman) this.handHidden.set(true);
@@ -576,8 +576,8 @@ export class UnoService {
     }
   }
 
-  // ---- Computer-Gegner -----------------------------------------------------
-  /** Ist ein Computer dran, zieht oder legt er nach kurzer Bedenkzeit. */
+  // ---- Computer opponent ---------------------------------------------------
+  /** If a computer is on turn, it draws or plays after a short pause. */
   private maybeScheduleCpu(): void {
     const g = this.game();
     if (this.mode() !== 'local' || !g || g.status !== 'playing') return;
@@ -610,8 +610,8 @@ export class UnoService {
     this.cpuTimer = null;
   }
 
-  // ---- Intern --------------------------------------------------------------
-  /** Spielhülle ohne Karten – ausgeteilt wird erst beim Start. */
+  // ---- Internals -----------------------------------------------------------
+  /** Game shell without cards – dealing only happens at the start. */
   private emptyGame(
     code: string,
     hostId: string,
@@ -642,8 +642,8 @@ export class UnoService {
   }
 
   /**
-   * Firebase speichert keine leeren Arrays sauber – beim Einlesen ergänzen,
-   * damit die Oberfläche niemals auf "undefined" zugreift.
+   * Firebase does not store empty arrays cleanly – fill them in when reading,
+   * so that the UI never accesses "undefined".
    */
   private normalize(g: UnoGame): UnoGame {
     const players = g.players ?? {};
@@ -661,7 +661,7 @@ export class UnoService {
       currentColor: g.currentColor ?? 'r',
       direction: g.direction === -1 ? -1 : 1,
       winnerId: g.winnerId ?? null,
-      // Ausgestiegene Mitspieler fallen auch aus der Rangliste.
+      // Players who left are also dropped from the ranking.
       ranking: (g.ranking ?? []).filter((id) => order.includes(id)),
       lastAction: g.lastAction ?? null,
       lastLeft: g.lastLeft ?? null,

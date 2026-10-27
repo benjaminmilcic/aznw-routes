@@ -6,9 +6,9 @@ import { GamesService } from '../games.service';
 import { SyncStatusComponent } from '../shared/sync-status/sync-status.component';
 
 /**
- * "4 Gewinnt" – zeigt entweder den Startbildschirm oder das laufende Spiel.
- * Die Spielarten (gegen den Computer, zu zweit am selben Gerät, online über
- * einen Spiel-Code) stecken komplett im ConnectFourService.
+ * "Connect Four" – shows either the start screen or the running game.
+ * The game modes (against the computer, two players on the same device, online via
+ * a game code) live entirely in the ConnectFourService.
  */
 @Component({
   selector: 'app-connect-four',
@@ -25,14 +25,14 @@ export class ConnectFourComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.gamesService.changeGameName.next('connect-four');
-    // Zurück in eine laufende Online-Partie (Neuladen, Seitenwechsel, oder wenn
-    // Android den Tab verworfen hat) statt auf den Startbildschirm.
+    // Back into a running online game (reload, page change, or when
+    // Android discarded the tab) instead of the start screen.
     void this.svc.resume();
   }
 
   ngOnDestroy(): void {
-    // Firebase-Abo und Computer-Timer aufräumen, den Spiel-Code aber behalten –
-    // sonst wäre die Online-Partie beim Zurückkommen verloren.
+    // Clean up the Firebase subscription and the computer timer, but keep the game code –
+    // otherwise the online game would be lost when coming back.
     this.svc.suspend();
   }
 }

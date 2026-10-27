@@ -10,7 +10,7 @@ const KING_DIRS: Dir[] = [
   [1, 1],
 ];
 
-/** Startaufstellung: Schwarz oben, Weiß unten, nur auf dunklen Feldern. */
+/** Starting position: black at the top, white at the bottom, only on dark squares. */
 export function startBoard(): string[] {
   const b = new Array<string>(SIZE * SIZE).fill('');
   for (let r = 0; r < SIZE; r++) {
@@ -120,7 +120,7 @@ export function allCaptures(board: string[], color: DameColor): DameMove[] {
   return moves;
 }
 
-/** Alle erlaubten Züge (Schlagzwang: gibt es Schläge, sind nur diese erlaubt). */
+/** All allowed moves (forced capture: if there are captures, only these are allowed). */
 export function legalMoves(board: string[], color: DameColor, continueFrom: number | null): DameMove[] {
   if (continueFrom !== null) return captureMovesFrom(board, continueFrom);
   const caps = allCaptures(board, color);
@@ -138,8 +138,8 @@ function nextPlayer(g: DameGame): string {
 }
 
 /**
- * Führt einen Zug aus. Gibt null zurück, wenn der Zug nicht erlaubt ist.
- * Bei Mehrfachschlag bleibt derselbe Spieler dran (`continueFrom`).
+ * Performs a move. Returns null if the move is not allowed.
+ * On a multiple capture the same player stays on turn (`continueFrom`).
  */
 export function applyMove(g: DameGame, from: number, to: number, playerId: string): DameGame | null {
   if (g.status !== 'playing' || g.currentTurn !== playerId) return null;
@@ -194,7 +194,7 @@ export function applyMove(g: DameGame, from: number, to: number, playerId: strin
   return next;
 }
 
-/** Neue Runde auf demselben Spiel – der Verlierer beginnt. */
+/** New round in the same game – the loser starts. */
 export function freshRound(g: DameGame): Partial<DameGame> {
   const starter =
     g.winnerId && g.order.includes(g.winnerId)

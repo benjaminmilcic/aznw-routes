@@ -5,12 +5,12 @@ export const CHECKERS = 15;
 
 export function startBoard(): number[] {
   const b = new Array<number>(24).fill(0);
-  // Weiß (+) zieht Richtung Index 0, Heimat 0–5.
+  // White (+) moves towards index 0, home 0–5.
   b[23] = 2;
   b[12] = 5;
   b[7] = 3;
   b[5] = 5;
-  // Schwarz (−) zieht Richtung Index 23, Heimat 18–23.
+  // Black (−) moves towards index 23, home 18–23.
   b[0] = -2;
   b[11] = -5;
   b[16] = -3;
@@ -36,18 +36,18 @@ export function colorOf(id: string, g: BgGame): BgColor | null {
   return g.players[id]?.color ?? null;
 }
 
-/** Einstiegsfeld von der Bar für einen Würfelwert. */
+/** Entry point from the bar for a die value. */
 function entryIndex(color: BgColor, die: number): number {
   return color === 'white' ? 24 - die : die - 1;
 }
 
-/** Darf eine Farbe auf diesem Punkt landen? (Gesperrt bei ≥2 gegnerischen Steinen.) */
+/** May a color land on this point? (Blocked with ≥2 opposing checkers.) */
 function canLand(board: number[], color: BgColor, to: number): boolean {
   const v = board[to];
   return color === 'white' ? v >= -1 : v <= 1;
 }
 
-/** Sind alle eigenen Steine in der Heimat (Voraussetzung fürs Herausspielen)? */
+/** Are all own checkers in the home board (required for bearing off)? */
 function allHome(board: number[], bar: Bar, color: BgColor): boolean {
   if (color === 'white') {
     if (bar.white > 0) return false;
@@ -59,7 +59,7 @@ function allHome(board: number[], bar: Bar, color: BgColor): boolean {
   return true;
 }
 
-/** Kann der Stein bei Index i mit diesem Würfel herausgespielt werden? */
+/** Can the checker at index i be borne off with this die? */
 function canBearOff(board: number[], color: BgColor, i: number, die: number): boolean {
   if (color === 'white') {
     if (i < 0 || i > 5) return false;
@@ -81,7 +81,7 @@ function canBearOff(board: number[], color: BgColor, i: number, die: number): bo
   return false;
 }
 
-/** Alle erlaubten Einzelzüge für eine Farbe mit einem bestimmten Würfelwert. */
+/** All allowed single moves for a color with a given die value. */
 export function legalFor(board: number[], bar: Bar, color: BgColor, die: number): BgMove[] {
   const moves: BgMove[] = [];
   const onBar = color === 'white' ? bar.white : bar.black;
@@ -112,7 +112,7 @@ export function anyMove(board: number[], bar: Bar, color: BgColor, diceLeft: num
   return false;
 }
 
-/** Felder (0–23, oder -1 für Bar), von denen aus aktuell gezogen werden kann. */
+/** Points (0–23, or -1 for the bar) from which a move is currently possible. */
 export function legalSources(g: BgGame, playerId: string): number[] {
   if (g.status !== 'playing' || g.currentTurn !== playerId || !g.rolled) return [];
   const color = colorOf(playerId, g);
@@ -125,7 +125,7 @@ export function legalSources(g: BgGame, playerId: string): number[] {
   return [...set];
 }
 
-/** Mögliche Ziele für einen Stein von „from" (pro Ziel der sparsamste Würfel). */
+/** Possible targets for a checker from "from" (per target the most economical die). */
 export function targetsFrom(g: BgGame, playerId: string, from: number): BgMove[] {
   const color = colorOf(playerId, g);
   if (!color) return [];
@@ -141,7 +141,7 @@ export function targetsFrom(g: BgGame, playerId: string, from: number): BgMove[]
   return [...byTo.values()];
 }
 
-/** Wendet einen Steinzug auf eine Kopie des Spielstands an (null = ungültig). */
+/** Applies a checker move to a copy of the game state (null = invalid). */
 export function applyMove(
   g: BgGame,
   from: number,
@@ -256,7 +256,7 @@ export function freshRound(starter: string): Pick<
   };
 }
 
-/** Reiner Steinzug auf Board/Bar/Off – für die KI-Bewertung. */
+/** Plain checker move on board/bar/off – for the AI evaluation. */
 export function applyChecker(
   board: number[],
   bar: Bar,

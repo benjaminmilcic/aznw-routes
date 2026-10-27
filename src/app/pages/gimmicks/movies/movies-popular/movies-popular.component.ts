@@ -152,34 +152,34 @@ export class MoviesPopularComponent implements OnInit, OnDestroy {
 
   search(): void {
     this.loading.set(true);
-    // Erste Seite laden um total_pages zu erhalten
+    // Load the first page to get total_pages
     this.getMovies(1).subscribe({
       next: (firstResponse) => {
         const totalPages = firstResponse.total_pages;
-        // Maximal 20 Seiten laden, um Rate Limiting zu vermeiden
+        // Load at most 20 pages to avoid rate limiting
         const maxPages = Math.min(totalPages, 20);
 
-        // <= statt ===: bei einem leeren Ergebnis meldet die API
-        // total_pages: 0. Mit === liefe der Fall in den else-Zweig, dort
-        // bliebe die Liste der Nachladeanfragen leer, und forkJoin([])
-        // schliesst ohne je einen Wert zu liefern - loading bliebe fuer
-        // immer true und die Seite drehte endlos den Ladekreis.
+        // <= instead of ===: for an empty result the API reports
+        // total_pages: 0. With === this case would run into the else branch, where
+        // the list of follow-up requests would stay empty, and forkJoin([])
+        // completes without ever delivering a value - loading would stay
+        // true forever and the page would spin the loading circle endlessly.
         if (maxPages <= 1) {
-          // Nur eine Seite vorhanden (oder gar kein Ergebnis)
+          // Only one page available (or no result at all)
           this.results.set(firstResponse.results);
           this.pageIndex = 0;
           this.updatePaginatedResults();
           this.loading.set(false);
         } else {
-          // Mehrere Seiten: alle weiteren Seiten parallel laden
+          // Several pages: load all further pages in parallel
           const pageRequests = [];
           for (let page = 2; page <= maxPages; page++) {
-            // Jeden Request mit catchError wrappen, um bei Fehlern leere Ergebnisse zurückzugeben
+            // Wrap every request with catchError to return empty results on errors
             pageRequests.push(
               this.getMovies(page).pipe(
                 catchError((error) => {
                   console.error(`Error loading page ${page}:`, error);
-                  // Leere Response zurückgeben, damit forkJoin nicht komplett fehlschlägt
+                  // Return an empty response so that forkJoin does not fail completely
                   return of({
                     page,
                     results: [],
@@ -193,7 +193,7 @@ export class MoviesPopularComponent implements OnInit, OnDestroy {
 
           forkJoin(pageRequests).subscribe({
             next: (responses) => {
-              // Alle Ergebnisse kombinieren (nur erfolgreiche)
+              // Combine all results (only successful ones)
               const allMovies = [
                 ...firstResponse.results,
                 ...responses.flatMap((r) => r.results),
@@ -205,7 +205,7 @@ export class MoviesPopularComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
               console.error('Error loading additional pages:', error);
-              // Bei Fehler zumindest die erste Seite anzeigen
+              // On error at least show the first page
               this.results.set(firstResponse.results);
               this.pageIndex = 0;
               this.updatePaginatedResults();

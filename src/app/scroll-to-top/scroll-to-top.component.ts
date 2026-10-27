@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
 export class ScrollToTopComponent implements OnInit, OnDestroy {
   scrollToTopVisible = false;
 
-  /** Umfang des Fortschrittskreises (r=23 im 50x50-viewBox des Templates). */
+  /** Circumference of the progress circle (r=23 in the 50x50 viewBox of the template). */
   readonly progressCircumference = 2 * Math.PI * 23;
-  /** 0 = ganz oben, 1 = ganz unten. */
+  /** 0 = at the very top, 1 = at the very bottom. */
   scrollProgress = 0;
 
   get progressOffset(): number {

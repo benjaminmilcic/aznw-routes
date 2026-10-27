@@ -12,7 +12,7 @@ import {
   type ShipSpec,
 } from '../game/ships.types';
 
-/** Flotte platzieren: Feld antippen legt das jeweils nächste Schiff. */
+/** Place the fleet: tapping a cell places the next ship. */
 @Component({
   selector: 'app-ships-setup',
   imports: [ShipsBoardComponent, TranslateModule],
@@ -23,10 +23,10 @@ import {
 export class ShipsSetupComponent {
   protected readonly svc = inject(ShipsService);
 
-  /** specId -> belegte Felder ("x,y") */
+  /** specId -> occupied cells ("x,y") */
   private readonly placed = signal<Record<string, string[]>>({});
   protected readonly orient = signal<Orientation>('h');
-  /** Kurze Warnung unter dem Feld (Übersetzungsschlüssel). */
+  /** Short warning below the board (translation key). */
   protected readonly flash = signal<string | null>(null);
 
   protected readonly nextSpec = computed<ShipSpec | null>(
@@ -53,7 +53,7 @@ export class ShipsSetupComponent {
     return grid;
   });
 
-  /** Voller Übersetzungsschlüssel für einen Schiffsnamen. */
+  /** Full translation key for a ship name. */
   protected shipNameKey(spec: ShipSpec): string {
     return `gimmicks.games.shipsGame.ships.${spec.nameKey}`;
   }
@@ -66,7 +66,7 @@ export class ShipsSetupComponent {
     const key = `${c.x},${c.y}`;
     const map = { ...this.placed() };
 
-    // Auf ein bereits gesetztes Schiff getippt -> wieder wegnehmen.
+    // Tapped on a ship already placed -> take it away again.
     for (const [id, cells] of Object.entries(map)) {
       if (cells.includes(key)) {
         delete map[id];

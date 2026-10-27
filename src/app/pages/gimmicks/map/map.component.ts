@@ -672,7 +672,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async clickFederalState(federalStateName: string) {
-    // Filter zurücksetzen
+    // Reset the filter
     this.badenWuerttemberg = false;
     this.bavaria = false;
     this.berlin = false;
@@ -690,7 +690,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.schleswigHolstein = false;
     this.thuringia = false;
 
-    // Entsprechendes Bundesland aktivieren
+    // Activate the corresponding federal state
     switch (federalStateName) {
       case 'Baden-Württemberg':
         this.badenWuerttemberg = true;

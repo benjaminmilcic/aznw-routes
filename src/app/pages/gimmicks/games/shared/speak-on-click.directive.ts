@@ -2,18 +2,18 @@ import { Directive, HostListener, Input, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
- * Aus der Whiteboard-App übernommen.
+ * Taken over from the whiteboard app.
  *
- * Klick auf ein Element liest den übergebenen Text laut vor. Nutzt die
- * eingebaute Web Speech API (window.speechSynthesis) – kostenlos, ohne
- * API-Key, offline. Verfügbar in Chrome/Edge/Safari.
+ * Clicking an element reads the given text aloud. Uses the
+ * built-in Web Speech API (window.speechSynthesis) – free, without an
+ * API key, offline. Available in Chrome/Edge/Safari.
  *
- * Anders als im Whiteboard (dort immer kroatisch) richtet sich die
- * Aussprache nach der aktuell eingestellten App-Sprache. Passt eine
- * installierte Stimme dazu, wird sie gezielt gewählt; sonst nutzt der
- * Browser die Standardstimme mit gesetztem `lang`.
+ * Unlike in the whiteboard (always Croatian there) the pronunciation
+ * follows the currently selected app language. If an installed voice
+ * matches, it is chosen specifically; otherwise the browser uses the
+ * default voice with `lang` set.
  *
- * Verwendung:  <span [speakOnClick]="spieler.name">{{ spieler.name }}</span>
+ * Usage:  <span [speakOnClick]="spieler.name">{{ spieler.name }}</span>
  */
 @Directive({
   selector: '[speakOnClick]',
@@ -25,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
   },
 })
 export class SpeakOnClickDirective {
-  /** App-Sprache → BCP-47-Sprachcode für die Sprachausgabe. */
+  /** App language → BCP-47 language code for speech output. */
   private static readonly LANG_MAP: Record<string, string> = {
     de: 'de-DE',
     en: 'en-US',
@@ -34,7 +34,7 @@ export class SpeakOnClickDirective {
 
   private readonly translate = inject(TranslateService);
 
-  /** Der vorzulesende Text (i.d.R. ein Spielername). */
+  /** The text to read aloud (usually a player name). */
   @Input('speakOnClick') text = '';
 
   @HostListener('click')
@@ -45,14 +45,14 @@ export class SpeakOnClickDirective {
     if (!text) return;
 
     const synth = window.speechSynthesis;
-    if (!synth) return; // Browser ohne Sprachausgabe: still ignorieren
+    if (!synth) return; // Browser without speech output: silently ignore
 
-    synth.cancel(); // laufende Ausgabe abbrechen, damit es nicht überlappt
+    synth.cancel(); // cancel the running output so that it doesn't overlap
 
-    // Die Stimmenliste wird asynchron geladen. Ist sie beim ersten Klick noch
-    // leer, bekäme die Ausgabe keine passende Stimme – der Browser würde dann
-    // seine Standardstimme nehmen (meist englisch) und z. B. deutsche Namen
-    // englisch aussprechen. Deshalb notfalls auf 'voiceschanged' warten.
+    // The voice list is loaded asynchronously. If it is still empty on the first
+    // click, the output would get no matching voice – the browser would then
+    // take its default voice (usually English) and pronounce e.g. German names
+    // in English. That's why we wait for 'voiceschanged' if necessary.
     if (synth.getVoices().length === 0) {
       synth.addEventListener('voiceschanged', () => this.utter(synth, text), { once: true });
       return;
@@ -69,8 +69,8 @@ export class SpeakOnClickDirective {
     const voice = this.voiceFor(synth, lang, localOnly);
     if (voice) utterance.voice = voice;
 
-    // Online-Stimmen (z. B. "Google Deutsch") brauchen Internet. Klappt es
-    // nicht, einmalig mit einer lokal installierten Stimme wiederholen.
+    // Online voices (e.g. "Google Deutsch") need the internet. If it does not
+    // work, retry once with a locally installed voice.
     if (voice && !voice.localService && !localOnly) {
       utterance.onerror = () => this.utter(synth, text, true);
     }
@@ -78,19 +78,19 @@ export class SpeakOnClickDirective {
     synth.speak(utterance);
   }
 
-  /** BCP-47-Code passend zur eingestellten Sprache (Fallback: Deutsch). */
+  /** BCP-47 code matching the selected language (fallback: German). */
   private speechLang(): string {
     const current = this.translate.currentLang || this.translate.getDefaultLang() || 'de';
     return SpeakOnClickDirective.LANG_MAP[current] ?? current;
   }
 
   /**
-   * Wählt die beste verfügbare Stimme für diese Sprache.
+   * Picks the best available voice for this language.
    *
-   * Bevorzugt werden moderne Online-Stimmen wie "Google Deutsch" – die klingen
-   * deutlich natürlicher als die alten Windows-Desktop-Stimmen. Mit
-   * `localOnly` wird auf eine lokal installierte Stimme ausgewichen (Rückfall,
-   * wenn keine Internetverbindung besteht).
+   * Modern online voices like "Google Deutsch" are preferred – they sound
+   * much more natural than the old Windows desktop voices. With
+   * `localOnly` it falls back to a locally installed voice (fallback
+   * when there is no internet connection).
    */
   private voiceFor(
     synth: SpeechSynthesis,
@@ -110,15 +110,15 @@ export class SpeakOnClickDirective {
     return candidates.reduce((best, v) => (this.rank(v, wanted) > this.rank(best, wanted) ? v : best));
   }
 
-  /** Je höher, desto lieber – rein nach Klangqualität sortiert. */
+  /** The higher, the more preferred – sorted purely by sound quality. */
   private rank(voice: SpeechSynthesisVoice, wanted: string): number {
     const name = (voice.name || '').toLowerCase();
     const lang = (voice.lang || '').toLowerCase().replace('_', '-');
     let score = 0;
-    if (lang === wanted) score += 8; // exakt passende Region
+    if (lang === wanted) score += 8; // exactly matching region
     if (name.includes('google') || name.includes('natural')) score += 4;
-    if (!voice.localService) score += 2; // Online-Stimmen klingen meist besser
-    if (name.includes('desktop') || name.includes('hedda')) score -= 3; // alte Stimmen
+    if (!voice.localService) score += 2; // Online voices usually sound better
+    if (name.includes('desktop') || name.includes('hedda')) score -= 3; // old voices
     return score;
   }
 }

@@ -1,13 +1,13 @@
-/* Als Block mit voller Breite – sonst schrumpfen leere Zellen auf die
-   Inhaltsbreite und das Raster wird ungleichmäßig. */
+/* As a full-width block – otherwise empty cells shrink to their
+   content width and the grid becomes uneven. */
 :host {
   display: block;
   width: 100%;
 }
 
-/* Bezugsgröße für die Zellen: Schrift und Beschriftung richten sich nach der
-   Breite des Rasters (cqw = 1% davon), nicht nach dem Bildschirm. Dadurch
-   passt das Raster auf dem Smartphone genauso wie groß auf dem Desktop. */
+/* Reference size for the cells: font and labels follow the
+   width of the grid (cqw = 1% of it), not the screen. That way
+   the grid fits on a smartphone just as well as large on the desktop. */
 .board {
   width: 100%;
   container-type: inline-size;

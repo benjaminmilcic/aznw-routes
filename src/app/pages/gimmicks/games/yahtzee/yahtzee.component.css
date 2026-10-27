@@ -1,7 +1,7 @@
-/* Der Hintergrund kommt vom umgebenden Spiele-Layout (games.component) –
-   diese Komponente bleibt bewusst transparent. "relative" ist nötig, damit
-   das absolut positionierte section:before-Overlay nicht über den Buttons
-   und Eingabefeldern liegt. */
+/* The background comes from the surrounding games layout (games.component) –
+   this component deliberately stays transparent. "relative" is needed so that
+   the absolutely positioned section:before overlay does not lie on top of the buttons
+   and input fields. */
 :host {
   display: block;
   position: relative;

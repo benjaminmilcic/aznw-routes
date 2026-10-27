@@ -4,7 +4,7 @@ import { ALL_MOTIFS } from '../data/card-motifs';
 
 const MOTIF_MAP = new Map(ALL_MOTIFS.map((m) => [m.id, m]));
 
-/** Zeigt ein Kartenmotiv als eingebettetes SVG (keine externen Bilder). */
+/** Shows a card motif as an embedded SVG (no external images). */
 @Component({
   selector: 'app-memo-motif',
   templateUrl: './motif.component.html',

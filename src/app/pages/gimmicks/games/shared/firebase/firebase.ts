@@ -1,12 +1,12 @@
 // =============================================================
-//  Firebase-Anbindung für die Online-Spiele (4 Gewinnt, Memo-Quiz, Backgammon, …).
+//  Firebase connection for the online games (Connect Four, Memo quiz, Backgammon, …).
 // =============================================================
-// Die Konfiguration steht in firebase-config.ts (keine Geheimnisse, siehe dort).
-// Der Schutz kommt über die Datenbank-Regeln des Projekts (`auth != null`)
-// und die anonyme Anmeldung unten.
+// The configuration is in firebase-config.ts (no secrets, see there).
+// Protection comes from the project's database rules (`auth != null`)
+// and the anonymous sign-in below.
 //
-// Eigene, BENANNTE Firebase-App, damit es nicht mit einer eventuellen
-// [DEFAULT]-App (z. B. über @angular/fire) kollidiert.
+// Own, NAMED Firebase app, so that it does not collide with a possible
+// [DEFAULT] app (e.g. via @angular/fire).
 // =============================================================
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInAnonymously, type Auth } from 'firebase/auth';
@@ -18,7 +18,7 @@ const APP_NAME = 'aznw-games';
 
 const config = firebaseConfig;
 
-/** Ohne gültige databaseURL kann das SDK nicht verbinden – Anfragen würden hängen. */
+/** Without a valid databaseURL the SDK cannot connect – requests would hang. */
 export const databaseConfigured =
   !!config.apiKey && !!config.databaseURL && config.databaseURL.startsWith('https://');
 
@@ -36,13 +36,13 @@ if (databaseConfigured) {
   }
 }
 
-/** Nur gültig, wenn `databaseConfigured === true` ist (vorher prüfen!). */
+/** Only valid if `databaseConfigured === true` (check first!). */
 export const db = database as Database;
 
 // ---- Firestore -------------------------------------------------------
-// "Schiffe versenken" liegt in Firestore (Sammlung "games") statt in der
-// Realtime Database – so wie in der Whiteboard-App. Dadurch kann eine
-// Partie sogar geräteübergreifend zwischen beiden Apps gespielt werden.
+// "Battleship" lives in Firestore (collection "games") instead of the
+// Realtime Database – just like in the whiteboard app. That way a
+// game can even be played across devices between both apps.
 let firestore: Firestore | null = null;
 
 if (app) {
@@ -55,12 +55,12 @@ if (app) {
 
 export const firestoreConfigured = !!firestore;
 
-/** Nur gültig, wenn `firestoreConfigured === true` ist (vorher prüfen!). */
+/** Only valid if `firestoreConfigured === true` (check first!). */
 export const firestoreDb = firestore as Firestore;
 
 /**
- * Anonyme Anmeldung – die Datenbank-Regeln verlangen `auth != null`.
- * Erst wenn dieses Promise erfüllt ist, dürfen DB-Zugriffe erfolgen.
+ * Anonymous sign-in – the database rules require `auth != null`.
+ * DB access may only happen once this promise is fulfilled.
  */
 export const authReady: Promise<void> =
   databaseConfigured && app ? ensureAnonAuth(app) : Promise.resolve();
@@ -82,18 +82,18 @@ function ensureAnonAuth(firebaseApp: FirebaseApp): Promise<void> {
     }
   });
   void ready.then(() => watchAuth(auth)).catch(() => {
-    /* Fehler meldet der Aufrufer – hier nur keine unbehandelte Rejection */
+    /* The caller reports errors – here only no unhandled rejection */
   });
   return ready;
 }
 
 /**
- * Hält die anonyme Anmeldung aufrecht.
+ * Keeps the anonymous sign-in alive.
  *
- * Fällt der Benutzer im laufenden Betrieb weg (z. B. weil der Token nicht
- * erneuert werden konnte), verlieren offene Listener ihre Leseberechtigung –
- * Firebase bricht sie ab und hängt sie NIE wieder an, das Spiel bleibt dann
- * stumm stehen. Deshalb wird hier sofort neu angemeldet.
+ * If the user drops out while running (e.g. because the token could not
+ * be renewed), open listeners lose their read permission –
+ * Firebase cancels them and NEVER reattaches them, the game then stays
+ * silently stuck. That's why we sign in again right away here.
  */
 function watchAuth(auth: Auth): void {
   let retries = 0;
