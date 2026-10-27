@@ -1,0 +1,574 @@
+// Look of the gimmicks page (gimmicks/overview/overview.component.scss): dark wood with dots, glass bars, cream text
+// and amber accents. The previous slate/blue look is backed up in aznw-routes-backups/chat-ui-2026-10-26.
+:host {
+  --chat-cream: #fef3c7;
+  --chat-text: rgba(254, 243, 199, 0.92);
+  --chat-muted: rgba(254, 243, 199, 0.6);
+  --chat-amber: #fbbf24;
+  --chat-amber-light: #fde68a;
+  --chat-amber-gradient: linear-gradient(135deg, #fcd34d, #f59e0b);
+  --chat-glass: rgba(0, 0, 0, 0.3);
+  --chat-glass-strong: rgba(0, 0, 0, 0.4);
+  --chat-glass-border: rgba(148, 163, 184, 0.16);
+  --chat-line: rgba(254, 243, 199, 0.18);
+  --chat-dark-text: #1e293b;
+  display: block;
+}
+
+.chat-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100dvh;
+  // The navbar is fixed and 70px high
+  padding-top: 70px;
+  color: var(--chat-text);
+  // Same background as the gimmicks page
+  background:
+    radial-gradient(circle at 15% 25%, rgba(160, 82, 45, 0.18) 2px, transparent 2px),
+    radial-gradient(circle at 85% 75%, rgba(139, 69, 19, 0.14) 1px, transparent 1px),
+    radial-gradient(circle at 45% 85%, rgba(160, 82, 45, 0.1) 3px, transparent 3px),
+    radial-gradient(circle at 65% 15%, rgba(101, 67, 33, 0.12) 2px, transparent 2px),
+    radial-gradient(circle at 25% 65%, rgba(160, 82, 45, 0.16) 1.5px, transparent 1.5px),
+    linear-gradient(135deg, #3a2515 0%, #4a3020 50%, #3a2515 100%);
+  background-size: 80px 80px, 120px 120px, 60px 60px, 100px 100px, 90px 90px, 100% 100%;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255, 200, 150, 0.05) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent 0 200px, rgba(0, 0, 0, 0.05) 200px 201px),
+      repeating-linear-gradient(90deg, transparent 0 200px, rgba(0, 0, 0, 0.05) 200px 201px);
+    pointer-events: none;
+  }
+
+  // Content above the ::before overlay
+  > * {
+    position: relative;
+  }
+}
+
+// Floating glass bar like the top bar of the gimmicks page
+.chat-toolbar {
+  flex-shrink: 0;
+  padding: 10px 12px 0;
+
+  @media (min-width: 640px) {
+    padding: 14px 16px 0;
+  }
+}
+
+.chat-toolbar-inner {
+  // w-full plus padding and border – without border-box (Tailwind preflight is off) it is 8px wider than a phone
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 4px 6px 4px 12px;
+  border: 1px solid var(--chat-glass-border);
+  border-radius: 14px;
+  background: var(--chat-glass);
+  backdrop-filter: blur(8px);
+  color: #e2e8f0;
+}
+
+.chat-logo {
+  display: flex;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  border-radius: 8px;
+  background: var(--chat-amber-gradient);
+  color: var(--chat-dark-text);
+  font-size: 0.75rem;
+}
+
+.chat-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--chat-cream);
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Compact icon buttons (36px instead of Material's 48px), so the bar stays slim
+.toolbar-button {
+  --mdc-icon-button-state-layer-size: 36px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  flex-shrink: 0;
+  color: #cbd5e1;
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+
+  &:hover {
+    color: var(--chat-amber);
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  // Colors like the info dialog, but in the normal width
+  scrollbar-color: rgba(251, 191, 36, 0.6) rgba(0, 0, 0, 0.2);
+
+  // Browsers without scrollbar-color (Safari)
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: rgba(251, 191, 36, 0.6) padding-box;
+  }
+}
+
+.user-bubble {
+  padding: 8px 16px;
+  border-radius: 18px 18px 4px 18px;
+  background: var(--chat-amber-gradient);
+  color: var(--chat-dark-text);
+  font-weight: 500;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.assistant-icon {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 50%;
+  background: var(--chat-glass-strong);
+  color: var(--chat-amber);
+  box-sizing: border-box;
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+}
+
+.thinking {
+  color: var(--chat-muted);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.chat-error {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--chat-amber-light);
+  font-size: 0.9rem;
+
+  mat-icon {
+    flex-shrink: 0;
+    color: var(--chat-amber);
+  }
+}
+
+.location-button,
+.example-button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 999px;
+  background: var(--chat-glass);
+  backdrop-filter: blur(6px);
+  color: var(--chat-cream);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    border-color: var(--chat-amber);
+    background: rgba(0, 0, 0, 0.45);
+    color: var(--chat-amber-light);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.location-button {
+  margin-top: 10px;
+}
+
+.summary-note {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 4px;
+  color: var(--chat-muted);
+  font-size: 0.75rem;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+// Empty chat: label, headline and text like the head of the gimmicks page
+.chat-empty {
+  margin-top: 8vh;
+  text-align: center;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--chat-amber-light);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--chat-amber-light);
+    opacity: 0.6;
+  }
+
+  .num {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: var(--chat-amber);
+    color: var(--chat-dark-text);
+    font-weight: 700;
+  }
+}
+
+.chat-headline {
+  margin: 0 0 14px;
+  color: var(--chat-cream);
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+  em {
+    color: var(--chat-amber);
+    font-style: italic;
+  }
+}
+
+.chat-intro {
+  max-width: 34rem;
+  margin: 0 auto;
+  color: rgba(254, 243, 199, 0.78);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+// Glass bar at the bottom with the input
+.chat-footer {
+  flex-shrink: 0;
+  padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--chat-glass-border);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+
+  @media (min-width: 640px) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+.input-box,
+.voice-box {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-end;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 24px;
+  background: var(--chat-glass-strong);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-box:focus-within {
+  border-color: var(--chat-amber);
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.18);
+}
+
+.input-box textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 4px 12px 18px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--chat-cream);
+  font: inherit;
+  line-height: 1.4;
+  resize: none;
+  // The textarea grows with its text (cdkTextareaAutosize) – a scrollbar would only show up from rounding errors.
+  // Above the maximum height it still scrolls, just without a visible bar.
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::placeholder {
+    color: var(--chat-muted);
+  }
+}
+
+// As high as one line of the textarea (12px + 1.4 × 16px + 12px ≈ 46px) and bottom-aligned with it, so the icon is
+// centered on the text of a single line and stays next to the last line when the text grows
+.mic-button {
+  --mdc-icon-button-state-layer-size: 40px;
+  width: 40px;
+  height: 40px;
+  margin: 0 4px 3px 0;
+  padding: 8px;
+  color: var(--chat-muted);
+
+  &:hover {
+    color: var(--chat-amber);
+  }
+}
+
+.voice-box {
+  height: 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 0 4px;
+  // The waveform bars take this color
+  color: var(--chat-amber-light);
+
+  button {
+    color: var(--chat-muted);
+  }
+}
+
+// Same height as the input box with one line (46px textarea + 2px border)
+.round-button {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--chat-amber-gradient);
+  color: var(--chat-dark-text);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s, opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+    box-shadow: none;
+  }
+}
+
+// The first line of an answer sits on the same height as the 32px assistant icon: (32px - 1.6 × 16px) / 2 ≈ 3px
+.chat-markdown {
+  padding-top: 3px;
+  line-height: 1.6;
+}
+
+// Markdown of the answers (rendered HTML, so ::ng-deep)
+.chat-markdown ::ng-deep {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+
+  // A heading or paragraph at the start must not push the answer below the icon
+  > div > :first-child {
+    margin-top: 0;
+  }
+
+  p {
+    margin: 0 0 0.6em;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+  ul,
+  ol {
+    margin: 0 0 0.6em;
+    padding-left: 1.4em;
+  }
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
+  li::marker {
+    color: var(--chat-amber);
+  }
+  // Small headings: they fit into one line height (≈ 25.6px), so an answer starting with a heading stays level
+  // with the assistant icon as well
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0.8em 0 0.4em;
+    color: var(--chat-cream);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  h1,
+  h2 {
+    font-size: 1.15em;
+  }
+  h3,
+  h4 {
+    font-size: 1.05em;
+  }
+  a {
+    color: var(--chat-amber);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--chat-amber-light);
+    }
+  }
+  strong {
+    color: var(--chat-cream);
+    font-weight: 600;
+  }
+  blockquote {
+    margin: 0 0 0.6em;
+    padding: 0.4em 1em;
+    border-left: 3px solid var(--chat-amber);
+    border-radius: 0 8px 8px 0;
+    background: var(--chat-glass);
+  }
+  img {
+    display: block;
+    max-width: min(100%, 420px);
+    height: auto;
+    margin: 0.5em 0;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  }
+  pre {
+    padding: 0.75em 1em;
+    overflow-x: auto;
+    border: 1px solid var(--chat-glass-border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #e2e8f0;
+  }
+  code {
+    font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    font-size: 0.88em;
+  }
+  :not(pre) > code {
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--chat-amber-light);
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--chat-line);
+  }
+  // Wide tables scroll inside the message instead of widening the page
+  table {
+    display: block;
+    max-width: 100%;
+    margin: 0 0 0.6em;
+    overflow-x: auto;
+    border-collapse: collapse;
+    overflow-wrap: normal;
+  }
+  th,
+  td {
+    padding: 0.3em 0.6em;
+    border: 1px solid var(--chat-line);
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: var(--chat-glass);
+    color: var(--chat-cream);
+    font-weight: 600;
+  }
+}
+
+app-copy-button ::ng-deep .copy-button {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--chat-muted);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--chat-glass);
+    color: var(--chat-amber);
+  }
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}

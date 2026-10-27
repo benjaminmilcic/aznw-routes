@@ -11,13 +11,13 @@
       <span class="screw br"></span>
 
       <div class="enamel-kicker">
-        @if (available()) {
+        @if (availability()?.available === true) {
           <span class="live"></span>
           <span class="translate-y-[1px]"
-            >{{ "header.available" | translate }} · Q{{ quarter() }}
-            {{ year() }}</span
+            >{{ "header.available" | translate }} · Q{{ availability().quarter }}
+            {{ availability().year }}</span
           >
-        } @else {
+        } @else if (availability()?.available === false) {
           <span class="not-live"></span>
           <span class="translate-y-[1px]">{{
             "header.notAvailable" | translate

@@ -62,6 +62,14 @@ export const environment = {
     signup: `${api}/auth/signup`,
     tts: `${api}/auth/tts`,
   },
+  chat: {
+    streamApi: `${api}/chat/stream`,
+    sessionApi: `${api}/chat`,
+    transcribeApi: `${api}/chat/transcribe`,
+  },
+  availability: {
+    availabilityApi: `${api}/availability`,
+  },
   moorhuhn: {
     moorhuhnApi: `${api}/moorhuhn`,
   },

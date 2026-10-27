@@ -1,0 +1,201 @@
+<div class="chat-page">
+  <!-- Toolbar -->
+  <div class="chat-toolbar">
+    <div class="chat-toolbar-inner mx-auto flex w-full max-w-3xl items-center gap-1">
+      <span class="chat-logo max-sm:!hidden"><i class="fa-solid fa-comments"></i></span>
+      <h1 class="chat-title">{{ "chat.title" | translate }}</h1>
+      @if (chat.messages().length && !chat.streaming()) {
+        <button
+          mat-icon-button
+          class="toolbar-button"
+          data-cy="chat-copy-all"
+          [matTooltip]="(chatCopied() ? 'chat.chatCopied' : 'chat.copyChat') | translate"
+          [cdkCopyToClipboard]="chatAsText()"
+          (cdkCopyToClipboardCopied)="$event && onChatCopied()"
+        >
+          <mat-icon>{{ chatCopied() ? "check" : "content_copy" }}</mat-icon>
+        </button>
+      }
+      <button
+        mat-icon-button
+        class="toolbar-button"
+        data-cy="chat-new"
+        [matTooltip]="'chat.newChat' | translate"
+        (click)="chat.reset()"
+      >
+        <mat-icon>add_comment</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="toolbar-button"
+        data-cy="chat-info"
+        [matTooltip]="'chat.info.button' | translate"
+        (click)="openInfo()"
+      >
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <main #scrollContainer class="chat-messages" (click)="onMessageClick($event)">
+    <div class="mx-auto flex max-w-3xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6">
+      @for (message of chat.messages(); track $index) {
+        @if (message.role === "user") {
+          <div class="group flex max-w-[85%] flex-col items-end gap-1 self-end">
+            <div class="user-bubble" data-cy="chat-user-message">{{ message.content }}</div>
+            <app-copy-button
+              class="opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
+              label="chat.copyQuestion"
+              [text]="message.content"
+            />
+          </div>
+        } @else {
+          <div class="flex w-full gap-3 self-start sm:max-w-[95%]">
+            <span class="assistant-icon max-sm:!hidden"><mat-icon>smart_toy</mat-icon></span>
+            <div class="chat-markdown min-w-0 flex-1" data-cy="chat-answer">
+              @if (message.content) {
+                <div [innerHTML]="message.content | chatMarkdown"></div>
+              } @else if (!message.errorCode) {
+                <span class="thinking">
+                  {{ (message.tool ? "chat.tools." + message.tool : "chat.thinking") | translate }}
+                </span>
+              }
+              @if (message.errorCode) {
+                <div class="chat-error" data-cy="chat-error">
+                  <mat-icon>{{ message.errorCode === "error" ? "error_outline" : "hourglass_top" }}</mat-icon>
+                  <span>{{ "chat.errors." + message.errorCode | translate: { minutes: message.retryAfterMinutes } }}</span>
+                </div>
+              }
+              @if (message.locationRequest) {
+                <button
+                  type="button"
+                  class="location-button"
+                  data-cy="chat-share-location"
+                  [disabled]="locating() || chat.streaming()"
+                  (click)="shareLocation()"
+                >
+                  <mat-icon>my_location</mat-icon>
+                  {{ "chat.shareLocation" | translate }}
+                </button>
+              }
+              @if (message.content && !(chat.streaming() && $last)) {
+                <app-copy-button class="mt-1 block w-fit" label="chat.copyAnswer" [text]="message.content" />
+              }
+              @if (message.summarized) {
+                <div class="summary-note" data-cy="chat-summarized" [matTooltip]="'chat.summaryTooltip' | translate">
+                  <mat-icon>compress</mat-icon>
+                  {{ "chat.summarized" | translate }}
+                </div>
+              }
+            </div>
+          </div>
+        }
+      } @empty {
+        <div class="chat-empty">
+          <div class="section-tag">
+            <span class="num">{{ "chat.tag" | translate }}</span>
+            <span>{{ "chat.tagLabel" | translate }}</span>
+          </div>
+          <h2 class="chat-headline">
+            {{ "chat.headlinePre" | translate }} <em>{{ "chat.headlineEm" | translate }}</em>
+          </h2>
+          <p class="chat-intro">{{ "chat.subline" | translate }}</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            @for (question of exampleQuestions; track question) {
+              <button type="button" class="example-button" data-cy="chat-example" (click)="ask(question)">
+                {{ question | translate }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </main>
+
+  <!-- Input -->
+  <footer class="chat-footer">
+    <form class="mx-auto flex max-w-3xl items-end gap-2" (ngSubmit)="send()">
+      @if (voice.stream(); as stream) {
+        <!-- Recording: the input is replaced by a live waveform, like ChatGPT's voice input -->
+        <div class="voice-box">
+          <button
+            mat-icon-button
+            type="button"
+            [matTooltip]="'chat.discardRecording' | translate"
+            [disabled]="voice.state() === 'transcribing'"
+            (click)="voice.cancel()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          <app-voice-waveform class="h-8 flex-1" [stream]="stream" [paused]="voice.state() === 'transcribing'" />
+          @if (voice.state() === "transcribing") {
+            <span class="shrink-0 animate-pulse whitespace-nowrap text-sm opacity-70">
+              {{ "chat.transcribing" | translate }}
+            </span>
+          }
+        </div>
+        <button
+          type="button"
+          class="round-button"
+          [matTooltip]="'chat.applyRecording' | translate"
+          [disabled]="voice.state() === 'transcribing'"
+          (click)="toggleRecording()"
+        >
+          @if (voice.state() === "transcribing") {
+            <mat-spinner diameter="22" />
+          } @else {
+            <mat-icon>check</mat-icon>
+          }
+        </button>
+      } @else {
+        <div class="input-box">
+          <textarea
+            name="input"
+            data-cy="chat-input"
+            [(ngModel)]="input"
+            (keydown)="onKeydown($event)"
+            (input)="keepCaretVisible($event)"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="8"
+            maxlength="2000"
+            [attr.aria-label]="'chat.message' | translate"
+            [placeholder]="(narrow() ? 'chat.message' : 'chat.placeholder') | translate"
+          ></textarea>
+          <button
+            mat-icon-button
+            type="button"
+            class="mic-button"
+            data-cy="chat-mic"
+            [matTooltip]="'chat.voiceInput' | translate"
+            (click)="toggleRecording()"
+          >
+            <mat-icon>mic</mat-icon>
+          </button>
+        </div>
+        @if (chat.streaming()) {
+          <button
+            type="button"
+            class="round-button"
+            data-cy="chat-stop"
+            [matTooltip]="'chat.stop' | translate"
+            (click)="chat.stop()"
+          >
+            <mat-icon>stop</mat-icon>
+          </button>
+        } @else {
+          <button
+            type="submit"
+            class="round-button"
+            data-cy="chat-send"
+            [matTooltip]="'chat.send' | translate"
+            [disabled]="!input.trim()"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        }
+      }
+    </form>
+  </footer>
+</div>

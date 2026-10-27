@@ -56,6 +56,7 @@
     "fuse.js": "^7.1.0",
     "i18n-iso-countries": "^7.14.0",
     "leaflet": "^1.9.4",
+    "marked": "^18.1.1",
     "ng-circle-progress": "^1.7.1",
     "ng2-charts": "^6.0.0",
     "ngx-mat-select-search": "^8.0.2",

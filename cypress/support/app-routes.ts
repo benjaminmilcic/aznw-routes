@@ -53,6 +53,7 @@ export const PUBLIC_ROUTES: string[] = [
   '/gimmicks/movies/search',
   '/gimmicks/auth/login',
   '/gimmicks/telegram/login',
+  '/chat',
   ...GAME_ROUTES,
 ];
 

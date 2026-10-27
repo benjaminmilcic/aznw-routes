@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HomeService } from '../../home.service';
 import { MatIconModule } from '@angular/material/icon';
+import { PortfolioProject } from './portfolio.model';
+import projectsData from './portfolio.json';
 
 @Component({
   selector: 'app-portfolio',
@@ -11,31 +13,34 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [TranslateModule, RouterModule, MatIconModule],
 })
 export class PortfolioComponent {
+  @ViewChild('projectDialog') projectDialog: ElementRef<HTMLDialogElement>;
+
+  readonly projects = (projectsData as PortfolioProject[]).filter(
+    (project) => !project.hidden,
+  );
+  selectedProject: PortfolioProject | null = null;
+
   constructor(
     public homeService: HomeService,
     public translate: TranslateService,
     private router: Router,
   ) {}
 
-  get gameCollectionImage(): string {
+  /** Replaces "{lang}" in image paths and links with the current language */
+  localize(value: string): string {
     const lang = this.translate.currentLang;
     const supported = ['de', 'en', 'hr'];
     const suffix = supported.includes(lang) ? lang : 'en';
-    return `assets/game-collection-${suffix}.webp`;
+    return value.replace('{lang}', suffix);
   }
 
-  get todoAppImage(): string {
-    const lang = this.translate.currentLang;
-    const supported = ['de', 'en', 'hr'];
-    const suffix = supported.includes(lang) ? lang : 'en';
-    return `assets/todo-app-${suffix}.webp`;
-  }
-
-  get gimmicksImage(): string {
-    const lang = this.translate.currentLang;
-    const supported = ['de', 'en', 'hr'];
-    const suffix = supported.includes(lang) ? lang : 'en';
-    return `assets/gimmicks-${suffix}.webp`;
+  openProject(project: PortfolioProject) {
+    if (project.route) {
+      this.router.navigate([project.route]);
+      return;
+    }
+    this.selectedProject = project;
+    this.openDialog(this.projectDialog.nativeElement);
   }
 
   closeDialog(dialog: HTMLDialogElement) {

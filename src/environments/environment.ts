@@ -49,6 +49,14 @@ export const environment = {
     signup: `http://${ip}:3000/auth/signup`,
     tts: `http://${ip}:3000/auth/tts`,
   },
+  chat: {
+    streamApi: `http://${ip}:3000/chat/stream`,
+    sessionApi: `http://${ip}:3000/chat`,
+    transcribeApi: `http://${ip}:3000/chat/transcribe`,
+  },
+  availability: {
+    availabilityApi: `http://${ip}:3000/availability`,
+  },
   moorhuhn: {
     moorhuhnApi: `http://${ip}:3000/moorhuhn`,
   },
