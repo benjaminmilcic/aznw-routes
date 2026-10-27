@@ -15,6 +15,7 @@ import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.servi
 import { AuthService } from './pages/gimmicks/auth/auth.service';
 import { SeoService } from './seo/seo.service';
 import { AnalyticsService } from './services/analytics.service';
+import { ScrollbarThemeService } from './services/scrollbar-theme.service';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MapService } from './pages/gimmicks/map/map.service';
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private seoService: SeoService,
     private analyticsService: AnalyticsService,
+    private scrollbarThemeService: ScrollbarThemeService,
     private router: Router,
     private mapService: MapService,
     private ngZone: NgZone,
@@ -92,6 +94,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     // Setzt Titel, Beschreibung und Canonical je Route und bei Sprachwechsel.
     this.seoService.init();
+    // Scrollbalken in der Farbe der jeweiligen Seite
+    this.scrollbarThemeService.init();
     this.authService.autoLogin();
 
     // Analytics-Tracking beim App-Start initialisieren

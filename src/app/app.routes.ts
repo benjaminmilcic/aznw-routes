@@ -16,6 +16,8 @@ export const routes: Routes = [
   },
   {
     path: 'gimmicks',
+    // Farbe der Scrollbalken (ScrollbarThemeService, Farben in styles.scss)
+    data: { scrollbar: 'water' },
     loadComponent: () =>
       import('./pages/gimmicks/gimmicks.component').then(
         (m) => m.GimmicksComponent,
@@ -23,6 +25,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        data: { scrollbar: 'wood' },
         loadComponent: () =>
           import('./pages/gimmicks/overview/overview.component').then(
             (m) => m.OverviewComponent,
@@ -222,6 +225,7 @@ export const routes: Routes = [
       },
       {
         path: 'weather',
+        data: { scrollbar: 'wood' },
         loadComponent: () =>
           import('./pages/gimmicks/weather/weather.component').then(
             (m) => m.WeatherComponent,
@@ -327,6 +331,7 @@ export const routes: Routes = [
       },
       {
         path: 'imagegen',
+        data: { scrollbar: 'wood' },
         loadComponent: () =>
           import('./pages/gimmicks/imagegen/imagegen.component').then(
             (m) => m.ImagegenComponent,
@@ -411,6 +416,7 @@ export const routes: Routes = [
   },
   {
     path: '404',
+    data: { scrollbar: 'night' },
     loadComponent: () =>
       import('./pages/page-not-found/page-not-found.component').then(
         (m) => m.PageNotFoundComponent,
@@ -418,6 +424,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
+    data: { scrollbar: 'night' },
     loadComponent: () =>
       import('./pages/page-not-found/page-not-found.component').then(
         (m) => m.PageNotFoundComponent,
