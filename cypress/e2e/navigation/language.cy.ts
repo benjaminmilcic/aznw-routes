@@ -1,17 +1,17 @@
 /**
- * Sprachumschaltung.
+ * Language switching.
  *
- * Die Startsprache kommt aus `navigator.language` (siehe AppComponent), eine
- * spaetere Auswahl wird bewusst NICHT gespeichert. Der letzte Test haelt
- * dieses Verhalten fest, damit ein spaeterer Umbau auf persistente Auswahl
- * hier auffaellt statt unbemerkt zu passieren.
+ * The starting language comes from `navigator.language` (see AppComponent), a
+ * later choice is deliberately NOT stored. The last test pins down
+ * this behavior, so that a later switch to a persistent choice
+ * shows up here instead of happening unnoticed.
  */
 describe('Language switcher', () => {
   const chooseLanguage = (lang: 'de' | 'en' | 'hr') => {
     cy.byCy('language-trigger').click();
     cy.byCy('language-' + lang).click();
-    // Das Material-Menue liegt in einem Overlay ueber der Seite und wuerde
-    // sonst den naechsten Klick abfangen.
+    // The Material menu lies in an overlay above the page and would
+    // otherwise catch the next click.
     cy.get('.cdk-overlay-backdrop').should('not.exist');
   };
 

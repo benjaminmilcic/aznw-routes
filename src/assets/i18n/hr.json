@@ -1787,5 +1787,83 @@
       "gamesUno": "Uno s akcijskim kartama i biranjem boje – protiv računala ili protiv suigrača.",
       "gamesTriviaQuiz": "Kviz s izgovorenim pitanjima, više težina i bodovanjem."
     }
+  },
+  "chat": {
+    "navButton": "AI",
+    "open": "Otvori AI chat",
+    "title": "AI chat",
+    "intro": "Pitaj me sve o Benjaminu Milčiću, njegovom radu, projektima i ovoj web stranici – na bilo kojem jeziku.",
+    "tag": "/AI chat",
+    "tagLabel": "Pitaj me",
+    "headlinePre": "Pitaj me sve o",
+    "headlineEm": "Benjaminu.",
+    "subline": "O njegovom radu, projektima i ovoj web stranici – na bilo kojem jeziku.",
+    "examples": {
+      "q1": "Predstavi mi Benjamina",
+      "q2": "Koje jezike govori Benjamin?",
+      "q3": "Pokaži mi nasumični recept iz gimmicka Recepti",
+      "q4": "Je li Benjamin dostupan za nove projekte?"
+    },
+    "placeholder": "Enter za slanje, Shift+Enter za novi red",
+    "message": "Poruka",
+    "send": "Pošalji",
+    "stop": "Zaustavi",
+    "voiceInput": "Glasovni unos",
+    "discardRecording": "Odbaci snimku",
+    "applyRecording": "Preuzmi",
+    "transcribing": "Prepoznavanje …",
+    "thinking": "Razmišlja …",
+    "newChat": "Novi chat",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "copyQuestion": "Kopiraj pitanje",
+    "copyAnswer": "Kopiraj odgovor",
+    "readAloud": "Pročitaj odgovor naglas",
+    "stopReading": "Zaustavi čitanje",
+    "copyChat": "Kopiraj cijeli chat",
+    "chatCopied": "Chat kopiran",
+    "you": "Ti",
+    "assistant": "Asistent",
+    "close": "Zatvori",
+    "summarized": "Starije poruke sažete za model",
+    "summaryTooltip": "Povijest razgovora više nije stala u kontekstni prozor. Starije poruke su sažete za model – ovdje u chatu sve ostaje vidljivo.",
+    "shareLocation": "Podijeli lokaciju",
+    "locationShared": "Lokacija podijeljena",
+    "locationDenied": "Lokacija se nije mogla odrediti. Možeš i jednostavno navesti grad.",
+    "tools": {
+      "get_availability": "Provjerava dostupnost …",
+      "search_recipes": "Traži recepte …",
+      "get_random_joke": "Bira šalu …",
+      "find_guestbook_entries": "Gleda u knjigu gostiju …",
+      "get_guestbook_entry": "Otvara unos u knjizi gostiju …",
+      "get_weather": "Provjerava vrijeme …",
+      "get_moorhuhn_highscores": "Dohvaća Moorhuhn rezultate …"
+    },
+    "errors": {
+      "rate_limit": "Chat je demonstracija, zato je moguće samo nekoliko pitanja u minuti. Pokušaj ponovno za minutu.",
+      "error": "AI chat trenutno nije dostupan. Pokušaj ponovno kasnije.",
+      "daily_limit": "Dnevni budžet AI chata je potrošen – chat je demonstracija. Ponovno je dostupan od {{time}} sati."
+    },
+    "voiceErrors": {
+      "unsupported": "Ovaj preglednik ne podržava snimanje zvuka.",
+      "microphone": "Nema pristupa mikrofonu. Dopusti ga u pregledniku.",
+      "rate_limit": "Prepoznavanje govora je trenutno zauzeto. Pokušaj ponovno za minutu.",
+      "failed": "Prepoznavanje govora nije uspjelo."
+    },
+    "info": {
+      "button": "Napomene i ograničenja",
+      "title": "Napomene i ograničenja",
+      "intro": "AI chat je demonstracijski projekt. Kako bi troškovi ostali razumni, postoje ograničenja po posjetitelju i dnevni budžet za sve posjetitelje zajedno. Kad se dosegne ograničenje, chat prikazuje napomenu.",
+      "chatTitle": "Chat – OpenAI, GPT-5.4 mini",
+      "chatLimit1": "Po posjetitelju: 5 pitanja u minuti, 100 dnevno",
+      "chatNote": "Svako pitanje šalje povijest razgovora i isječke znanja, često nekoliko tisuća tokena – jedno pitanje stoji otprilike jedan cent. Kad se dnevni budžet potroši, chat nastavlja nakon ponoći (UTC).",
+      "voiceTitle": "Glasovni unos – Groq besplatna kvota, Whisper",
+      "voiceLimit1": "20 zahtjeva u minuti, 2.000 dnevno",
+      "voiceLimit2": "7.200 sekundi zvuka po satu, 28.800 dnevno",
+      "searchTitle": "Pretraživanje znanja – Cloudflare Workers AI, bge-m3",
+      "searchLimit1": "10.000 neurona dnevno – dovoljno za nekoliko milijuna tokena",
+      "searchLimit2": "Workers besplatni plan: 100.000 poziva dnevno",
+      "asOf": "Stanje: listopad 2026. Pružatelji usluga mogu promijeniti ograničenja u bilo kojem trenutku."
+    }
   }
 }

@@ -1,0 +1,223 @@
+[
+  {
+    "id": "gimmicks",
+    "title": "Gimmicks",
+    "descKey": "portfolio.gimmicksDesc",
+    "image": "assets/gimmicks-{lang}.webp",
+    "imageAlt": "Gimmicks",
+    "stack": ["Angular", "NestJS"],
+    "pin": { "position": "center", "color": "green" },
+    "route": "/gimmicks"
+  },
+  {
+    "id": "catchcups",
+    "title": "CatchCups",
+    "descKey": "portfolio.catchCupsDesc",
+    "image": "assets/catchCups.webp",
+    "imageAlt": "CatchCups",
+    "stack": ["Angular", "Ionic"],
+    "pin": { "position": "right", "color": "yellow" },
+    "dialog": [
+      { "type": "website", "href": "https://catchcups.com" },
+      {
+        "type": "text",
+        "parts": [
+          { "key": "portfolio.catchCups.text1" },
+          { "text": "Codext GmbH", "href": "https://codext.de/" },
+          { "text": ",", "glue": true },
+          { "key": "portfolio.catchCups.text2" }
+        ]
+      },
+      {
+        "type": "gallery",
+        "layout": "catchcups",
+        "images": [
+          { "src": "/assets/catchcups1.webp", "alt": "CatchCups" },
+          { "src": "/assets/catchcups2.webp", "alt": "CatchCups" },
+          { "src": "/assets/catchcups3.webp", "alt": "CatchCups" },
+          { "src": "/assets/catchcups4.webp", "alt": "CatchCups" }
+        ]
+      },
+      {
+        "type": "storeBadge",
+        "href": "https://play.google.com/store/apps/details?id=de.codext.catchcup",
+        "alt": "CatchCup App",
+        "variant": "small"
+      }
+    ]
+  },
+  {
+    "id": "webaro",
+    "title": "Webaro",
+    "descKey": "portfolio.webaroDesc",
+    "image": "assets/webaro.webp",
+    "imageAlt": "Webaro",
+    "stack": ["Angular"],
+    "pin": { "position": "left", "color": "blue" },
+    "dialog": [
+      { "type": "website", "href": "https://webaro.dev" },
+      {
+        "type": "text",
+        "parts": [
+          { "key": "portfolio.webaro.text1" },
+          { "text": "Weber Agrar Robotik GmbH", "href": "https://webaro.de" },
+          { "key": "portfolio.webaro.text2" },
+          { "text": "Codext GmbH", "href": "https://codext.de" },
+          { "text": ".", "glue": true }
+        ]
+      },
+      {
+        "type": "gallery",
+        "layout": "vertical",
+        "images": [
+          { "src": "/assets/webaro.webp", "alt": "Weber Agrar Robotik GmbH Dashboard" },
+          { "src": "/assets/webaro1.webp", "alt": "Weber Agrar Robotik GmbH Interface" },
+          { "src": "/assets/webaro2.webp", "alt": "Weber Agrar Robotik GmbH Analytics" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "vocabulary-trainer",
+    "titleKey": "portfolio.vocabularyTrainerTitle",
+    "descKey": "portfolio.vocabularyTrainerDesc",
+    "image": "assets/learnCroatian.webp",
+    "imageAlt": "Vocabulary Trainer",
+    "stack": ["Angular", "Ionic", "Firebase"],
+    "pin": { "position": "center", "color": "green" },
+    "dialog": [
+      {
+        "type": "section",
+        "titleKey": "portfolio.vocabularyTrainer.text2",
+        "image": { "src": "/assets/learnCroatianAndroid.webp", "alt": "Android App to learn Croatian Language", "kind": "mobile-app" },
+        "links": [
+          { "href": "https://raw.githubusercontent.com/benjaminmilcic/learn-croatian/master/apk/learn-croatian.apk", "icon": "download", "label": "Download APK", "style": "primary", "newTab": false },
+          { "href": "https://github.com/benjaminmilcic/learn-croatian", "icon": "code", "labelKey": "portfolio.vocabularyTrainer.sourceCode", "style": "secondary", "newTab": true }
+        ]
+      },
+      {
+        "type": "section",
+        "titleKey": "portfolio.vocabularyTrainer.text1",
+        "image": { "src": "/assets/learnCroatian.webp", "alt": "A Web App to learn Croatian Language", "kind": "web-app" },
+        "spacedLinks": true,
+        "links": [
+          { "href": "https://learn-croatian-86b00.web.app/", "icon": "launch", "label": "Live Demo", "style": "primary", "newTab": true },
+          { "href": "https://github.com/benjaminmilcic/learn-croatian", "icon": "code", "labelKey": "portfolio.vocabularyTrainer.sourceCode", "style": "secondary", "newTab": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "solakon",
+    "title": "Solakon",
+    "descKey": "portfolio.solakonDesc",
+    "image": "assets/solakon.webp",
+    "imageAlt": "Solakon",
+    "stack": ["Angular", "Ionic"],
+    "pin": { "position": "left", "color": "red" },
+    "dialogInSection": true,
+    "dialog": [
+      { "type": "website", "href": "https://www.solakon.de" },
+      {
+        "type": "text",
+        "parts": [
+          { "key": "portfolio.solakon.text1" },
+          { "text": "Codext GmbH", "href": "https://codext.de/" },
+          { "text": ",", "glue": true },
+          { "key": "portfolio.solakon.text2" }
+        ]
+      },
+      {
+        "type": "gallery",
+        "layout": "grid",
+        "images": [
+          { "src": "/assets/solakon1.webp", "alt": "Solakon Screenshot 1" },
+          { "src": "/assets/solakon2.webp", "alt": "Solakon Screenshot 2" },
+          { "src": "/assets/solakon3.webp", "alt": "Solakon Screenshot 3" },
+          { "src": "/assets/solakon4.webp", "alt": "Solakon Screenshot 4" }
+        ]
+      },
+      {
+        "type": "storeBadge",
+        "href": "https://play.google.com/store/apps/details?id=de.solakon.app",
+        "alt": "Get it on Google Play",
+        "variant": "badge"
+      }
+    ]
+  },
+  {
+    "id": "game-collection",
+    "titleKey": "portfolio.gamesCollectionTitle",
+    "descKey": "portfolio.gamesCollectionDesc",
+    "image": "assets/game-collection-{lang}.webp",
+    "imageAlt": "Game Collection",
+    "stack": ["Angular", "Firebase"],
+    "pin": { "position": "left", "color": "yellow" },
+    "dialog": [
+      {
+        "type": "section",
+        "titleKey": "portfolio.gameCollection.text1",
+        "image": { "src": "assets/game-collection-{lang}.webp", "alt": "Game Collection", "kind": "web-app" },
+        "spacedLinks": true,
+        "links": [
+          { "href": "https://whiteboard-32486.web.app/?lang={lang}", "icon": "launch", "label": "Live Demo", "style": "primary", "newTab": true },
+          { "href": "https://github.com/benjaminmilcic/whiteboard", "icon": "code", "labelKey": "portfolio.vocabularyTrainer.sourceCode", "style": "secondary", "newTab": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "todo-app",
+    "titleKey": "portfolio.todoAppTitle",
+    "descKey": "portfolio.todoAppDesc",
+    "image": "assets/todo-app-{lang}.webp",
+    "imageAlt": "ToDo App",
+    "stack": ["Angular", "Ionic", "NestJS", "MySQL"],
+    "pin": { "position": "right", "color": "red" },
+    "dialog": [
+      {
+        "type": "section",
+        "titleKey": "portfolio.todoApp.text1",
+        "image": { "src": "assets/todo-app-{lang}.webp", "alt": "ToDo App", "kind": "web-app" },
+        "spacedLinks": true,
+        "links": [
+          { "href": "https://todo-app.benjamin-milcic.dev", "icon": "launch", "label": "Live Demo", "style": "primary", "newTab": true },
+          { "href": "https://todo-app.benjamin-milcic.dev/downloads/todo-app.apk", "icon": "download", "labelKey": "portfolio.todoApp.downloadApk", "style": "primary", "newTab": false },
+          { "href": "https://github.com/benjaminmilcic/to-do-app", "icon": "code", "labelKey": "portfolio.vocabularyTrainer.sourceCode", "style": "secondary", "newTab": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hippo-data",
+    "title": "Hippo Data",
+    "descKey": "portfolio.hippoDataDesc",
+    "image": "assets/hippo2.webp",
+    "imageAlt": "Hippo Data",
+    "stack": ["Angular"],
+    "pin": { "position": "left", "color": "red" },
+    "hidden": true,
+    "dialog": [
+      { "type": "website", "href": "https://login.hippodata.de" },
+      {
+        "type": "text",
+        "parts": [
+          { "key": "portfolio.hippo.text1" },
+          { "text": "Hippo Data GmbH", "href": "https://public.hippodata.net" },
+          { "key": "portfolio.hippo.text2" },
+          { "text": "Codext GmbH", "href": "https://codext.de" },
+          { "text": ".", "glue": true }
+        ]
+      },
+      {
+        "type": "gallery",
+        "layout": "vertical",
+        "images": [
+          { "src": "/assets/hippo2.webp", "alt": "Hippo Data Dashboard Overview" },
+          { "src": "/assets/hippo1.webp", "alt": "Hippo Data Analytics Interface" },
+          { "src": "/assets/hippo.webp", "alt": "Hippo Data Management System" }
+        ]
+      }
+    ]
+  }
+]

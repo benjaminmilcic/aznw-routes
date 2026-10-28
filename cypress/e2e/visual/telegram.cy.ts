@@ -1,10 +1,10 @@
 /**
- * Telegram-Bereich.
+ * Telegram section.
  *
- * Der Chat haengt an einer echten Telegram-Sitzung und einem WebSocket. Der
- * Teil, der sich ohne beides zuverlaessig pruefen laesst, ist der Waechter
- * davor: wer nicht angemeldet ist, darf nicht in den Chat, und die Anmeldung
- * verlaeuft in Schritten.
+ * The chat depends on a real Telegram session and a WebSocket. The
+ * part that can be checked reliably without both is the guard
+ * in front of it: whoever is not signed in may not enter the chat, and the sign-in
+ * happens in steps.
  */
 describe('Telegram', () => {
   const AUTH_STATUS = {
@@ -52,7 +52,7 @@ describe('Telegram', () => {
 
     cy.visitApp('/gimmicks/telegram');
 
-    // /telegram leitet auf /chat, der Waechter schickt weiter zum Login.
+    // /telegram redirects to /chat, the guard sends you on to the login.
     cy.location('pathname').should('eq', '/gimmicks/telegram/login');
   });
 });

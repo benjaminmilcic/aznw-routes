@@ -1,10 +1,10 @@
 /**
- * Vier Gewinnt gegen den Computer.
+ * Connect Four against the computer.
  *
- * Der Online-Modus laeuft ueber die Firebase Realtime Database und wird hier
- * bewusst ausgelassen - er braucht einen zweiten Spieler und eine echte
- * Verbindung. Der Computer-Modus haelt den Spielstand laut Service als rein
- * lokales Signal und ist deshalb vollstaendig ueber die Oberflaeche pruefbar.
+ * The online mode runs via the Firebase Realtime Database and is deliberately
+ * left out here - it needs a second player and a real
+ * connection. According to the service, the computer mode keeps the game state
+ * as a purely local signal and can therefore be fully checked via the UI.
  */
 describe('Connect Four', () => {
   const startAgainstComputer = (name = 'Tester') => {
@@ -52,7 +52,7 @@ describe('Connect Four', () => {
 
     cy.byCy('c4-column-3').click();
 
-    // Der eigene Stein liegt sofort, der Computer antwortet kurz darauf.
+    // Your own disc lands right away, the computer answers shortly after.
     cy.get('.board .disc').should('have.length.at.least', 1);
     cy.byCy('c4-column-3').find('.disc').should('have.length.at.least', 1);
   });
@@ -71,7 +71,7 @@ describe('Connect Four', () => {
     cy.byCy('c4-column-6').click();
     cy.get('.board .disc').should('have.length', 2);
 
-    // Die unterste Zelle einer Spalte ist die letzte im DOM.
+    // The bottom cell of a column is the last one in the DOM.
     cy.byCy('c4-column-6').find('.hole').last().find('.disc').should('exist');
   });
 

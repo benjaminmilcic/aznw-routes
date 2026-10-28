@@ -1,9 +1,9 @@
 /**
- * Kalenderseite.
+ * Calendar page.
  *
- * Der angezeigte Monat haengt vom aktuellen Datum ab. Damit die Tests nicht
- * je nach Tag anders ausgehen, friert `cy.clock()` die Zeit auf ein festes
- * Datum ein - der 15. Maerz 2026, ein Sonntag, mitten im Monat.
+ * The month shown depends on the current date. So that the tests don't
+ * turn out differently depending on the day, `cy.clock()` freezes the time on a fixed
+ * date - March 15, 2026, a Sunday, in the middle of the month.
  */
 describe('Calendar', () => {
   const FIXED_DATE = new Date(2026, 2, 15, 12, 0, 0);

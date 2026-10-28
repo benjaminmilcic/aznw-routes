@@ -280,6 +280,17 @@
       >
         <i class="fa-solid fa-magnifying-glass"></i>
       </button> -->
+      <!-- AI chat -->
+      <a
+        class="chat-toggle"
+        [routerLink]="['/chat']"
+        routerLinkActive="active"
+        data-cy="chat-button"
+        [attr.aria-label]="'chat.open' | translate"
+      >
+        <span>{{ "chat.navButton" | translate }}</span>
+        <i class="fa-solid fa-comments"></i>
+      </a>
       <!-- Language switcher -->
       <app-language-switcher></app-language-switcher>
       <!-- Mobile Menu Toggle -->

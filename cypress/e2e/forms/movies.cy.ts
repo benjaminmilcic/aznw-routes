@@ -1,9 +1,9 @@
 /**
- * Filmportal (TMDB).
+ * Movie portal (TMDB).
  *
- * Alle Antworten kommen aus Fixtures. Damit haengt kein Test an einem
- * gueltigen TMDB-Key, an der Verfuegbarkeit des Dienstes oder daran, welcher
- * Film gerade populaer ist.
+ * All responses come from fixtures. That way no test depends on a
+ * valid TMDB key, on the availability of the service or on which
+ * movie happens to be popular.
  */
 describe('Movies', () => {
   const stubLists = () => {
@@ -103,13 +103,13 @@ describe('Movies', () => {
   });
 
   /**
-   * Regressionstest zu `total_pages: 0`.
+   * Regression test for `total_pages: 0`.
    *
-   * Bei einem leeren Ergebnis meldet die API null Seiten. Solange die Abfrage
-   * in `MoviesPopularComponent.search()` auf `maxPages === 1` stand, lief der
-   * Fall in den else-Zweig: `forkJoin([])` schliesst ohne einen Wert zu
-   * liefern, `loading` blieb fuer immer true und die Seite drehte endlos den
-   * Ladekreis. Faellt dieser Test aus, ist die Bedingung wieder zu eng.
+   * For an empty result the API reports zero pages. As long as the check
+   * in `MoviesPopularComponent.search()` was `maxPages === 1`, this case
+   * ran into the else branch: `forkJoin([])` completes without delivering a
+   * value, `loading` stayed true forever and the page spun the loading circle
+   * endlessly. If this test fails, the condition is too narrow again.
    */
   it('reports an empty result instead of showing nothing', () => {
     cy.intercept('GET', '**/discover/movie*', {

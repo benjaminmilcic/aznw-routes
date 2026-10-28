@@ -1,15 +1,15 @@
 /**
- * Tic-Tac-Toe, vollstaendig ueber die Oberflaeche gespielt.
+ * Tic-tac-toe, played completely via the UI.
  *
- * Das Spiel laeuft rein im Browser - kein Backend, kein Firebase. Damit ist
- * es der beste Ort, um Spiellogik ueber die Oberflaeche zu pruefen: Zuege,
- * Gewinnerkennung, Unentschieden und der Computergegner.
+ * The game runs purely in the browser - no backend, no Firebase. That makes
+ * it the best place to check game logic via the UI: moves,
+ * win detection, draws and the computer opponent.
  */
 describe('Tic-Tac-Toe', () => {
   const cell = (row: number, column: number) =>
     cy.byCy('ttt-cell-' + row + '-' + column);
 
-  /** Zellinhalt ohne die Leerzeichen, die Angular aus dem Template mitbringt. */
+  /** Cell content without the spaces that Angular brings along from the template. */
   const cellText = (row: number, column: number) =>
     cell(row, column).trimmedText();
 
@@ -48,8 +48,8 @@ describe('Tic-Tac-Toe', () => {
     cell(0, 0).click();
 
     cellText(0, 0).should('eq', 'X');
-    // Waere der Zug gezaehlt worden, stuende jetzt O am Zug fuer das
-    // naechste Feld - so bleibt es bei O.
+    // Had the move been counted, O would now be on turn for the
+    // next cell - this way it stays with O.
     cell(2, 2).click();
     cellText(2, 2).should('eq', 'O');
   });
@@ -139,17 +139,17 @@ describe('Tic-Tac-Toe', () => {
   });
 
   it('lets the computer answer a move', () => {
-    // Feste Zufallswerte, damit der Computerzug in jedem Lauf gleich ausfaellt.
+    // Fixed random values, so that the computer's move is the same in every run.
     cy.visitApp('/gimmicks/games/tiktaktoe', { randomValues: [0.9, 0.9] });
 
-    // Nicht das ion-label anklicken - es hat pointer-events: none.
+    // Don't click the ion-label - it has pointer-events: none.
     cy.byCy('ttt-opponent')
       .find('ion-segment-button[value="computer"]')
       .click();
     cell(0, 0).click();
 
-    // Der Computer zieht nach einer halben Sekunde - danach liegt genau ein
-    // O auf dem Brett.
+    // The computer moves after half a second - after that there is exactly one
+    // O on the board.
     cy.byCy('ttt-board')
       .find('button')
       .filter(':contains("O")')

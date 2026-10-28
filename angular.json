@@ -56,7 +56,17 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "assets": [
+                "src/favicon.ico",
+                "src/sitemap.xml",
+                "src/assets",
+                {
+                  "glob": "test-questions.md",
+                  "input": "ai-chat-knowledge-base",
+                  "output": "assets/chat-test"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

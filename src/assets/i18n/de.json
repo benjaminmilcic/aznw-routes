@@ -1785,5 +1785,83 @@
       "gamesUno": "Uno mit Aktionskarten und Farbwahl – gegen den Computer oder gegen Mitspieler.",
       "gamesTriviaQuiz": "Quizspiel mit vorgelesenen Fragen, mehreren Schwierigkeitsgraden und Punktewertung."
     }
+  },
+  "chat": {
+    "navButton": "KI",
+    "open": "KI-Chat öffnen",
+    "title": "KI-Chat",
+    "intro": "Frag mich alles über Benjamin Milčić, seine Arbeit, seine Projekte und diese Webseite – in jeder Sprache.",
+    "tag": "/KI-Chat",
+    "tagLabel": "Frag mich",
+    "headlinePre": "Frag mich alles über",
+    "headlineEm": "Benjamin.",
+    "subline": "Über seine Arbeit, seine Projekte und diese Webseite – in jeder Sprache.",
+    "examples": {
+      "q1": "Stelle mir Benjamin vor",
+      "q2": "Welche Sprachen spricht Benjamin?",
+      "q3": "Zeig mir ein zufälliges Rezept aus dem Rezepte-Gimmick",
+      "q4": "Ist Benjamin für neue Projekte verfügbar?"
+    },
+    "placeholder": "Enter zum Senden, Shift+Enter für Zeilenumbruch",
+    "message": "Nachricht",
+    "send": "Senden",
+    "stop": "Stoppen",
+    "voiceInput": "Spracheingabe",
+    "discardRecording": "Aufnahme verwerfen",
+    "applyRecording": "Übernehmen",
+    "transcribing": "Wird erkannt …",
+    "thinking": "Denkt nach …",
+    "newChat": "Neuer Chat",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "copyQuestion": "Frage kopieren",
+    "copyAnswer": "Antwort kopieren",
+    "readAloud": "Antwort vorlesen",
+    "stopReading": "Vorlesen beenden",
+    "copyChat": "Ganzen Chat kopieren",
+    "chatCopied": "Chat kopiert",
+    "you": "Du",
+    "assistant": "Assistent",
+    "close": "Schließen",
+    "summarized": "Ältere Nachrichten für das Modell zusammengefasst",
+    "summaryTooltip": "Der Verlauf passte nicht mehr ins Context Window. Für das Modell wurden ältere Nachrichten zusammengefasst – hier im Chat bleibt alles sichtbar.",
+    "shareLocation": "Standort teilen",
+    "locationShared": "Standort geteilt",
+    "locationDenied": "Der Standort konnte nicht ermittelt werden. Du kannst auch einfach eine Stadt nennen.",
+    "tools": {
+      "get_availability": "Prüft die Verfügbarkeit …",
+      "search_recipes": "Sucht Rezepte …",
+      "get_random_joke": "Sucht einen Witz aus …",
+      "find_guestbook_entries": "Sieht im Gästebuch nach …",
+      "get_guestbook_entry": "Öffnet den Gästebucheintrag …",
+      "get_weather": "Fragt das Wetter ab …",
+      "get_moorhuhn_highscores": "Holt den Moorhuhn-Highscore …"
+    },
+    "errors": {
+      "rate_limit": "Der Chat ist eine Demonstration, deshalb sind nur wenige Fragen pro Minute möglich. Probier es in einer Minute nochmal.",
+      "error": "Der KI-Chat ist gerade nicht erreichbar. Bitte versuch es später noch einmal.",
+      "daily_limit": "Das Tagesbudget des KI-Chats ist aufgebraucht – der Chat ist eine Demonstration. Ab {{time}} Uhr geht es wieder."
+    },
+    "voiceErrors": {
+      "unsupported": "Dieser Browser unterstützt keine Audioaufnahme.",
+      "microphone": "Kein Zugriff auf das Mikrofon. Bitte im Browser erlauben.",
+      "rate_limit": "Die Spracherkennung ist gerade ausgelastet. Probier es in einer Minute nochmal.",
+      "failed": "Die Spracherkennung hat nicht geklappt."
+    },
+    "info": {
+      "button": "Hinweise und Limits",
+      "title": "Hinweise und Limits",
+      "intro": "Der KI-Chat ist ein Demonstrationsprojekt. Damit die Kosten überschaubar bleiben, gibt es Limits pro Besucher und ein Tagesbudget für alle zusammen. Ist ein Limit erreicht, zeigt der Chat einen Hinweis.",
+      "chatTitle": "Chat – OpenAI, GPT-5.4 mini",
+      "chatLimit1": "Pro Besucher: 5 Fragen pro Minute, 100 pro Tag",
+      "chatNote": "Jede Frage schickt Verlauf und Wissensausschnitte mit, oft einige tausend Tokens – eine Frage kostet etwa einen Cent. Ist das Tagesbudget aufgebraucht, geht es nach Mitternacht (UTC) weiter.",
+      "voiceTitle": "Spracheingabe – Groq Free Tier, Whisper",
+      "voiceLimit1": "20 Anfragen pro Minute, 2.000 pro Tag",
+      "voiceLimit2": "7.200 Sekunden Audio pro Stunde, 28.800 pro Tag",
+      "searchTitle": "Wissenssuche – Cloudflare Workers AI, bge-m3",
+      "searchLimit1": "10.000 Neurons pro Tag – reicht für mehrere Millionen Tokens",
+      "searchLimit2": "Workers Free Plan: 100.000 Aufrufe pro Tag",
+      "asOf": "Stand: Oktober 2026. Die Anbieter können die Limits jederzeit ändern."
+    }
   }
 }

@@ -4,7 +4,7 @@
 
 // const ip = '10.39.128.38';
 const ip = 'localhost';
-const localIp = '172.16.201.213'; //je nach aktueller IP anpassen
+const localIp = '172.16.201.213'; // adjust to the current IP
 
 // @ts-ignore
 const stripeKey = process.env['STRIPE_PUBLISHABLE_KEY'] || '';
@@ -49,6 +49,15 @@ export const environment = {
     signup: `http://${ip}:3000/auth/signup`,
     tts: `http://${ip}:3000/auth/tts`,
   },
+  chat: {
+    streamApi: `http://${ip}:3000/chat/stream`,
+    sessionApi: `http://${ip}:3000/chat`,
+    transcribeApi: `http://${ip}:3000/chat/transcribe`,
+    speechApi: `http://${ip}:3000/chat/speech`,
+  },
+  availability: {
+    availabilityApi: `http://${ip}:3000/availability`,
+  },
   moorhuhn: {
     moorhuhnApi: `http://${ip}:3000/moorhuhn`,
   },
@@ -70,7 +79,7 @@ export const environment = {
   recipes: {
     recipesApi: `http://${ip}:3000/recipes`,
     filesUrl: `http://${ip}:3000/files`,
-    translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
+    translationEmail: 'benjamin.milcic@gmail.com', // For the MyMemory API - raises the limit to 50k chars/day
   },
   analytics: {
     sendData: `http://${ip}:3000/analytics/visitor-data`,

@@ -11,13 +11,13 @@
       <span class="screw br"></span>
 
       <div class="enamel-kicker">
-        @if (available()) {
+        @if (availability()?.available === true) {
           <span class="live"></span>
           <span class="translate-y-[1px]"
-            >{{ "header.available" | translate }} · Q{{ quarter() }}
-            {{ year() }}</span
+            >{{ "header.available" | translate }} · Q{{ availability().quarter }}
+            {{ availability().year }}</span
           >
-        } @else {
+        } @else if (availability()?.available === false) {
           <span class="not-live"></span>
           <span class="translate-y-[1px]">{{
             "header.notAvailable" | translate
@@ -28,7 +28,7 @@
       <h1>Benjamin <em>Milčić</em></h1>
       <div class="role flex justify-center items-center gap-2 flex-wrap">
         <div>Full Stack {{ "header.developer" | translate }}</div>
-        <div class="stack translate-y-[2px]">Angular · NestJS · Ionic</div>
+        <div class="stack translate-y-[2px]">Angular · NestJS · Ionic · LLMs</div>
       </div>
 
       <div class="enamel-text">

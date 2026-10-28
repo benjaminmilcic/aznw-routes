@@ -1,12 +1,12 @@
 import { API_PATHS, apiRoute } from '../../support/api';
 
 /**
- * Trivia-Quiz.
+ * Trivia quiz.
  *
- * Die Fragen kommen aus der eigenen API. Mit Fixtures ist der komplette
- * Ablauf reproduzierbar: bekannte Fragen, bekannte richtige Antwort, bekannter
- * Punktestand. Ohne Stub haengt jeder Durchlauf davon ab, welche Fragen die
- * Datenbank gerade zufaellig ausliefert.
+ * The questions come from our own API. With fixtures the complete
+ * flow is reproducible: known questions, known correct answer, known
+ * score. Without a stub every run depends on which questions the
+ * database happens to deliver.
  */
 describe('Trivia quiz', () => {
   const stubQuestions = () =>
@@ -66,7 +66,7 @@ describe('Trivia quiz', () => {
     cy.wait('@loadFailed');
 
     cy.get('.trivia-state-error').should('be.visible');
-    // Der Text muss fuer Besucher taugen: kein Statuscode, kein Hostname.
+    // The text must be fit for visitors: no status code, no host name.
     cy.get('.trivia-state-error').should('not.contain.text', '500');
     cy.get('.trivia-state-error').should('not.contain.text', 'localhost');
     cy.get('.trivia-state-error button').should('be.visible');

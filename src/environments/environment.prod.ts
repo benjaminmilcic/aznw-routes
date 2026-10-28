@@ -1,11 +1,11 @@
-// ACHTUNG: Diese Datei wird beim Deploy vollstaendig ueberschrieben.
-// .github/workflows/deploy-dev.yml erzeugt sie im Schritt "Environment fuer
-// den neuen Server erzeugen" neu, bevor gebaut wird. Aenderungen hier wirken
-// deshalb NUR bei einem lokalen Prod-Build. Wer den Produktiv-Host aendern
-// will, aendert den Workflow - nicht diese Datei.
+// WARNING: This file is completely overwritten on deploy.
+// .github/workflows/deploy-dev.yml regenerates it in the step "Create the environment for
+// the new server" before building. Changes here therefore only
+// take effect in a local prod build. Whoever wants to change the production host
+// changes the workflow - not this file.
 //
-// Sie wird trotzdem aktuell gehalten, damit sie niemanden in die Irre fuehrt:
-// der alte Host benjaminmilcic.site laeuft noch, mit eigenem Datenbestand.
+// It is still kept up to date so that it doesn't mislead anyone:
+// the old host benjaminmilcic.site is still running, with its own data.
 
 const api = 'https://api.benjamin-milcic.dev';
 
@@ -62,6 +62,15 @@ export const environment = {
     signup: `${api}/auth/signup`,
     tts: `${api}/auth/tts`,
   },
+  chat: {
+    streamApi: `${api}/chat/stream`,
+    sessionApi: `${api}/chat`,
+    transcribeApi: `${api}/chat/transcribe`,
+    speechApi: `${api}/chat/speech`,
+  },
+  availability: {
+    availabilityApi: `${api}/availability`,
+  },
   moorhuhn: {
     moorhuhnApi: `${api}/moorhuhn`,
   },
@@ -86,7 +95,7 @@ export const environment = {
   recipes: {
     recipesApi: `${api}/recipes`,
     filesUrl: `${api}/files`,
-    translationEmail: 'benjamin.milcic@gmail.com', // Für MyMemory API - erhöht Limit auf 50k chars/day
+    translationEmail: 'benjamin.milcic@gmail.com', // For the MyMemory API - raises the limit to 50k chars/day
   },
   analytics: {
     sendData: `${api}/analytics/visitor-data`,

@@ -1785,5 +1785,83 @@
       "gamesUno": "Uno with action cards and colour picking – against the computer or against other players.",
       "gamesTriviaQuiz": "Quiz game with spoken questions, several difficulty levels and scoring."
     }
+  },
+  "chat": {
+    "navButton": "AI",
+    "open": "Open AI chat",
+    "title": "AI chat",
+    "intro": "Ask me anything about Benjamin Milčić, his work, his projects and this website – in any language.",
+    "tag": "/AI chat",
+    "tagLabel": "Ask me",
+    "headlinePre": "Ask me anything about",
+    "headlineEm": "Benjamin.",
+    "subline": "About his work, his projects and this website – in any language.",
+    "examples": {
+      "q1": "Introduce Benjamin to me",
+      "q2": "Which languages does Benjamin speak?",
+      "q3": "Show me a random recipe from the Recipes gimmick",
+      "q4": "Is Benjamin available for new projects?"
+    },
+    "placeholder": "Enter to send, Shift+Enter for a new line",
+    "message": "Message",
+    "send": "Send",
+    "stop": "Stop",
+    "voiceInput": "Voice input",
+    "discardRecording": "Discard recording",
+    "applyRecording": "Use recording",
+    "transcribing": "Recognising …",
+    "thinking": "Thinking …",
+    "newChat": "New chat",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyQuestion": "Copy question",
+    "copyAnswer": "Copy answer",
+    "readAloud": "Read answer aloud",
+    "stopReading": "Stop reading",
+    "copyChat": "Copy whole chat",
+    "chatCopied": "Chat copied",
+    "you": "You",
+    "assistant": "Assistant",
+    "close": "Close",
+    "summarized": "Older messages summarized for the model",
+    "summaryTooltip": "The history no longer fit into the context window. Older messages were summarized for the model – here in the chat everything stays visible.",
+    "shareLocation": "Share location",
+    "locationShared": "Location shared",
+    "locationDenied": "The location could not be determined. You can also simply name a city.",
+    "tools": {
+      "get_availability": "Checking availability …",
+      "search_recipes": "Searching recipes …",
+      "get_random_joke": "Picking a joke …",
+      "find_guestbook_entries": "Looking in the guestbook …",
+      "get_guestbook_entry": "Opening the guestbook entry …",
+      "get_weather": "Checking the weather …",
+      "get_moorhuhn_highscores": "Getting the Moorhuhn high score …"
+    },
+    "errors": {
+      "rate_limit": "The chat is a demonstration, so only a few questions per minute are possible. Please try again in a minute.",
+      "error": "The AI chat is not available right now. Please try again later.",
+      "daily_limit": "The daily budget of the AI chat is used up – the chat is a demonstration. It will be available again from {{time}}."
+    },
+    "voiceErrors": {
+      "unsupported": "This browser does not support audio recording.",
+      "microphone": "No access to the microphone. Please allow it in the browser.",
+      "rate_limit": "Speech recognition is busy right now. Please try again in a minute.",
+      "failed": "Speech recognition did not work."
+    },
+    "info": {
+      "button": "Notes and limits",
+      "title": "Notes and limits",
+      "intro": "The AI chat is a demonstration project. To keep the costs manageable, there are limits per visitor and a daily budget for all visitors together. When a limit is reached, the chat shows a note.",
+      "chatTitle": "Chat – OpenAI, GPT-5.4 mini",
+      "chatLimit1": "Per visitor: 5 questions per minute, 100 per day",
+      "chatNote": "Every question sends the history and knowledge excerpts along, often a few thousand tokens – one question costs about one cent. Once the daily budget is used up, the chat continues after midnight (UTC).",
+      "voiceTitle": "Voice input – Groq free tier, Whisper",
+      "voiceLimit1": "20 requests per minute, 2,000 per day",
+      "voiceLimit2": "7,200 seconds of audio per hour, 28,800 per day",
+      "searchTitle": "Knowledge search – Cloudflare Workers AI, bge-m3",
+      "searchLimit1": "10,000 neurons per day – enough for several million tokens",
+      "searchLimit2": "Workers free plan: 100,000 requests per day",
+      "asOf": "As of October 2026. The providers may change their limits at any time."
+    }
   }
 }

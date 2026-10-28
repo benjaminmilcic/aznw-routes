@@ -1,11 +1,11 @@
 /**
- * Bildgenerator.
+ * Image generator.
  *
- * Die Erzeugung laeuft ueber die eigene API und kostet dort Rechenzeit. Kein
- * Test darf sie wirklich anstossen - jeder Aufruf wird abgefangen und mit
- * einem winzigen Bild beantwortet.
+ * The generation runs via our own API and costs compute time there. No
+ * test may really trigger it - every call is intercepted and answered with
+ * a tiny image.
  *
- * Die Komponente nutzt `fetch` statt HttpClient; `cy.intercept` faengt beides.
+ * The component uses `fetch` instead of HttpClient; `cy.intercept` catches both.
  */
 describe('Image generator', () => {
   const IMAGEGEN = { hostname: 'localhost', port: 3000, pathname: '/imagegen' };

@@ -1,9 +1,9 @@
 /**
- * Knopf "nach oben".
+ * "Back to top" button.
  *
- * Er erscheint erst ab 600 Pixel Scrolltiefe und zeigt ueber einen Ring an,
- * wie weit die Seite gescrollt ist. Beides ist gut zu uebersehen und genauso
- * gut zu testen.
+ * It only appears from a scroll depth of 600 pixels and shows with a ring
+ * how far the page has been scrolled. Both are easy to overlook and just as
+ * easy to test.
  */
 describe('Scroll to top', () => {
   beforeEach(() => {

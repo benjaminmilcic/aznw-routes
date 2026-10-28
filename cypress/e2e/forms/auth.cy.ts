@@ -1,12 +1,12 @@
 import { API_PATHS, apiRoute } from '../../support/api';
 /**
- * Anmeldung am Witze-Bereich.
+ * Sign-in to the jokes section.
  *
- * Der AuthService legt den angemeldeten Benutzer unter `authUserData` im
- * localStorage ab und liest ihn beim Start ueber `autoLogin()` wieder ein.
- * `cy.visitApp(path, { auth: true })` schreibt genau diesen Eintrag, bevor
- * die App startet - so muss sich nur der Login-Test selbst durch das
- * Formular klicken, alle anderen starten angemeldet.
+ * The AuthService stores the signed-in user under `authUserData` in
+ * localStorage and reads it back on start via `autoLogin()`.
+ * `cy.visitApp(path, { auth: true })` writes exactly this entry before
+ * the app starts - so only the login test itself has to click through the
+ * form, all others start signed in.
  */
 describe('Authentication', () => {
   const LOGIN = API_PATHS.login;
@@ -41,9 +41,9 @@ describe('Authentication', () => {
     });
 
     it('keeps query parameters across the redirect', () => {
-      // Nach einer Stripe-Zahlung fuehrt die return_url hierher und traegt
-      // die Zahlungsdaten als Query-Parameter. Gehen sie bei der Umleitung
-      // verloren, steht die Stripe-Komponente ohne Daten da.
+      // After a Stripe payment the return_url leads here and carries
+      // the payment data as query parameters. If they get lost in the redirect,
+      // the Stripe component has no data.
       cy.visitApp('/gimmicks/auth/login?payment_intent=pi_test_123', {
         auth: true,
       });
@@ -119,20 +119,20 @@ describe('Authentication', () => {
 
   describe('sign up form', () => {
     /**
-     * Erst fokussieren, dann tippen - und zwar nur hier.
+     * Focus first, then type - and only here.
      *
-     * Angular Material laesst das Label eines leeren Feldes ueber dem
-     * Eingabefeld liegen, bis es den Fokus bekommt. Beim
-     * Bestaetigungsfeld reicht das deutsche Label "Passwort Wiederholung"
-     * gerade eben ueber die Mitte des Feldes (bis x=478 bei Mitte x=475);
-     * Cypress prueft genau diesen Punkt und verweigert Klick und Eingabe.
-     * Bei "E-Mail" und "Passwort" endet das Label vorher, dort geht die
-     * normale Eingabe.
+     * Angular Material keeps the label of an empty field on top of the
+     * input until it gets the focus. For the
+     * confirmation field the German label "Passwort Wiederholung" reaches
+     * just past the middle of the field (up to x=478 with the middle at x=475);
+     * Cypress checks exactly this point and refuses click and input.
+     * For "E-Mail" and "Passwort" the label ends before that, there the
+     * normal input works.
      *
-     * Fuer Besucher ist das kein Problem: ein Klick auf das Label setzt den
-     * Fokus ins Feld, danach rutscht das Label nach oben. `focus()` bildet
-     * genau das nach - im Gegensatz zu `force` bleiben alle uebrigen
-     * Pruefungen von Cypress aktiv.
+     * For visitors this is no problem: a click on the label puts the
+     * focus into the field, after that the label moves up. `focus()` reproduces
+     * exactly that - unlike `force`, all other
+     * checks of Cypress stay active.
      */
     const typeInto = (field: string, value: string) =>
       cy.byCy(field).focus().type(value);

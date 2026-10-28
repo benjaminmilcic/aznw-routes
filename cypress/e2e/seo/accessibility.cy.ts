@@ -1,15 +1,15 @@
 import 'cypress-axe';
 
 /**
- * Barrierefreiheit, geprueft mit axe.
+ * Accessibility, checked with axe.
  *
- * Bewusst eng gefasst: nur die schweren Verstoesse (`serious` und `critical`)
- * auf den beiden meistbesuchten Seiten. Ein Test, der jede Empfehlung
- * einfordert, waere am ersten Tag rot und wuerde danach ignoriert - das
- * hilft niemandem.
+ * Deliberately narrow: only the serious violations (`serious` and `critical`)
+ * on the two most visited pages. A test that demands every
+ * recommendation would be red on the first day and ignored afterwards - that
+ * helps nobody.
  *
- * Verstoesse landen als Tabelle im Testprotokoll, damit man sie ohne
- * zusaetzliches Werkzeug lesen kann.
+ * Violations end up as a table in the test log, so that they can be read
+ * without an additional tool.
  */
 const SEVERITIES = ['serious', 'critical'];
 
@@ -34,7 +34,7 @@ describe('Accessibility', () => {
       undefined,
       { includedImpacts: SEVERITIES },
       reportViolations,
-      true, // nur berichten, den Test nicht rot faerben
+      true, // only report, don't turn the test red
     );
   };
 

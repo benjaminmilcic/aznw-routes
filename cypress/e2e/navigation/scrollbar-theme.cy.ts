@@ -1,6 +1,6 @@
 /**
- * Scrollbalken in der Farbe der jeweiligen Seite: der ScrollbarThemeService
- * setzt `data-scrollbar` am <html> aus den Routendaten.
+ * Scrollbars in the color of each page: the ScrollbarThemeService
+ * sets `data-scrollbar` on <html> from the route data.
  */
 describe('Scrollbalken-Farben', () => {
   beforeEach(() => {

@@ -1,10 +1,10 @@
 /**
- * Laenderseite.
+ * Countries page.
  *
- * Die Laenderliste liegt als Datei im Projekt
- * (`assets/data/countries-v3.1.json`) und bleibt in Tests echt - so werden
- * auch Fehler in dieser Datei bemerkt. Nur die Zusatzdienste (Wikipedia,
- * Open-Meteo, Weltbank) sind abgeklemmt.
+ * The country list is a file in the project
+ * (`assets/data/countries-v3.1.json`) and stays real in tests - that way
+ * errors in this file are noticed too. Only the additional services (Wikipedia,
+ * Open-Meteo, World Bank) are cut off.
  */
 describe('Countries', () => {
   it('renders the world map', () => {

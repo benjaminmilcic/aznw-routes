@@ -112,7 +112,13 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (isHovering) {
-      this.gimmicksExpanded = true;
+      // Already open (back within the closing delay): stays open
+      if (this.gimmicksExpanded) return;
+      // Delay opening, so the menu doesn't open when the mouse only passes over the entry on its way down –
+      // e.g. to the buttons of the chat header, which the menu would cover
+      this.gimmicksTimeout = setTimeout(() => {
+        this.gimmicksExpanded = true;
+      }, 200);
     } else {
       // Delay closing to allow moving to mega menu
       this.gimmicksTimeout = setTimeout(() => {

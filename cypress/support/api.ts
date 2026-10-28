@@ -1,14 +1,14 @@
 /**
- * Adressen der eigenen API fuer `cy.intercept`.
+ * Addresses of our own API for `cy.intercept`.
  *
- * Warum nicht einfach `cy.intercept('GET', '**\/guestbook')`? Weil ein solches
- * Muster auch die SEITE `/gimmicks/guestbook` trifft. Cypress liefert dann das
- * Fixture als Dokument aus und `cy.visit()` bricht mit einem falschen
- * content-type ab. Die Matcher hier nennen deshalb immer Host und Port der
- * API und koennen die Seiten-URL gar nicht erwischen.
+ * Why not simply `cy.intercept('GET', '**\/guestbook')`? Because such a
+ * pattern also hits the PAGE `/gimmicks/guestbook`. Cypress then delivers the
+ * fixture as a document and `cy.visit()` aborts with a wrong
+ * content-type. That's why the matchers here always name host and port of the
+ * API and can never catch the page URL.
  *
- * Host und Port stammen aus `src/environments/environment.ts` - dem Stand,
- * gegen den der Dev-Server laeuft.
+ * Host and port come from `src/environments/environment.ts` - the state
+ * the dev server runs against.
  */
 const API_HOSTNAME = 'localhost';
 const API_PORT = 3000;
@@ -16,9 +16,9 @@ const API_PORT = 3000;
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 /**
- * Baut einen Matcher fuer einen Pfad der eigenen API.
+ * Builds a matcher for a path of our own API.
  *
- * @param pathname Pfad wie `/guestbook` oder ein Glob wie `/recipes/*`.
+ * @param pathname Path like `/guestbook` or a glob like `/recipes/*`.
  */
 export function apiRoute(pathname: string, method: HttpMethod = 'GET') {
   return {
@@ -29,7 +29,7 @@ export function apiRoute(pathname: string, method: HttpMethod = 'GET') {
   };
 }
 
-/** Pfade, die mehr als ein Test braucht. */
+/** Paths that more than one test needs. */
 export const API_PATHS = {
   guestbook: '/guestbook',
   contact: '/form2email',

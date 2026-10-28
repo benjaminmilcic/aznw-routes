@@ -1,11 +1,11 @@
 /**
- * Memory gegen den Computer.
+ * Memory against the computer.
  *
- * Wie bei Vier Gewinnt bleibt der Online-Kanal im Computer-Modus geschlossen -
- * das Spiel laeuft dann rein lokal und ist ohne Firebase pruefbar.
+ * As with Connect Four, the online channel stays closed in computer mode -
+ * the game then runs purely locally and can be checked without Firebase.
  *
- * Die Kartenverteilung ist zufaellig. Mit festem Startwert liegt in jedem Lauf
- * dasselbe Brett, sodass "zwei gleiche Karten aufdecken" reproduzierbar wird.
+ * The card distribution is random. With a fixed seed every run gets
+ * the same board, so that "revealing two matching cards" becomes reproducible.
  */
 describe('Memory', () => {
   const startAgainstComputer = (pairs?: string) => {
