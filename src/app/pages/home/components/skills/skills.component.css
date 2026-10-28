@@ -75,7 +75,7 @@ section::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 0 60px;
+  padding: 95px 0 75px;
   margin-bottom: 40px;
 }
 
@@ -124,122 +124,21 @@ section::before {
   100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
 
-/* ── Orbit keyframes ─────────────────────────────────── */
-@keyframes skill-animation2 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(0deg) translateX(250px); }
-}
-.in-view.skill-animation2 {
-  animation-name: skill-animation2;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation3 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(28deg) translateX(250px); }
-}
-.in-view.skill-animation3 {
-  animation-name: skill-animation3;
-  animation-duration: 2s;
+/* ── Orbit ────────────────────────────────────────────
+   Every node turns to its angle, moves out by the radius and turns back, so icon
+   and label stay upright. --angle and --start are set per skill (skills.component.ts),
+   the fly-in interpolates from the top of the orbit to the final angle. */
+.main {
+  /* 265px keeps about 120px between neighbours with 14 skills, as before with 13 at 250px */
+  --radius: 265px;
 }
 
-@keyframes skill-animation4 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(55deg) translateX(250px); }
+@keyframes orbit-fly-in {
+  from { transform: rotate(var(--start)) translateX(var(--radius)) rotate(calc(-1 * var(--start))); }
+  to   { transform: rotate(var(--angle)) translateX(var(--radius)) rotate(calc(-1 * var(--angle))); }
 }
-.in-view.skill-animation4 {
-  animation-name: skill-animation4;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation5 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(83deg) translateX(250px); }
-}
-.in-view.skill-animation5 {
-  animation-name: skill-animation5;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation6 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(111deg) translateX(250px); }
-}
-.in-view.skill-animation6 {
-  animation-name: skill-animation6;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation7 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(138deg) translateX(250px); }
-}
-.in-view.skill-animation7 {
-  animation-name: skill-animation7;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation8 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(166deg) translateX(250px); }
-}
-.in-view.skill-animation8 {
-  animation-name: skill-animation8;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation9 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(194deg) translateX(250px); }
-}
-.in-view.skill-animation9 {
-  animation-name: skill-animation9;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation10 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(222deg) translateX(250px); }
-}
-.in-view.skill-animation10 {
-  animation-name: skill-animation10;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation11 {
-  0% { transform: rotate(270deg) translateX(250px); }
-  100% { transform: rotate(249deg) translateX(250px); }
-}
-.in-view.skill-animation11 {
-  animation-name: skill-animation11;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation12 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(-82deg) translateX(250px); }
-}
-.in-view.skill-animation12 {
-  animation-name: skill-animation12;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation13 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(-55deg) translateX(250px); }
-}
-.in-view.skill-animation13 {
-  animation-name: skill-animation13;
-  animation-duration: 2s;
-}
-
-@keyframes skill-animation14 {
-  0% { transform: rotate(-90deg) translateX(250px); }
-  100% { transform: rotate(-28deg) translateX(250px); }
-}
-.in-view.skill-animation14 {
-  animation-name: skill-animation14;
-  animation-duration: 2s;
+.in-view.circle {
+  animation: orbit-fly-in 2s;
 }
 
 /* ── Circle nodes ────────────────────────────────────── */
@@ -253,6 +152,7 @@ section::before {
   flex-direction: column;
   align-items: center;
   color: white;
+  transform: rotate(var(--angle)) translateX(var(--radius)) rotate(calc(-1 * var(--angle)));
 }
 
 .circle-image {
@@ -264,10 +164,7 @@ section::before {
   width: 35px;
   height: 35px;
   /* Without this the flex container .circle (fixed 100px height) squashes the
-     circle vertically as soon as icon + label exceed it - it becomes oval.
-     Affected JavaScript and Tailwind: only for those the label is not pulled up
-     far enough negatively AND the icon is flat enough that the
-     automatic minimum height does not already prevent the shrinking. */
+     circle vertically as soon as icon + label exceed it - it becomes oval. */
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -279,20 +176,6 @@ section::before {
   transform: scale(1.1);
   box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
-
-.circle:nth-child(2)  { transform: translateX(250px); }
-.circle:nth-child(3)  { transform: rotate(28deg) translateX(250px); }
-.circle:nth-child(4)  { transform: rotate(55deg) translateX(250px); }
-.circle:nth-child(5)  { transform: rotate(83deg) translateX(250px); }
-.circle:nth-child(6)  { transform: rotate(111deg) translateX(250px); }
-.circle:nth-child(7)  { transform: rotate(138deg) translateX(250px); }
-.circle:nth-child(8)  { transform: rotate(166deg) translateX(250px); }
-.circle:nth-child(9)  { transform: rotate(194deg) translateX(250px); }
-.circle:nth-child(10) { transform: rotate(222deg) translateX(250px); }
-.circle:nth-child(11) { transform: rotate(249deg) translateX(250px); }
-.circle:nth-child(12) { transform: rotate(278deg) translateX(250px); }
-.circle:nth-child(13) { transform: rotate(305deg) translateX(250px); }
-.circle:nth-child(14) { transform: rotate(332deg) translateX(250px); }
 
 /* ── Small version ───────────────────────────────────── */
 .skills-small {
