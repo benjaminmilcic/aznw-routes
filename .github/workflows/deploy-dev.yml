@@ -287,12 +287,15 @@ jobs:
             live=$(curl -sS --max-time 15 "https://benjamin-milcic.dev/build-info.json?r=$GITHUB_RUN_ID" || true)
             echo "Attempt $i: $live"
             if printf '%s' "$live" | grep -q "\"sha\":\"$GITHUB_SHA\""; then
-              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/)
+              # Right after the Cloudflare purge a request can take longer than 15 s: --retry tries a timeout
+              # again, "|| true" keeps bash -e from ending the step on it. A wrong status (e.g. 404) is not
+              # retried and still fails below; no answer at all shows up as HTTP 000.
+              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 --retry 3 --retry-delay 5 https://benjamin-milcic.dev/ || true)
               [ "$code" = "200" ] || { echo "Home page answers with HTTP $code"; exit 1; }
               # Since the switch to path routing every subpage depends on the
               # SPA fallback of Apache. If it fails, only the home page is
               # reachable - the check above would not notice that.
-              deep=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://benjamin-milcic.dev/gimmicks/map)
+              deep=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 --retry 3 --retry-delay 5 https://benjamin-milcic.dev/gimmicks/map || true)
               [ "$deep" = "200" ] || { echo "Deep link /gimmicks/map answers with HTTP $deep - SPA fallback missing (check FallbackResource/AllowOverride in Apache)"; exit 1; }
               echo "Deploy verified - commit $GITHUB_SHA is live, home page and deep link HTTP 200."
               exit 0
