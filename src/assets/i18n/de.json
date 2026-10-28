@@ -1797,8 +1797,8 @@
     "headlineEm": "Benjamin.",
     "subline": "Über seine Arbeit, seine Projekte und diese Webseite – in jeder Sprache.",
     "examples": {
-      "q1": "Welche Erfahrung hat Benjamin?",
-      "q2": "Welche Spiele gibt es auf der Webseite?",
+      "q1": "Stelle mir Benjamin vor",
+      "q2": "Welche Sprachen spricht Benjamin?",
       "q3": "Zeig mir ein zufälliges Rezept aus dem Rezepte-Gimmick",
       "q4": "Ist Benjamin für neue Projekte verfügbar?"
     },
@@ -1816,6 +1816,8 @@
     "copied": "Kopiert",
     "copyQuestion": "Frage kopieren",
     "copyAnswer": "Antwort kopieren",
+    "readAloud": "Antwort vorlesen",
+    "stopReading": "Vorlesen beenden",
     "copyChat": "Ganzen Chat kopieren",
     "chatCopied": "Chat kopiert",
     "you": "Du",
@@ -1836,9 +1838,9 @@
       "get_moorhuhn_highscores": "Holt den Moorhuhn-Highscore …"
     },
     "errors": {
-      "rate_limit": "Der Chat ist eine Demonstration und nutzt das kostenlose Kontingent des Sprachmodells, deshalb sind nur wenige Fragen pro Minute möglich. Probier es in einer Minute nochmal.",
+      "rate_limit": "Der Chat ist eine Demonstration, deshalb sind nur wenige Fragen pro Minute möglich. Probier es in einer Minute nochmal.",
       "error": "Der KI-Chat ist gerade nicht erreichbar. Bitte versuch es später noch einmal.",
-      "daily_limit": "Das kostenlose Tageskontingent des Sprachmodells ist für den Moment aufgebraucht – der Chat ist eine Demonstration. Probier es in etwa {{minutes}} Minuten nochmal."
+      "daily_limit": "Das Tagesbudget des KI-Chats ist aufgebraucht – der Chat ist eine Demonstration. Ab {{time}} Uhr geht es wieder."
     },
     "voiceErrors": {
       "unsupported": "Dieser Browser unterstützt keine Audioaufnahme.",
@@ -1849,11 +1851,10 @@
     "info": {
       "button": "Hinweise und Limits",
       "title": "Hinweise und Limits",
-      "intro": "Der KI-Chat ist ein Demonstrationsprojekt und läuft deshalb komplett auf den kostenlosen Kontingenten der Anbieter (Free Tier). Darum sind nur wenige Fragen pro Minute möglich. Ist ein Limit erreicht, zeigt der Chat einen Hinweis – probier es dann einfach in einer Minute nochmal.",
-      "chatTitle": "Chat – Groq Free Tier, gpt-oss-120b",
-      "chatLimit1": "30 Anfragen pro Minute, 1.000 pro Tag",
-      "chatLimit2": "8.000 Tokens pro Minute, 200.000 pro Tag – für alle Besucher zusammen",
-      "chatNote": "Jede Frage schickt Verlauf und Wissensausschnitte mit, oft einige tausend Tokens. Das Minutenlimit ist daher schon nach wenigen Fragen erreicht.",
+      "intro": "Der KI-Chat ist ein Demonstrationsprojekt. Damit die Kosten überschaubar bleiben, gibt es Limits pro Besucher und ein Tagesbudget für alle zusammen. Ist ein Limit erreicht, zeigt der Chat einen Hinweis.",
+      "chatTitle": "Chat – OpenAI, GPT-5.4 mini",
+      "chatLimit1": "Pro Besucher: 5 Fragen pro Minute, 100 pro Tag",
+      "chatNote": "Jede Frage schickt Verlauf und Wissensausschnitte mit, oft einige tausend Tokens – eine Frage kostet etwa einen Cent. Ist das Tagesbudget aufgebraucht, geht es nach Mitternacht (UTC) weiter.",
       "voiceTitle": "Spracheingabe – Groq Free Tier, Whisper",
       "voiceLimit1": "20 Anfragen pro Minute, 2.000 pro Tag",
       "voiceLimit2": "7.200 Sekunden Audio pro Stunde, 28.800 pro Tag",

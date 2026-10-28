@@ -8,7 +8,7 @@ category: page
 summary: The AI chat on Benjamin's website – answers questions about Benjamin and his website with RAG and tool calling.
 
 aliases: [AI chat, chatbot, assistant, AI assistant, KI-Chat, KI, Chatbot, Assistent, UI chat, umjetna inteligencija, RAG, LLM, tool calling]
-tech: [Angular, NestJS, Python, FastAPI, LiteLLM, Groq, gpt-oss-120b, Whisper, Cloudflare Workers AI, bge-m3, RAG, tool calling]
+tech: [Angular, NestJS, Python, FastAPI, LiteLLM, OpenAI, GPT-5.4 mini, Groq, Whisper, Cloudflare Workers AI, bge-m3, RAG, tool calling]
 tools: []
 related: [architecture, skills, person]
 subroutes: []
@@ -35,8 +35,8 @@ The AI chat answers questions about Benjamin Milčić, his work, his projects an
 The Angular frontend sends the question to the NestJS backend, which keeps the conversation history and forwards it to a separate Python service (FastAPI). The Python service does everything that involves the language model, via LiteLLM:
 - **RAG (retrieval-augmented generation):** the knowledge base – Markdown files about every page, the portfolio data and the CV – is split into sections and turned into vectors with the multilingual embedding model bge-m3 on Cloudflare Workers AI. For each question the most similar sections are added to the prompt.
 - **Tool calling:** the model can call tools that fetch live data from the NestJS backend and from Open-Meteo.
-- **LLM:** gpt-oss-120b on Groq; speech input uses Whisper on Groq.
+- **LLM:** GPT-5.4 mini from OpenAI; speech input uses Whisper on Groq.
 - The answer is streamed token by token as Server-Sent Events. Long conversations are summarized automatically to fit the model's context window.
 
 ## Why does the AI chat sometimes say it is busy?
-The chat is a demonstration and runs on the free tier of Groq, which allows only a limited number of tokens per minute for the whole website. Each question uses a few thousand tokens, so only a few questions per minute are possible. If the limit is reached, the chat asks to try again in a minute. The info button in the chat shows the limits.
+The chat is a demonstration, and every question costs money (about one cent). To keep the costs manageable, each visitor can ask 5 questions per minute and 100 per day, and there is a daily budget for all visitors together. If a visitor reaches the limit, the chat asks to try again in a minute; once the daily budget is used up, the chat says from what time it answers again (after midnight UTC). The info button in the chat shows the limits.

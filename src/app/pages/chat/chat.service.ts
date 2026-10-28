@@ -9,8 +9,8 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   errorCode?: ChatErrorCode;
-  /** For 'daily_limit': minutes until Groq's free daily allowance has room again */
-  retryAfterMinutes?: number;
+  /** For 'daily_limit': when the chat answers again (ms since epoch) – the daily budget starts over at midnight UTC */
+  retryAt?: number;
   /** Set when older messages had to be summarized for this answer to fit the model's context window. */
   summarized?: boolean;
   /** Tool the assistant is calling right now (e.g. search_recipes) – shown while no text has arrived yet. */
@@ -27,6 +27,8 @@ export interface ChatMessage {
 export class ChatService {
   readonly messages = signal<ChatMessage[]>([]);
   readonly streaming = signal(false);
+  /** Scroll position of the chat when a link to the website was clicked – restored when the visitor comes back */
+  scrollTop: number | null = null;
 
   private readonly translate = inject(TranslateService);
 
@@ -137,7 +139,8 @@ export class ChatService {
         if (payload.action === 'request_location') this.updateLast({ locationRequest: true });
         if (payload.error) {
           const code: ChatErrorCode = payload.code === 'rate_limit' || payload.code === 'daily_limit' ? payload.code : 'error';
-          this.updateLast({ errorCode: code, retryAfterMinutes: payload.retryAfterMinutes });
+          const retryAt = payload.retryAfterMinutes ? Date.now() + payload.retryAfterMinutes * 60_000 : undefined;
+          this.updateLast({ errorCode: code, retryAt });
         }
       }
     }

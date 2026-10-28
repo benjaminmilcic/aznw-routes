@@ -5,7 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 /**
- * Info dialog: why the chat only allows a few questions per minute (free tiers) and their limits.
+ * Info dialog: the limits of the chat – per visitor (nest-aznw-api), the daily budget (python-aznw-api) and the free
+ * tiers of voice input and knowledge search.
  * Values as of 2026-10 – sources: console.groq.com/docs/rate-limits, developers.cloudflare.com/workers-ai/platform/pricing
  */
 @Component({
@@ -26,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
           </h3>
           <ul class="m-0 pl-5 text-sm">
             <li>{{ 'chat.info.chatLimit1' | translate }}</li>
-            <li>{{ 'chat.info.chatLimit2' | translate }}</li>
           </ul>
           <p class="m-0 text-sm opacity-70">{{ 'chat.info.chatNote' | translate }}</p>
         </section>

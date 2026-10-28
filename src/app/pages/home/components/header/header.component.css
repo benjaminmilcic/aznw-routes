@@ -220,10 +220,11 @@ h1 em {
 .role .stack {
   font-style: normal;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 14px;
+  /* Shrinks on narrow phones, so the four technologies stay on one line down to 320px */
+  font-size: clamp(10.5px, 3.3vw, 14px);
   color: #9a3412;
   background: rgba(255, 255, 255, 0.4);
-  padding: 4px 12px;
+  padding: 4px clamp(8px, 2.5vw, 12px);
   border-radius: 999px;
   margin-left: 8px;
   border: 1px solid rgba(122, 45, 18, 0.18);

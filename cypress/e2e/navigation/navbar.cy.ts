@@ -19,6 +19,12 @@ describe('Navbar', () => {
     cy.get('.mega-menu .mega-item').should('have.length.at.least', 12);
   });
 
+  it('does not open the mega menu when the mouse only passes over the entry', () => {
+    cy.get('.gimmicks-trigger').trigger('mouseenter').trigger('mouseleave');
+    cy.wait(400);
+    cy.get('.mega-menu').should('not.have.class', 'visible');
+  });
+
   it('navigates from the mega menu to the overview', () => {
     cy.get('.gimmicks-trigger').trigger('mouseenter');
     cy.get('.mega-menu').contains('.mega-item', 'Übersicht').click();

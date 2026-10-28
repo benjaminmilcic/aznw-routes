@@ -1797,8 +1797,8 @@
     "headlineEm": "Benjamin.",
     "subline": "About his work, his projects and this website – in any language.",
     "examples": {
-      "q1": "What experience does Benjamin have?",
-      "q2": "Which games are there on the website?",
+      "q1": "Introduce Benjamin to me",
+      "q2": "Which languages does Benjamin speak?",
       "q3": "Show me a random recipe from the Recipes gimmick",
       "q4": "Is Benjamin available for new projects?"
     },
@@ -1816,6 +1816,8 @@
     "copied": "Copied",
     "copyQuestion": "Copy question",
     "copyAnswer": "Copy answer",
+    "readAloud": "Read answer aloud",
+    "stopReading": "Stop reading",
     "copyChat": "Copy whole chat",
     "chatCopied": "Chat copied",
     "you": "You",
@@ -1836,9 +1838,9 @@
       "get_moorhuhn_highscores": "Getting the Moorhuhn high score …"
     },
     "errors": {
-      "rate_limit": "The chat is a demonstration and uses the free tier of the language model, so only a few questions per minute are possible. Please try again in a minute.",
+      "rate_limit": "The chat is a demonstration, so only a few questions per minute are possible. Please try again in a minute.",
       "error": "The AI chat is not available right now. Please try again later.",
-      "daily_limit": "The free daily allowance of the language model is used up for the moment – the chat is a demonstration. Please try again in about {{minutes}} minutes."
+      "daily_limit": "The daily budget of the AI chat is used up – the chat is a demonstration. It will be available again from {{time}}."
     },
     "voiceErrors": {
       "unsupported": "This browser does not support audio recording.",
@@ -1849,11 +1851,10 @@
     "info": {
       "button": "Notes and limits",
       "title": "Notes and limits",
-      "intro": "The AI chat is a demonstration project and therefore runs entirely on the free tiers of the providers. That is why only a few questions per minute are possible. When a limit is reached, the chat shows a note – then simply try again in a minute.",
-      "chatTitle": "Chat – Groq free tier, gpt-oss-120b",
-      "chatLimit1": "30 requests per minute, 1,000 per day",
-      "chatLimit2": "8,000 tokens per minute, 200,000 per day – for all visitors together",
-      "chatNote": "Every question sends the history and knowledge excerpts along, often a few thousand tokens. The per-minute limit is therefore reached after a few questions.",
+      "intro": "The AI chat is a demonstration project. To keep the costs manageable, there are limits per visitor and a daily budget for all visitors together. When a limit is reached, the chat shows a note.",
+      "chatTitle": "Chat – OpenAI, GPT-5.4 mini",
+      "chatLimit1": "Per visitor: 5 questions per minute, 100 per day",
+      "chatNote": "Every question sends the history and knowledge excerpts along, often a few thousand tokens – one question costs about one cent. Once the daily budget is used up, the chat continues after midnight (UTC).",
       "voiceTitle": "Voice input – Groq free tier, Whisper",
       "voiceLimit1": "20 requests per minute, 2,000 per day",
       "voiceLimit2": "7,200 seconds of audio per hour, 28,800 per day",

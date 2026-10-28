@@ -53,6 +53,7 @@ export const environment = {
     streamApi: `http://${ip}:3000/chat/stream`,
     sessionApi: `http://${ip}:3000/chat`,
     transcribeApi: `http://${ip}:3000/chat/transcribe`,
+    speechApi: `http://${ip}:3000/chat/speech`,
   },
   availability: {
     availabilityApi: `http://${ip}:3000/availability`,

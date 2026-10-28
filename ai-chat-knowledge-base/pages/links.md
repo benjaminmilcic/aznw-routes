@@ -25,4 +25,9 @@ The footer of the website links Benjamin's profiles:
 - Stack Overflow: https://stackoverflow.com/users/20271366/benjamin
 
 ## Where is the source code of the website?
-The source code of the frontend is public on GitHub: https://github.com/benjaminmilcic/aznw-routes. The footer also says that the website is built with Angular and NestJS, hosted on Strato and uses Cloudflare for the domain.
+The source code of the website is public on GitHub, in three repositories:
+- Frontend (Angular): https://github.com/benjaminmilcic/aznw-routes
+- Backend (NestJS): https://github.com/benjaminmilcic/nest-aznw-api
+- AI service of the AI chat (Python, FastAPI): https://github.com/benjaminmilcic/python-aznw-api
+
+The footer links the frontend repository. It also says that the website is built with Angular and NestJS, hosted on Strato and uses Cloudflare for the domain.

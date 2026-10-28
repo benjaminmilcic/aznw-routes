@@ -10,7 +10,7 @@ The chat itself runs in [python-aznw-api](https://github.com/benjaminmilcic/pyth
 | `gimmicks/**/*.md` | One file per visible gimmick or game |
 | `src/app/pages/home/components/portfolio/portfolio.json` | The portfolio projects – the same file the website renders the portfolio from |
 | `src/assets/i18n/en.json` | The English texts for the translation keys used in `portfolio.json` |
-| `src/assets/benjamin_milcic_cv_en_*.pdf` | The English CV (the newest one, if there are several) |
+| `src/assets/cv/benjamin_milcic_cv_en*.pdf` | The English CV (the newest one, if there are several) |
 
 Not part of the knowledge: `README.md`, `_template.md`, `tools.md` (the list of chat tools) and `test-questions.md`
 (50 likely questions for testing the chat).
@@ -40,7 +40,7 @@ fetches it with tools, so it is always up to date.
    und `knowledgeError` (null, wenn alles geklappt hat).
 
 Das Gleiche gilt für `portfolio.json`, die Portfolio-Texte in `en.json` und einen neuen Lebenslauf
-(`benjamin_milcic_cv_en_<Jahr>.pdf` – die neueste Datei wird genommen). Portfolio-Projekte mit `"hidden": true`
+(`cv/benjamin_milcic_cv_en.pdf` – bei mehreren Dateien wird die neueste genommen, z.B. `…_en_2027.pdf`). Portfolio-Projekte mit `"hidden": true`
 kennt der Chat nicht.
 
 **Eine Seite fällt weg oder wird im Menü auskommentiert:** die `.md`-Datei löschen und ihre `id` aus allen

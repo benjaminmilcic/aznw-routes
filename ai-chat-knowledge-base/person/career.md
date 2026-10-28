@@ -32,11 +32,10 @@ Benjamin works as a freelancer and supports various companies, with a focus on d
 - Campsite employee at Camping Fare, Kalamata, Greece (04/2001 – 07/2005): running workshops for children and young people
 
 ## What is Benjamin's education?
-- Web developer training through Udemy online courses (08/2019 – 02/2020): Angular, Ionic, Cypress and NestJS
+- Training through Udemy online courses: as web developer (08/2019 – 02/2020) with Angular, Ionic, Cypress and NestJS, and later as AI engineer with the AI Engineer Core Track by Ed Donner (LLM engineering, RAG, QLoRA, agents)
 - Computer science studies at Martin Luther University Halle-Wittenberg, Halle (Saale) (10/1997 – 03/2001)
 - High school (Abitur) at Thomas-Müntzer-Gymnasium, Halle (09/1991 – 04/1997), grade point average 1.9
 - After school he did his civilian service in a kindergarten.
-- Later he also trained as an AI engineer through online courses (see courses).
 
 ## Does Benjamin have a driving licence?
 Yes, Benjamin has a class B driving licence.

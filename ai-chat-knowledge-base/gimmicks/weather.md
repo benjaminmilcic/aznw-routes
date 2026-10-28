@@ -31,5 +31,3 @@ In the Weather gimmick you first choose a place, either via the browser's curren
 ## How is the Weather gimmick built?
 The Weather gimmick is an Angular component using Angular Material and Ionic. The forecast comes from the free Open-Meteo API. The climate chart is based on the Open-Meteo Archive API, which provides daily measurements for the last 30 years. The values are aggregated into monthly averages in the browser and cached per location. The charts are built with Chart.js via ng2-charts. The weather map uses the MapTiler SDK with the weather layers from MapTiler Weather. City search and converting coordinates into an address run through Benjamin's own NestJS backend, which uses OpenStreetMap and Geonames. The gimmick is available in German, English and Croatian.
 
-## Why did Benjamin build the Weather gimmick?
-TODO: add background and motivation, e.g. what he wanted to try out with Chart.js or MapTiler.

@@ -3,6 +3,10 @@ name: Deploy Frontend (benjamin-milcic.dev)
 on:
   push:
     branches: [new]
+    # The AI chat reads its knowledge base straight from GitHub (python-aznw-api checks for changes every 15
+    # minutes), so a push that only changes these files needs no deploy. A push with other files still deploys.
+    paths-ignore:
+      - 'ai-chat-knowledge-base/**'
   # Manual start via Actions -> "Run workflow". There the test run can be
   # skipped with a checkbox when it has to be quick.
   workflow_dispatch:
@@ -134,6 +138,7 @@ jobs:
               streamApi: `${api}/chat/stream`,
               sessionApi: `${api}/chat`,
               transcribeApi: `${api}/chat/transcribe`,
+              speechApi: `${api}/chat/speech`,
             },
             availability: {
               availabilityApi: `${api}/availability`,

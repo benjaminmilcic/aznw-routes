@@ -4,6 +4,10 @@
     <div class="chat-toolbar-inner mx-auto flex w-full max-w-3xl items-center gap-1">
       <span class="chat-logo max-sm:!hidden"><i class="fa-solid fa-comments"></i></span>
       <h1 class="chat-title">{{ "chat.title" | translate }}</h1>
+      <!-- TEMPORARY: test questions, only in development builds -->
+      @if (showTestQuestions) {
+        <app-chat-test-questions (ask)="chat.send($event)" />
+      }
       @if (chat.messages().length && !chat.streaming()) {
         <button
           mat-icon-button
@@ -21,7 +25,7 @@
         class="toolbar-button"
         data-cy="chat-new"
         [matTooltip]="'chat.newChat' | translate"
-        (click)="chat.reset()"
+        (click)="newChat()"
       >
         <mat-icon>add_comment</mat-icon>
       </button>
@@ -64,7 +68,7 @@
               @if (message.errorCode) {
                 <div class="chat-error" data-cy="chat-error">
                   <mat-icon>{{ message.errorCode === "error" ? "error_outline" : "hourglass_top" }}</mat-icon>
-                  <span>{{ "chat.errors." + message.errorCode | translate: { minutes: message.retryAfterMinutes } }}</span>
+                  <span>{{ "chat.errors." + message.errorCode | translate: { time: message.retryAt | date: "HH:mm" } }}</span>
                 </div>
               }
               @if (message.locationRequest) {
@@ -80,7 +84,10 @@
                 </button>
               }
               @if (message.content && !(chat.streaming() && $last)) {
-                <app-copy-button class="mt-1 block w-fit" label="chat.copyAnswer" [text]="message.content" />
+                <div class="mt-1 flex w-fit gap-1">
+                  <app-copy-button label="chat.copyAnswer" [text]="message.content" />
+                  <app-read-aloud-button [text]="message.content" />
+                </div>
               }
               @if (message.summarized) {
                 <div class="summary-note" data-cy="chat-summarized" [matTooltip]="'chat.summaryTooltip' | translate">
@@ -148,32 +155,35 @@
             <mat-icon>check</mat-icon>
           }
         </button>
-      } @else {
-        <div class="input-box">
-          <textarea
-            name="input"
-            data-cy="chat-input"
-            [(ngModel)]="input"
-            (keydown)="onKeydown($event)"
-            (input)="keepCaretVisible($event)"
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="8"
-            maxlength="2000"
-            [attr.aria-label]="'chat.message' | translate"
-            [placeholder]="(narrow() ? 'chat.message' : 'chat.placeholder') | translate"
-          ></textarea>
-          <button
-            mat-icon-button
-            type="button"
-            class="mic-button"
-            data-cy="chat-mic"
-            [matTooltip]="'chat.voiceInput' | translate"
-            (click)="toggleRecording()"
-          >
-            <mat-icon>mic</mat-icon>
-          </button>
-        </div>
+      }
+      <!-- Only hidden while recording, not removed: a re-created cdkTextareaAutosize caches a wrong placeholder
+           height and the input would stay two lines high afterwards -->
+      <div class="input-box" [hidden]="voice.stream()">
+        <textarea
+          name="input"
+          data-cy="chat-input"
+          [(ngModel)]="input"
+          (keydown)="onKeydown($event)"
+          (input)="keepCaretVisible($event)"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="8"
+          maxlength="2000"
+          [attr.aria-label]="'chat.message' | translate"
+          [placeholder]="(narrow() ? 'chat.message' : 'chat.placeholder') | translate"
+        ></textarea>
+        <button
+          mat-icon-button
+          type="button"
+          class="mic-button"
+          data-cy="chat-mic"
+          [matTooltip]="'chat.voiceInput' | translate"
+          (click)="toggleRecording()"
+        >
+          <mat-icon>mic</mat-icon>
+        </button>
+      </div>
+      @if (!voice.stream()) {
         @if (chat.streaming()) {
           <button
             type="button"
@@ -198,4 +208,7 @@
       }
     </form>
   </footer>
+
+  <!-- Opened by project links in an answer, so the visitor stays in the chat -->
+  <app-project-dialog />
 </div>

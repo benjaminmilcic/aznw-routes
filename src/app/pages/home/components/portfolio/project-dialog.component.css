@@ -1,0 +1,110 @@
+:host {
+  display: contents;
+}
+
+/* ── Dialog ──────────────────────────────────────────── */
+dialog {
+  border: none;
+  border-radius: 16px;
+  background: white;
+  padding: 0;
+  max-width: 95vw;
+  max-height: 90vh;
+  width: 900px;
+  box-shadow: 0 25px 50px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+dialog::backdrop {
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(4px);
+}
+.dialog-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+.close-btn {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  color: white;
+  padding: .5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all .2s ease;
+}
+.close-btn:hover { background: rgba(255,255,255,.2); transform: scale(1.05); }
+.dialog-content {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+}
+.website-link { display: flex; justify-content: center; margin-bottom: 2rem; }
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .3s;
+  font-size: .9rem;
+}
+.project-link.primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 4px 15px rgba(59,130,246,.3); }
+.project-link.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59,130,246,.4); }
+.project-link.secondary { background: rgba(59,130,246,.1); color: #3b82f6; border: 1px solid rgba(59,130,246,.2); }
+.project-link.secondary:hover { background: rgba(59,130,246,.15); transform: translateY(-1px); }
+.project-link.featured { padding: 1rem 2rem; font-size: 1rem; font-weight: 700; }
+.project-description { margin-bottom: 2rem; }
+.project-description p { font-size: 1.1rem; line-height: 1.7; color: #475569; text-align: center; max-width: 800px; margin: 0 auto; }
+.inline-link { color: #3b82f6; text-decoration: none; font-weight: 500; transition: color .2s; }
+.inline-link:hover { color: #1d4ed8; text-decoration: underline; }
+.links-container { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+.links-container.centered { justify-content: center; }
+.image-gallery { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 2rem 0; }
+.image-gallery.vertical { flex-direction: column; align-items: center; gap: 1.5rem; }
+.project-image { border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,.15); max-width: 100%; height: auto; }
+.project-image.web-app { max-width: 800px; }
+.project-image.mobile-app { max-width: 250px; }
+.project-image.large { max-width: 700px; }
+.project-section { margin-bottom: 2rem; }
+.section-title { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0 0 1.5rem; text-align: center; }
+.image-container { display: flex; justify-content: center; margin: 2rem 0; }
+.store-badge { display: inline-block; transition: transform .3s; }
+.store-badge:hover { transform: translateY(-2px); }
+.badge-image { height: 60px; width: auto; border-radius: 8px; }
+.catchcups { display: flex; justify-content: center; flex-wrap: wrap; }
+.catchcups img { width: 200px; margin-right: 10px; margin-bottom: 10px; }
+
+@media (max-width: 768px) {
+  dialog { width: 95vw; max-height: 90vh; }
+  .dialog-header { padding: 1rem 1.5rem; }
+  .dialog-title { font-size: 1.25rem; }
+  .dialog-content { padding: 1.5rem 1rem; }
+  .project-link { width: 100%; max-width: 280px; justify-content: center; }
+  .project-description p { font-size: 1rem; padding: 0 1rem; }
+  .links-container { flex-direction: column; align-items: center; gap: .75rem; }
+  .image-gallery img { max-width: 300px; height: auto; }
+  .project-image.web-app, .project-image.large { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .dialog-header { padding: .75rem 1rem; }
+  .dialog-title { font-size: 1.1rem; }
+  .dialog-content { padding: 1rem .75rem; }
+  .project-link { max-width: 220px; }
+  .section-title { font-size: 1.1rem; }
+  .catchcups img { width: 125px; }
+}
+@media (hover: none) {
+  a { text-decoration: none; }
+}

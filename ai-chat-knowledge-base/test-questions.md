@@ -45,7 +45,7 @@ Format: eine Frage pro Zeile, `<Nummer>. <Frage>` – in Klammern dahinter, was 
 29. Wie ist die Webseite technisch aufgebaut? (Angular, NestJS, Python, drei Repos)
 30. Wo finde ich den Quellcode der Webseite? (GitHub-Links aznw-routes, nest-aznw-api)
 31. Wo ist das Schach-Spiel im Code zu finden? (Link zu games/schach)
-32. Wie funktioniert dieser KI-Chat? (RAG, Tool Calling, Groq, Cloudflare, Free Tier)
+32. Wie funktioniert dieser KI-Chat? (RAG, Tool Calling, OpenAI GPT-5.4 mini, Groq Whisper, Cloudflare, Limits und Tagesbudget)
 
 ## Live-Daten (Tools)
 

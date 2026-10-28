@@ -335,6 +335,11 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+// display: flex above would otherwise override the hidden attribute
+.input-box[hidden] {
+  display: none;
+}
+
 .input-box:focus-within {
   border-color: var(--chat-amber);
   box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.18);
@@ -548,7 +553,8 @@
   }
 }
 
-app-copy-button ::ng-deep .copy-button {
+app-copy-button ::ng-deep .copy-button,
+app-read-aloud-button ::ng-deep .copy-button {
   display: flex;
   width: 28px;
   height: 28px;

@@ -20,10 +20,10 @@ source:
 # Home page
 
 ## What is on the home page of benjamin-milcic.dev?
-The home page introduces Benjamin Milčić as a full stack developer for Angular, NestJS and Ionic: a passionate developer with over 10 years of experience and a focus on modern web technologies, who turns ideas into elegant, functional solutions. At the top a badge shows whether Benjamin is currently available for new projects and from which quarter. The home page has the sections About me, Skills, Portfolio and Contact, and a footer with links. From the navigation you also reach the gimmicks, small apps and games.
+The home page introduces Benjamin Milčić as a full stack developer for Angular, NestJS, Ionic and LLMs (large language models): a passionate developer with over 10 years of experience and a focus on modern web technologies, who turns ideas into elegant, functional solutions. At the top a badge shows whether Benjamin is currently available for new projects and from which quarter. The home page has the sections About me, Skills, Portfolio and Contact, and a footer with links. From the navigation you also reach the gimmicks, small apps and games.
 
 ## In which languages is the website available?
 The whole website is available in German, English and Croatian. The language can be switched in the navigation.
 
 ## How is the website built?
-The website benjamin-milcic.dev is built with Angular (frontend) and NestJS (backend), styled with Tailwind CSS and Angular Material, and tested end-to-end with Cypress. It is hosted on a Strato server, the domain runs through Cloudflare. The source code is public on GitHub in the repositories aznw-routes (frontend) and nest-aznw-api (backend). The AI chat runs on a separate Python service with FastAPI and LiteLLM.
+The website benjamin-milcic.dev is built with Angular (frontend) and NestJS (backend), styled with Tailwind CSS and Angular Material, and tested end-to-end with Cypress. It is hosted on a Strato server, the domain runs through Cloudflare. The AI chat runs on a separate Python service with FastAPI and LiteLLM. The source code is public on GitHub in three repositories: aznw-routes (frontend, https://github.com/benjaminmilcic/aznw-routes), nest-aznw-api (backend, https://github.com/benjaminmilcic/nest-aznw-api) and python-aznw-api (AI service, https://github.com/benjaminmilcic/python-aznw-api).

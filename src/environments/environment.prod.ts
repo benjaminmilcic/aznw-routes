@@ -66,6 +66,7 @@ export const environment = {
     streamApi: `${api}/chat/stream`,
     sessionApi: `${api}/chat`,
     transcribeApi: `${api}/chat/transcribe`,
+    speechApi: `${api}/chat/speech`,
   },
   availability: {
     availabilityApi: `${api}/availability`,
