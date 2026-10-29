@@ -35,6 +35,8 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   searchOpen: boolean = false;
   gimmicksExpanded: boolean = false;
   isGimmicksRoute: boolean = false;
+  /** The section links are only highlighted on the home page – not in the chat or on the 404 page */
+  isHomeRoute: boolean = false;
   private gimmicksTimeout: any;
   private routerSub?: Subscription;
   mobileMenuOpen: boolean = false;
@@ -85,16 +87,18 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Check initial route
     this.isGimmicksRoute = this.router.url.startsWith('/gimmicks');
+    this.isHomeRoute = isHome(this.router.url);
 
     // Subscribe to route changes
     this.routerSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        const wasGimmicksRoute = this.isGimmicksRoute;
+        const wasHomeRoute = this.isHomeRoute;
         this.isGimmicksRoute = event.urlAfterRedirects.startsWith('/gimmicks');
+        this.isHomeRoute = isHome(event.urlAfterRedirects);
 
-        // Re-setup observer when returning from gimmicks to home
-        if (wasGimmicksRoute && !this.isGimmicksRoute) {
+        // Re-setup observer when returning to home (from gimmicks, the chat, ...) – its sections are new elements
+        if (!wasHomeRoute && this.isHomeRoute) {
           this.observer?.disconnect();
           setTimeout(() => this.setupIntersectionObserver(), 100);
         }
@@ -184,4 +188,9 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fragmentSub?.unsubscribe();
     this.routerSub?.unsubscribe();
   }
+}
+
+/** The home page with its sections: "/", also with an anchor or a query (/#skills, /?project=webaro#portfolio) */
+function isHome(url: string): boolean {
+  return url.split(/[?#]/)[0] === '/';
 }

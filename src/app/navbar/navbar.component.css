@@ -313,6 +313,20 @@
   box-shadow: 0 0 12px var(--nav-accent-glow);
 }
 
+/* In the chat: clearly stronger than the hover, like the highlighted section links */
+.chat-toggle.active {
+  border-color: var(--nav-accent);
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.45), rgba(167, 139, 250, 0.5));
+  color: #fff;
+  box-shadow:
+    0 0 0 1px var(--nav-accent),
+    0 0 16px rgba(96, 165, 250, 0.45);
+}
+
+.chat-toggle.active i {
+  color: #fff;
+}
+
 /* mobile menu css */
 /* Prevent body scroll when mobile menu is open */
 :host-context(body.menu-open) {

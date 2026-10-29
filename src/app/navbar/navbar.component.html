@@ -28,7 +28,7 @@
     <div class="flex items-center gap-2 nav-links">
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'header'"
+        [class.active]="isHomeRoute && activeFragment === 'header'"
         [routerLink]="['/']"
         fragment="header"
       >
@@ -38,7 +38,7 @@
 
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'about'"
+        [class.active]="isHomeRoute && activeFragment === 'about'"
         [routerLink]="['/']"
         fragment="about"
       >
@@ -48,7 +48,7 @@
 
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'skills'"
+        [class.active]="isHomeRoute && activeFragment === 'skills'"
         [routerLink]="['/']"
         fragment="skills"
       >
@@ -58,7 +58,7 @@
 
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'portfolio'"
+        [class.active]="isHomeRoute && activeFragment === 'portfolio'"
         [routerLink]="['/']"
         fragment="portfolio"
       >
@@ -68,7 +68,7 @@
 
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'contact'"
+        [class.active]="isHomeRoute && activeFragment === 'contact'"
         [routerLink]="['/']"
         fragment="contact"
       >
@@ -78,7 +78,7 @@
 
       <a
         class="nav-link"
-        [class.active]="!isGimmicksRoute && activeFragment === 'footer'"
+        [class.active]="isHomeRoute && activeFragment === 'footer'"
         [routerLink]="['/']"
         fragment="footer"
       >

@@ -39,6 +39,22 @@ describe('Navbar', () => {
     cy.get('.gimmicks-trigger').should('have.class', 'active');
   });
 
+  it('highlights only the chat button in the chat and the section links again back home', () => {
+    cy.stubBackend();
+    cy.byCy('navbar').contains('.nav-link', 'Kontakt').click();
+    cy.byCy('navbar').contains('.nav-link', 'Kontakt').should('have.class', 'active');
+
+    cy.byCy('chat-button').click();
+    cy.location('pathname').should('eq', '/chat');
+    cy.byCy('chat-button').should('have.class', 'active');
+    cy.byCy('navbar').find('.nav-link.active').should('not.exist');
+
+    cy.byCy('navbar').contains('.nav-link', 'Portfolio').click();
+    cy.location('hash').should('eq', '#portfolio');
+    cy.byCy('chat-button').should('not.have.class', 'active');
+    cy.byCy('navbar').contains('.nav-link', 'Portfolio').should('have.class', 'active');
+  });
+
   it('returns to the start page via the logo', () => {
     cy.visitApp('/gimmicks/charts');
 
