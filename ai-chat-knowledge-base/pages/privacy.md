@@ -3,7 +3,7 @@ id: privacy
 title_de: Datenschutz
 title_en: Privacy
 title_hr: Privatnost
-route: /
+route: none
 category: page
 summary: Which data the website and the AI chat store or pass on – no analytics, no tracking; data is only stored where a visitor enters it on purpose.
 

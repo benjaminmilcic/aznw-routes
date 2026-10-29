@@ -3,7 +3,7 @@ id: architecture
 title_de: Aufbau der Webseite
 title_en: Website architecture
 title_hr: Arhitektura web stranice
-route: /
+route: none
 category: page
 summary: How benjamin-milcic.dev is built – Angular frontend, NestJS backend, Python AI service, hosting and deployment.
 
