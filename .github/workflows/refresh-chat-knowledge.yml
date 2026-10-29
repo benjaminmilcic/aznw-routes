@@ -1,0 +1,64 @@
+name: Refresh AI chat knowledge
+
+# The AI chat (python-aznw-api) reads its knowledge base from this repository on GitHub and only checks for changes
+# every 15 minutes. After a push that changes the knowledge, this restarts the service on the server, so it loads the
+# new state right away – unchanged chunks come from its embedding cache, so only new text is embedded.
+on:
+  push:
+    branches: [new]
+    paths:
+      - 'ai-chat-knowledge-base/**'
+      - 'src/app/pages/home/components/portfolio/portfolio.json'
+      - 'src/assets/i18n/en.json'
+      - 'src/assets/cv/**'
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-chat-knowledge
+  cancel-in-progress: true
+
+env:
+  DEPLOY_HOST: 212.227.31.144
+  DEPLOY_USER: deploy
+  # Public host key of the server, pinned instead of trusting whatever ssh-keyscan returns
+  DEPLOY_HOST_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJochYl1GIdPP5/AI52kDXBFd5d3ludjEotSaOhqtLXO
+  SERVICE: python-aznw-api
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "$DEPLOY_HOST $DEPLOY_HOST_KEY" > ~/.ssh/known_hosts
+
+      # reset-failed only when the service has failed (it fails on a unit that is not loaded); not "|| true", so a
+      # refused sudo still fails the step
+      - name: Restart the chat service
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" "set -e; \
+            if systemctl is-failed --quiet $SERVICE; then sudo -n systemctl reset-failed $SERVICE; fi; \
+            sudo -n systemctl restart $SERVICE"
+
+      # The service loads the knowledge base in the background after its start – green only once it has pages
+      - name: Check the knowledge base
+        run: |
+          for i in $(seq 1 20); do
+            health=$(ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" 'curl -fsS --max-time 5 http://127.0.0.1:8000/health' || true)
+            pages=$(printf '%s' "$health" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["knowledgePages"] if not d.get("knowledgeError") else -1)' 2>/dev/null || echo 0)
+            if [ "${pages:-0}" -gt 0 ]; then
+              echo "Knowledge base loaded: $pages pages."
+              exit 0
+            fi
+            if [ "${pages:-0}" = "-1" ]; then
+              echo "The knowledge base reports an error:"; printf '%s\n' "$health"; exit 1
+            fi
+            echo "Attempt $i: not loaded yet, waiting..."; sleep 5
+          done
+          echo "The knowledge base was not loaded within 100 seconds."
+          ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" "systemctl status --no-pager $SERVICE" || true
+          exit 1

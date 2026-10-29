@@ -33,9 +33,10 @@ fetches it with tools, so it is always up to date.
 3. **Lokal ausprobieren** (optional): Die lokale Python-API liest die Dateien direkt aus `../aznw-routes`
    (`KNOWLEDGE_SOURCE=../aznw-routes` in ihrer `.env`). Nach einem Neustart oder spätestens nach 15 Minuten kennt der
    Chat die Änderung – es werden nur die geänderten Abschnitte neu eingebettet.
-4. **Committen und auf den Branch `new` pushen.** Mehr ist nicht nötig: Die Python-API auf dem Server prüft alle
-   15 Minuten, ob sich auf GitHub etwas geändert hat, und lädt dann nur die geänderten Dateien neu. Kein Deploy,
-   kein Neustart. Wer nicht warten will, startet den Dienst neu (`sudo systemctl restart python-aznw-api`).
+4. **Committen und auf den Branch `new` pushen.** Mehr ist nicht nötig: Der Workflow `refresh-chat-knowledge.yml`
+   startet die Python-API auf dem Server neu, sie lädt die Wissensbasis sofort von GitHub (nur geänderte Abschnitte
+   werden neu eingebettet). Kein Frontend-Deploy. Ohne den Workflow prüft die API ohnehin alle 15 Minuten auf
+   Änderungen.
 5. **Kontrollieren:** `curl http://127.0.0.1:8000/health` auf dem Server zeigt `knowledgePages`, `knowledgeChunks`
    und `knowledgeError` (null, wenn alles geklappt hat).
 
