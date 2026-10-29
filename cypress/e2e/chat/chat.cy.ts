@@ -141,11 +141,14 @@ describe('AI chat', () => {
     cy.get('#portfolio .dialog-title').should('contain.text', 'Webaro');
   });
 
-  it('shows links to the chat itself as plain text', () => {
-    stubAnswer({ token: 'Auch der [KI-Chat](/chat) ist ein Projekt von ihm, siehe [Wetter](/gimmicks/weather).' });
+  it('shows links to the chat itself and links without a target as plain text', () => {
+    // The backend empties the target of an invented path that fits no page
+    stubAnswer({
+      token: 'Auch der [KI-Chat](/chat) ist ein Projekt von ihm, siehe [Wetter](/gimmicks/weather) und [Aufbau der Webseite]().',
+    });
     cy.visitApp('/chat');
     cy.byCy('chat-input').type('KI?{enter}');
-    cy.byCy('chat-answer').should('contain.text', 'Auch der KI-Chat ist ein Projekt');
+    cy.byCy('chat-answer').should('contain.text', 'Auch der KI-Chat ist ein Projekt').and('contain.text', 'Aufbau der Webseite');
     cy.byCy('chat-answer').find('a').should('have.length', 1).and('contain.text', 'Wetter');
   });
 

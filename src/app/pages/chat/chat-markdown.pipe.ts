@@ -11,7 +11,8 @@ const SITE_HOSTS = ['benjamin-milcic.dev', 'www.benjamin-milcic.dev'];
  * Renders the Markdown of an answer as safe HTML.
  * - Links to the website get `data-internal` with their path – the chat opens them with the Angular router in the
  *   same tab. All other links open in a new tab, as do files of the website (the CV as PDF).
- * - Links to the chat itself become plain text – the visitor is already here.
+ * - Links to the chat itself become plain text – the visitor is already here. So do links without a target: the
+ *   backend empties the target of an invented path that fits no page of the website.
  * - Links to GitHub show their full address, so visitors see which repository and folder they lead to.
  * - Images from other hosts are removed.
  */
@@ -24,8 +25,13 @@ export class ChatMarkdownPipe implements PipeTransform {
     const template = document.createElement('template');
     template.innerHTML = html;
 
-    template.content.querySelectorAll('a[href]').forEach((link) => {
-      const path = internalPath(link.getAttribute('href')!);
+    template.content.querySelectorAll('a').forEach((link) => {
+      const href = link.getAttribute('href')?.trim();
+      if (!href) {
+        link.replaceWith(...Array.from(link.childNodes));
+        return;
+      }
+      const path = internalPath(href);
       if (path && /^\/chat\/?(?:[?#]|$)/.test(path)) {
         link.replaceWith(...Array.from(link.childNodes));
       } else if (path) {
@@ -35,7 +41,6 @@ export class ChatMarkdownPipe implements PipeTransform {
       } else {
         link.setAttribute('target', '_blank');
         link.setAttribute('rel', 'noopener noreferrer');
-        const href = link.getAttribute('href')!;
         if (isGitHub(href) && !link.querySelector('img')) link.textContent = href;
       }
     });
