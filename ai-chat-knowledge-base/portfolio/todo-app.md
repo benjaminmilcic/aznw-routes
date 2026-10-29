@@ -3,7 +3,7 @@ id: todo-app
 title_de: ToDo-App
 title_en: To-do app
 title_hr: ToDo aplikacija
-route: /#portfolio
+route: /?project=todo-app#portfolio
 category: project
 summary: Benjamin's own multi-user to-do app with real-time sync on all devices – as an installable PWA and an Android app, with NestJS and MySQL.
 

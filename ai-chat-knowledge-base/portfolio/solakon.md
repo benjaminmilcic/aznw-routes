@@ -3,7 +3,7 @@ id: solakon
 title_de: Solakon
 title_en: Solakon
 title_hr: Solakon
-route: /#portfolio
+route: /?project=solakon#portfolio
 category: project
 summary: iOS and Android app of Solakon for balcony power plants (solar monitoring) – a client project Benjamin worked on for Codext GmbH.
 

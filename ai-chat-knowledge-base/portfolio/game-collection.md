@@ -3,7 +3,7 @@ id: game-collection
 title_de: Spielesammlung
 title_en: Game collection
 title_hr: Zbirka igara
-route: /#portfolio
+route: /?project=game-collection#portfolio
 category: project
 summary: Benjamin's own collection of well-known multiplayer games with a shared drawing board and the kids AI chat "Sovica" – built with Angular and Firebase.
 

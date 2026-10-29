@@ -3,7 +3,7 @@ id: catchcups
 title_de: CatchCups
 title_en: CatchCups
 title_hr: CatchCups
-route: /#portfolio
+route: /?project=catchcups#portfolio
 category: project
 summary: Mobile app (iOS and Android) for irrigation audits of lawns with catch cups – a client project Benjamin worked on for Codext GmbH.
 

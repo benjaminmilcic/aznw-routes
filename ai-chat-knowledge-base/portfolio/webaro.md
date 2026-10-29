@@ -3,7 +3,7 @@ id: webaro
 title_de: Webaro
 title_en: Webaro
 title_hr: Webaro
-route: /#portfolio
+route: /?project=webaro#portfolio
 category: project
 summary: Web app (dashboard) of Weber Agrar Robotik GmbH for planning and evaluating drone data in agriculture – a client project Benjamin worked on for Codext GmbH.
 

@@ -3,7 +3,7 @@ id: vocabulary-trainer
 title_de: Vokabeltrainer
 title_en: Vocabulary Trainer
 title_hr: Trener vokabulara
-route: /#portfolio
+route: /?project=vocabulary-trainer#portfolio
 category: project
 summary: Benjamin's own web and Android app for learning Croatian vocabulary – verbs, nouns and adjectives with lessons, quiz and typing practice.
 
