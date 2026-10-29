@@ -176,9 +176,6 @@ jobs:
               filesUrl: `${api}/files`,
               translationEmail: 'benjamin.milcic@gmail.com',
             },
-            analytics: {
-              sendData: `${api}/analytics/visitor-data`,
-            },
             geoapify: { apiKey: '${{ secrets.GEOAPIFY_API_KEY }}' },
             maptiler: { apiKey: '${{ secrets.MAPTILER_API_KEY }}' },
             telegram: {

@@ -14,7 +14,6 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ChartsHelperService } from './pages/gimmicks/charts/charts-helper.service';
 import { AuthService } from './pages/gimmicks/auth/auth.service';
 import { SeoService } from './seo/seo.service';
-import { AnalyticsService } from './services/analytics.service';
 import { ScrollbarThemeService } from './services/scrollbar-theme.service';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -48,7 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private chartsHelperService: ChartsHelperService,
     private authService: AuthService,
     private seoService: SeoService,
-    private analyticsService: AnalyticsService,
     private scrollbarThemeService: ScrollbarThemeService,
     private router: Router,
     private mapService: MapService,
@@ -97,11 +95,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // Scrollbars in the color of the current page
     this.scrollbarThemeService.init();
     this.authService.autoLogin();
-
-    // Initialize analytics tracking on app start
-    if (environment.production) {
-      this.analyticsService.initTracking();
-    }
 
     // Hide the loading animation only once the first route has finished loading
     // (including the lazy chunk of the HomeComponent)

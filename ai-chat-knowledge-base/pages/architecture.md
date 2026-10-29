@@ -27,7 +27,7 @@ The website benjamin-milcic.dev consists of three parts, each in its own public 
 - **AI service – python-aznw-api:** a Python service with FastAPI and LiteLLM that runs the AI chat: RAG over the knowledge base, tool calling and speech recognition.
 
 ## Which modules does the NestJS backend have?
-The NestJS backend nest-aznw-api has one module per feature, among others: guestbook, recipes, files (uploads), auth and users (login, Google login), jokes, stripe, form2email (contact form), error2email, moorhuhn, trivia, yahtzee-game, geolocation, imagegen (AI images via Cloudflare Workers AI), telegram, analytics, availability and chat (the AI chat, which forwards to the Python service).
+The NestJS backend nest-aznw-api has one module per feature, among others: guestbook, recipes, files (uploads), auth and users (login, Google login), jokes, stripe, form2email (contact form), error2email, moorhuhn, trivia, yahtzee-game, geolocation, imagegen (AI images via Cloudflare Workers AI), telegram, availability and chat (the AI chat, which forwards to the Python service).
 
 ## How is the website hosted and deployed?
 The website runs on a Linux server at Strato with Apache as reverse proxy; the backend services run as systemd services. The domain and the protection of the server run through Cloudflare. Each repository has a GitHub Actions workflow: a push runs the tests (for the frontend Cypress end-to-end tests) and deploys automatically to the server. Online games use the Firebase Realtime Database. The AI features use OpenAI (GPT-5.4 mini for the AI chat), Groq (Whisper for the speech input) and Cloudflare Workers AI (embeddings for the knowledge search and AI images).

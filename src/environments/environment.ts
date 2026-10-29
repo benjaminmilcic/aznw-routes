@@ -81,9 +81,6 @@ export const environment = {
     filesUrl: `http://${ip}:3000/files`,
     translationEmail: 'benjamin.milcic@gmail.com', // For the MyMemory API - raises the limit to 50k chars/day
   },
-  analytics: {
-    sendData: `http://${ip}:3000/analytics/visitor-data`,
-  },
   geoapify: {
     apiKey: geoapifyKey,
   },

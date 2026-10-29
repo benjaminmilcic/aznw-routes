@@ -17,7 +17,7 @@ declare global {
       /** Text of the element without surrounding spaces (including non-breaking ones). */
       trimmedText(): Chainable<string>;
 
-      /** Turns off fonts, icon kits, Google Maps, tiles and analytics. */
+      /** Turns off fonts, icon kits, Google Maps and tiles. */
       stubExternals(): Chainable<void>;
 
       /** Answers all otherwise open API calls with an empty list. */

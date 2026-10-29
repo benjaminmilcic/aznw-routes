@@ -201,12 +201,6 @@ Cypress.Commands.add('stubExternals', () => {
   cy.intercept({ hostname: /openstreetmap\.org$/ }, pixel);
   cy.intercept({ hostname: /maptiler\.com$/ }, pixel);
   cy.intercept({ hostname: 'image.tmdb.org' }, pixel);
-
-  // Visitor statistics: only runs in the prod build, but is still
-  // intercepted here, so that a test run never ends up in the real statistics.
-  cy.intercept('POST', '**/analytics/**', { statusCode: 204, body: {} }).as(
-    'analytics',
-  );
 });
 
 /**
