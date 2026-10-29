@@ -20,6 +20,10 @@ source: []
 ## Who is Benjamin Milčić?
 Benjamin Milčić is a German full stack developer living in Croatia. He develops web applications and mobile apps, mainly with Angular, Ionic and NestJS, and has also trained as an AI engineer. In his career he has mainly built enterprise applications. His website benjamin-milcic.dev presents his work, including a portfolio and many gimmicks.
 
+## Is there a photo of Benjamin?
+Yes. The website shows a photo of Benjamin in the navigation and in the About me section (/#about).
+Photo: /assets/benjamin_milcic_photo.jpg
+
 ## Where does Benjamin come from and where does he live?
 Benjamin was born in 1978 in Halle an der Saale, Germany, as Benjamin Lüders. Since 2016 he has been living permanently in Croatia, on the coast. He is married to a Croatian woman and has a daughter. His wife works at the Croatian pension insurance fund. Benjamin's home address is private.
 
