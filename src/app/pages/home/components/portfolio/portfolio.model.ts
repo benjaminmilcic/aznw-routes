@@ -37,7 +37,9 @@ export type PortfolioBlock =
       layout: 'catchcups' | 'grid' | 'vertical';
       images: { src: string; alt: string }[];
     }
-  | { type: 'storeBadge'; href: string; alt: string; variant: 'small' | 'badge' };
+  | { type: 'storeBadge'; href: string; alt: string; variant: 'small' | 'badge' }
+  /** A row of link buttons without an image, e.g. the web version of an app */
+  | { type: 'links'; links: PortfolioLink[] };
 
 /** A translated text or an (optionally linked) fixed text; parts are separated by a space unless glue is set */
 export interface PortfolioTextPart {

@@ -55,7 +55,7 @@
     "gamesCollectionTitle": "Game collection",
     "todoAppTitle": "To-do app",
     "todoAppDesc": "Multi-user to-do list with live sync – as a PWA and an Android app.",
-    "solakonDesc": "iOS and Android app for solar monitoring. Live on Play Store.",
+    "solakonDesc": "App for solar monitoring – for iOS, Android and in the browser. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
       "text1": "Web App for learning Croatian language. Made with Angular, Ionic and Firebase.",
@@ -83,7 +83,8 @@
     },
     "solakon": {
       "text1": "On behalf of the company",
-      "text2": "I worked on a mobile app that enables the integration of balcony power plants into the home energy network. The app was created with Angular and Ionic."
+      "text2": "I worked on an app that enables the integration of balcony power plants into the home energy network – as a mobile app for iOS and Android and as a web app in the browser. The app was created with Angular and Ionic.",
+      "webApp": "Open web app"
     }
   },
   "contact": {

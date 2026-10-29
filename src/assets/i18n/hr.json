@@ -55,7 +55,7 @@
     "gamesCollectionTitle": "Kolekcija igara",
     "todoAppTitle": "Aplikacija za zadatke",
     "todoAppDesc": "Popis zadataka za više korisnika s trenutnom sinkronizacijom – kao PWA i Android aplikacija.",
-    "solakonDesc": "iOS i Android aplikacija za solar-monitoring. Dostupno na Play Storeu.",
+    "solakonDesc": "Aplikacija za solar-monitoring – za iOS, Android i u pregledniku. Dostupno na Play Storeu.",
     "hippoDataDesc": "B2B platforma za analizu podataka i izvješćivanje.",
     "vocabularyTrainer": {
       "text1": "Web aplikacija za učenje hrvatskog jezika. Izrađena s Angularom, Ionicom i Firebaseom.",
@@ -83,7 +83,8 @@
     },
     "solakon": {
       "text1": "U ime tvrtke",
-      "text2": "radio sam na mobilnoj aplikaciji koja omogućuje integraciju balkonskih elektrana u kućnu energetsku mrežu. Aplikacija je izrađena s Angularom i Ionicom."
+      "text2": "radio sam na aplikaciji koja omogućuje integraciju balkonskih elektrana u kućnu energetsku mrežu – kao mobilna aplikacija za iOS i Android i kao web aplikacija u pregledniku. Aplikacija je izrađena s Angularom i Ionicom.",
+      "webApp": "Otvori web aplikaciju"
     }
   },
   "contact": {

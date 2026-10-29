@@ -89,6 +89,21 @@
               }
             </div>
           }
+          @case ("links") {
+            <div class="links-container project-section">
+              @for (link of block.links; track link.href) {
+                <a
+                  [href]="localize(link.href)"
+                  [attr.target]="link.newTab ? '_blank' : null"
+                  class="project-link"
+                  [class]="link.style"
+                >
+                  <mat-icon>{{ link.icon }}</mat-icon
+                  ><span>{{ link.labelKey ? (link.labelKey | translate) : link.label }}</span>
+                </a>
+              }
+            </div>
+          }
           @case ("storeBadge") {
             @if (block.variant === "small") {
               <div class="mt-5 flex justify-center">

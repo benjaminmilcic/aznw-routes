@@ -55,7 +55,7 @@
     "gamesCollectionTitle": "Spielesammlung",
     "todoAppTitle": "ToDo-App",
     "todoAppDesc": "Multi-User-Aufgabenliste mit Live-Sync – als PWA und Android-App.",
-    "solakonDesc": "iOS- und Android-App für Solar-Monitoring. Live im Play Store.",
+    "solakonDesc": "App für Solar-Monitoring – für iOS, Android und im Browser. Live im Play Store.",
     "hippoDataDesc": "B2B-Plattform für Datenanalyse und Reporting.",
     "vocabularyTrainer": {
       "text1": "Web-App zum Erlernen der kroatischen Sprache. Realisiert mit Angular, Ionic und Firebase.",
@@ -83,7 +83,8 @@
     },
     "solakon": {
       "text1": "Im Auftrag der Firma",
-      "text2": "habe ich an einer mobilen App gearbeitet, die die Integration von Balkonkraftwerken in das Hausenergienetzwerk ermöglicht. Die App wurde mit Angular und Ionic erstellt."
+      "text2": "habe ich an einer App gearbeitet, die die Integration von Balkonkraftwerken in das Hausenergienetzwerk ermöglicht – als mobile App für iOS und Android und als Web-App im Browser. Die App wurde mit Angular und Ionic erstellt.",
+      "webApp": "Web-App öffnen"
     }
   },
   "contact": {

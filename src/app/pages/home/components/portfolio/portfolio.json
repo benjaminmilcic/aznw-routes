@@ -138,6 +138,18 @@
         ]
       },
       {
+        "type": "links",
+        "links": [
+          {
+            "href": "https://app.solakon.de/",
+            "icon": "launch",
+            "labelKey": "portfolio.solakon.webApp",
+            "style": "primary",
+            "newTab": true
+          }
+        ]
+      },
+      {
         "type": "storeBadge",
         "href": "https://play.google.com/store/apps/details?id=de.solakon.app",
         "alt": "Get it on Google Play",
