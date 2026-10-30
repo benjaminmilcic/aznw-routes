@@ -1598,6 +1598,7 @@
       "deleteRecipe": "Rezept löschen",
       "deleteQuestion": "Löschen?",
       "deleteConfirmation": "Möchten Sie das Rezept mit dem Titel \"{{title}}\" wirklich aus der Datenbank löschen?",
+      "deleteDemoNote": "Hinweis: Das ist ein Demoprojekt – jeder kann Rezepte löschen, und das Löschen gilt für alle Besucher.",
       "cancel": "Abbrechen",
       "delete": "Löschen",
       "uploadImageTitle": "Bild hochladen",

@@ -1600,6 +1600,7 @@
       "deleteRecipe": "Izbriši recept",
       "deleteQuestion": "Izbrisati?",
       "deleteConfirmation": "Želite li stvarno izbrisati recept s naslovom \"{{title}}\" iz baze podataka?",
+      "deleteDemoNote": "Napomena: Ovo je demo projekt – svatko može brisati recepte, a brisanje vrijedi za sve posjetitelje.",
       "cancel": "Odustani",
       "delete": "Izbriši",
       "uploadImageTitle": "Prenesi sliku",

@@ -1598,6 +1598,7 @@
       "deleteRecipe": "Delete Recipe",
       "deleteQuestion": "Delete?",
       "deleteConfirmation": "Do you really want to delete the recipe titled \"{{title}}\" from the database?",
+      "deleteDemoNote": "Note: This is a demo project – anyone can delete recipes, and the deletion applies to all visitors.",
       "cancel": "Cancel",
       "delete": "Delete",
       "uploadImageTitle": "Upload Image",

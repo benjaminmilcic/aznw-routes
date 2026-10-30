@@ -195,6 +195,8 @@ describe('Recipes', () => {
 
     cy.byCy('recipe-item').first().find('[data-cy="recipe-delete"]').click();
 
+    // Visitors learn that deleting affects everyone
+    cy.byCy('recipe-delete-demo-note').should('contain.text', 'Demoprojekt').and('contain.text', 'für alle Besucher');
     cy.byCy('recipe-delete-cancel').should('be.visible').click();
 
     cy.get('@deleteRecipe.all').should('have.length', 0);
