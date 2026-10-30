@@ -1800,7 +1800,7 @@
     "examples": {
       "q1": "Introduce Benjamin to me",
       "q2": "Which languages does Benjamin speak?",
-      "q3": "Show me a random recipe from the Recipes gimmick",
+      "q3": "Which hardware and software does Benjamin use?",
       "q4": "Is Benjamin available for new projects?"
     },
     "placeholder": "Enter to send, Shift+Enter for a new line",

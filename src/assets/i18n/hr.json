@@ -1802,7 +1802,7 @@
     "examples": {
       "q1": "Predstavi mi Benjamina",
       "q2": "Koje jezike govori Benjamin?",
-      "q3": "Pokaži mi nasumični recept iz gimmicka Recepti",
+      "q3": "Koji hardver i softver koristi Benjamin?",
       "q4": "Je li Benjamin dostupan za nove projekte?"
     },
     "placeholder": "Enter za slanje, Shift+Enter za novi red",

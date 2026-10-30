@@ -24,7 +24,7 @@ source:
 # Recipes (Gimmick)
 
 ## What is the Recipes gimmick?
-The Recipes gimmick is a recipe manager. Visitors can browse and search recipes and add their own. Every day a recipe of the day is featured.
+The Recipes gimmick is a recipe manager. Visitors can browse and search recipes and add their own. Every day a recipe of the day is featured. Benjamin's own favourite recipe in it is "Milchreis mit Zimt und Zucker und Apfelmus" (rice pudding with cinnamon and sugar and apple sauce): /gimmicks/recipes/recipe/11
 
 ## What can you do in the Recipes gimmick?
 - Search the recipe list and view the recipe of the day

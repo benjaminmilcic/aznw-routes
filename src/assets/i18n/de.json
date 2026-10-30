@@ -1800,7 +1800,7 @@
     "examples": {
       "q1": "Stelle mir Benjamin vor",
       "q2": "Welche Sprachen spricht Benjamin?",
-      "q3": "Zeig mir ein zufälliges Rezept aus dem Rezepte-Gimmick",
+      "q3": "Welche Hard- und Software nutzt Benjamin?",
       "q4": "Ist Benjamin für neue Projekte verfügbar?"
     },
     "placeholder": "Enter zum Senden, Shift+Enter für Zeilenumbruch",

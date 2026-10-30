@@ -39,6 +39,10 @@ Yes. Driven by the AI hype, Benjamin trained as an AI engineer through online co
 ## What are Benjamin's hobbies?
 Benjamin's hobbies are cycling and swimming. In his youth he played a lot of basketball and football.
 
+## What is Benjamin's favourite dish?
+Benjamin's favourite dish is rice pudding (Milchreis) with cinnamon and sugar, served with apple sauce. It is his favourite recipe in the Recipes gimmick, with ingredients, preparation and a picture.
+Link: /gimmicks/recipes/recipe/11
+
 ## Which operating systems does Benjamin use?
 Benjamin works with Windows and Linux.
 
