@@ -121,7 +121,179 @@
     "builtWith": "Napravljeno s",
     "hostedOn": "Hostirano na",
     "domainFrom": "Domena od",
-    "and": "i"
+    "and": "i",
+    "privacy": "Privatnost"
+  },
+  "privacy": {
+    "backHome": "Na početnu stranicu",
+    "title": "Izjava o zaštiti podataka",
+    "updated": "Stanje: 1. studenoga 2026.",
+    "intro": "Ovdje saznaješ koji se podaci obrađuju kada posjetiš ovu web-stranicu, u koju svrhu i kome se prosljeđuju. Ukratko: nema statistike posjeta, nema praćenja i nema reklama. Sprema se samo ono što sam/sama svjesno uneseš.",
+    "controllerTitle": "Voditelj obrade",
+    "controllerText": "Za obradu podataka na ovoj web-stranici odgovoran je:",
+    "contactText": "Ako imaš pitanja o zaštiti podataka ili želiš ostvariti svoja prava, jednostavno mi pošalji e-mail.",
+    "sections": [
+      {
+        "title": "Hosting i isporuka",
+        "paragraphs": [
+          "Web-stranica radi na poslužitelju tvrtke STRATO GmbH (Berlin). Pri svakom pozivu web-poslužitelj sprema tehničke podatke u zapisnike: tvoju IP adresu, datum i vrijeme, pozvanu adresu, prethodno posjećenu stranicu i oznaku tvog preglednika. Zapisnici služe sigurnom radu i traženju grešaka te se automatski brišu nakon 15 dana.",
+          "Domena i cjelokupni promet idu preko tvrtke Cloudflare, Inc. (SAD). Cloudflare prosljeđuje pozive poslužitelju, štiti ga od napada i čuva datoteke u međuspremniku. Pritom Cloudflare obrađuje tehničke podatke poput tvoje IP adrese.",
+          "Radi zaštite od zlouporabe poslužitelj kod nekih funkcija (na primjer AI chat, generator slika, recepti i učitavanje datoteka) kratko broji koliko ih često neka IP adresa koristi. Ti brojači postoje samo u radnoj memoriji i nestaju najkasnije pri sljedećem ponovnom pokretanju."
+        ],
+        "basis": "Pravna osnova: čl. 6. st. 1. t. (f) GDPR-a – legitimni interes za siguran i stabilan rad web-stranice."
+      },
+      {
+        "title": "Fontovi, ikone i Google Maps",
+        "paragraphs": [
+          "Fontovi i ikone nalaze se na vlastitom poslužitelju. Za njih se ne uspostavlja veza s Google Fontsom ni s Font Awesomeom.",
+          "Kako bi karte u gimmickima odmah bile spremne, web-stranica pri pokretanju učitava programsku biblioteku Google Mapsa (Google Ireland Limited, Irska; matična tvrtka Google LLC, SAD). Pritom Google dobiva tvoju IP adresu i tehničke podatke o tvom pregledniku, čak i ako ne otvoriš nijednu kartu. Kada koristiš karte ili pretraživanje mjesta, Googleu se šalju i tvoji unosi te prikazani dio karte."
+        ],
+        "basis": "Pravna osnova: čl. 6. st. 1. t. (f) GDPR-a – legitimni interes za ispravan prikaz karata."
+      },
+      {
+        "title": "Što web-stranica sprema",
+        "paragraphs": [
+          "Osobni podaci spremaju se samo tamo gdje ih sam/sama uneseš:"
+        ],
+        "items": [
+          {
+            "label": "Knjiga gostiju",
+            "text": "ime, tekst i slike tvog unosa spremaju se i javno prikazuju dok se unos ne izbriše."
+          },
+          {
+            "label": "Recepti",
+            "text": "recepti koje dodaš (naslov, sastojci, priprema i slika) spremaju se i javno prikazuju."
+          },
+          {
+            "label": "Moorhuhn",
+            "text": "uneseno ime i tvoji bodovi pojavljuju se na javnoj ljestvici najboljih."
+          },
+          {
+            "label": "Prijava u gimmicku Šale",
+            "text": "spremaju se tvoja e-mail adresa i lozinka, lozinka samo kao sigurni hash. Pri prijavi putem Googlea Google prenosi tvoje ime i e-mail adresu. Nakon neuspjelih pokušaja prijave sprema se IP adresa kako bi se spriječilo pogađanje lozinki; unos se briše čim prijava uspije, a najkasnije nakon 24 sata."
+          },
+          {
+            "label": "Kontaktni obrazac",
+            "text": "tvoja poruka šalje mi se e-mailom zajedno s tvojom IP adresom i ne sprema se na web-stranici. E-mail se šalje putem Gmaila (Google) i ostaje u mom poštanskom sandučiću onoliko dugo koliko je potrebno za odgovor."
+          },
+          {
+            "label": "Izvješća o greškama",
+            "text": "ako dođe do tehničke greške, dobivam e-mail s opisom greške kako bih je mogao ispraviti."
+          }
+        ],
+        "after": [
+          "Ako želiš da se neki unos izbriše, dovoljan je e-mail."
+        ],
+        "basis": "Pravna osnova: čl. 6. st. 1. t. (b) GDPR-a, jer koristiš određenu funkciju; za zaštitu od zlouporabe i izvješća o greškama čl. 6. st. 1. t. (f) GDPR-a."
+      },
+      {
+        "title": "AI chat",
+        "paragraphs": [
+          "Razgovori u AI chatu se ne spremaju. Kako bi se chat mogao osvrnuti na ranija pitanja, tijek razgovora čuva se samo u radnoj memoriji poslužitelja. Briše se kada klikneš na „Novi chat”, nakon dva sata neaktivnosti ili pri ponovnom pokretanju poslužitelja.",
+          "Za odgovaranje se tvoja pitanja preko mog poslužitelja šalju ovim servisima:"
+        ],
+        "items": [
+          {
+            "label": "OpenAI (SAD)",
+            "text": "piše odgovore jezičnim modelom GPT-5.4 mini."
+          },
+          {
+            "label": "Groq (SAD)",
+            "text": "pretvara tvoj glasovni unos u tekst."
+          },
+          {
+            "label": "Microsoft (SAD)",
+            "text": "čita odgovore naglas kada koristiš tu funkciju."
+          },
+          {
+            "label": "Cloudflare (SAD)",
+            "text": "tvojim pitanjem pretražuje bazu znanja web-stranice."
+          },
+          {
+            "label": "Open-Meteo (Švicarska)",
+            "text": "dobiva koordinate ako za pitanje o vremenu podijeliš svoju lokaciju."
+          }
+        ],
+        "after": [
+          "Ti servisi dobivaju tvoja pitanja, ali ne i tvoju IP adresu. Molim te, ne unosi osjetljive osobne podatke u chat."
+        ],
+        "basis": "Pravna osnova: čl. 6. st. 1. t. (b) GDPR-a – koristiš chat."
+      },
+      {
+        "title": "Ostali servisi u gimmickima",
+        "paragraphs": [
+          "Neki gimmicki uključuju vanjske servise. Oni se pozivaju tek kada otvoriš ili koristiš određeni gimmick. Kada se tvoj preglednik izravno poveže sa servisom, taj servis dobiva tvoju IP adresu."
+        ],
+        "items": [
+          {
+            "label": "Karte i vrijeme",
+            "text": "MapTiler (Švicarska), Geoapify (Njemačka), Open-Meteo (Švicarska), pločice karata OpenStreetMapa (Ujedinjeno Kraljevstvo) i ugrađena vremenska karta Windyja (Češka). Pretraživanja mjesta poslužitelj šalje servisima OpenStreetMap Nominatim i GeoNames; oni dobivaju samo pojam za pretraživanje."
+          },
+          {
+            "label": "Zemlje",
+            "text": "pokazatelji Svjetske banke (SAD) i granice zemalja s GitHuba (SAD)."
+          },
+          {
+            "label": "Kalendar",
+            "text": "povijesni događaji dana s Wikimedije (SAD)."
+          },
+          {
+            "label": "Filmovi",
+            "text": "podaci i slike s The Movie Databasea (TMDB, SAD)."
+          },
+          {
+            "label": "Recepti",
+            "text": "prijevodi putem MyMemoryja (Translated, Italija)."
+          },
+          {
+            "label": "Knjiga gostiju",
+            "text": "uređivač teksta TinyMCE učitava se od tvrtke Tiny Technologies (SAD)."
+          },
+          {
+            "label": "Generator slika",
+            "text": "tvoj opis slike šalje se servisu Cloudflare Workers AI (SAD)."
+          },
+          {
+            "label": "Online igre",
+            "text": "stanje igre, odabrano ime i avatar idu preko Googleovog Firebasea (Realtime Database i Firestore). Za to te Firebase anonimno prijavljuje."
+          },
+          {
+            "label": "Plaćanje u gimmicku Šale",
+            "text": "podatke za plaćanje unosiš izravno kod Stripea (Irska/SAD); oni ne dolaze do mog poslužitelja."
+          },
+          {
+            "label": "Govorni izlaz nakon prijave",
+            "text": "tekst se preko mog poslužitelja šalje servisu ElevenLabs (SAD)."
+          },
+          {
+            "label": "Telegram",
+            "text": "ako se prijaviš svojim Telegram računom, broj telefona, potvrdni kod i poruke idu preko mog poslužitelja do Telegrama (Ujedinjeni Arapski Emirati). Sesija postoji samo u radnoj memoriji i ne sprema se trajno."
+          }
+        ],
+        "basis": "Pravna osnova: čl. 6. st. 1. t. (b) GDPR-a, jer koristiš funkciju, inače čl. 6. st. 1. t. (f) GDPR-a."
+      },
+      {
+        "title": "Spremanje u pregledniku",
+        "paragraphs": [
+          "Web-stranica ne postavlja kolačiće za praćenje. U memoriji tvog preglednika (local storage) sprema samo ono što pojedine funkcije trebaju: tvoj status prijave, ime i avatar u online igrama, najbolja vremena u Minesweeperu te postavke karte i kalendara. Firebase i Google Maps mogu stvoriti vlastite tehnički nužne unose. Te podatke možeš u bilo kojem trenutku izbrisati u postavkama preglednika."
+        ],
+        "basis": "Pravna osnova: Zakon o elektroničkim komunikacijama, kojim je preuzet čl. 5. st. 3. Direktive o e-privatnosti – unosi su nužno potrebni za funkciju koju koristiš pa za njih nije potrebna privola."
+      },
+      {
+        "title": "Prijenos u zemlje izvan EU-a",
+        "paragraphs": [
+          "Neki od navedenih pružatelja nalaze se u SAD-u ili drugim zemljama izvan EU-a. Prijenos se temelji na odluci Europske komisije o primjerenosti – za SAD na okviru EU-US Data Privacy Framework, ako je pružatelj certificiran – ili na standardnim ugovornim klauzulama Europske komisije."
+        ]
+      },
+      {
+        "title": "Tvoja prava",
+        "paragraphs": [
+          "Imaš pravo na pristup svojim spremljenim podacima (čl. 15. GDPR-a), na ispravak (čl. 16.), brisanje (čl. 17.), ograničenje obrade (čl. 18.) i prenosivost podataka (čl. 20.). Obradi na temelju čl. 6. st. 1. t. (f) GDPR-a možeš se u bilo kojem trenutku usprotiviti (čl. 21.). Dovoljan je e-mail na gore navedenu adresu.",
+          "Osim toga, možeš podnijeti pritužbu nadzornom tijelu za zaštitu podataka (čl. 77. GDPR-a). Za mene je nadležna Agencija za zaštitu osobnih podataka (AZOP, azop.hr), a možeš se obratiti i nadzornom tijelu u svojoj zemlji.",
+          "Nisi obvezan/obvezna davati podatke. Bez njih, međutim, ne možeš koristiti određenu funkciju. Automatizirano donošenje odluka se ne provodi."
+        ]
+      }
+    ]
   },
   "sidebar": {
     "home": "Početna",

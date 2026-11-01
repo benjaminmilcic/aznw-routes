@@ -37,5 +37,8 @@
     </div>
   </div>
 
-  <div class="copyright">© Benjamin Milčić · {{currentYear()}}</div>
+  <div class="copyright">
+    © Benjamin Milčić · {{currentYear()}} ·
+    <a routerLink="/privacy" class="privacy-link" data-cy="footer-privacy">{{ "footer.privacy" | translate }}</a>
+  </div>
 </footer>

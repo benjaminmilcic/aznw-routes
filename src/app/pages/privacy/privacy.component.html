@@ -1,0 +1,51 @@
+<section id="header" class="privacy" data-cy="privacy">
+  <article class="privacy-inner">
+    <a [routerLink]="['/']" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i>
+      {{ "privacy.backHome" | translate }}
+    </a>
+
+    <h1>{{ "privacy.title" | translate }}</h1>
+    <p class="updated">{{ "privacy.updated" | translate }}</p>
+    <p class="lead">{{ "privacy.intro" | translate }}</p>
+
+    <section class="block">
+      <h2>{{ "privacy.controllerTitle" | translate }}</h2>
+      <p>{{ "privacy.controllerText" | translate }}</p>
+      <p class="contact">
+        Benjamin Milčić<br />
+        <a [href]="'mailto:' + email">{{ email }}</a>
+      </p>
+      <p>{{ "privacy.contactText" | translate }}</p>
+    </section>
+
+    @if (isList(sections())) {
+      @for (section of sections(); track section.title) {
+        <section class="block">
+          <h2>{{ section.title }}</h2>
+          @for (paragraph of section.paragraphs ?? []; track $index) {
+            <p>{{ paragraph }}</p>
+          }
+          @if (section.items?.length) {
+            <ul>
+              @for (item of section.items; track item.label) {
+                <li><strong>{{ item.label }}:</strong> {{ item.text }}</li>
+              }
+            </ul>
+          }
+          @for (paragraph of section.after ?? []; track $index) {
+            <p>{{ paragraph }}</p>
+          }
+          @if (section.basis) {
+            <p class="basis">{{ section.basis }}</p>
+          }
+        </section>
+      }
+    }
+
+    <a [routerLink]="['/']" class="back-link back-link-bottom">
+      <i class="fa-solid fa-arrow-left"></i>
+      {{ "privacy.backHome" | translate }}
+    </a>
+  </article>
+</section>

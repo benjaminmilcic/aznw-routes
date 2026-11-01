@@ -405,6 +405,12 @@ export const routes: Routes = [
       import('./pages/chat/chat.component').then((m) => m.ChatComponent),
   },
   {
+    path: 'privacy',
+    data: { scrollbar: 'night' },
+    loadComponent: () =>
+      import('./pages/privacy/privacy.component').then((m) => m.PrivacyComponent),
+  },
+  {
     path: 'print/:printDate',
     outlet: 'print',
     loadComponent: () =>

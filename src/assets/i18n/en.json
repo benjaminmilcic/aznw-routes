@@ -119,7 +119,179 @@
     "builtWith": "Built with",
     "hostedOn": "Hosted on",
     "domainFrom": "Domain from",
-    "and": "and"
+    "and": "and",
+    "privacy": "Privacy"
+  },
+  "privacy": {
+    "backHome": "Back to the home page",
+    "title": "Privacy Policy",
+    "updated": "Last updated: 1 November 2026",
+    "intro": "This page explains which data is processed when you visit this website, why, and who receives it. In short: there are no visitor statistics, no tracking and no ads. Only what you deliberately enter yourself is stored.",
+    "controllerTitle": "Controller",
+    "controllerText": "The controller responsible for data processing on this website is:",
+    "contactText": "If you have questions about privacy or want to exercise your rights, just send me an email.",
+    "sections": [
+      {
+        "title": "Hosting and delivery",
+        "paragraphs": [
+          "The website runs on a server of STRATO GmbH (Berlin). With every request the web server stores technical data in log files: your IP address, date and time, the requested address, the previously visited page and the identifier of your browser. The logs are used for secure operation and troubleshooting and are deleted automatically after 15 days.",
+          "The domain and all traffic run through Cloudflare, Inc. (USA). Cloudflare forwards requests to the server, protects it from attacks and keeps files cached. In doing so, Cloudflare processes technical data such as your IP address.",
+          "To prevent abuse, the server briefly counts how often an IP address uses some features (for example the AI chat, the image generator, recipes and file uploads). These counters are kept in memory only and disappear at the latest with the next restart."
+        ],
+        "basis": "Legal basis: Art. 6(1)(f) GDPR – legitimate interest in secure and stable operation of the website."
+      },
+      {
+        "title": "Fonts, icons and Google Maps",
+        "paragraphs": [
+          "Fonts and icons are hosted on this website's own server. No connection to Google Fonts or Font Awesome is made for them.",
+          "So that the maps in the gimmicks are ready right away, the website loads the Google Maps library at startup (Google Ireland Limited, Ireland; parent company Google LLC, USA). Google thereby receives your IP address and technical data about your browser, even if you never open a map. When you use maps or the place search, your input and the map section shown are also sent to Google."
+        ],
+        "basis": "Legal basis: Art. 6(1)(f) GDPR – legitimate interest in working maps."
+      },
+      {
+        "title": "What the website stores",
+        "paragraphs": [
+          "Personal data is only stored where you enter it yourself:"
+        ],
+        "items": [
+          {
+            "label": "Guestbook",
+            "text": "the name, text and images of your entry are stored and shown publicly until the entry is deleted."
+          },
+          {
+            "label": "Recipes",
+            "text": "recipes you create (title, ingredients, preparation and image) are stored and shown publicly."
+          },
+          {
+            "label": "Moorhuhn",
+            "text": "the name you enter and your score appear in the public high score list."
+          },
+          {
+            "label": "Login in the Jokes gimmick",
+            "text": "your email address and your password are stored, the password only as a secure hash. When you log in with Google, Google transmits your name and email address. After failed login attempts the IP address is stored to prevent password guessing; the entry is deleted as soon as a login succeeds, at the latest after 24 hours."
+          },
+          {
+            "label": "Contact form",
+            "text": "your message is sent to me by email together with your IP address and is not stored on the website. The email is sent via Gmail (Google) and stays in my mailbox as long as it is needed for the reply."
+          },
+          {
+            "label": "Error reports",
+            "text": "if a technical error occurs, I receive an email with the error description so that I can fix it."
+          }
+        ],
+        "after": [
+          "If you want an entry deleted, an email to me is enough."
+        ],
+        "basis": "Legal basis: Art. 6(1)(b) GDPR, because you use the respective feature; for abuse protection and error reports Art. 6(1)(f) GDPR."
+      },
+      {
+        "title": "AI chat",
+        "paragraphs": [
+          "Conversations in the AI chat are not saved. So that the chat can refer to earlier questions, the conversation is kept only in the server's memory. It is deleted when you click \"New chat\", after two hours without activity or when the server restarts.",
+          "To answer, your questions are sent via my server to these services:"
+        ],
+        "items": [
+          {
+            "label": "OpenAI (USA)",
+            "text": "writes the answers with the language model GPT-5.4 mini."
+          },
+          {
+            "label": "Groq (USA)",
+            "text": "turns your voice input into text."
+          },
+          {
+            "label": "Microsoft (USA)",
+            "text": "reads the answers aloud when you use read-aloud."
+          },
+          {
+            "label": "Cloudflare (USA)",
+            "text": "searches the website's knowledge base with your question."
+          },
+          {
+            "label": "Open-Meteo (Switzerland)",
+            "text": "receives the coordinates if you share your location for a weather question."
+          }
+        ],
+        "after": [
+          "These services receive your questions, but not your IP address. Please do not enter sensitive personal data in the chat."
+        ],
+        "basis": "Legal basis: Art. 6(1)(b) GDPR – you use the chat."
+      },
+      {
+        "title": "Other services in the gimmicks",
+        "paragraphs": [
+          "Some gimmicks embed third-party services. They are only contacted when you open or use the respective gimmick. When your browser connects to a service directly, that service receives your IP address."
+        ],
+        "items": [
+          {
+            "label": "Maps and weather",
+            "text": "MapTiler (Switzerland), Geoapify (Germany), Open-Meteo (Switzerland), map tiles from OpenStreetMap (United Kingdom) and the embedded weather map from Windy (Czech Republic). Place searches are sent by the server to OpenStreetMap Nominatim and GeoNames; they only receive the search term."
+          },
+          {
+            "label": "Countries",
+            "text": "indicators from the World Bank (USA) and country borders from GitHub (USA)."
+          },
+          {
+            "label": "Calendar",
+            "text": "historical events of the day from Wikimedia (USA)."
+          },
+          {
+            "label": "Movies",
+            "text": "data and images from The Movie Database (TMDB, USA)."
+          },
+          {
+            "label": "Recipes",
+            "text": "translations via MyMemory (Translated, Italy)."
+          },
+          {
+            "label": "Guestbook",
+            "text": "the TinyMCE text editor is loaded from Tiny Technologies (USA)."
+          },
+          {
+            "label": "Image generator",
+            "text": "your image description is sent to Cloudflare Workers AI (USA)."
+          },
+          {
+            "label": "Online games",
+            "text": "game state, chosen name and avatar run through Google's Firebase (Realtime Database and Firestore). For this, Firebase signs you in anonymously."
+          },
+          {
+            "label": "Payment in the Jokes gimmick",
+            "text": "you enter payment data directly at Stripe (Ireland/USA); it never reaches my server."
+          },
+          {
+            "label": "Speech output after login",
+            "text": "the text is sent via my server to ElevenLabs (USA)."
+          },
+          {
+            "label": "Telegram",
+            "text": "if you log in with your Telegram account, your phone number, confirmation code and messages pass through my server to Telegram (United Arab Emirates). The session is kept in memory only and is not stored permanently."
+          }
+        ],
+        "basis": "Legal basis: Art. 6(1)(b) GDPR, because you use the feature, otherwise Art. 6(1)(f) GDPR."
+      },
+      {
+        "title": "Storage in the browser",
+        "paragraphs": [
+          "The website does not set tracking cookies. In your browser's storage (local storage) it only keeps what individual features need: your login status, name and avatar in the online games, best times in Minesweeper and settings of the map and calendar. Firebase and Google Maps may create their own technically necessary entries. You can delete this data at any time in your browser settings."
+        ],
+        "basis": "Legal basis: Art. 5(3) of the ePrivacy Directive as implemented in Croatian law (Zakon o elektroničkim komunikacijama) – the entries are strictly necessary for the feature you use and therefore need no consent."
+      },
+      {
+        "title": "Transfers to countries outside the EU",
+        "paragraphs": [
+          "Some of the providers mentioned are based in the USA or other countries outside the EU. The transfer is based on an adequacy decision of the EU Commission – for the USA the EU-US Data Privacy Framework, insofar as the provider is certified – or on the EU Commission's standard contractual clauses."
+        ]
+      },
+      {
+        "title": "Your rights",
+        "paragraphs": [
+          "You have the right of access to your stored data (Art. 15 GDPR), to rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18) and data portability (Art. 20). You can object at any time to processing based on Art. 6(1)(f) GDPR (Art. 21). An email to the address above is enough.",
+          "You can also lodge a complaint with a data protection supervisory authority (Art. 77 GDPR). The authority responsible for me is the Croatian Personal Data Protection Agency (AZOP, azop.hr); you can also contact the authority in your own country.",
+          "You are not obliged to provide any data. Without it, however, you cannot use the respective feature. There is no automated decision-making."
+        ]
+      }
+    ]
   },
   "sidebar": {
     "home": "Home",

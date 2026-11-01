@@ -119,7 +119,179 @@
     "builtWith": "Erstellt mit",
     "hostedOn": "Gehostet auf",
     "domainFrom": "Domain von",
-    "and": "und"
+    "and": "und",
+    "privacy": "Datenschutz"
+  },
+  "privacy": {
+    "backHome": "Zur Startseite",
+    "title": "Datenschutz\u00ADerklärung",
+    "updated": "Stand: 1. November 2026",
+    "intro": "Hier erfährst du, welche Daten beim Besuch dieser Website verarbeitet werden, wofür das geschieht und an wen sie gehen. Kurz gesagt: Es gibt keine Besucherstatistik, kein Tracking und keine Werbung. Gespeichert wird nur, was du selbst bewusst eingibst.",
+    "controllerTitle": "Verantwortlicher",
+    "controllerText": "Verantwortlich für die Datenverarbeitung auf dieser Website ist:",
+    "contactText": "Bei Fragen zum Datenschutz oder wenn du deine Rechte wahrnehmen möchtest, schreib mir einfach eine E-Mail.",
+    "sections": [
+      {
+        "title": "Hosting und Auslieferung",
+        "paragraphs": [
+          "Die Website läuft auf einem Server der STRATO GmbH (Berlin). Bei jedem Aufruf speichert der Webserver technische Daten in Protokolldateien: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse, die vorher besuchte Seite und die Kennung deines Browsers. Die Protokolle dienen dem sicheren Betrieb und der Fehlersuche und werden nach 15 Tagen automatisch gelöscht.",
+          "Die Domain und der gesamte Datenverkehr laufen über Cloudflare, Inc. (USA). Cloudflare leitet die Aufrufe an den Server weiter, schützt ihn vor Angriffen und hält Dateien zwischengespeichert bereit. Dabei verarbeitet Cloudflare technische Daten wie deine IP-Adresse.",
+          "Zum Schutz vor Missbrauch zählt der Server bei einigen Funktionen (zum Beispiel KI-Chat, Bild-Generator, Rezepte und Datei-Upload) kurzzeitig, wie oft eine IP-Adresse sie nutzt. Diese Zähler liegen nur im Arbeitsspeicher und verschwinden spätestens beim nächsten Neustart."
+        ],
+        "basis": "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO – berechtigtes Interesse an einem sicheren und stabilen Betrieb der Website."
+      },
+      {
+        "title": "Schriften, Icons und Google Maps",
+        "paragraphs": [
+          "Schriften und Icons liegen auf dem eigenen Server. Für sie wird keine Verbindung zu Google Fonts oder Font Awesome aufgebaut.",
+          "Damit die Karten in den Gimmicks sofort bereitstehen, lädt die Website beim Start die Programmbibliothek von Google Maps (Google Ireland Limited, Irland; Muttergesellschaft Google LLC, USA). Dabei erhält Google deine IP-Adresse und technische Daten deines Browsers, auch wenn du keine Karte öffnest. Wenn du Karten oder die Ortssuche nutzt, gehen außerdem deine Eingaben und der angezeigte Kartenausschnitt an Google."
+        ],
+        "basis": "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO – berechtigtes Interesse an einer funktionierenden Kartendarstellung."
+      },
+      {
+        "title": "Was die Website speichert",
+        "paragraphs": [
+          "Persönliche Daten werden nur dort gespeichert, wo du sie selbst eingibst:"
+        ],
+        "items": [
+          {
+            "label": "Gästebuch",
+            "text": "Name, Text und Bilder deines Eintrags werden gespeichert und öffentlich angezeigt, bis der Eintrag gelöscht wird."
+          },
+          {
+            "label": "Rezepte",
+            "text": "Rezepte, die du anlegst (Titel, Zutaten, Zubereitung und Bild), werden gespeichert und öffentlich angezeigt."
+          },
+          {
+            "label": "Moorhuhn",
+            "text": "Der eingegebene Name und deine Punkte erscheinen in der öffentlichen Bestenliste."
+          },
+          {
+            "label": "Anmeldung im Witze-Gimmick",
+            "text": "Gespeichert werden deine E-Mail-Adresse und dein Passwort, dieses nur als sicherer Hash. Bei der Anmeldung mit Google übermittelt Google deinen Namen und deine E-Mail-Adresse. Nach fehlgeschlagenen Anmeldeversuchen wird die IP-Adresse gespeichert, um das Erraten von Passwörtern zu verhindern; der Eintrag wird gelöscht, sobald die Anmeldung gelingt, spätestens aber nach 24 Stunden."
+          },
+          {
+            "label": "Kontaktformular",
+            "text": "Deine Nachricht wird zusammen mit deiner IP-Adresse per E-Mail an mich geschickt und nicht auf der Website gespeichert. Die E-Mail wird über Gmail (Google) versendet und bleibt in meinem Postfach, solange sie für die Antwort nötig ist."
+          },
+          {
+            "label": "Fehlerberichte",
+            "text": "Tritt ein technischer Fehler auf, bekomme ich eine E-Mail mit der Fehlerbeschreibung, damit ich ihn beheben kann."
+          }
+        ],
+        "after": [
+          "Wenn ein Eintrag gelöscht werden soll, genügt eine E-Mail an mich."
+        ],
+        "basis": "Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO, weil du die jeweilige Funktion nutzt; für den Schutz vor Missbrauch und die Fehlerberichte Art. 6 Abs. 1 lit. f DSGVO."
+      },
+      {
+        "title": "KI-Chat",
+        "paragraphs": [
+          "Gespräche im KI-Chat werden nicht gespeichert. Damit der Chat auf frühere Fragen eingehen kann, liegt der Verlauf nur im Arbeitsspeicher des Servers. Er wird gelöscht, wenn du auf „Neuer Chat“ klickst, nach zwei Stunden ohne Aktivität oder beim Neustart des Servers.",
+          "Zum Beantworten gehen deine Fragen über meinen Server an diese Dienste:"
+        ],
+        "items": [
+          {
+            "label": "OpenAI (USA)",
+            "text": "erstellt die Antworten mit dem Sprachmodell GPT-5.4 mini."
+          },
+          {
+            "label": "Groq (USA)",
+            "text": "wandelt deine Spracheingabe in Text um."
+          },
+          {
+            "label": "Microsoft (USA)",
+            "text": "liest die Antworten vor, wenn du das Vorlesen nutzt."
+          },
+          {
+            "label": "Cloudflare (USA)",
+            "text": "durchsucht mit deiner Frage die Wissensbasis der Website."
+          },
+          {
+            "label": "Open-Meteo (Schweiz)",
+            "text": "erhält die Koordinaten, wenn du für eine Wetterfrage deinen Standort freigibst."
+          }
+        ],
+        "after": [
+          "Diese Dienste erhalten deine Fragen, aber nicht deine IP-Adresse. Bitte gib im Chat keine sensiblen persönlichen Daten ein."
+        ],
+        "basis": "Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO – du nutzt den Chat."
+      },
+      {
+        "title": "Weitere Dienste in den Gimmicks",
+        "paragraphs": [
+          "Einige Gimmicks binden fremde Dienste ein. Sie werden erst angesprochen, wenn du das jeweilige Gimmick öffnest oder nutzt. Wenn sich dein Browser direkt mit einem Dienst verbindet, erhält dieser deine IP-Adresse."
+        ],
+        "items": [
+          {
+            "label": "Karten und Wetter",
+            "text": "MapTiler (Schweiz), Geoapify (Deutschland), Open-Meteo (Schweiz), Kartenkacheln von OpenStreetMap (Großbritannien) und die eingebettete Wetterkarte von Windy (Tschechien). Ortssuchen schickt der Server an OpenStreetMap Nominatim und GeoNames; diese erhalten nur den Suchbegriff."
+          },
+          {
+            "label": "Länder",
+            "text": "Kennzahlen der Weltbank (USA) und Ländergrenzen von GitHub (USA)."
+          },
+          {
+            "label": "Kalender",
+            "text": "historische Ereignisse des Tages von Wikimedia (USA)."
+          },
+          {
+            "label": "Filme",
+            "text": "Daten und Bilder von The Movie Database (TMDB, USA)."
+          },
+          {
+            "label": "Rezepte",
+            "text": "Übersetzungen über MyMemory (Translated, Italien)."
+          },
+          {
+            "label": "Gästebuch",
+            "text": "der Texteditor TinyMCE wird von Tiny Technologies (USA) geladen."
+          },
+          {
+            "label": "Bild-Generator",
+            "text": "deine Bildbeschreibung geht an Cloudflare Workers AI (USA)."
+          },
+          {
+            "label": "Online-Spiele",
+            "text": "Spielstand, gewählter Name und Avatar laufen über Firebase von Google (Realtime Database und Firestore). Dafür meldet Firebase dich anonym an."
+          },
+          {
+            "label": "Bezahlung im Witze-Gimmick",
+            "text": "Zahlungsdaten gibst du direkt bei Stripe (Irland/USA) ein; sie erreichen meinen Server nicht."
+          },
+          {
+            "label": "Sprachausgabe nach der Anmeldung",
+            "text": "der Text geht über meinen Server an ElevenLabs (USA)."
+          },
+          {
+            "label": "Telegram",
+            "text": "Wenn du dich mit deinem Telegram-Konto anmeldest, laufen Telefonnummer, Bestätigungscode und Nachrichten über meinen Server zu Telegram (Vereinigte Arabische Emirate). Die Sitzung liegt nur im Arbeitsspeicher und wird nicht dauerhaft gespeichert."
+          }
+        ],
+        "basis": "Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO, weil du die Funktion nutzt, sonst Art. 6 Abs. 1 lit. f DSGVO."
+      },
+      {
+        "title": "Speicherung im Browser",
+        "paragraphs": [
+          "Die Website setzt keine Tracking-Cookies. Im Speicher deines Browsers (Local Storage) legt sie nur ab, was einzelne Funktionen brauchen: deinen Anmeldestatus, Name und Avatar in den Online-Spielen, Bestzeiten im Minesweeper und Einstellungen von Karte und Kalender. Firebase und Google Maps können eigene technisch notwendige Einträge anlegen. Du kannst diese Daten jederzeit in den Einstellungen deines Browsers löschen."
+        ],
+        "basis": "Rechtsgrundlage: Art. 5 Abs. 3 der ePrivacy-Richtlinie in der kroatischen Umsetzung (Zakon o elektroničkim komunikacijama) – die Einträge sind für die von dir genutzte Funktion unbedingt erforderlich und brauchen daher keine Einwilligung."
+      },
+      {
+        "title": "Übermittlung in Länder außerhalb der EU",
+        "paragraphs": [
+          "Einige der genannten Anbieter sitzen in den USA oder in anderen Ländern außerhalb der EU. Die Übermittlung stützt sich auf einen Angemessenheitsbeschluss der EU-Kommission – für die USA das EU-US Data Privacy Framework, soweit der Anbieter zertifiziert ist – oder auf die Standardvertragsklauseln der EU-Kommission."
+        ]
+      },
+      {
+        "title": "Deine Rechte",
+        "paragraphs": [
+          "Du hast das Recht auf Auskunft über deine gespeicherten Daten (Art. 15 DSGVO), auf Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Einer Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO kannst du jederzeit widersprechen (Art. 21). Eine E-Mail an die oben genannte Adresse genügt.",
+          "Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO). Zuständig für mich ist die kroatische Agentur für den Schutz personenbezogener Daten (AZOP, azop.hr); du kannst dich aber auch an die Behörde in deinem Land wenden.",
+          "Du bist nicht verpflichtet, Daten anzugeben. Ohne die Angaben kannst du die jeweilige Funktion aber nicht nutzen. Eine automatisierte Entscheidungsfindung findet nicht statt."
+        ]
+      }
+    ]
   },
   "sidebar": {
     "home": "Start",

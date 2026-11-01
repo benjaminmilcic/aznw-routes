@@ -56,6 +56,13 @@
   ><ng-container *ngTemplateOutlet="arrow"></ng-container
 ></a>
 <a
+  *ngIf="currentRoute === '/privacy'"
+  [ngClass]="{ visible: scrollToTopVisible }"
+  [routerLink]="['/privacy']"
+  fragment="header"
+  ><ng-container *ngTemplateOutlet="arrow"></ng-container
+></a>
+<a
   *ngIf="currentRoute && currentRoute.includes('/gimmicks/movies')"
   [ngClass]="{ visible: scrollToTopVisible }"
   [routerLink]="[currentRoute]"

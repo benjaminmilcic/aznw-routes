@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
-  imports: [TranslateModule],
+  imports: [TranslateModule, RouterLink],
 })
 export class FooterComponent implements OnInit, OnDestroy {
   currentYear = signal<string>('2026');
