@@ -28,6 +28,8 @@ import { MapService } from './pages/gimmicks/map/map.service';
 export class AppComponent implements OnInit, OnDestroy {
   appLoaded = false;
   private routerSub?: Subscription;
+  /** Ends the position correction of the last fragment scroll (see scrollToFragment) */
+  private stopFragmentAlign?: () => void;
   private langChangeSub?: Subscription;
   private previousRoute = '';
   private mapsScript?: HTMLScriptElement;
@@ -125,20 +127,10 @@ export class AppComponent implements OnInit, OnDestroy {
         const prevRoute = this.previousRoute;
         this.previousRoute = routePath;
 
+        this.stopFragmentAlign?.();
         if (fragment) {
           // Small delay to ensure DOM is ready after navigation
-          setTimeout(() => {
-            const element = document.getElementById(fragment);
-            if (element) {
-              const navbarOffset = 70;
-              const elementPosition =
-                element.getBoundingClientRect().top + window.scrollY;
-              window.scrollTo({
-                top: elementPosition - navbarOffset,
-                behavior: 'smooth',
-              });
-            }
-          }, 100);
+          setTimeout(() => this.scrollToFragment(fragment), 100);
         } else if (routeChanged) {
           // Skip scroll-to-top for auth child route transitions (login <-> main)
           const isAuthChildNav =
@@ -151,7 +143,48 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Scrolls the section below the navbar. On the first visit of the home page, images and sections above the target
+   * are still loading and push it down after the scroll – so the position is corrected while the layout keeps
+   * changing, until it has been quiet for a moment, the visitor scrolls or clicks themselves, or a time limit is hit.
+   */
+  private scrollToFragment(fragment: string): void {
+    const element = document.getElementById(fragment);
+    if (!element) return;
+    const navbarOffset = 70;
+    const target = () => element.getBoundingClientRect().top + window.scrollY - navbarOffset;
+    let lastTarget = target();
+    window.scrollTo({ top: lastTarget, behavior: 'smooth' });
+
+    // Checked every frame: the html and body elements have a fixed height, so a ResizeObserver would not notice
+    // the content growing
+    const userEvents = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+    const quietMs = 2500;
+    const startedAt = performance.now();
+    let changedAt = startedAt;
+    let frame = 0;
+    const check = (now: number) => {
+      const newTarget = target();
+      if (Math.abs(newTarget - lastTarget) >= 1) {
+        lastTarget = newTarget;
+        changedAt = now;
+        window.scrollTo({ top: newTarget, behavior: 'smooth' });
+      }
+      if (now - changedAt > quietMs || now - startedAt > 10_000) stop();
+      else frame = requestAnimationFrame(check);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      userEvents.forEach((name) => window.removeEventListener(name, stop));
+      if (this.stopFragmentAlign === stop) this.stopFragmentAlign = undefined;
+    };
+    frame = requestAnimationFrame(check);
+    userEvents.forEach((name) => window.addEventListener(name, stop, { passive: true }));
+    this.stopFragmentAlign = stop;
+  }
+
   ngOnDestroy(): void {
+    this.stopFragmentAlign?.();
     this.routerSub?.unsubscribe();
     this.langChangeSub?.unsubscribe();
   }
