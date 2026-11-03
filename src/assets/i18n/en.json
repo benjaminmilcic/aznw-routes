@@ -55,12 +55,16 @@
     "gamesCollectionTitle": "Game collection",
     "todoAppTitle": "To-do app",
     "todoAppDesc": "Multi-user to-do list with live sync – as a PWA and an Android app.",
+    "languageTrainerDesc": "AI language trainer for Croatian, German and English with tailor-made texts.",
     "solakonDesc": "App for solar monitoring – for iOS, Android and in the browser. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
       "text1": "Web App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "text2": "Android App for learning Croatian language. Made with Angular, Ionic and Firebase.",
       "sourceCode": "Source code"
+    },
+    "languageTrainer": {
+      "text1": "The AI Language Trainer creates reading texts matched to your level, topic and length, grades your translation with corrections and explains every word with a click. You practise saved words with flashcards, multiple choice, letter puzzles and typing on a spaced-repetition schedule. For anyone learning Croatian, German or English – using your own Anthropic (Claude) or Google (Gemini) API key."
     },
     "todoApp": {
       "text1": "To-do list with live sync across all devices and AI voice input – as a PWA and an Android app. Built with Angular, Ionic, NestJS and MySQL.",
@@ -120,7 +124,15 @@
     "hostedOn": "Hosted on",
     "domainFrom": "Domain from",
     "and": "and",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "imprint": "Imprint"
+  },
+  "imprint": {
+    "backHome": "Back to the home page",
+    "title": "Imprint",
+    "intro": "Responsible for the content of this website:",
+    "contactText": "You can reach me by email or via the",
+    "contactLink": "contact form"
   },
   "privacy": {
     "backHome": "Back to the home page",

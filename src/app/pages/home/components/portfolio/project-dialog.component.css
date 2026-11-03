@@ -14,6 +14,11 @@ dialog {
   box-shadow: 0 25px 50px rgba(0,0,0,.25);
   overflow: hidden;
 }
+/* Header plus scrolling content fill the dialog exactly, so the end of the content and of its scrollbar is never cut off */
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
 dialog::backdrop {
   background: rgba(0,0,0,.75);
   backdrop-filter: blur(4px);
@@ -22,6 +27,7 @@ dialog::backdrop {
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   color: white;
   padding: 1.5rem 2rem;
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,8 +51,9 @@ dialog::backdrop {
 .close-btn:hover { background: rgba(255,255,255,.2); transform: scale(1.05); }
 .dialog-content {
   padding: 2rem;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  max-height: calc(90vh - 120px);
 }
 .website-link { display: flex; justify-content: center; margin-bottom: 2rem; }
 .project-link {
@@ -78,7 +85,8 @@ dialog::backdrop {
 .project-image.mobile-app { max-width: 250px; }
 .project-image.large { max-width: 700px; }
 .project-section { margin-bottom: 2rem; }
-.section-title { font-size: 1.25rem; font-weight: 600; color: #1e293b; margin: 0 0 1.5rem; text-align: center; }
+/* The section text is the project description, so it looks like .project-description p */
+.section-title { font-size: 1.1rem; font-weight: 400; line-height: 1.7; color: #475569; text-align: center; max-width: 800px; margin: 0 auto 1.5rem; }
 .image-container { display: flex; justify-content: center; margin: 2rem 0; }
 .store-badge { display: inline-block; transition: transform .3s; }
 .store-badge:hover { transform: translateY(-2px); }
@@ -92,7 +100,7 @@ dialog::backdrop {
   .dialog-title { font-size: 1.25rem; }
   .dialog-content { padding: 1.5rem 1rem; }
   .project-link { width: 100%; max-width: 280px; justify-content: center; }
-  .project-description p { font-size: 1rem; padding: 0 1rem; }
+  .project-description p, .section-title { font-size: 1rem; padding: 0 1rem; }
   .links-container { flex-direction: column; align-items: center; gap: .75rem; }
   .image-gallery img { max-width: 300px; height: auto; }
   .project-image.web-app, .project-image.large { max-width: 100%; }
@@ -102,7 +110,6 @@ dialog::backdrop {
   .dialog-title { font-size: 1.1rem; }
   .dialog-content { padding: 1rem .75rem; }
   .project-link { max-width: 220px; }
-  .section-title { font-size: 1.1rem; }
   .catchcups img { width: 125px; }
 }
 @media (hover: none) {

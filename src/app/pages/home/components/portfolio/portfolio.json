@@ -201,6 +201,26 @@
     ]
   },
   {
+    "id": "language-trainer",
+    "title": "AI Language Trainer",
+    "descKey": "portfolio.languageTrainerDesc",
+    "image": "assets/languages-{lang}.webp",
+    "imageAlt": "AI Language Trainer",
+    "stack": ["Angular", "NestJS", "MySQL", "LLMs"],
+    "pin": { "position": "center", "color": "blue" },
+    "dialog": [
+      {
+        "type": "section",
+        "titleKey": "portfolio.languageTrainer.text1",
+        "image": { "src": "assets/languages-{lang}.webp", "alt": "AI Language Trainer", "kind": "web-app" },
+        "spacedLinks": true,
+        "links": [
+          { "href": "https://languages.benjamin-milcic.dev", "icon": "launch", "label": "Live Demo", "style": "primary", "newTab": true }
+        ]
+      }
+    ]
+  },
+  {
     "id": "hippo-data",
     "title": "Hippo Data",
     "descKey": "portfolio.hippoDataDesc",
