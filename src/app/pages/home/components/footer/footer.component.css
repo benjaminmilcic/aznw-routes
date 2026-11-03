@@ -99,17 +99,6 @@ hr {
   margin: 8px 0;
 }
 
-.privacy-link {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s;
-}
-
-.privacy-link:hover {
-  color: #fbbf24;
-}
-
 .address {
   color: #94a3b8;
   font-size: 13px;

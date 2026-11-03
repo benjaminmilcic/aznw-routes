@@ -37,8 +37,9 @@
     </div>
   </div>
 
-  <div class="copyright">
-    © Benjamin Milčić · {{currentYear()}} ·
-    <a routerLink="/privacy" class="privacy-link" data-cy="footer-privacy">{{ "footer.privacy" | translate }}</a>
+  <div class="copyright">© Benjamin Milčić · {{currentYear()}}</div>
+  <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[14px] text-slate-300">
+    <a routerLink="/privacy" class="text-inherit underline underline-offset-[3px] transition-colors duration-200 hover:text-amber-400" data-cy="footer-privacy">{{ "footer.privacy" | translate }}</a>
+    <a routerLink="/imprint" class="text-inherit underline underline-offset-[3px] transition-colors duration-200 hover:text-amber-400" data-cy="footer-imprint">{{ "footer.imprint" | translate }}</a>
   </div>
 </footer>

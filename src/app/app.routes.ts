@@ -411,6 +411,12 @@ export const routes: Routes = [
       import('./pages/privacy/privacy.component').then((m) => m.PrivacyComponent),
   },
   {
+    path: 'imprint',
+    data: { scrollbar: 'night' },
+    loadComponent: () =>
+      import('./pages/imprint/imprint.component').then((m) => m.ImprintComponent),
+  },
+  {
     path: 'print/:printDate',
     outlet: 'print',
     loadComponent: () =>
