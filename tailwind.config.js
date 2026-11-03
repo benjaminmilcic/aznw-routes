@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js,ts}"],
   theme: {
     screens: {
       xs: "400px",
@@ -11,6 +11,10 @@ module.exports = {
       "2xl": "1700px",
     },
     extend: {
+      // Amber gradient of the AI chat (logo, question bubbles, send button)
+      backgroundImage: {
+        "chat-amber": "linear-gradient(135deg, #fcd34d, #f59e0b)",
+      },
       colors: {
         color1: "var(--color1)",
         color2: "var(--color2)",

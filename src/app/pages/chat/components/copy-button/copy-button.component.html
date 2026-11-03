@@ -1,0 +1,9 @@
+<button
+  type="button"
+  class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-0 text-amber-100/60 hover:bg-black/30 hover:text-amber-400 [&_mat-icon]:!h-[18px] [&_mat-icon]:!w-[18px] [&_mat-icon]:!text-[18px]"
+  [attr.aria-label]="label() | translate"
+  [matTooltip]="(copied() ? 'chat.copied' : label()) | translate"
+  (click)="copy()"
+>
+  <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+</button>

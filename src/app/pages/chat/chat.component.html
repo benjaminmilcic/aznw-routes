@@ -1,17 +1,28 @@
-<div class="chat-page">
-  <!-- Toolbar -->
-  <div class="chat-toolbar">
-    <div class="chat-toolbar-inner mx-auto flex w-full max-w-3xl items-center gap-1">
-      <span class="chat-logo max-sm:!hidden"><i class="fa-solid fa-comments"></i></span>
-      <h1 class="chat-title">{{ "chat.title" | translate }}</h1>
+<!-- Colors: amber-100 = cream text, amber-200/400 = accents, black/30–40 = glass, slate-400/16 = glass border.
+     Background, scrollbars and the rendered markdown stay in chat.component.scss. -->
+<div class="chat-page relative box-border flex h-dvh flex-col pt-[70px] text-amber-100/[0.92]">
+  <!-- Toolbar: floating glass bar like the top bar of the gimmicks page -->
+  <div class="shrink-0 px-3 pt-2.5 sm:px-4 sm:pt-3.5">
+    <!-- box-border: w-full plus padding and border would otherwise be wider than a phone (preflight is off) -->
+    <div
+      class="mx-auto box-border flex min-h-[44px] w-full max-w-3xl items-center gap-1 rounded-[14px] border border-solid border-slate-400/[0.16] bg-black/30 py-1 pl-3 pr-1.5 text-slate-200 backdrop-blur"
+    >
+      <span
+        class="mr-2 flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-lg bg-chat-amber text-[0.75rem] text-slate-800 max-sm:!hidden"
+        ><i class="fa-solid fa-comments"></i
+      ></span>
+      <h1 class="m-0 min-w-0 flex-1 truncate font-['Fraunces',serif] text-[1.1rem] font-semibold text-amber-100">
+        {{ "chat.title" | translate }}
+      </h1>
       <!-- TEMPORARY: test questions, only in development builds -->
       @if (showTestQuestions) {
         <app-chat-test-questions (ask)="chat.send($event)" />
       }
+      <!-- Compact icon buttons (36px instead of Material's 48px), so the bar stays slim -->
       @if (chat.messages().length && !chat.streaming()) {
         <button
           mat-icon-button
-          class="toolbar-button"
+          class="!h-9 !w-9 shrink-0 !p-1.5 !text-slate-300 [--mdc-icon-button-state-layer-size:36px] hover:!text-amber-400 [&_mat-icon]:!h-5 [&_mat-icon]:!w-5 [&_mat-icon]:!text-[20px]"
           data-cy="chat-copy-all"
           [matTooltip]="(chatCopied() ? 'chat.chatCopied' : 'chat.copyChat') | translate"
           [cdkCopyToClipboard]="chatAsText()"
@@ -22,7 +33,7 @@
       }
       <button
         mat-icon-button
-        class="toolbar-button"
+        class="!h-9 !w-9 shrink-0 !p-1.5 !text-slate-300 [--mdc-icon-button-state-layer-size:36px] hover:!text-amber-400 [&_mat-icon]:!h-5 [&_mat-icon]:!w-5 [&_mat-icon]:!text-[20px]"
         data-cy="chat-new"
         [matTooltip]="'chat.newChat' | translate"
         (click)="newChat()"
@@ -31,7 +42,7 @@
       </button>
       <button
         mat-icon-button
-        class="toolbar-button"
+        class="!h-9 !w-9 shrink-0 !p-1.5 !text-slate-300 [--mdc-icon-button-state-layer-size:36px] hover:!text-amber-400 [&_mat-icon]:!h-5 [&_mat-icon]:!w-5 [&_mat-icon]:!text-[20px]"
         data-cy="chat-info"
         [matTooltip]="'chat.info.button' | translate"
         (click)="openInfo()"
@@ -42,12 +53,15 @@
   </div>
 
   <!-- Messages -->
-  <main #scrollContainer class="chat-messages" (click)="onMessageClick($event)">
+  <main #scrollContainer class="chat-messages flex-1 overflow-y-auto" (click)="onMessageClick($event)">
     <div class="mx-auto flex max-w-3xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6">
       @for (message of chat.messages(); track $index) {
         @if (message.role === "user") {
           <div class="group flex max-w-[85%] flex-col items-end gap-1 self-end">
-            <div class="user-bubble" data-cy="chat-user-message">{{ message.content }}</div>
+            <div
+              class="whitespace-pre-wrap rounded-[18px_18px_4px_18px] bg-chat-amber px-4 py-2 font-medium text-slate-800 shadow-[0_4px_14px_rgba(0,0,0,0.3)] [overflow-wrap:anywhere]"
+              data-cy="chat-user-message"
+            >{{ message.content }}</div>
             <app-copy-button
               class="opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
               label="chat.copyQuestion"
@@ -56,17 +70,24 @@
           </div>
         } @else {
           <div class="flex w-full gap-3 self-start sm:max-w-[95%]">
-            <span class="assistant-icon max-sm:!hidden"><mat-icon>smart_toy</mat-icon></span>
-            <div class="chat-markdown min-w-0 flex-1" data-cy="chat-answer">
+            <span
+              class="assistant-icon box-border flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-solid border-amber-400/35 bg-black/40 text-amber-400 max-sm:!hidden [&_mat-icon]:!h-5 [&_mat-icon]:!w-5 [&_mat-icon]:!text-[20px]"
+              ><mat-icon>smart_toy</mat-icon></span
+            >
+            <!-- pt-[3px]: the first line sits level with the 32px icon, (32px - 1.6 × 16px) / 2 ≈ 3px -->
+            <div class="chat-markdown min-w-0 flex-1 pt-[3px] leading-[1.6]" data-cy="chat-answer">
               @if (message.content) {
                 <div [innerHTML]="message.content | chatMarkdown"></div>
               } @else if (!message.errorCode) {
-                <span class="thinking">
+                <span class="animate-[pulse_1.5s_ease-in-out_infinite] text-amber-100/60">
                   {{ (message.tool ? "chat.tools." + message.tool : "chat.thinking") | translate }}
                 </span>
               }
               @if (message.errorCode) {
-                <div class="chat-error" data-cy="chat-error">
+                <div
+                  class="mt-1 flex items-start gap-2 rounded-[10px] border border-solid border-amber-400/45 bg-black/35 px-3 py-2.5 text-[0.9rem] text-amber-200 [&_mat-icon]:shrink-0 [&_mat-icon]:text-amber-400"
+                  data-cy="chat-error"
+                >
                   <mat-icon>{{ message.errorCode === "error" ? "error_outline" : "hourglass_top" }}</mat-icon>
                   <span>{{ "chat.errors." + message.errorCode | translate: { time: message.retryAt | date: "HH:mm" } }}</span>
                 </div>
@@ -74,7 +95,7 @@
               @if (message.locationRequest) {
                 <button
                   type="button"
-                  class="location-button"
+                  class="mt-2.5 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-amber-400/35 bg-black/30 px-3.5 py-2 font-[inherit] text-[0.9rem] text-amber-100 backdrop-blur-[6px] [transition:all_0.2s] [font-weight:inherit] [line-height:inherit] hover:enabled:border-amber-400 hover:enabled:bg-black/45 hover:enabled:text-amber-200 disabled:cursor-default disabled:opacity-50"
                   data-cy="chat-share-location"
                   [disabled]="locating() || chat.streaming()"
                   (click)="shareLocation()"
@@ -90,7 +111,11 @@
                 </div>
               }
               @if (message.summarized) {
-                <div class="summary-note" data-cy="chat-summarized" [matTooltip]="'chat.summaryTooltip' | translate">
+                <div
+                  class="mt-1 flex items-center gap-1 text-[0.75rem] text-amber-100/60 [&_mat-icon]:!h-4 [&_mat-icon]:!w-4 [&_mat-icon]:!text-[16px]"
+                  data-cy="chat-summarized"
+                  [matTooltip]="'chat.summaryTooltip' | translate"
+                >
                   <mat-icon>compress</mat-icon>
                   {{ "chat.summarized" | translate }}
                 </div>
@@ -99,18 +124,30 @@
           </div>
         }
       } @empty {
-        <div class="chat-empty">
-          <div class="section-tag">
-            <span class="num">{{ "chat.tag" | translate }}</span>
+        <!-- Empty chat: label, headline and text like the head of the gimmicks page -->
+        <div class="mt-[8vh] text-center">
+          <div
+            class="mb-4 inline-flex items-center gap-2.5 font-['JetBrains_Mono',monospace] text-[12px] uppercase tracking-[0.16em] text-amber-200 before:h-px before:w-9 before:bg-amber-200 before:opacity-60 before:content-[''] after:h-px after:w-9 after:bg-amber-200 after:opacity-60 after:content-['']"
+          >
+            <span class="rounded-md bg-amber-400 px-2.5 py-[3px] font-bold text-slate-800">{{ "chat.tag" | translate }}</span>
             <span>{{ "chat.tagLabel" | translate }}</span>
           </div>
-          <h2 class="chat-headline">
+          <h2
+            class="m-0 mb-3.5 font-['Fraunces',serif] text-[clamp(32px,5vw,52px)] font-semibold leading-[1.08] tracking-[-0.02em] text-amber-100 [text-shadow:0_2px_8px_rgba(0,0,0,0.4)] [&_em]:italic [&_em]:text-amber-400"
+          >
             {{ "chat.headlinePre" | translate }} <em>{{ "chat.headlineEm" | translate }}</em>
           </h2>
-          <p class="chat-intro">{{ "chat.subline" | translate }}</p>
+          <p class="mx-auto my-0 max-w-[34rem] text-[1.05rem] font-medium leading-[1.55] text-amber-100/[0.78]">
+            {{ "chat.subline" | translate }}
+          </p>
           <div class="mt-6 flex flex-wrap justify-center gap-2">
             @for (question of exampleQuestions; track question) {
-              <button type="button" class="example-button" data-cy="chat-example" (click)="ask(question)">
+              <button
+                type="button"
+                class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-amber-400/35 bg-black/30 px-3.5 py-2 font-[inherit] text-[0.9rem] text-amber-100 backdrop-blur-[6px] [transition:all_0.2s] [font-weight:inherit] [line-height:inherit] hover:enabled:border-amber-400 hover:enabled:bg-black/45 hover:enabled:text-amber-200 disabled:cursor-default disabled:opacity-50"
+                data-cy="chat-example"
+                (click)="ask(question)"
+              >
                 {{ question | translate }}
               </button>
             }
@@ -120,12 +157,17 @@
     </div>
   </main>
 
-  <!-- Input -->
-  <footer class="chat-footer">
+  <!-- Input: glass bar at the bottom -->
+  <footer
+    class="shrink-0 border-0 border-t border-solid border-slate-400/[0.16] bg-black/25 p-3 pb-[calc(12px+env(safe-area-inset-bottom))] backdrop-blur sm:px-4"
+  >
     <form class="mx-auto flex max-w-3xl items-end gap-2" (ngSubmit)="send()">
       @if (voice.stream(); as stream) {
-        <!-- Recording: the input is replaced by a live waveform, like ChatGPT's voice input -->
-        <div class="voice-box">
+        <!-- Recording: the input is replaced by a live waveform, like ChatGPT's voice input.
+             The waveform bars take the text color (amber-200). -->
+        <div
+          class="flex h-12 min-w-0 flex-1 items-center gap-2 rounded-3xl border border-solid border-amber-400/30 bg-black/40 py-0 pl-1 pr-5 text-amber-200 [&_button]:!text-amber-100/60"
+        >
           <button
             mat-icon-button
             type="button"
@@ -144,7 +186,7 @@
         </div>
         <button
           type="button"
-          class="round-button"
+          class="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent bg-chat-amber text-slate-800 shadow-[0_4px_14px_rgba(0,0,0,0.35)] [transition:transform_0.15s,opacity_0.2s] hover:enabled:scale-105 disabled:cursor-default disabled:opacity-40 disabled:shadow-none"
           [matTooltip]="'chat.applyRecording' | translate"
           [disabled]="voice.state() === 'transcribing'"
           (click)="toggleRecording()"
@@ -157,9 +199,15 @@
         </button>
       }
       <!-- Only hidden while recording, not removed: a re-created cdkTextareaAutosize caches a wrong placeholder
-           height and the input would stay two lines high afterwards -->
-      <div class="input-box" [hidden]="voice.stream()">
+           height and the input would stay two lines high afterwards. [&[hidden]]:hidden – flex would override it. -->
+      <div
+        class="flex min-w-0 flex-1 items-end rounded-3xl border border-solid border-amber-400/30 bg-black/40 [transition:border-color_0.2s,box-shadow_0.2s] focus-within:border-amber-400 focus-within:shadow-[0_0_0_3px_rgba(251,191,36,0.18)] [&[hidden]]:hidden"
+        [hidden]="voice.stream()"
+      >
+        <!-- The textarea grows with its text (cdkTextareaAutosize) – a scrollbar would only show up from rounding
+             errors. Above the maximum height it still scrolls, just without a visible bar. -->
         <textarea
+          class="min-w-0 flex-1 resize-none border-0 bg-transparent py-3 pl-[18px] pr-1 text-amber-100 outline-none [font-family:inherit] [font-size:inherit] leading-[1.4] [scrollbar-width:none] placeholder:text-amber-100/60 [&::-webkit-scrollbar]:hidden"
           name="input"
           data-cy="chat-input"
           [(ngModel)]="input"
@@ -172,10 +220,12 @@
           [attr.aria-label]="'chat.message' | translate"
           [placeholder]="(narrow() ? 'chat.message' : 'chat.placeholder') | translate"
         ></textarea>
+        <!-- As high as one line of the textarea (≈ 46px) and bottom-aligned with it, so the icon is centered on a
+             single line and stays next to the last line when the text grows -->
         <button
           mat-icon-button
           type="button"
-          class="mic-button"
+          class="!mb-[3px] !mr-1 !h-10 !w-10 !p-2 !text-amber-100/60 [--mdc-icon-button-state-layer-size:40px] hover:!text-amber-400"
           data-cy="chat-mic"
           [matTooltip]="'chat.voiceInput' | translate"
           (click)="toggleRecording()"
@@ -184,10 +234,11 @@
         </button>
       </div>
       @if (!voice.stream()) {
+        <!-- Round buttons: as high as the input box with one line (46px textarea + 2px border) -->
         @if (chat.streaming()) {
           <button
             type="button"
-            class="round-button"
+            class="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent bg-chat-amber text-slate-800 shadow-[0_4px_14px_rgba(0,0,0,0.35)] [transition:transform_0.15s,opacity_0.2s] hover:enabled:scale-105 disabled:cursor-default disabled:opacity-40 disabled:shadow-none"
             data-cy="chat-stop"
             [matTooltip]="'chat.stop' | translate"
             (click)="chat.stop()"
@@ -197,7 +248,7 @@
         } @else {
           <button
             type="submit"
-            class="round-button"
+            class="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent bg-chat-amber text-slate-800 shadow-[0_4px_14px_rgba(0,0,0,0.35)] [transition:transform_0.15s,opacity_0.2s] hover:enabled:scale-105 disabled:cursor-default disabled:opacity-40 disabled:shadow-none"
             data-cy="chat-send"
             [matTooltip]="'chat.send' | translate"
             [disabled]="!input.trim()"

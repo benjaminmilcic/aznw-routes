@@ -1,0 +1,10 @@
+<button
+  type="button"
+  class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-0 text-amber-100/60 hover:bg-black/30 hover:text-amber-400 [&_mat-icon]:!h-[18px] [&_mat-icon]:!w-[18px] [&_mat-icon]:!text-[18px]"
+  data-cy="chat-read-aloud"
+  [attr.aria-label]="(reading() ? 'chat.stopReading' : 'chat.readAloud') | translate"
+  [matTooltip]="(reading() ? 'chat.stopReading' : 'chat.readAloud') | translate"
+  (click)="toggle()"
+>
+  <mat-icon>{{ reading() ? 'stop_circle' : 'volume_up' }}</mat-icon>
+</button>

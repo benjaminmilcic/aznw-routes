@@ -8,17 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-copy-button',
   imports: [MatIconModule, MatTooltipModule, TranslateModule],
-  template: `
-    <button
-      type="button"
-      class="copy-button"
-      [attr.aria-label]="label() | translate"
-      [matTooltip]="(copied() ? 'chat.copied' : label()) | translate"
-      (click)="copy()"
-    >
-      <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
-    </button>
-  `,
+  templateUrl: './copy-button.component.html',
+  styleUrl: './copy-button.component.scss',
 })
 export class CopyButtonComponent {
   readonly text = input.required<string>();

@@ -1,0 +1,13 @@
+@if (questions().length) {
+  <select
+    class="mr-1.5 h-7 max-w-[min(40vw,260px)] rounded-md border border-dashed border-amber-400 bg-slate-900 px-1.5 py-0 text-[0.75rem] text-amber-200"
+    data-cy="chat-test-questions"
+    aria-label="Testfrage"
+    (change)="pick($event)"
+  >
+    <option value="">Testfrage …</option>
+    @for (q of questions(); track q.number) {
+      <option [value]="q.number" [title]="q.expected">{{ q.number }}. {{ q.question }}</option>
+    }
+  </select>
+}

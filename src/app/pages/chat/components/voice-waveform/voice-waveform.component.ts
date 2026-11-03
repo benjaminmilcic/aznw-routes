@@ -14,14 +14,9 @@ const MIN_BAR_HEIGHT = 2;
  */
 @Component({
   selector: 'app-voice-waveform',
-  template: `
-    <!-- Absolutely positioned so the canvas' pixel size never pushes the layout wider -->
-    <div class="relative h-full min-w-0 flex-1">
-      <canvas #canvas class="absolute inset-0 block h-full w-full"></canvas>
-    </div>
-    <span class="shrink-0 tabular-nums opacity-70">{{ elapsed() }}</span>
-  `,
+  templateUrl: './voice-waveform.component.html',
   host: { class: 'flex min-w-0 items-center gap-3' },
+  styleUrl: './voice-waveform.component.scss',
 })
 export class VoiceWaveformComponent {
   readonly stream = input.required<MediaStream>();

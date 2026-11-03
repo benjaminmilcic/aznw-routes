@@ -14,34 +14,8 @@ interface TestQuestion {
  */
 @Component({
   selector: 'app-chat-test-questions',
-  template: `
-    @if (questions().length) {
-      <select
-        class="test-select"
-        data-cy="chat-test-questions"
-        aria-label="Testfrage"
-        (change)="pick($event)"
-      >
-        <option value="">Testfrage …</option>
-        @for (q of questions(); track q.number) {
-          <option [value]="q.number" [title]="q.expected">{{ q.number }}. {{ q.question }}</option>
-        }
-      </select>
-    }
-  `,
-  styles: `
-    .test-select {
-      max-width: min(40vw, 260px);
-      height: 28px;
-      margin-right: 6px;
-      padding: 0 6px;
-      border: 1px dashed #fbbf24;
-      border-radius: 6px;
-      background: #0f172a;
-      color: #fde68a;
-      font-size: 0.75rem;
-    }
-  `,
+  templateUrl: './chat-test-questions.component.html',
+  styleUrl: './chat-test-questions.component.scss',
 })
 export class ChatTestQuestionsComponent {
   /** The selected question, to be sent */

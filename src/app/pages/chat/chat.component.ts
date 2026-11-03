@@ -14,17 +14,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
-import { ChatInfoDialogComponent } from './chat-info-dialog.component';
+import { ChatInfoDialogComponent } from './components/chat-info-dialog/chat-info-dialog.component';
 import { ChatMarkdownPipe } from './chat-markdown.pipe';
 import { environment } from '../../../environments/environment';
 import { ChatService } from './chat.service';
-import { ChatTestQuestionsComponent } from './chat-test-questions.component';
+import { ChatTestQuestionsComponent } from './components/chat-test-questions/chat-test-questions.component';
 import { ProjectDialogComponent } from '../home/components/portfolio/project-dialog.component';
-import { CopyButtonComponent } from './copy-button.component';
-import { ReadAloudButtonComponent } from './read-aloud-button.component';
+import { CopyButtonComponent } from './components/copy-button/copy-button.component';
+import { ReadAloudButtonComponent } from './components/read-aloud-button/read-aloud-button.component';
 import { SpeechPlayerService } from './speech-player.service';
 import { VoiceInputError, VoiceInputService } from './voice-input.service';
-import { VoiceWaveformComponent } from './voice-waveform.component';
+import { VoiceWaveformComponent } from './components/voice-waveform/voice-waveform.component';
 
 /**
  * The AI chat page: questions about Benjamin and his website, answered by python-aznw-api via nest-aznw-api

@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>{{ 'chat.info.title' | translate }}</h2>
+
+<mat-dialog-content class="chat-dialog">
+  <!-- Inner wrapper: Material sets display: block on mat-dialog-content, which overrides Tailwind's flex -->
+  <div class="flex flex-col gap-5">
+    <p class="m-0 text-sm">{{ 'chat.info.intro' | translate }}</p>
+
+    <section class="flex flex-col gap-2">
+      <h3 class="m-0 flex items-center gap-2 text-base font-medium">
+        <mat-icon>smart_toy</mat-icon>
+        {{ 'chat.info.chatTitle' | translate }}
+      </h3>
+      <ul class="m-0 pl-5 text-sm">
+        <li>{{ 'chat.info.chatLimit1' | translate }}</li>
+      </ul>
+      <p class="m-0 text-sm opacity-70">{{ 'chat.info.chatNote' | translate }}</p>
+    </section>
+
+    <section class="flex flex-col gap-2">
+      <h3 class="m-0 flex items-center gap-2 text-base font-medium">
+        <mat-icon>mic</mat-icon>
+        {{ 'chat.info.voiceTitle' | translate }}
+      </h3>
+      <ul class="m-0 pl-5 text-sm">
+        <li>{{ 'chat.info.voiceLimit1' | translate }}</li>
+        <li>{{ 'chat.info.voiceLimit2' | translate }}</li>
+      </ul>
+    </section>
+
+    <section class="flex flex-col gap-2">
+      <h3 class="m-0 flex items-center gap-2 text-base font-medium">
+        <mat-icon>travel_explore</mat-icon>
+        {{ 'chat.info.searchTitle' | translate }}
+      </h3>
+      <ul class="m-0 pl-5 text-sm">
+        <li>{{ 'chat.info.searchLimit1' | translate }}</li>
+        <li>{{ 'chat.info.searchLimit2' | translate }}</li>
+      </ul>
+    </section>
+
+    <p class="m-0 text-xs opacity-60">{{ 'chat.info.asOf' | translate }}</p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" class="chat-info-close" mat-dialog-close>{{ 'chat.close' | translate }}</button>
+</mat-dialog-actions>
