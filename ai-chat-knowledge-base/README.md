@@ -37,7 +37,7 @@ fetches it with tools, so it is always up to date.
    startet die Python-API auf dem Server neu, sie lädt die Wissensbasis sofort von GitHub (nur geänderte Abschnitte
    werden neu eingebettet). Kein Frontend-Deploy. Ohne den Workflow prüft die API ohnehin alle 15 Minuten auf
    Änderungen.
-5. **Kontrollieren:** `curl http://127.0.0.1:8000/health` auf dem Server zeigt `knowledgePages`, `knowledgeChunks`
+5. **Kontrollieren:** `curl http://127.0.0.1:8000/health` auf dem Server zeigt `knowledgeCommit` (den geladenen Stand), `knowledgePages`, `knowledgeChunks`
    und `knowledgeError` (null, wenn alles geklappt hat).
 
 Das Gleiche gilt für `portfolio.json`, die Portfolio-Texte in `en.json` und einen neuen Lebenslauf
