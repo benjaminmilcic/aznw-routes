@@ -208,7 +208,6 @@
     "imageAlt": "AI Language Trainer",
     "stack": ["Angular", "NestJS", "MySQL", "LLMs"],
     "pin": { "position": "center", "color": "blue" },
-    "hidden": true,
     "dialog": [
       {
         "type": "section",
