@@ -10,7 +10,7 @@ summary: Benjamin's own web and Android app for learning Croatian vocabulary –
 aliases: [vocabulary trainer, learn Croatian, Croatian language, flashcards, Vokabeltrainer, Kroatisch lernen, Vokabeln, učenje hrvatskog, rječnik, learn-croatian]
 tech: [Angular, Ionic, Capacitor, Firebase]
 tools: []
-related: [portfolio, game-collection, todo-app]
+related: [portfolio, language-trainer, game-collection, todo-app]
 subroutes: []
 source:
   - https://github.com/benjaminmilcic/learn-croatian
