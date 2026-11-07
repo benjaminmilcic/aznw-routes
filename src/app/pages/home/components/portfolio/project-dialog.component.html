@@ -20,6 +20,7 @@
               <a
                 [href]="block.href"
                 target="_blank"
+                rel="noopener"
                 class="project-link primary featured"
               >
                 <mat-icon>launch</mat-icon><span>{{ block.href }}</span>
@@ -33,7 +34,7 @@
                 @for (part of block.parts; track $index) {
                   <ng-container>{{ !$first && !part.glue ? " " : "" }}</ng-container>
                   @if (part.href) {
-                    <a [href]="part.href" target="_blank" class="inline-link">{{ part.text }}</a>
+                    <a [href]="part.href" target="_blank" rel="noopener" class="inline-link">{{ part.text }}</a>
                   } @else {
                     <ng-container>{{ part.key ? (part.key | translate) : part.text }}</ng-container>
                   }
@@ -60,6 +61,7 @@
                     <a
                       [href]="localize(link.href)"
                       [attr.target]="link.newTab ? '_blank' : null"
+                      [attr.rel]="link.newTab ? 'noopener' : null"
                       class="project-link"
                       [class]="link.style"
                     >
@@ -95,6 +97,7 @@
                 <a
                   [href]="localize(link.href)"
                   [attr.target]="link.newTab ? '_blank' : null"
+                  [attr.rel]="link.newTab ? 'noopener' : null"
                   class="project-link"
                   [class]="link.style"
                 >
@@ -107,7 +110,7 @@
           @case ("storeBadge") {
             @if (block.variant === "small") {
               <div class="mt-5 flex justify-center">
-                <a [href]="block.href" target="_blank">
+                <a [href]="block.href" target="_blank" rel="noopener">
                   <img
                     width="144px"
                     src="/assets/google-play-badge.png"
@@ -117,7 +120,7 @@
               </div>
             } @else {
               <div class="links-container centered">
-                <a [href]="block.href" target="_blank" class="store-badge">
+                <a [href]="block.href" target="_blank" rel="noopener" class="store-badge">
                   <img
                     src="/assets/google-play-badge.png"
                     [alt]="block.alt"

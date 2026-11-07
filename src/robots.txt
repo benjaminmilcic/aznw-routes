@@ -1,0 +1,5 @@
+# All crawlers are welcome, including AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, ...)
+User-agent: *
+Allow: /
+
+Sitemap: https://benjamin-milcic.dev/sitemap.xml
