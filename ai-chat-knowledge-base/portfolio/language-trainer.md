@@ -5,7 +5,7 @@ title_en: AI Language Trainer
 title_hr: AI Language Trainer
 route: /?project=language-trainer#portfolio
 category: project
-summary: Benjamin's own web app for learning Croatian, German, English, Spanish, French and Italian by translating AI-generated texts, with a vocabulary trainer and a basic vocabulary from A1 to B2.
+summary: Benjamin's own web app for learning languages by translating AI-generated texts, with a vocabulary trainer and a basic vocabulary from A1 to B2. It is available in many languages, currently Croatian, German, English, Spanish, French and Italian.
 
 aliases: [AI Language Trainer, language trainer, language learning, learn languages, translate, basic vocabulary, Sprachtrainer, Sprachen lernen, Französisch lernen, Italienisch lernen, Grundwortschatz, KI-Sprachtrainer, trener jezika, učenje jezika, osnovni vokabular]
 tech: [Angular, Angular Material, Tailwind CSS, Transloco, NestJS, TypeORM, MySQL, LLMs, Anthropic Claude, Google Gemini, OpenAI]
@@ -18,7 +18,7 @@ source: []
 # AI Language Trainer (Portfolio project)
 
 ## What is the AI Language Trainer?
-The AI Language Trainer is Benjamin's own web app for learning languages by translating. It supports Croatian, German, English, Spanish, French and Italian, in any combination, and its interface is available in the same six languages. Benjamin wrote it to expand his own Croatian vocabulary and then put it online for others. It is a private, free project; the live demo is linked in the portfolio.
+The AI Language Trainer is Benjamin's own web app for learning languages by translating. It supports Croatian, German, English, Spanish, French and Italian, in any combination, and its interface is available in the same six languages. More languages are planned, so the app and the portfolio describe it as available in many languages instead of listing them; this page always names the languages that are available right now. Benjamin wrote it to expand his own Croatian vocabulary and then put it online for others. It is a private, free project; the live demo is linked in the portfolio.
 
 ## What can you do in the AI Language Trainer?
 - **Translate:** the AI writes a text for your level, topic and length and evaluates your translation with corrections

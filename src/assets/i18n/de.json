@@ -55,7 +55,7 @@
     "gamesCollectionTitle": "Spielesammlung",
     "todoAppTitle": "ToDo-App",
     "todoAppDesc": "Multi-User-Aufgabenliste mit Live-Sync – als PWA und Android-App.",
-    "languageTrainerDesc": "KI-Sprachtrainer für Kroatisch, Deutsch, Englisch, Spanisch, Französisch und Italienisch mit Texten nach Maß.",
+    "languageTrainerDesc": "KI-Sprachtrainer für viele Sprachen mit Texten nach Maß.",
     "solakonDesc": "App für Solar-Monitoring – für iOS, Android und im Browser. Live im Play Store.",
     "hippoDataDesc": "B2B-Plattform für Datenanalyse und Reporting.",
     "vocabularyTrainer": {
@@ -64,7 +64,7 @@
       "sourceCode": "Quellcode"
     },
     "languageTrainer": {
-      "text1": "KI-Sprachtrainer für Kroatisch, Deutsch, Englisch, Spanisch, Französisch und Italienisch. Realisiert mit Angular, NestJS und MySQL; Texte, Bewertungen und Worterklärungen liefern austauschbare Modelle von Anthropic, Google und OpenAI über den eigenen API-Key der Nutzer."
+      "text1": "KI-Sprachtrainer, verfügbar in vielen Sprachen. Realisiert mit Angular, NestJS und MySQL; Texte, Bewertungen und Worterklärungen liefern austauschbare Modelle von Anthropic, Google und OpenAI über den eigenen API-Key der Nutzer."
     },
     "todoApp": {
       "text1": "Aufgabenliste mit Live-Sync auf allen Geräten und KI-Spracheingabe – als PWA und Android-App. Realisiert mit Angular, Ionic, NestJS und MySQL.",

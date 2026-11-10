@@ -55,7 +55,7 @@
     "gamesCollectionTitle": "Game collection",
     "todoAppTitle": "To-do app",
     "todoAppDesc": "Multi-user to-do list with live sync – as a PWA and an Android app.",
-    "languageTrainerDesc": "AI language trainer for Croatian, German, English, Spanish, French and Italian with tailor-made texts.",
+    "languageTrainerDesc": "AI language trainer for many languages with tailor-made texts.",
     "solakonDesc": "App for solar monitoring – for iOS, Android and in the browser. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
@@ -64,7 +64,7 @@
       "sourceCode": "Source code"
     },
     "languageTrainer": {
-      "text1": "AI language trainer for Croatian, German, English, Spanish, French and Italian. Built with Angular, NestJS and MySQL; texts, evaluations and word explanations come from interchangeable models by Anthropic, Google and OpenAI via the user's own API key."
+      "text1": "AI language trainer, available in many languages. Built with Angular, NestJS and MySQL; texts, evaluations and word explanations come from interchangeable models by Anthropic, Google and OpenAI via the user's own API key."
     },
     "todoApp": {
       "text1": "To-do list with live sync across all devices and AI voice input – as a PWA and an Android app. Built with Angular, Ionic, NestJS and MySQL.",
