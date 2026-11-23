@@ -56,6 +56,7 @@
     "todoAppTitle": "Aplikacija za zadatke",
     "todoAppDesc": "Popis zadataka za više korisnika s trenutnom sinkronizacijom – kao PWA i Android aplikacija.",
     "languageTrainerDesc": "AI trener jezika za mnogo jezika s tekstovima po mjeri.",
+    "quietSolitaireDesc": "Pet klasičnih pasijansa, svaka partija zajamčeno rješiva.",
     "solakonDesc": "Aplikacija za solar-monitoring – za iOS, Android i u pregledniku. Dostupno na Play Storeu.",
     "hippoDataDesc": "B2B platforma za analizu podataka i izvješćivanje.",
     "vocabularyTrainer": {
@@ -65,6 +66,9 @@
     },
     "languageTrainer": {
       "text1": "AI trener jezika, dostupan na mnogo jezika. Izrađeno s Angularom, NestJS-om i MySQL-om; tekstove, ocjene i objašnjenja riječi daju zamjenjivi modeli tvrtki Anthropic, Google i OpenAI uz korisnikov vlastiti API ključ."
+    },
+    "quietSolitaire": {
+      "text1": "Pet klasičnih pasijansa – Spider, Klondike, FreeCell, Piramida i TriPeaks – na pet jezika. Izrađeno u Angularu kao unaprijed generirana statična web stranica na Cloudflare Pagesu; solver unaprijed provjerava svako dijeljenje, a pet razina težine ovisi o tome koliko je partiju stvarno teško riješiti."
     },
     "todoApp": {
       "text1": "Popis zadataka s trenutnom sinkronizacijom na svim uređajima i glasovnim unosom uz umjetnu inteligenciju – kao PWA i Android aplikacija. Izrađeno s Angularom, Ionicom, NestJS-om i MySQL-om.",

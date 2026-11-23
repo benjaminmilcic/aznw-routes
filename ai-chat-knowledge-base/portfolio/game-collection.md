@@ -10,7 +10,7 @@ summary: Benjamin's own collection of well-known multiplayer games with a shared
 aliases: [game collection, games, multiplayer games, whiteboard, drawing board, Sovica, kids chat, Spielesammlung, Spiele, Malen, Kinder-Chat, zbirka igara, igre]
 tech: [Angular, Firebase Firestore, Firebase Realtime Database, NestJS, Groq]
 tools: []
-related: [portfolio, games, vocabulary-trainer, todo-app]
+related: [portfolio, games, vocabulary-trainer, todo-app, quiet-solitaire]
 subroutes: []
 source:
   - https://github.com/benjaminmilcic/whiteboard

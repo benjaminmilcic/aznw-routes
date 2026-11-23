@@ -56,6 +56,7 @@
     "todoAppTitle": "To-do app",
     "todoAppDesc": "Multi-user to-do list with live sync – as a PWA and an Android app.",
     "languageTrainerDesc": "AI language trainer for many languages with tailor-made texts.",
+    "quietSolitaireDesc": "Five classic solitaire games, every deal guaranteed solvable.",
     "solakonDesc": "App for solar monitoring – for iOS, Android and in the browser. Live on Play Store.",
     "hippoDataDesc": "B2B platform for data analysis and reporting.",
     "vocabularyTrainer": {
@@ -65,6 +66,9 @@
     },
     "languageTrainer": {
       "text1": "AI language trainer, available in many languages. Built with Angular, NestJS and MySQL; texts, evaluations and word explanations come from interchangeable models by Anthropic, Google and OpenAI via the user's own API key."
+    },
+    "quietSolitaire": {
+      "text1": "Five classic solitaire games – Spider, Klondike, FreeCell, Pyramid and TriPeaks – in five languages. Built with Angular as a prerendered static website on Cloudflare Pages; a solver checks every deal in advance, and the five difficulty levels are based on how hard a deal really is to solve."
     },
     "todoApp": {
       "text1": "To-do list with live sync across all devices and AI voice input – as a PWA and an Android app. Built with Angular, Ionic, NestJS and MySQL.",

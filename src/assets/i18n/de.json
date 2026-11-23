@@ -56,6 +56,7 @@
     "todoAppTitle": "ToDo-App",
     "todoAppDesc": "Multi-User-Aufgabenliste mit Live-Sync – als PWA und Android-App.",
     "languageTrainerDesc": "KI-Sprachtrainer für viele Sprachen mit Texten nach Maß.",
+    "quietSolitaireDesc": "Fünf klassische Solitär-Spiele, jedes Spiel garantiert lösbar.",
     "solakonDesc": "App für Solar-Monitoring – für iOS, Android und im Browser. Live im Play Store.",
     "hippoDataDesc": "B2B-Plattform für Datenanalyse und Reporting.",
     "vocabularyTrainer": {
@@ -65,6 +66,9 @@
     },
     "languageTrainer": {
       "text1": "KI-Sprachtrainer, verfügbar in vielen Sprachen. Realisiert mit Angular, NestJS und MySQL; Texte, Bewertungen und Worterklärungen liefern austauschbare Modelle von Anthropic, Google und OpenAI über den eigenen API-Key der Nutzer."
+    },
+    "quietSolitaire": {
+      "text1": "Fünf klassische Solitär-Spiele – Spider, Klondike, FreeCell, Pyramide und TriPeaks – in fünf Sprachen. Realisiert mit Angular als vorab erzeugte statische Website auf Cloudflare Pages; ein Solver prüft jede Verteilung vorher, und die fünf Schwierigkeitsstufen richten sich danach, wie schwer ein Spiel wirklich zu lösen ist."
     },
     "todoApp": {
       "text1": "Aufgabenliste mit Live-Sync auf allen Geräten und KI-Spracheingabe – als PWA und Android-App. Realisiert mit Angular, Ionic, NestJS und MySQL.",

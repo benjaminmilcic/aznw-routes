@@ -221,6 +221,24 @@
     ]
   },
   {
+    "id": "quiet-solitaire",
+    "title": "Quiet Solitaire",
+    "descKey": "portfolio.quietSolitaireDesc",
+    "image": "assets/quiet-solitaire-{lang}.webp",
+    "imageAlt": "Quiet Solitaire",
+    "stack": ["Angular", "Cloudflare"],
+    "pin": { "position": "right", "color": "green" },
+    "dialog": [
+      { "type": "website", "href": "https://quietsolitaire.com" },
+      {
+        "type": "section",
+        "titleKey": "portfolio.quietSolitaire.text1",
+        "image": { "src": "assets/quiet-solitaire-{lang}.webp", "alt": "Quiet Solitaire", "kind": "web-app" },
+        "links": []
+      }
+    ]
+  },
+  {
     "id": "hippo-data",
     "title": "Hippo Data",
     "descKey": "portfolio.hippoDataDesc",
