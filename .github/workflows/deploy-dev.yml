@@ -8,11 +8,11 @@ on:
     paths-ignore:
       - 'ai-chat-knowledge-base/**'
   # Manual start via Actions -> "Run workflow". There the test run can be
-  # skipped with a checkbox when it has to be quick.
+  # switched on with a checkbox.
   workflow_dispatch:
     inputs:
-      skip_tests:
-        description: 'Skip the E2E tests and deploy right away'
+      run_tests:
+        description: 'Run the E2E tests before the deploy'
         type: boolean
         default: false
 
@@ -32,20 +32,16 @@ jobs:
   # Tests and build run in parallel; only the delivery waits for both.
   # A red test still prevents publishing.
   #
-  # Skipping works in two ways:
-  #   1. Manual start with the "skip_tests" checkbox set.
-  #   2. "[skip tests]" or "[skip e2e]" anywhere in the commit message.
-  # In both cases this job does not even start and the deploy
-  # starts right away.
+  # The tests are off by default: this job does not even start and the deploy
+  # starts right away. They run in two cases:
+  #   1. Manual start with the "run_tests" checkbox set.
+  #   2. "[e2e]" anywhere in the message of the pushed (last) commit.
   e2e:
     name: Cypress
     runs-on: ubuntu-latest
     if: >-
-      !(
-        (github.event_name == 'workflow_dispatch' && inputs.skip_tests) ||
-        contains(github.event.head_commit.message, '[skip tests]') ||
-        contains(github.event.head_commit.message, '[skip e2e]')
-      )
+      (github.event_name == 'workflow_dispatch' && inputs.run_tests) ||
+      contains(github.event.head_commit.message, '[e2e]')
     steps:
       - uses: actions/checkout@v4
 
